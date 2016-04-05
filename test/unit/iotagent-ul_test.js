@@ -69,10 +69,38 @@ describe('Ultralight 2.0 Parser', function() {
         });
     });
     describe('When a payload with an empty measure is found: "a=10||"', function() {
-        it('should throw a PARSE_ERROR error');
+        it('should throw a PARSE_ERROR error', function() {
+            var result,
+                error;
+
+            try {
+                result = ulParser.parse('a=10||')
+            } catch(e) {
+                error = e;
+            }
+
+            should.exist(error);
+            should.not.exist(result);
+            error.name.should.equal('PARSE_ERROR');
+        });
     });
     describe('When a payload with an empty measure group is found: "a=10|b=11##t=3"', function() {
-        it('should throw a PARSE_ERROR error');
+        it('should throw a PARSE_ERROR error', function() {
+            it('should throw a PARSE_ERROR error', function() {
+                var result,
+                    error;
+
+                try {
+                    result = ulParser.parse('a=10|b=11##t=3')
+                } catch(e) {
+                    error = e;
+                }
+
+                should.exist(error);
+                should.not.exist(result);
+                error.name.should.equal('PARSE_ERROR');
+            });
+        });
     });
 
 });
