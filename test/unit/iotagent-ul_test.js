@@ -28,7 +28,16 @@ var ulParser = require('../../lib/ulParser'),
 
 describe('Ultralight 2.0 Parser', function() {
     describe('When a payload with a single measure is parsed', function() {
-        it('should return an array with a single object with just one attribute');
+        it('should return an array with a single object with just one attribute', function() {
+            var result = ulParser.parse('a=1');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            result.length.should.equal(1);
+            should.exist(result[0]);
+            should.exist(result[0].a);
+            result[0].a.should.equal('1');
+        });
     });
     describe('When a payload with a multiple measures is parsed', function() {
         it('should return an array with a single object with multiple attributes');
@@ -42,5 +51,5 @@ describe('Ultralight 2.0 Parser', function() {
     describe('When a payload with an empty measure group is found: "a=10|b=11##t=3"', function() {
         it('should throw a PARSE_ERROR error');
     });
-    
+
 });
