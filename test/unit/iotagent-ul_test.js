@@ -40,7 +40,18 @@ describe('Ultralight 2.0 Parser', function() {
         });
     });
     describe('When a payload with a multiple measures is parsed', function() {
-        it('should return an array with a single object with multiple attributes');
+        it('should return an array with a single object with multiple attributes', function() {
+            var result = ulParser.parse('c=7|b=18');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            result.length.should.equal(1);
+            should.exist(result[0]);
+            should.exist(result[0].c);
+            result[0].c.should.equal('7');
+            should.exist(result[0].b);
+            result[0].b.should.equal('18');
+        });
     });
     describe('When a payload with two groups of measures and one measure in each group is parsed', function() {
         it('should return an array with two objects with just one attribute');
