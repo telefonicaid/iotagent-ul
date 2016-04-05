@@ -6,11 +6,18 @@
 * [Protocol] (#protocol)
 
 ## <a name="overview"/> Overview
+This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
+and NGSI Context Brokers (like [Orion](https://github.com/telefonicaid/fiware-orion)). Ultralight 2.0 is a lightweight
+text based protocol aimed to constrained devices and communications where the bandwidth and device memory may be limited
+resources. This IoTA will provide different transport protocol bindings for the same protocol: HTTP, MQTT...
+
+As is the case in any IoT Agent, this one follows the interaction model defined in the [Node.js IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib),
+that is used for the implementation of the Northbound APIs.
 
 ## <a name="protocol"/> Protocol
 ### Description
 Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and communications where the
-bandwidth may be a limited resource.
+bandwidth and device memory may be limited resources.
 
 ### Measure Payload Syntax
 The payload for information update requests is composed of a list of key-value pairs separated by the '|' character. E.g.:
