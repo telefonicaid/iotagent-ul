@@ -54,7 +54,19 @@ describe('Ultralight 2.0 Parser', function() {
         });
     });
     describe('When a payload with two groups of measures and one measure in each group is parsed', function() {
-        it('should return an array with two objects with just one attribute');
+        it('should return an array with two objects with just one attribute', function() {
+            var result = ulParser.parse('c=7#b=18');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            result.length.should.equal(2);
+            should.exist(result[0]);
+            should.exist(result[0].c);
+            result[0].c.should.equal('7');
+            should.exist(result[1]);
+            should.exist(result[1].b);
+            result[1].b.should.equal('18');
+        });
     });
     describe('When a payload with an empty measure is found: "a=10||"', function() {
         it('should throw a PARSE_ERROR error');
