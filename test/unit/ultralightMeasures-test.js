@@ -26,7 +26,7 @@
 var ulParser = require('../../lib/ulParser'),
     should = require('should');
 
-describe('Ultralight 2.0 Parser', function() {
+describe('Ultralight 2.0 Parser: measures', function() {
     describe('When a payload with a single measure is parsed', function() {
         it('should return an array with a single object with just one attribute', function() {
             var result = ulParser.parse('a=1');
@@ -102,5 +102,4 @@ describe('Ultralight 2.0 Parser', function() {
             });
         });
     });
-
 });
