@@ -10,12 +10,13 @@
   "undef": true,
   "unused": true,
   "trailing": true,
-  "maxparams": 3,
+  "maxparams": 6,
   "maxdepth": 4,
   "camelcase": true,
   "maxlen": 120,
   "node": true,
   "expr": true,
+  "unused": "vars",
   "globals": {
     "describe":true,
     "it": true,
@@ -26,5 +27,9 @@
     "afterEach": true,
     "mock": true,
     "sinon": true
-  }
+  },
+  "predef":
+  [
+    "describe", "beforeEach", "afterEach", "it"
+  ]
 }
