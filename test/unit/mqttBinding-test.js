@@ -100,6 +100,22 @@ describe.only('MQTT Transport binding', function() {
     });
 
     describe('When single message with multiple measure groups arrive to a Device topic', function() {
-        it('should send one update context per measure group to the Contet Broker');
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+        });
+
+
+        it('should send one update context per measure group to the Contet Broker', function(done) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23|b=98', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
     });
 });
