@@ -34,7 +34,7 @@ var iotagentMqtt = require('../../'),
     contextBrokerMock,
     mqttClient;
 
-describe.only('MQTT Transport binding', function() {
+describe('MQTT Transport binding', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -77,7 +77,22 @@ describe.only('MQTT Transport binding', function() {
     });
 
     describe('When a new single measure arrives to a Device topic', function() {
-        it('should send a new update context request to the Context Broker with just that attribute');
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+        });
+
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            mqttClient.publish('/1234/MQTT_2/attrs/a', '23', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
     });
 
     describe('When a new multiple measure arrives to a Device topic', function() {
@@ -107,7 +122,6 @@ describe.only('MQTT Transport binding', function() {
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         });
-
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
             mqttClient.publish('/1234/MQTT_2/attrs', 'a=23|b=98', null, function(error) {
