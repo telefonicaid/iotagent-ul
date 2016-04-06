@@ -74,7 +74,7 @@ describe('Ultralight 2.0 Parser: measures', function() {
                 error;
 
             try {
-                result = ulParser.parse('a=10||')
+                result = ulParser.parse('a=10||');
             } catch(e) {
                 error = e;
             }
@@ -91,7 +91,7 @@ describe('Ultralight 2.0 Parser: measures', function() {
                     error;
 
                 try {
-                    result = ulParser.parse('a=10|b=11##t=3')
+                    result = ulParser.parse('a=10|b=11##t=3');
                 } catch(e) {
                     error = e;
                 }

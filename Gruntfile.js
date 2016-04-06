@@ -64,7 +64,7 @@ module.exports = function(grunt) {
             lib: {
                 src: ['lib/**/*.js'],
                 options: {
-                    jshintrc: 'lib/.jshintrc'
+                    jshintrc: '.jshintrc'
                 }
             },
             test: {
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
                 options: {
                     reporter: 'checkstyle',
                     reporterOutput: '<%= clean.reportLint[0] %>/jshint-lib.xml',
-                    jshintrc: 'lib/.jshintrc'
+                    jshintrc: '.jshintrc'
                 }
             },
             reportTest: {
@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 
         dox: {
             options: {
-                title: 'iotagent-ul documentation'
+                title: 'iotagent-thinking-things documentation'
             },
             files: {
                 src: ['<%= jshint.lib.src %>'],
@@ -161,14 +161,14 @@ module.exports = function(grunt) {
         exec: {
             istanbul: {
                 cmd:
-                    'bash -c "./node_modules/.bin/istanbul cover --root lib/ --dir <%= clean.siteCoverage[0] %> -- ' +
-                    '\\"`npm root -g`/grunt-cli/bin/grunt\\" test && ' +
-                    './node_modules/.bin/istanbul report --dir <%= clean.siteCoverage[0] %> text-summary"'
+                'bash -c "./node_modules/.bin/istanbul cover --root lib/ --dir <%= clean.siteCoverage[0] %> -- ' +
+                '\\"`npm root -g`/grunt-cli/bin/grunt\\" test && ' +
+                './node_modules/.bin/istanbul report --dir <%= clean.siteCoverage[0] %> text-summary"'
             },
             istanbulCobertura: {
                 cmd:
-                    'bash -c "./node_modules/.bin/istanbul report --dir <%= clean.siteCoverage[0] %> cobertura && ' +
-                    'mv <%= clean.siteCoverage[0] %>/cobertura-coverage.xml <%= clean.reportCoverage[0] %>"'
+                'bash -c "./node_modules/.bin/istanbul report --dir <%= clean.siteCoverage[0] %> cobertura && ' +
+                'mv <%= clean.siteCoverage[0] %>/cobertura-coverage.xml <%= clean.reportCoverage[0] %>"'
             },
             githubPagesInit: {
                 cmd: 'bash tools/github-pages.sh'
@@ -187,9 +187,9 @@ module.exports = function(grunt) {
         },
 
         githooks: {
-          all: {
-            'pre-commit': 'lint test'
-          }
+            all: {
+                'pre-commit': 'lint test'
+            }
         },
 
         gjslint: {
@@ -269,13 +269,13 @@ module.exports = function(grunt) {
 
     grunt.registerTask('lint-report', 'Generate checkstyle reports',
         ['clean:reportLint', 'mkdir:reportLint', 'jshint:reportGruntfile', 'jshint:reportLib',
-        'jshint:reportTest', 'gjslint:report']);
+            'jshint:reportTest', 'gjslint:report']);
 
     grunt.registerTask('site', ['doc', 'coverage', 'complexity', 'githubPages']);
 
     grunt.registerTask('init-dev-env', ['githooks']);
 
     // Default task.
-    grunt.registerTask('default', ['lint-jshint', 'test']);
+    grunt.registerTask('default', ['lint', 'test']);
 
 };
