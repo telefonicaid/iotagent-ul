@@ -23,20 +23,3 @@
 
 'use strict';
 
-module.exports = {
-    ParseError: function(errorMsg) {
-        this.name = 'PARSE_ERROR';
-        this.message = 'There was a syntax error in the Ultralight request: ' + errorMsg;
-        this.code = 400;
-    },
-    ConfigurationError: function(errorMsg) {
-        this.name = 'CONFIGURATION_ERROR';
-        this.message = 'There was an error in the configuration file, starting the agent: ' + errorMsg;
-        this.code = 501;
-    },
-    GroupNotFound: function(service, subservice) {
-        this.name = 'GROUP_NOT_FOUND';
-        this.message = 'Group not found for service [' + service + '] and subservice [' + subservice + ']';
-        this.code = 404;
-    }
-};

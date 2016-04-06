@@ -42,7 +42,7 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result.params.param2.should.equal('2');
         });
     });
-    describe('When a command result is parsed', function(){
+    describe('When a command result is parsed', function() {
         describe('should extract the deviceId, the command name, and the result', function() {
             it('should extract the deviceId, the command name, and the parameters', function() {
                 var result = ulParser.result('weatherStation167@ping|Ping ok');
