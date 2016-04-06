@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 
         dox: {
             options: {
-                title: 'iotagent-thinking-things documentation'
+                title: 'iotagent-ul documentation'
             },
             files: {
                 src: ['<%= jshint.lib.src %>'],
