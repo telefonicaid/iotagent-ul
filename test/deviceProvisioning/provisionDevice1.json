@@ -1,0 +1,21 @@
+{
+  "devices": [
+    {
+      "device_id": "MQTT_2",
+      "protocol": "GENERIC_PROTO",
+      "entity_name": "Second MQTT Device",
+      "timezone": "America/Santiago",
+      "entity_type": "AnMQTTDevice",
+      "attributes": [
+        {
+          "name": "a",
+          "type": "celsius"
+        },
+        {
+          "name": "b",
+          "type": "degrees"
+        }
+      ]
+    }
+  ]
+}
