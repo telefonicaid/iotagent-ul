@@ -1,2 +1,4 @@
 - Create the Ultralight payload parser (#1)
 - Create the MQTT transport binding (#3)
+- Create the application (#9)
+- Create the command line client (#8)

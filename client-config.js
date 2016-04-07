@@ -20,35 +20,22 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
  */
-
-'use strict';
-
 var config = {};
 
 config.mqtt = {
     host: 'localhost',
     port: 1883,
-    defaultKey: '1234'
+    options: {
+        keepalive: 0,
+        connectTimeout: 60 * 60 * 1000
+    }
 };
 
-config.iota = {
-    logLevel: 'DEBUG',
-    contextBroker: {
-        host: '52.37.157.18',
-        port: '10026'
-    },
-    server: {
-        port: 4041
-    },
-    deviceRegistry: {
-        type: 'memory'
-    },
-    types: {},
-    service: 'howtoService',
-    subservice: '/howto',
-    providerUrl: 'http://localhost:4041',
-    deviceRegistrationDuration: 'P1M',
-    defaultType: 'Thing'
-};
+config.device = {
+    id: 'myDeviceId',
+    apikey: '1234'
+}
+
+config.defaultBinding = 'mqtt';
 
 module.exports = config;
