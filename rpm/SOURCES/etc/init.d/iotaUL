@@ -39,7 +39,7 @@
 
 PARAM=$1
 NAME=iotaul
-EXECUTABLE=bin/iotagent-ul.js
+EXECUTABLE=bin/iotagent-ul
 IOTA_PATH=/opt/iotaul
 PIDFILE=$IOTA_PATH/$NAME.pid
 LOG_PATH=/var/log/iotaul/iotaul.log
