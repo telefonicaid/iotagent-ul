@@ -95,7 +95,7 @@ describe('MQTT Transport binding', function() {
         });
     });
 
-    describe('When a new multiple measure arrives to a Device topic', function() {
+    describe('When a new multiple measure arrives to a Device topic with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -114,7 +114,7 @@ describe('MQTT Transport binding', function() {
         });
     });
 
-    describe('When single message with multiple measure groups arrive to a Device topic', function() {
+    describe('When single message with multiple measures arrive to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')

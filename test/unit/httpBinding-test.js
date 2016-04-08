@@ -110,4 +110,37 @@ describe('HTTP Transport binding', function() {
             });
         });
     });
+    describe('When multiple mesasures arrive for a device via HTTP GET', function() {
+        var getOptions = {
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'GET',
+            qs: {
+                i: 'MQTT_2',
+                k: '1234',
+                d: 'a=23|b=98'
+            }
+        };
+
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+        });
+
+        it('should end up with a 200OK status code', function(done) {
+            request(getOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+        it('should send a new update context request to the Context Broker with those attributes', function(done) {
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
 });
