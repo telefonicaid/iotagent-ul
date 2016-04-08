@@ -34,11 +34,11 @@ config.mqtt = {
 config.iota = {
     logLevel: 'DEBUG',
     contextBroker: {
-        host: '52.37.157.18',
-        port: '10026'
+        host: 'localhost',
+        port: '1026'
     },
     server: {
-        port: 4041
+        port: 4061
     },
     deviceRegistry: {
         type: 'memory'
