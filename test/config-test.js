@@ -28,6 +28,10 @@ config.mqtt = {
     defaultKey: '1234'
 };
 
+config.http = {
+    port: 7896
+};
+
 config.iota = {
     logLevel: 'FATAL',
     contextBroker: {
