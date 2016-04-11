@@ -3,3 +3,4 @@
 - Create the application (#9)
 - Create the command line client (#8)
 - Create the HTTP transport binding (#2)
+- Create RPM package files (#6)
