@@ -1,0 +1,22 @@
+{
+  "contextResponses": [
+    {
+      "contextElement": {
+        "attributes": [
+          {
+            "name": "b",
+            "type": "degrees",
+            "value": ""
+          }
+        ],
+        "type": "MQTTSensor",
+        "isPattern": "false",
+        "id": "MQTTId_1"
+      },
+      "statusCode": {
+        "code": "200",
+        "reasonPhrase": "OK"
+      }
+    }
+  ]
+}

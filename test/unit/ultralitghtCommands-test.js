@@ -26,7 +26,7 @@
 var ulParser = require('../../lib/ulParser'),
     should = require('should');
 
-describe('Ultralight 2.0 Parser: measures', function() {
+describe('Ultralight 2.0 Parser: commands', function() {
     describe('When a command execution request is parsed', function() {
         it('should extract the deviceId, the command name, and the parameters', function() {
             var result = ulParser.command('weatherStation167@ping|param1=1|param2=2');

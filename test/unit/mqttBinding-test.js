@@ -132,4 +132,53 @@ describe('MQTT Transport binding', function() {
             });
         });
     });
+
+    describe('When a message with multiple measure groups arrives to a Device topic', function() {
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondSingleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
+        });
+
+        it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23#b=98', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
+    describe('When multiple groups of measures arrive, with multiple attributes, to a Device topic', function() {
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondMultipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+        });
+
+        it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23|b=98#a=16|b=34', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
 });
