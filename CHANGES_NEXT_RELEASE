@@ -2,5 +2,6 @@
 - Create the MQTT transport binding (#3)
 - Create the application (#9)
 - Create the command line client (#8)
+- Create the HTTP transport binding (#2)
 - Create RPM package files (#6)
 - Document how to develop a new transport (#7)

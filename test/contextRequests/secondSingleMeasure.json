@@ -1,0 +1,17 @@
+{
+  "contextElements": [
+    {
+      "type": "AnMQTTDevice",
+      "isPattern": "false",
+      "id": "Second MQTT Device",
+      "attributes": [
+        {
+          "name": "b",
+          "type": "degrees",
+          "value": "98"
+        }
+      ]
+    }
+  ],
+  "updateAction": "UPDATE"
+}
