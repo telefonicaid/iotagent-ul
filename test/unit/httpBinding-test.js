@@ -24,7 +24,6 @@
 'use strict';
 
 var iotagentUl = require('../../'),
-    mqtt = require('mqtt'),
     config = require('../config-test.js'),
     nock = require('nock'),
     iotAgentLib = require('iotagent-node-lib'),
@@ -32,8 +31,7 @@ var iotagentUl = require('../../'),
     async = require('async'),
     request = require('request'),
     utils = require('../utils'),
-    contextBrokerMock,
-    mqttClient;
+    contextBrokerMock;
 
 describe('HTTP Transport binding', function() {
     beforeEach(function(done) {
@@ -48,11 +46,6 @@ describe('HTTP Transport binding', function() {
         };
 
         nock.cleanAll();
-
-        mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
-            keepalive: 0,
-            connectTimeout: 60 * 60 * 1000
-        });
 
         contextBrokerMock = nock('http://10.11.128.16:1026')
             .matchHeader('fiware-service', 'smartGondor')
@@ -69,7 +62,6 @@ describe('HTTP Transport binding', function() {
 
     afterEach(function(done) {
         nock.cleanAll();
-        mqttClient.end();
 
         async.series([
             iotAgentLib.clearAll,
