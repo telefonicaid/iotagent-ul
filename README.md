@@ -4,6 +4,9 @@
 
 * [Overview](#overview)
 * [Protocol] (#protocol)
+* [Developing new transports] (#transport)
+* [Development documentation] (#development)
+
 
 ## <a name="overview"/> Overview
 This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
@@ -135,7 +138,32 @@ The result of the command must be reported in the following topic:
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
 
-## Development documentation
+## <a name="transport"/> Developing new transports
+
+The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
+transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
+Those module must export the following fields:
+
+* **deviceProvisioningHandler(device, callback)**: this handler will be called each time a new device is provisioned
+in the IoT Agent. The device object contains all the information provided in the device registration.
+
+* **configurationHandler(configuration, callback)**: handler for changes (provisioning or updates) in device groups. This
+handler should be used when configuration groups require any initialization or registration in the protocol binding.
+
+* **start(newConfig, callback)**: starts the binding module, with the provided configuration. The `newConfig` object
+contains the global Agent configuration; the module should use a specific attribute inside the global scope to hold all
+its configuration values instead of using the global configuration scope itself.
+
+* **stop(callback)**: stops the binding module.
+
+* **protocol**: This field must contain a string key identifying the protocol. Requests coming from the server (commands
+and passive attributes) will use the `protocol` field of the devices and the corresponding `protocol` attribute in the
+modules to identify which module should attend the request.
+
+All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
+IoT Agent Node.js library to interact process incoming requests.
+
+## <a name="development"/> Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 
