@@ -23,9 +23,9 @@ Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices
 bandwidth and device memory may be limited resources.
 
 ### Measure Payload Syntax
-The payload for information update requests is composed of a list of key-value pairs separated by the '$' character. E.g.:
+The payload for information update requests is composed of a list of key-value pairs separated by the '|' character. E.g.:
 ```
-t|15$k|abc
+t|15|k|abc
 ```
 In this example, two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted.
 Values in Ultralight 2.0 are not typed (everything is treated as a string).

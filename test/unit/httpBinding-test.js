@@ -109,7 +109,7 @@ describe('HTTP Transport binding', function() {
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'a|23$b|98'
+                d: 'a|23|b|98'
             }
         };
 
@@ -224,7 +224,7 @@ describe('HTTP Transport binding', function() {
             headers: {
                 'Content-type': 'text/plain'
             },
-            body: 'a|23$b|98#a|16$b|34'
+            body: 'a|23|b|98#a|16|b|34'
         };
 
         beforeEach(function() {
