@@ -105,7 +105,7 @@ describe('MQTT Transport binding', function() {
         });
 
         it('should send a single update context request with all the attributes', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -124,7 +124,7 @@ describe('MQTT Transport binding', function() {
         });
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23|b=98', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23$b|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -149,7 +149,7 @@ describe('MQTT Transport binding', function() {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23#b=98', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23#b|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -173,7 +173,7 @@ describe('MQTT Transport binding', function() {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a=23|b=98#a=16|b=34', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23$b|98#a|16$b|34', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();

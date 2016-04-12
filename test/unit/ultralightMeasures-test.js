@@ -29,7 +29,7 @@ var ulParser = require('../../lib/ulParser'),
 describe('Ultralight 2.0 Parser: measures', function() {
     describe('When a payload with a single measure is parsed', function() {
         it('should return an array with a single object with just one attribute', function() {
-            var result = ulParser.parse('a=1');
+            var result = ulParser.parse('a|1');
 
             should.exist(result);
             (typeof result).should.equal('object');
@@ -41,7 +41,7 @@ describe('Ultralight 2.0 Parser: measures', function() {
     });
     describe('When a payload with a multiple measures is parsed', function() {
         it('should return an array with a single object with multiple attributes', function() {
-            var result = ulParser.parse('c=7|b=18');
+            var result = ulParser.parse('c|7$b|18');
 
             should.exist(result);
             (typeof result).should.equal('object');
@@ -55,7 +55,7 @@ describe('Ultralight 2.0 Parser: measures', function() {
     });
     describe('When a payload with two groups of measures and one measure in each group is parsed', function() {
         it('should return an array with two objects with just one attribute', function() {
-            var result = ulParser.parse('c=7#b=18');
+            var result = ulParser.parse('c|7#b|18');
 
             should.exist(result);
             (typeof result).should.equal('object');
@@ -68,13 +68,13 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[1].b.should.equal('18');
         });
     });
-    describe('When a payload with an empty measure is found: "a=10||"', function() {
+    describe('When a payload with an empty measure is found: "a|10$$"', function() {
         it('should throw a PARSE_ERROR error', function() {
             var result,
                 error;
 
             try {
-                result = ulParser.parse('a=10||');
+                result = ulParser.parse('a|10$$');
             } catch (e) {
                 error = e;
             }
@@ -84,14 +84,14 @@ describe('Ultralight 2.0 Parser: measures', function() {
             error.name.should.equal('PARSE_ERROR');
         });
     });
-    describe('When a payload with an empty measure group is found: "a=10|b=11##t=3"', function() {
+    describe('When a payload with an empty measure group is found: "a|10$b|11##t|3"', function() {
         it('should throw a PARSE_ERROR error', function() {
             it('should throw a PARSE_ERROR error', function() {
                 var result,
                     error;
 
                 try {
-                    result = ulParser.parse('a=10|b=11##t=3');
+                    result = ulParser.parse('a|10$b|11##t|3');
                 } catch (e) {
                     error = e;
                 }
