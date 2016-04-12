@@ -33,7 +33,7 @@ var iotagentUl = require('../../'),
     utils = require('../utils'),
     contextBrokerMock;
 
-describe('HTTP Transport binding', function() {
+describe('HTTP Transport binding: measures', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
