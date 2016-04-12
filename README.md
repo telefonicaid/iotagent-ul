@@ -25,7 +25,7 @@ bandwidth and device memory may be limited resources.
 ### Measure Payload Syntax
 The payload for information update requests is composed of a list of key-value pairs separated by the '|' character. E.g.:
 ```
-t|15&k=abc
+t|15|k|abc
 ```
 In this example, two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted.
 Values in Ultralight 2.0 are not typed (everything is treated as a string).
@@ -35,7 +35,8 @@ NGSI request will be generated for each group of measures. E.g.:
 ```
 gps|1.2/3.4#t|10
 ```
-This will generate to NGSI requests for the same entity, one for each one of the values.
+This will generate two NGSI requests for the same entity, one for each one of the values. Each one of those requests
+can contain any number of attributes.
 
 ### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:

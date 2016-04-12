@@ -5,3 +5,4 @@
 - Create the HTTP transport binding (#2)
 - Create RPM package files (#6)
 - Document how to develop a new transport (#7)
+- Key-value meassure pair should be separated by | (#16)
