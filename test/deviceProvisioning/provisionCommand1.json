@@ -8,8 +8,7 @@
       "commands": [
         {
           "name": "PING",
-          "type": "command",
-          "value": ""
+          "type": "command"
         }
       ]
     }

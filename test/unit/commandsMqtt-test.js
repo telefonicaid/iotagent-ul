@@ -27,6 +27,7 @@ var iotagentMqtt = require('../../'),
     mqtt = require('mqtt'),
     config = require('../config-test.js'),
     nock = require('nock'),
+    should = require('should'),
     iotAgentLib = require('iotagent-node-lib'),
     async = require('async'),
     request = require('request'),
@@ -46,6 +47,8 @@ describe('MQTT Transport binding: commands', function() {
             }
         };
 
+        config.logLevel = 'INFO';
+
         nock.cleanAll();
 
         mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
@@ -53,7 +56,16 @@ describe('MQTT Transport binding: commands', function() {
             connectTimeout: 60 * 60 * 1000
         });
 
+        mqttClient.subscribe('/1234/MQTT_2/cmd', null);
+
         contextBrokerMock = nock('http://10.11.128.16:1026')
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/NGSI9/registerContext')
+            .reply(200,
+                utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+
+        contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
@@ -68,6 +80,7 @@ describe('MQTT Transport binding: commands', function() {
 
     afterEach(function(done) {
         nock.cleanAll();
+        mqttClient.unsubscribe('/1234/MQTT_2/cmd', null);
         mqttClient.end();
 
         async.series([
@@ -81,15 +94,6 @@ describe('MQTT Transport binding: commands', function() {
                 url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
                 method: 'POST',
                 json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            provisionOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice1.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
                     'fiware-servicepath': '/gardens'
@@ -127,16 +131,19 @@ describe('MQTT Transport binding: commands', function() {
         });
 
         it('should publish the command information in the MQTT topic', function(done) {
-            var commandMsg = 'device_id@ping6|data=22';
+            var commandMsg = 'MQTT_2@PING|data=22',
+                payload;
 
             mqttClient.on('message', function(topic, data) {
-                should.exist(data);
-                data.should.equal(commandMsg);
-                done();
+                payload = data.toString();
             });
 
             request(commandOptions, function(error, response, body) {
-                should.not.exist(error);
+                setTimeout(function() {
+                    should.exist(payload);
+                    payload.should.equal(commandMsg);
+                    done();
+                }, 100);
             });
         });
     });
