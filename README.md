@@ -4,6 +4,7 @@
 
 * [Overview](#overview)
 * [Protocol] (#protocol)
+* [Transport Protocol] (#transportprotocol)
 * [Developing new transports] (#transport)
 * [Development documentation] (#development)
 
@@ -61,7 +62,7 @@ weatherStation167@ping|Ping ok
 ```
 In this case, the Weather station replies with a String value indicating everything has worked fine.
 
-### Transport Protocol
+# <a name="transportprotocol"/> Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
 scenarios.
@@ -70,10 +71,10 @@ This transport protocol binding has not been implemented yet.
 
 The following sections describe the bindings currently supported, or under development.
 
-#### HTTP
+## HTTP
 There are three possible interactions defined in the HTTP binding: requests with GET, requests with POST and commands.
 
-##### Requests with GET requests
+### Requests with GET requests
 A device can report new measures to the IoT Platform using an HTTP GET request to the `/iot/d` path with the following
 query parameters:
 
@@ -84,7 +85,7 @@ query parameters:
 
 Payloads for GET requests should not contain multiple measure groups.
 
-##### Requests with POST requests
+### Requests with POST requests
 Another way of reporting measures is to do it using a POST request. In this case, the payload is passed along as the
 request payload. Two query parameters are still mandatory:
 
@@ -92,9 +93,9 @@ request payload. Two query parameters are still mandatory:
 * **k (API Key)**: API Key for the service the device is registered on.
 * **t (timestamp)**: Timestamp of the measure. Will override the automatic IoTAgent timestamp (optional).
 
-##### Sending commands
+### Sending commands
 
-#### MQTT
+## MQTT
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
@@ -107,7 +108,7 @@ where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the 
 
 This transport protocol binding is still under development.
 
-##### Sending a single measure in one message
+### Sending a single measure in one message
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
 ```
 <apiKey>/<deviceId>/attr/<attrName>
@@ -115,7 +116,7 @@ In order to send a single measure value to the server, the device must publish t
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
 sending.
 
-##### Sending multiple measures in one message
+### Sending multiple measures in one message
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 ```
 <apiKey>/<deviceId>/attr
@@ -123,7 +124,7 @@ In order to send multiple measures in a single message, a device must publish a 
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
 payload (with or without measure groups).
 
-##### Commands
+### Commands
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
 where the device is subscribed: the *commands topic*. Once the device has finished with the command, it publishes it result
 to another topic.

@@ -89,7 +89,7 @@ describe('MQTT Transport binding: commands', function() {
         ], done);
     });
 
-    describe.only('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
+    describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
         var commandOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
                 method: 'POST',
@@ -149,6 +149,21 @@ describe('MQTT Transport binding: commands', function() {
     });
 
     describe('When a command update arrives to the MQTT command topic', function() {
-        it('should send an update request to the Context Broker');
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus2.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
+        });
+
+        it('should send an update request to the Context Broker', function(done) {
+            mqttClient.publish('/1234/MQTT_2/cmdexe', 'MQTT_2@PING|1234567890', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 200);
+            });
+        });
     });
 });
