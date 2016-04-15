@@ -34,7 +34,7 @@ var iotagentMqtt = require('../../'),
     contextBrokerMock,
     mqttClient;
 
-describe('MQTT Transport binding', function() {
+describe('MQTT Transport binding: measures', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
