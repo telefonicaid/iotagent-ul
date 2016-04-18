@@ -24,8 +24,7 @@ var config = {};
 
 config.mqtt = {
     host: 'localhost',
-    port: 1883,
-    defaultKey: '1234'
+    port: 1883
 };
 
 config.http = {
@@ -51,5 +50,7 @@ config.iota = {
     deviceRegistrationDuration: 'P1M',
     defaultType: 'Thing'
 };
+
+config.defaultKey = '1234';
 
 module.exports = config;
