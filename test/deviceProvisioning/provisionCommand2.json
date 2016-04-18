@@ -5,7 +5,8 @@
       "entity_name": "Second MQTT Device",
       "entity_type": "AnMQTTDevice",
       "timezone": "America/Santiago",
-      "protocol": "MQTT_UL",
+      "protocol": "HTTP_UL",
+      "endpoint": "http://localhost:9876/command",
       "commands": [
         {
           "name": "PING",

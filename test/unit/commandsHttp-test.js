@@ -23,16 +23,114 @@
 
 'use strict';
 
+var iotagentUl = require('../../'),
+    config = require('../config-test.js'),
+    nock = require('nock'),
+    iotAgentLib = require('iotagent-node-lib'),
+    should = require('should'),
+    request = require('request'),
+    utils = require('../utils'),
+    mockedClientServer,
+    contextBrokerMock;
+
 describe('HTTP Transport binding: commands', function() {
+    beforeEach(function(done) {
+        var provisionOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand2.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        nock.cleanAll();
+
+        contextBrokerMock = nock('http://10.11.128.16:1026')
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/NGSI9/registerContext')
+            .reply(200,
+                utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+
+        contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+        mockedClientServer = nock('http://localhost:9876')
+            .post('/command', 'MQTT_2@PING|data=22')
+            .reply(200, 'MQTT_2@PING|1234567890');
+
+        contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
+
+        iotagentUl.start(config, function(error) {
+            request(provisionOptions, function(error, response, body) {
+                done();
+            });
+        });
+    });
+
+    afterEach(function(done) {
+        nock.cleanAll();
+
+        iotAgentLib.clearAll(function() {
+            iotagentUl.stop(done);
+        });
+    });
+
     describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
-        it('should return a 200 OK without errors');
+        var commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
-        it('should reply with the appropriate command information');
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus1.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+        });
 
-        it('should update the status in the Context Broker');
+        it('should return a 200 OK without errors', function(done) {
+            request(commandOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
 
-        it('should publish the command information in the MQTT topic');
+        it('should reply with the appropriate command information', function(done) {
+            request(commandOptions, function(error, response, body) {
+                should.exist(body);
+                done();
+            });
+        });
 
-        it('should send an update with the command result to the Context Broker');
+        it('should update the status in the Context Broker', function(done) {
+            request(commandOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+
+        it('should send the information to the configured device endpoint', function(done) {
+            request(commandOptions, function(error, response, body) {
+                mockedClientServer.done();
+                done();
+            });
+        });
     });
 });
