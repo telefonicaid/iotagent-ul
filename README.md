@@ -3,11 +3,13 @@
 ## Index
 
 * [Overview](#overview)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Packaging](#packaging)
 * [Protocol] (#protocol)
 * [Transport Protocol] (#transportprotocol)
 * [Developing new transports] (#transport)
 * [Development documentation] (#development)
-
 
 ## <a name="overview"/> Overview
 This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
@@ -17,6 +19,85 @@ resources. This IoTA will provide different transport protocol bindings for the 
 
 As is the case in any IoT Agent, this one follows the interaction model defined in the [Node.js IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib),
 that is used for the implementation of the Northbound APIs.
+
+## <a name="installation"/> Installation
+There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
+The following sections describe each approach in detail.
+
+### Cloning the Github repository
+
+Clone the repository with the following command:
+```
+git clone https://github.com/telefonicaid/iotagent-ul.git
+```
+
+Once the repository is cloned, from the root folder of the project execute:
+```
+npm install
+```
+This will download the dependencies for the project, and let it ready to the execution.
+
+### Using the RPM
+To see how to generate the RPM, follow the instructions in [Packaging](#rpm).
+
+To install the RPM, use the YUM tool:
+```
+yum localinstall --nogpg <rpm-file_name>
+```
+
+Be aware that the RPM installs linux services that can be used to start the application, instead of directly calling
+the executable (as explained in the section [Usage](#usage).
+
+### Using Docker
+There are automatic builds of the development version of the IOTAgent published in Docker hub. In order to install
+using the docker version, just execute the following:
+```
+docker run --link orion:orion --link mosquitto:mosquitto fiwareiotplatform/iotagent-ul
+```
+As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker dependencies to work:
+
+* **mongo**: Mongo database instance (to store provisioning data).
+* **orion**: Orion Context Broker.
+* **mosquitto**: Mosquitto MQTT broker, to deal with MQTT based requests.
+
+In order to link them, deploy them using docker and use the option `--link` as shown in the example. You may also want to
+map the external IOTA ports, for external calls: 4041 (Northbound API) and 7896 (HTTP binding).
+
+## <a name="usage"/> Usage
+
+## Github installation
+In order to execute the IOTAgent, just issue the following command from the root folder of the cloned project:
+```
+bin/iotagent-ul [config file]
+```
+The optional name of a config file is optional and described in the following section.
+
+## RPM installation
+The RPM installs a linux service that can be managed with the typical instructions:
+```
+service iotaUL start
+
+service iotaUL status
+
+service iotaUL stop
+```
+
+In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.
+
+## Docker installation
+The Docker automatically starts listening in the API ports, so there is no need to
+
+# <a name="packaging"/> Packaging
+The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
+in the system.
+
+From the root folder of the project, create the RPM with the following commands:
+```
+cd rpm
+./create-rpm.sh <release-number> <version-number>
+```
+Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
+number dependent un previous installations.
 
 ## <a name="protocol"/> Protocol
 ### Description
