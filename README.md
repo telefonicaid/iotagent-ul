@@ -1,4 +1,4 @@
-# IoT Agent for the Ultrlight 2.0 protocol
+# IoT Agent for the Ultralight 2.0 protocol
 
 ## Index
 
