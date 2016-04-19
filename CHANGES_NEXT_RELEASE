@@ -8,3 +8,4 @@
 - Key-value meassure pair should be separated by | (#16)
 - Create the support for commands HTTP Push commands (#11)
 - ADD Travis CI to the repository (#5)
+- Add required files for integration with Sonar (#21)
