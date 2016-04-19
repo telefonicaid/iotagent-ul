@@ -9,9 +9,11 @@ branches:
     - master
 
 services:
+ - rabbitmq
  - mongodb
 
 install:
+ - sudo rabbitmq-plugins enable rabbitmq_mqtt
  - npm install
 
 before_install:
