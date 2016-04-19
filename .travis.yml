@@ -1,5 +1,7 @@
 language: node_js
 
+sudo: required
+
 node_js:
  - "0.10"
 
@@ -16,6 +18,6 @@ install:
  - npm install
 
 before_install:
- - rabbitmq-plugins enable rabbitmq_mqtt
- - service rabbitmq-server restart
+ - sudo rabbitmq-plugins enable rabbitmq_mqtt
+ - sudo service rabbitmq-server restart
  - npm install -g grunt-cli
