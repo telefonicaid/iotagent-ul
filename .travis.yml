@@ -13,7 +13,8 @@ services:
  - mongodb
 
 install:
- - sudo rabbitmq-plugins enable rabbitmq_mqtt
+ - rabbitmq-plugins enable rabbitmq_mqtt
+ - service rabbitmq-server restart
  - npm install
 
 before_install:
