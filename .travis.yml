@@ -11,13 +11,13 @@ branches:
     - master
 
 services:
- - rabbitmq
+ - docker
  - mongodb
 
 install:
  - npm install
 
 before_install:
- - sudo rabbitmq-plugins enable rabbitmq_mqtt
- - sudo service rabbitmq-server restart
+ - docker pull ansi/mosquitto
+ - docker run -d -p 1883:1883 -l mosquitto ansi/mosquitto
  - npm install -g grunt-cli
