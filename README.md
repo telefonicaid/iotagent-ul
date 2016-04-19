@@ -85,7 +85,8 @@ service iotaUL stop
 In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.
 
 ## Docker installation
-The Docker automatically starts listening in the API ports, so there is no need to
+The Docker automatically starts listening in the API ports, so there is no need to execute any process in order to
+have the application running. The Docker image will automatically start.
 
 # <a name="packaging"/> Packaging
 The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
