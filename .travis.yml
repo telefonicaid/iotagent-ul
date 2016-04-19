@@ -13,9 +13,9 @@ services:
  - mongodb
 
 install:
- - rabbitmq-plugins enable rabbitmq_mqtt
- - service rabbitmq-server restart
  - npm install
 
 before_install:
+ - rabbitmq-plugins enable rabbitmq_mqtt
+ - service rabbitmq-server restart
  - npm install -g grunt-cli
