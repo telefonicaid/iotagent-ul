@@ -44,6 +44,10 @@ IOTA_PATH=/opt/iotaul
 PIDFILE=$IOTA_PATH/$NAME.pid
 LOG_PATH=/var/log/iotaul/iotaul.log
 
+[ -f /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
+
+test -x ${IOTA_PATH}/${EXECUTABLE} || exit 5
+
 iotaul_start()
 {
     printf "%-50s" "Starting ${NAME}..."
