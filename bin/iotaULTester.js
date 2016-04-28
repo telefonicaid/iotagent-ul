@@ -96,6 +96,13 @@ function singleMeasure(commands) {
     mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
 }
 
+function sendCommandResult(commands) {
+    var topic = '/' + config.apikey + '/' + config.deviceId + '/cmdexe',
+        payload = config.deviceId + '@' + commands[0] + '|' + commands[1];
+
+    mqttClient.publish(topic, payload, null, mqttPublishHandler);
+}
+
 function parseMultipleAttributes(attributeString) {
     var result,
         attributes,
@@ -166,14 +173,14 @@ var commands = {
         '\tstring should have the following syntax: name=value[;name=value]*',
         handler: checkConnection(multipleMeasure)
     },
-    'exit': {
-        parameters: [],
-        description: '\tExit the client',
-        handler: exitClient
+    'mqttCommand': {
+        parameters: ['command', 'result'],
+        description: '\tSend the result of a command to the MQTT Broker.',
+        handler: checkConnection(sendCommandResult)
     }
 };
 
-commands = _.extend(commands, commandLine.commands);
+commands = _.extend(commandLine.commands, commands);
 commandLine.init(configCb, configIot);
 
 clUtils.initialize(commands, 'Ultralight 2.0 IoTA tester> ');
