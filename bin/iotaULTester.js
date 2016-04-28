@@ -28,7 +28,7 @@
 var fs = require('fs'),
     defaultConfig = require('../client-config.js'),
     commandLine = require('iotagent-node-lib').commandLine,
-    clUtils = require('command-node'),
+    clUtils = commandLine.clUtils,
     mqtt = require('mqtt'),
     async = require('async'),
     _ = require('underscore'),

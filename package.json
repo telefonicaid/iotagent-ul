@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "async": "1.5.2",
-    "command-node": "0.1.1",
     "dateformat": "1.0.12",
     "express": "^4.11.2",
     "body-parser": "1.15.0",
