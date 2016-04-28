@@ -6,6 +6,7 @@
       "entity_type": "AnMQTTDevice",
       "timezone": "America/Santiago",
       "protocol": "MQTT_UL",
+      "transport": "MQTT",
       "commands": [
         {
           "name": "PING",

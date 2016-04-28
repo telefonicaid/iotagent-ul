@@ -52,5 +52,6 @@ config.iota = {
 };
 
 config.defaultKey = '1234';
+config.defaultTransport = 'MQTT';
 
 module.exports = config;

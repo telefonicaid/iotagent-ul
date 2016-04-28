@@ -6,6 +6,7 @@
       "entity_type": "AnMQTTDevice",
       "timezone": "America/Santiago",
       "protocol": "HTTP_UL",
+      "transport": "HTTP",
       "endpoint": "http://localhost:9876/command",
       "commands": [
         {
