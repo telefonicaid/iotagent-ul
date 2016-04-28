@@ -214,4 +214,9 @@ config.iota = {
  */
 config.defaultKey = 'TEF';
 
+/**
+ * Default transport protocol when no transport is provisioned through the Device Provisioning API.
+ */
+config.defaultTransport = 'MQTT';
+
 module.exports = config;

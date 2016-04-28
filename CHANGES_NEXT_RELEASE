@@ -9,3 +9,4 @@
 - Create the support for commands HTTP Push commands (#11)
 - ADD Travis CI to the repository (#5)
 - Add required files for integration with Sonar (#21)
+- Add a new transport field (#37)

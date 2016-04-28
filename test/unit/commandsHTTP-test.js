@@ -85,7 +85,7 @@ describe('HTTP Transport binding: commands', function() {
         });
     });
 
-    describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
+    describe('When a command arrive to the Agent for a device with the HTTP_UL protocol', function() {
         var commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
@@ -95,14 +95,6 @@ describe('HTTP Transport binding: commands', function() {
                 'fiware-servicepath': '/gardens'
             }
         };
-
-        beforeEach(function() {
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus1.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
-        });
 
         it('should return a 200 OK without errors', function(done) {
             request(commandOptions, function(error, response, body) {

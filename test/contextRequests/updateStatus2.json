@@ -7,13 +7,13 @@
       "attributes": [
         {
           "name": "PING_status",
-          "type": "Status",
+          "type": "commandStatus",
           "value": "COMPLETED"
         },
         {
           "name": "PING_result",
-          "value": "1234567890",
-          "type": "command"
+          "type": "commandResult",
+          "value": "1234567890"
         }
       ]
     }

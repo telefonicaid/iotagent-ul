@@ -7,7 +7,7 @@
       "attributes": [
         {
           "name": "PING_status",
-          "type": "command",
+          "type": "commandStatus",
           "value": "PENDING"
         }
       ]
