@@ -9,7 +9,9 @@
         {
           "name": "PING",
           "type": "command",
-          "value": "{\"data\": \"22\"}"
+          "value": {
+            "data": "22"
+          }
         }
       ]
     }
