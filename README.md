@@ -1,21 +1,114 @@
-# IoT Agent for the Ultrlight 2.0 protocol
+# IoT Agent for the Ultralight 2.0 protocol
 
 ## Index
 
 * [Overview](#overview)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Packaging](#packaging)
 * [Protocol] (#protocol)
+* [Transport Protocol] (#transportprotocol)
+* [Developing new transports] (#transport)
+* [Development documentation] (#development)
 
 ## <a name="overview"/> Overview
+This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
+and NGSI Context Brokers (like [Orion](https://github.com/telefonicaid/fiware-orion)). Ultralight 2.0 is a lightweight
+text based protocol aimed to constrained devices and communications where the bandwidth and device memory may be limited
+resources. This IoTA will provide different transport protocol bindings for the same protocol: HTTP, MQTT...
+
+As is the case in any IoT Agent, this one follows the interaction model defined in the [Node.js IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib),
+that is used for the implementation of the Northbound APIs.
+
+## <a name="installation"/> Installation
+There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
+The following sections describe each approach in detail.
+
+### Cloning the Github repository
+
+Clone the repository with the following command:
+```
+git clone https://github.com/telefonicaid/iotagent-ul.git
+```
+
+Once the repository is cloned, from the root folder of the project execute:
+```
+npm install
+```
+This will download the dependencies for the project, and let it ready to the execution.
+
+### Using the RPM
+To see how to generate the RPM, follow the instructions in [Packaging](#rpm).
+
+To install the RPM, use the YUM tool:
+```
+yum localinstall --nogpg <rpm-file_name>
+```
+
+Be aware that the RPM installs linux services that can be used to start the application, instead of directly calling
+the executable (as explained in the section [Usage](#usage).
+
+### Using Docker
+There are automatic builds of the development version of the IOTAgent published in Docker hub. In order to install
+using the docker version, just execute the following:
+```
+docker run --link orion:orion --link mosquitto:mosquitto fiwareiotplatform/iotagent-ul
+```
+As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker dependencies to work:
+
+* **mongo**: Mongo database instance (to store provisioning data).
+* **orion**: Orion Context Broker.
+* **mosquitto**: Mosquitto MQTT broker, to deal with MQTT based requests.
+
+In order to link them, deploy them using docker and use the option `--link` as shown in the example. You may also want to
+map the external IOTA ports, for external calls: 4041 (Northbound API) and 7896 (HTTP binding).
+
+## <a name="usage"/> Usage
+
+## Github installation
+In order to execute the IOTAgent, just issue the following command from the root folder of the cloned project:
+```
+bin/iotagent-ul [config file]
+```
+The optional name of a config file is optional and described in the following section.
+
+## RPM installation
+The RPM installs a linux service that can be managed with the typical instructions:
+```
+service iotaUL start
+
+service iotaUL status
+
+service iotaUL stop
+```
+
+In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.
+
+## Docker installation
+The Docker automatically starts listening in the API ports, so there is no need to execute any process in order to
+have the application running. The Docker image will automatically start.
+
+# <a name="packaging"/> Packaging
+The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
+in the system.
+
+From the root folder of the project, create the RPM with the following commands:
+```
+cd rpm
+./create-rpm.sh <release-number> <version-number>
+```
+Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
+number dependent un previous installations.
 
 ## <a name="protocol"/> Protocol
 ### Description
 Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and communications where the
-bandwidth may be a limited resource.
+bandwidth and device memory may be limited resources.
 
 ### Measure Payload Syntax
 The payload for information update requests is composed of a list of key-value pairs separated by the '|' character. E.g.:
 ```
-t|15&k=abc
+t|15|k|abc
 ```
 In this example, two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted.
 Values in Ultralight 2.0 are not typed (everything is treated as a string).
@@ -25,7 +118,8 @@ NGSI request will be generated for each group of measures. E.g.:
 ```
 gps|1.2/3.4#t|10
 ```
-This will generate to NGSI requests for the same entity, one for each one of the values.
+This will generate two NGSI requests for the same entity, one for each one of the values. Each one of those requests
+can contain any number of attributes.
 
 ### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:
@@ -50,7 +144,7 @@ weatherStation167@ping|Ping ok
 ```
 In this case, the Weather station replies with a String value indicating everything has worked fine.
 
-### Transport Protocol
+# <a name="transportprotocol"/> Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
 scenarios.
@@ -59,10 +153,10 @@ This transport protocol binding has not been implemented yet.
 
 The following sections describe the bindings currently supported, or under development.
 
-#### HTTP
+## HTTP
 There are three possible interactions defined in the HTTP binding: requests with GET, requests with POST and commands.
 
-##### Requests with GET requests
+### Requests with GET requests
 A device can report new measures to the IoT Platform using an HTTP GET request to the `/iot/d` path with the following
 query parameters:
 
@@ -73,7 +167,7 @@ query parameters:
 
 Payloads for GET requests should not contain multiple measure groups.
 
-##### Requests with POST requests
+### Requests with POST requests
 Another way of reporting measures is to do it using a POST request. In this case, the payload is passed along as the
 request payload. Two query parameters are still mandatory:
 
@@ -81,9 +175,18 @@ request payload. Two query parameters are still mandatory:
 * **k (API Key)**: API Key for the service the device is registered on.
 * **t (timestamp)**: Timestamp of the measure. Will override the automatic IoTAgent timestamp (optional).
 
-##### Sending commands
+### Sending commands
+When using the HTTP transport, the command handling have two flavours:
 
-#### MQTT
+* **Push commands**: in this case, the Device **must** be provisioned with the `endpoint` attribute, that will contain
+the URL where the IoT Agent will send the received commands. The request payload format will be the one described in the
+UL Protocol description. The device will reply with a 200OK response containing the result of the command in the UL2.0
+result format.
+
+* **Polling commands**: in this case, the Agent does not send any messages to the device, being the later responsible
+of retrieving them from the IoTAgent whenever the device is ready to get commands.
+
+## MQTT
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
@@ -96,7 +199,7 @@ where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the 
 
 This transport protocol binding is still under development.
 
-##### Sending a single measure in one message
+### Sending a single measure in one message
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
 ```
 <apiKey>/<deviceId>/attr/<attrName>
@@ -104,7 +207,7 @@ In order to send a single measure value to the server, the device must publish t
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
 sending.
 
-##### Sending multiple measures in one message
+### Sending multiple measures in one message
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 ```
 <apiKey>/<deviceId>/attr
@@ -112,7 +215,7 @@ In order to send multiple measures in a single message, a device must publish a 
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
 payload (with or without measure groups).
 
-##### Commands
+### Commands
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
 where the device is subscribed: the *commands topic*. Once the device has finished with the command, it publishes it result
 to another topic.
@@ -128,7 +231,32 @@ The result of the command must be reported in the following topic:
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
 
-## Development documentation
+## <a name="transport"/> Developing new transports
+
+The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
+transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
+Those module must export the following fields:
+
+* **deviceProvisioningHandler(device, callback)**: this handler will be called each time a new device is provisioned
+in the IoT Agent. The device object contains all the information provided in the device registration.
+
+* **configurationHandler(configuration, callback)**: handler for changes (provisioning or updates) in device groups. This
+handler should be used when configuration groups require any initialization or registration in the protocol binding.
+
+* **start(newConfig, callback)**: starts the binding module, with the provided configuration. The `newConfig` object
+contains the global Agent configuration; the module should use a specific attribute inside the global scope to hold all
+its configuration values instead of using the global configuration scope itself.
+
+* **stop(callback)**: stops the binding module.
+
+* **protocol**: This field must contain a string key identifying the protocol. Requests coming from the server (commands
+and passive attributes) will use the `protocol` field of the devices and the corresponding `protocol` attribute in the
+modules to identify which module should attend the request.
+
+All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
+IoT Agent Node.js library to interact process incoming requests.
+
+## <a name="development"/> Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 

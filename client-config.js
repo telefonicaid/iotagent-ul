@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * Copyright 2016 Telefonica Investigación y Desarrollo, S.A.U
  *
@@ -22,33 +20,22 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
  */
-'use strict';
+var config = {};
 
-var iotAgent = require('../lib/iotagent-ul'),
-    info = require('../package.json'),
-    context = {
-        op: 'IOTAUL.Executable'
-    },
-    logger = require('logops');
-
-function start() {
-    var config;
-
-    if (process.argv.length === 3) {
-        config = require('../' + process.argv[2]);
-    } else {
-        config = require('../config');
+config.mqtt = {
+    host: 'localhost',
+    port: 1883,
+    options: {
+        keepalive: 0,
+        connectTimeout: 60 * 60 * 1000
     }
+};
 
-    config.iota.iotaVersion = info.version;
-
-    iotAgent.start(config, function (error) {
-        if (error) {
-            logger.error(context, 'Error starting Ultralight 2.0 IoT Agent: [%s] Exiting process', error);
-        } else {
-            logger.info(context, 'Ultralight 2.0 IoT Agent started');
-        }
-    });
+config.device = {
+    id: 'myDeviceId',
+    apikey: '1234'
 }
 
-start();
+config.defaultBinding = 'mqtt';
+
+module.exports = config;
