@@ -22,7 +22,21 @@ that is used for the implementation of the Northbound APIs.
 
 ## <a name="installation"/> Installation
 There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
-The following sections describe each approach in detail.
+Regardless of the installation method, there are some middlewares that must be present, as a prerequisite for the component
+installation (no installation instructions are provided for these middlewares):
+
+* A MQTT Broker is needed for the MQTT Binding to work. Both [Mosquitto](http://mosquitto.org/) and [Rabbit MQ](https://www.rabbitmq.com/)
+(with the MQTT plugin activated) have been tested for this purpose.
+
+* A [MongoDB](https://www.mongodb.com/) instance is required for those IoT Agents configured to have persistent storage.
+An in-memory storage repository is also provided for testing purposes.
+
+* The IoT Agent purpose is to connect devices (using a certain southbound device protocol) and NGSI endpoints (typically
+ a NGSI Context Broker, like [Orion](https://github.com/telefonicaid/fiware-orion)), so an accessible Context Broker is also required.
+
+Please, follow the links to the official Web Pages to find how can you install each of the middlewares in your environment.
+
+The following sections describe each installation method in detail.
 
 ### Cloning the Github repository
 
