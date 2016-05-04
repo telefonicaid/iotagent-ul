@@ -116,7 +116,7 @@ in the system.
 From the root folder of the project, create the RPM with the following commands:
 ```
 cd rpm
-./create-rpm.sh <release-number> <version-number>
+./create-rpm.sh -v <version-number> -r  <release-number>
 ```
 Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
 number dependent un previous installations.
