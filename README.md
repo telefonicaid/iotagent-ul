@@ -5,6 +5,7 @@
 * [Overview](#overview)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Configuration] (#configuration)
 * [Packaging](#packaging)
 * [Protocol] (#protocol)
 * [Transport Protocol] (#transportprotocol)
@@ -51,6 +52,9 @@ npm install
 ```
 This will download the dependencies for the project, and let it ready to the execution.
 
+When the component is executed from a cloned Github repository, it takes the default config file that can be found
+in the root of the repository.
+
 ### Using the RPM
 To see how to generate the RPM, follow the instructions in [Packaging](#rpm).
 
@@ -61,6 +65,9 @@ yum localinstall --nogpg <rpm-file_name>
 
 Be aware that the RPM installs linux services that can be used to start the application, instead of directly calling
 the executable (as explained in the section [Usage](#usage).
+
+When this option is used, all the files are installed under the `/opt/iotaul` folder. There you can find the `config.js`
+file to configure the service. Remember to restart the service each time the config file has changed.
 
 ### Using Docker
 There are automatic builds of the development version of the IOTAgent published in Docker hub. In order to install
@@ -113,6 +120,34 @@ cd rpm
 ```
 Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
 number dependent un previous installations.
+
+## <a name="configuration"/> Configuration
+
+All the configuration for the IoT Agent resides in the `config.js` file, in the root of the application. This file
+is a JavaSript file, that contains the following sections:
+
+* **config.iota**: general IoT Agent configuration. This group of attributes is common to all types of IoT Agents, and
+is described in the global [IoT Agent Library Documentation](https://github.com/telefonicaid/iotagent-node-lib#configuration).
+* **config.mqtt**: configuration for the MQTT transport protocol binding of the IoTA (described in the following subsections).
+* **config.http**: configuration for the MQTT transport protocol binding of the IoTA (described in the following subsections).
+* **config.defaultKey**: default API Key, for devices lacking a provided Configuration.
+* **config.defaultTransport**: code of the MQTT transport that will be used to resolve incoming commands and lazy attributes
+ in case a transport protocol could not be inferred for the device.
+
+### MQTT Binding configuration
+The `config.mqtt` section of the config file contains all the information needed to connect to the MQTT Broker from the
+IoTAgent. The following attributes are accepted:
+
+* **host**: Host where the MQTT Broker is located.
+* **port**: Port where the MQTT Broker is listening
+* **username**: User name for the IoTAgent in the MQTT broker, if authentication is activated.
+* **password**: Password for the IoTAgent in the MQTT broker, if authentication is activated.
+
+### HTTP Binding configuration
+The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
+transport protocol binding. The following options are accepted:
+
+* **port**: port where the southbound HTTP listener will be listening for information from the devices.
 
 ## <a name="protocol"/> Protocol
 ### Description

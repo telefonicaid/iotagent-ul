@@ -1,0 +1,2 @@
+- Doc: configuration section (#46)
+- Doc: "Prerequisites" section for needed middleware (MQTT and MongoDB) (#48)
