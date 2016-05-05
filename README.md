@@ -5,6 +5,7 @@
 * [Overview](#overview)
 * [Installation](#installation)
 * [Usage](#usage)
+* [Configuration] (#configuration)
 * [Packaging](#packaging)
 * [Protocol] (#protocol)
 * [Transport Protocol] (#transportprotocol)
@@ -22,7 +23,22 @@ that is used for the implementation of the Northbound APIs.
 
 ## <a name="installation"/> Installation
 There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
-The following sections describe each approach in detail.
+Regardless of the installation method, there are some middlewares that must be present, as a prerequisite for the component
+installation (no installation instructions are provided for these middlewares):
+
+* A MQTT v3.1 Broker is needed for the MQTT Binding to work. Both [Mosquitto](http://mosquitto.org/) and [Rabbit MQ](https://www.rabbitmq.com/)
+(with the MQTT plugin activated) have been tested for this purpose.
+
+* A [MongoDB](https://www.mongodb.com/) instance (v3.2+) is required for those IoT Agents configured to have persistent storage.
+An in-memory storage repository is also provided for testing purposes.
+
+* The IoT Agent purpose is to connect devices (using a certain southbound device protocol) and NGSI endpoints (typically
+ a NGSI Context Broker, like [Orion](https://github.com/telefonicaid/fiware-orion)), so an accessible Context Broker is also required.
+IoT Agents were tested with v0.26.0 (higher versions should also work).
+
+Please, follow the links to the official Web Pages to find how can you install each of the middlewares in your environment.
+
+The following sections describe each installation method in detail.
 
 ### Cloning the Github repository
 
@@ -37,6 +53,9 @@ npm install
 ```
 This will download the dependencies for the project, and let it ready to the execution.
 
+When the component is executed from a cloned Github repository, it takes the default config file that can be found
+in the root of the repository.
+
 ### Using the RPM
 To see how to generate the RPM, follow the instructions in [Packaging](#rpm).
 
@@ -47,6 +66,9 @@ yum localinstall --nogpg <rpm-file_name>
 
 Be aware that the RPM installs linux services that can be used to start the application, instead of directly calling
 the executable (as explained in the section [Usage](#usage).
+
+When this option is used, all the files are installed under the `/opt/iotaul` folder. There you can find the `config.js`
+file to configure the service. Remember to restart the service each time the config file has changed.
 
 ### Using Docker
 There are automatic builds of the development version of the IOTAgent published in Docker hub. In order to install
@@ -95,10 +117,38 @@ in the system.
 From the root folder of the project, create the RPM with the following commands:
 ```
 cd rpm
-./create-rpm.sh <release-number> <version-number>
+./create-rpm.sh -v <version-number> -r  <release-number>
 ```
 Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
 number dependent un previous installations.
+
+## <a name="configuration"/> Configuration
+
+All the configuration for the IoT Agent resides in the `config.js` file, in the root of the application. This file
+is a JavaSript file, that contains the following sections:
+
+* **config.iota**: general IoT Agent configuration. This group of attributes is common to all types of IoT Agents, and
+is described in the global [IoT Agent Library Documentation](https://github.com/telefonicaid/iotagent-node-lib#configuration).
+* **config.mqtt**: configuration for the MQTT transport protocol binding of the IoTA (described in the following subsections).
+* **config.http**: configuration for the MQTT transport protocol binding of the IoTA (described in the following subsections).
+* **config.defaultKey**: default API Key, for devices lacking a provided Configuration.
+* **config.defaultTransport**: code of the MQTT transport that will be used to resolve incoming commands and lazy attributes
+ in case a transport protocol could not be inferred for the device.
+
+### MQTT Binding configuration
+The `config.mqtt` section of the config file contains all the information needed to connect to the MQTT Broker from the
+IoTAgent. The following attributes are accepted:
+
+* **host**: Host where the MQTT Broker is located.
+* **port**: Port where the MQTT Broker is listening
+* **username**: User name for the IoTAgent in the MQTT broker, if authentication is activated.
+* **password**: Password for the IoTAgent in the MQTT broker, if authentication is activated.
+
+### HTTP Binding configuration
+The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
+transport protocol binding. The following options are accepted:
+
+* **port**: port where the southbound HTTP listener will be listening for information from the devices.
 
 ## <a name="protocol"/> Protocol
 ### Description

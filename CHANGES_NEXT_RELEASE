@@ -1,0 +1,3 @@
+- Doc: configuration section (#46)
+- Doc: "Prerequisites" section for needed middleware (MQTT and MongoDB) (#48)
+- Doc: Strictly following documentation ./create-rpm.sh doesn't work (#45)
