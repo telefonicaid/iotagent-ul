@@ -34,7 +34,7 @@ An in-memory storage repository is also provided for testing purposes.
 
 * The IoT Agent purpose is to connect devices (using a certain southbound device protocol) and NGSI endpoints (typically
  a NGSI Context Broker, like [Orion](https://github.com/telefonicaid/fiware-orion)), so an accessible Context Broker is also required.
-IoT Agents were tested with v0.26 (higher versions should also work).
+IoT Agents were tested with v0.26.0 (higher versions should also work).
 
 Please, follow the links to the official Web Pages to find how can you install each of the middlewares in your environment.
 
