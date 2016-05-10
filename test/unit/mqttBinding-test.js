@@ -114,6 +114,24 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
+    describe('When a new multiple measure arrives to a Device topic with a faulty payload', function() {
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+        });
+
+        it('should silently ignore the error (without crashing)', function(done) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'notAULPayload ', null, function(error) {
+                setTimeout(function() {
+                    done();
+                }, 100);
+            });
+        });
+    });
+
     describe('When single message with multiple measures arrive to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
