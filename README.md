@@ -252,7 +252,7 @@ This transport protocol binding is still under development.
 ### Sending a single measure in one message
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
 ```
-<apiKey>/<deviceId>/attr/<attrName>
+<apiKey>/<deviceId>/attrs/<attrName>
 ```
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
 sending.
@@ -260,7 +260,7 @@ sending.
 ### Sending multiple measures in one message
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 ```
-<apiKey>/<deviceId>/attr
+<apiKey>/<deviceId>/attrs
 ```
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
 payload (with or without measure groups).
