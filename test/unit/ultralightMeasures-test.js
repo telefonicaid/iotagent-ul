@@ -68,6 +68,13 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[1].b.should.equal('18');
         });
     });
+    describe('When a payload with multiple groups and measures is parsed', function() {
+        it('should return an array with the parsed groups and objects', function() {
+            var result = ulParser.parse('bat|75.0#tmp|16.25#ill|0.0#pos|43.46321/-3.80446');
+
+            should.exist(result);
+        });
+    });
     describe('When a payload with an empty measure is found: "a|10||"', function() {
         it('should throw a PARSE_ERROR error', function() {
             var result,

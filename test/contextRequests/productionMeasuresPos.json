@@ -1,0 +1,27 @@
+{
+  "contextElements": [
+    {
+      "type": "repeater:illuminance",
+      "isPattern": "false",
+      "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+      "attributes": [
+        {
+          "name": "pos",
+          "type": "string",
+          "value": "43.46321/-3.80446"
+        },
+        {
+          "name": "att_name",
+          "type": "string",
+          "value": "value"
+        },
+        {
+          "name": "coords",
+          "type": "string",
+          "value": "WGS84"
+        }
+      ]
+    }
+  ],
+  "updateAction": "UPDATE"
+}
