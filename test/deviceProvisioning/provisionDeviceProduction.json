@@ -1,0 +1,40 @@
+{
+  "devices": [
+    {
+      "attributes": [
+        {
+          "name": "temperature:ambient",
+          "object_id": "tmp",
+          "type": "float"
+        },
+        {
+          "object_id" : "ill",
+          "type" : "float",
+          "name" : "illuminance"
+        },
+        {
+          "name": "batteryLevel",
+          "object_id": "bat",
+          "type": "float"
+        }
+      ],
+      "device_id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+      "entity_name": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+      "entity_type": "repeater:illuminance",
+      "protocol": "PDI-IoTA-UltraLight",
+      "static_attributes": [
+        {
+          "name": "att_name",
+          "type": "string",
+          "value": "value"
+        },
+        {
+          "name": "coords",
+          "type": "string",
+          "value": "WGS84"
+        }
+      ],
+      "timezone": "Europe/Madrid"
+    }
+  ]
+}
