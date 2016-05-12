@@ -6,3 +6,4 @@
 - Fix Missing or wrong Content-type generates uninformative error (#57)
 - Implement textual value parameter for commands (#59)
 - Subscribe to the wildcards instead of creating a new subscription for each device (#19)
+- Fixed Docker is not published in dockerhub (#56)
