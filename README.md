@@ -74,7 +74,7 @@ file to configure the service. Remember to restart the service each time the con
 There are automatic builds of the development version of the IOTAgent published in Docker hub. In order to install
 using the docker version, just execute the following:
 ```
-docker run --link orion:orion --link mosquitto:mosquitto fiwareiotplatform/iotagent-ul
+docker run --link orion:orion --link mosquitto:mosquitto telefonicaiot/iotagent-ul
 ```
 As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker dependencies to work:
 
