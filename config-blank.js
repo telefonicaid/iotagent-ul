@@ -32,7 +32,7 @@ config.http = {
 };
 
 config.iota = {
-    logLevel: 'FATAL',
+    logLevel: 'DEBUG',
     contextBroker: {
         host: 'orion',
         port: '1026'
