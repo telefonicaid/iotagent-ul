@@ -77,12 +77,12 @@ config.iota = {
         /**
          * Host where the Context Broker is located.
          */
-        host: '52.37.157.18',
+        host: 'localhost',
 
         /**
          * Port where the Context Broker is listening.
          */
-        port: '10026'
+        port: '1026'
     },
 
     /**
@@ -93,6 +93,43 @@ config.iota = {
          * Port where the IoT Agent will be listening for requests.
          */
         port: 4061
+    },
+
+    /**
+     * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
+     * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
+     */
+    iotManager: {
+        /**
+         * Host where the IoT Manager is located.
+         */
+        host: 'localhost',
+
+        /**
+         * Port where the IoT Manager is listening.
+         */
+        port: 8082,
+
+        /**
+         * Path where the IoT Manager accepts subscriptions.
+         */
+        path: '/protocols',
+
+        /**
+         * Protocol code identifying this IoT Agent.
+         */
+        protocol: 'MQTT_UL',
+
+        /**
+         * Textual description of this IoT Agent.
+         */
+        description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)',
+
+        /**
+         * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
+         * Manager.
+         */
+        defaultResource: '/iot/d'
     },
 
     /**
@@ -183,3 +220,4 @@ config.defaultKey = 'TEF';
 config.defaultTransport = 'MQTT';
 
 module.exports = config;
+
