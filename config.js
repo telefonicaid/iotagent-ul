@@ -220,3 +220,4 @@ config.defaultKey = 'TEF';
 config.defaultTransport = 'MQTT';
 
 module.exports = config;
+

@@ -8,3 +8,4 @@
 - Subscribe to the wildcards instead of creating a new subscription for each device (#19)
 - Fixed Docker is not published in dockerhub (#56)
 - Update to last IoTAgent library version
+- Fixed empty device post results in a JS error (#66)
