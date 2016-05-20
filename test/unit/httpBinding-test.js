@@ -310,7 +310,7 @@ describe('HTTP Transport binding: measures', function() {
                 method: 'POST',
                 qs: {
                     i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
-                    k: 'TEF',
+                    k: '1234',
                     t: '2016-05-11T10:12:26.476659Z'
                 },
                 headers: {
@@ -365,7 +365,7 @@ describe('HTTP Transport binding: measures', function() {
             config.iota.timestamp = false;
         });
 
-        it('should end up with a 200OK status code', function(done) {
+        it('should end up with a 200 OK status code', function(done) {
             request(postOptions, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
