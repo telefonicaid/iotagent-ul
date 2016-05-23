@@ -9,3 +9,4 @@
 - Fixed Docker is not published in dockerhub (#56)
 - Update to last IoTAgent library version
 - Fixed empty device post results in a JS error (#66)
+- MQTT Binding has apiKey and resource mixed up (#71)

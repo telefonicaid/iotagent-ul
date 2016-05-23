@@ -123,14 +123,14 @@ config.iota = {
         /**
          * Textual description of this IoT Agent.
          */
-        description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)',
-
-        /**
-         * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
-         * Manager.
-         */
-        defaultResource: '/iot/d'
+        description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
     },
+
+    /**
+     * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
+     * Manager.
+     */
+    defaultResource: '/iot/d',
 
     /**
      * Defines the configuration for the Device Registry, where all the information about devices and configuration
