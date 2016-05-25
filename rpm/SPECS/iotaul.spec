@@ -156,8 +156,9 @@ rm -rf $RPM_BUILD_ROOT
 # Files to add to the RPM
 # -------------------------------------------------------------------------------------------- #
 %files
-%defattr(755,%{_project_user},%{_project_user},755)
+%defattr(644,%{_project_user},%{_project_user},755)
 %config /etc/init.d/%{_service_name}
+%attr(755, root, root) /etc/init.d/%{_service_name}
 %config /etc/logrotate.d/logrotate-iotaul.conf
 %config /etc/cron.d/cron-logrotate-iotaul-size
 %config /etc/sysconfig/logrotate-iotaul-size
