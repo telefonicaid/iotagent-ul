@@ -150,6 +150,22 @@ transport protocol binding. The following options are accepted:
 
 * **port**: port where the southbound HTTP listener will be listening for information from the devices.
 
+### Configuration with environment variables
+Some of the more common variables can be configured using environment variables. The ones overriding general parameters
+in the `config.iota` set are described in the [IoTA Library Configuration manual](https://github.com/telefonicaid/iotagent-node-lib#configuration).
+
+The ones relating specific Ultralight 2.0 bindings are described in the following table.
+
+| Environment variable | Configuration attribute             |
+|:-------------------- |:----------------------------------- |
+| MQTT_HOST            | mqtt.host                           |
+| MQTT_PORT            | mqtt.port                           |
+| MQTT_USERNAME        | mqtt.username                       |
+| MQTT_PASSWORD        | mqtt.password                       |
+| HTTP_HOST            | http.host                           |
+| HTTP_PORT            | http.port                           |
+
+
 ## <a name="protocol"/> Protocol
 ### Description
 Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and communications where the
