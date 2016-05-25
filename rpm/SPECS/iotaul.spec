@@ -108,6 +108,7 @@ echo "[INFO] Configuring application"
 
     if [ "$RET_VAL" == "0" ]; then
         mv /tmp/config.js %{_install_dir}/config.js
+        ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
     fi
 
 echo "Done"
@@ -160,6 +161,7 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/logrotate.d/logrotate-iotaul.conf
 %config /etc/cron.d/cron-logrotate-iotaul-size
 %config /etc/sysconfig/logrotate-iotaul-size
+%config /etc/sysconfig/iotaul.default
 %{_install_dir}
 
 %changelog
