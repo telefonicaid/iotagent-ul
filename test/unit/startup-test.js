@@ -50,7 +50,7 @@ describe('Startup tests', function() {
             iotagentUl.stop(done);
         });
 
-        it('should not start and raise a MISSING_CONFIG_PARAMS error', function(done) {
+        it('should load the environment variables in the internal configuration', function(done) {
             iotagentUl.start(iotAgentConfig, function(error) {
                 should.not.exist(error);
                 config.getConfig().mqtt.host.should.equal('127.0.0.1');
