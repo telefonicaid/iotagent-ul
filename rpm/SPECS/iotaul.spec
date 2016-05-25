@@ -107,9 +107,9 @@ echo "[INFO] Configuring application"
     RET_VAL=$?
 
     if [ "$RET_VAL" == "0" ]; then
-        mv /tmp/config.js %{_install_dir}/config.js
-        ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
+        mv /tmp/config.js %{_install_dir}/config.js 
     fi
+    ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
 
 echo "Done"
 
