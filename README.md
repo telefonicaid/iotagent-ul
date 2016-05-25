@@ -97,11 +97,11 @@ The optional name of a config file is optional and described in the following se
 ## RPM installation
 The RPM installs a linux service that can be managed with the typical instructions:
 ```
-service iotaUL start
+service iotaul start
 
-service iotaUL status
+service iotaul status
 
-service iotaUL stop
+service iotaul stop
 ```
 
 In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.

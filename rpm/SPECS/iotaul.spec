@@ -21,7 +21,7 @@ This component was designed to work alongside other Telefonica IoT Platform comp
 
 # System folders
 %define _srcdir $RPM_BUILD_ROOT/../../..
-%define _service_name iotaUL
+%define _service_name iotaul
 %define _install_dir /opt/iotaul
 %define _iotaul_log_dir /var/log/iotaul
 %define _iotaul_pid_dir /var/run/iotaul

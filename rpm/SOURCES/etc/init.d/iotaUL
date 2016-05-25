@@ -1,16 +1,16 @@
 #!/bin/bash
 #
-# iotaUL         Start/Stop the Ultralight IoT Agent
+# iotaul         Start/Stop the Ultralight IoT Agent
 #
 # chkconfig: 2345 99 60
 # description: Ultralight 2.0 IoT Agent for Telefonica's IoT Platform
 ### BEGIN INIT INFO
-# Provides: iotaUL
+# Provides: iotaul
 # Required-Start: $local_fs $syslog
 # Required-Stop: $local_fs $syslog
 # Default-Start:  345
 # Default-Stop: 90
-# Short-Description: run iotaUL
+# Short-Description: run iotaul
 # Description: Ultralight 2.0 IoT Agent is a bridge between Ultralight 2.0 (a text-based lightweight protocol aimed at communications
 #               for constrained devices) and the NGSI protocol.
 ### END INIT INFO
