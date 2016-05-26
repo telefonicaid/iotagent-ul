@@ -12,7 +12,6 @@ Requires(preun): /sbin/chkconfig, /sbin/service
 Requires(postun): /sbin/service
 Group: Applications/Engineering
 Vendor: Telefonica I+D
-BuildRequires: npm
 
 %description
 Ultralight 2.0 IoT Agent is a bridge between Ultralight 2.0 (a text-based lightweight protocol aimed at communications
