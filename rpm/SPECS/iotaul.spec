@@ -102,12 +102,10 @@ echo "[INFO] Configuring application"
     cd /etc/init.d
     chkconfig --add %{_service_name}
 
-    ls /tmp/config.js
-    RET_VAL=$?
-
-    if [ "$RET_VAL" == "0" ]; then
-        mv /tmp/config.js %{_install_dir}/config.js 
-    fi
+    # restores old configuration if any
+    [ -f /tmp/config.js ] && mv /tmp/config.js %{_install_dir}/config.js
+   
+    # Create the default instance config file as a link
     ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
 
 echo "Done"
