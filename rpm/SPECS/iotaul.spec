@@ -25,6 +25,8 @@ This component was designed to work alongside other Telefonica IoT Platform comp
 %define _iotaul_log_dir /var/log/iotaul
 %define _iotaul_pid_dir /var/run/iotaul
 
+%define _iotaul_executable iotagent-ul
+
 # RPM Building folder
 %define _build_root_project %{buildroot}%{_install_dir}
 # -------------------------------------------------------------------------------------------- #
@@ -107,7 +109,9 @@ echo "[INFO] Configuring application"
    
     # Create the default instance config file as a link
     ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
-    chown %{_project_user}:%{_project_user} %{_install_dir}/config-default.js
+
+    # Chmod iotagent-ul binary
+    chmod guo+xs %{_install_dir}/bin/%{_iotaul_executable}
 
 echo "Done"
 
