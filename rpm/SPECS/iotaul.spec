@@ -107,6 +107,7 @@ echo "[INFO] Configuring application"
    
     # Create the default instance config file as a link
     ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
+    chown %{_project_user}:%{_project_user} %{_install_dir}/config-default.js
 
 echo "Done"
 
