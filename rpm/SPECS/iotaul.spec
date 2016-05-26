@@ -12,7 +12,6 @@ Requires(preun): /sbin/chkconfig, /sbin/service
 Requires(postun): /sbin/service
 Group: Applications/Engineering
 Vendor: Telefonica I+D
-BuildRequires: npm
 
 %description
 Ultralight 2.0 IoT Agent is a bridge between Ultralight 2.0 (a text-based lightweight protocol aimed at communications
@@ -21,10 +20,12 @@ This component was designed to work alongside other Telefonica IoT Platform comp
 
 # System folders
 %define _srcdir $RPM_BUILD_ROOT/../../..
-%define _service_name iotaUL
+%define _service_name iotaul
 %define _install_dir /opt/iotaul
 %define _iotaul_log_dir /var/log/iotaul
 %define _iotaul_pid_dir /var/run/iotaul
+
+%define _iotaul_executable iotagent-ul
 
 # RPM Building folder
 %define _build_root_project %{buildroot}%{_install_dir}
@@ -103,12 +104,14 @@ echo "[INFO] Configuring application"
     cd /etc/init.d
     chkconfig --add %{_service_name}
 
-    ls /tmp/config.js
-    RET_VAL=$?
+    # restores old configuration if any
+    [ -f /tmp/config.js ] && mv /tmp/config.js %{_install_dir}/config.js
+   
+    # Create the default instance config file as a link
+    ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
 
-    if [ "$RET_VAL" == "0" ]; then
-        mv /tmp/config.js %{_install_dir}/config.js
-    fi
+    # Chmod iotagent-ul binary
+    chmod guo+x %{_install_dir}/bin/%{_iotaul_executable}
 
 echo "Done"
 
@@ -155,11 +158,13 @@ rm -rf $RPM_BUILD_ROOT
 # Files to add to the RPM
 # -------------------------------------------------------------------------------------------- #
 %files
-%defattr(755,%{_project_user},%{_project_user},755)
+%defattr(644,%{_project_user},%{_project_user},755)
 %config /etc/init.d/%{_service_name}
+%attr(755, root, root) /etc/init.d/%{_service_name}
 %config /etc/logrotate.d/logrotate-iotaul.conf
 %config /etc/cron.d/cron-logrotate-iotaul-size
 %config /etc/sysconfig/logrotate-iotaul-size
+%config /etc/sysconfig/iotaul.default
 %{_install_dir}
 
 %changelog
