@@ -111,7 +111,7 @@ echo "[INFO] Configuring application"
     ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
 
     # Chmod iotagent-ul binary
-    chmod guo+xs %{_install_dir}/bin/%{_iotaul_executable}
+    chmod guo+x %{_install_dir}/bin/%{_iotaul_executable}
 
 echo "Done"
 
