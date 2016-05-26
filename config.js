@@ -29,7 +29,7 @@ config.mqtt = {
     /**
      * Host where the MQTT Broker is located.
      */
-    host: 'fakedhost',
+    host: 'localhost',
 
     /**
      * Port where the MQTT Broker is listening
