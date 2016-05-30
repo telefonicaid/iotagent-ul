@@ -108,9 +108,6 @@ fi
 
     # restores old configuration if any
     [ -f /tmp/config.js ] && mv /tmp/config.js %{_install_dir}/config.js
-   
-    # Create the default instance config file as a link
-    ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
 
     # Chmod iotagent-ul binary
     chmod guo+x %{_install_dir}/bin/%{_iotaul_executable}
