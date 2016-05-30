@@ -160,6 +160,7 @@ INSTANCE=$2
 INSTANCES=$(ls ${CONF_DIR}/${NAME}.*.conf | cut -f3 -d.)
 RETVAL=0
 if [ -n "$INSTANCE" ]; then
+    [ -f ${CONF_DIR}/${NAME}.${INSTANCE}.conf ] || echo "instance ${INSTANCE} does not exists" && exit 3
     do_instance $OPERATION $INSTANCE
     RETVAL=$?
 else
