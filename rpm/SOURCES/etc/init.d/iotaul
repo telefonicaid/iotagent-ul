@@ -59,14 +59,13 @@ do_start()
     local INSTANCE=$1
     local PID_FILE=${PID_DIR}/${NAME}_${INSTANCE}.pid
     local LOG_PATH=${LOG_DIR}/${NAME}_${INSTANCE}.log
-    local PARAMS=config-${INSTANCE}.js
-
+  
    # Check if already started and exit if so
     status -p ${PID_FILE} ${EXECUTABLE} && return $?
     
     printf "%-50s" "Starting ${NAME} with ${PARAMS}..."
     if [[ -x ${EXECUTABLE} ]]; then
-        su $IOTA_USER -c "cd $BASE_DIR; nohup ${EXECUTABLE} ${PARAMS} &>> $LOG_PATH & echo \$! > $PID_FILE"
+        su $IOTA_USER -c "cd ${BASE_DIR}; nohup ${EXECUTABLE} &>> ${LOG_PATH} & echo \$! > ${PID_FILE}"
         echo "Success"
         return 0
     else
