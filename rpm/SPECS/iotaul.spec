@@ -164,8 +164,10 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/init.d/%{_service_name}
 %attr(755, root, root) /etc/init.d/%{_service_name}
 %config /etc/logrotate.d/logrotate-iotaul.conf
+%config /etc/iotaul.d/iotaul.default.conf
 %config /etc/cron.d/cron-logrotate-iotaul-size
 %config /etc/sysconfig/logrotate-iotaul-size
+%config /etc/sysconfig/iotaul.conf
 %{_install_dir}
 
 %changelog
