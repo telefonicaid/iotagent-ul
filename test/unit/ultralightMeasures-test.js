@@ -68,6 +68,13 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[1].b.should.equal('18');
         });
     });
+    describe('When a payload with multiple groups and measures is parsed', function() {
+        it('should return an array with the parsed groups and objects', function() {
+            var result = ulParser.parse('bat|75.0#tmp|16.25#ill|0.0#pos|43.46321/-3.80446');
+
+            should.exist(result);
+        });
+    });
     describe('When a payload with an empty measure is found: "a|10||"', function() {
         it('should throw a PARSE_ERROR error', function() {
             var result,
@@ -86,20 +93,35 @@ describe('Ultralight 2.0 Parser: measures', function() {
     });
     describe('When a payload with an empty measure group is found: "a|10|b|11##t|3"', function() {
         it('should throw a PARSE_ERROR error', function() {
-            it('should throw a PARSE_ERROR error', function() {
-                var result,
-                    error;
+            var result,
+                error;
 
-                try {
-                    result = ulParser.parse('a|10|b|11##t|3');
-                } catch (e) {
-                    error = e;
-                }
+            try {
+                result = ulParser.parse('a|10|b|11##t|3');
+            } catch (e) {
+                error = e;
+            }
 
-                should.exist(error);
-                should.not.exist(result);
-                error.name.should.equal('PARSE_ERROR');
-            });
+            should.exist(error);
+            should.not.exist(result);
+            error.name.should.equal('PARSE_ERROR');
         });
+    });
+    describe('When an empty payload is parsed', function() {
+        it('should throw a PARSE_ERROR error', function() {
+            var result,
+                error;
+
+            try {
+                result = ulParser.parse(undefined);
+            } catch (e) {
+                error = e;
+            }
+
+            should.exist(error);
+            should.not.exist(result);
+            error.name.should.equal('PARSE_ERROR');
+        });
+
     });
 });

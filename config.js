@@ -99,38 +99,38 @@ config.iota = {
      * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
      * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
      */
-    iotManager: {
+    //iotManager: {
         /**
          * Host where the IoT Manager is located.
          */
-        host: 'localhost',
+        //host: 'localhost',
 
         /**
          * Port where the IoT Manager is listening.
          */
-        port: 8082,
+        //port: 8082,
 
         /**
          * Path where the IoT Manager accepts subscriptions.
          */
-        path: '/protocols',
+        //path: '/protocols',
 
         /**
          * Protocol code identifying this IoT Agent.
          */
-        protocol: 'MQTT_UL',
+        //protocol: 'MQTT_UL',
 
         /**
          * Textual description of this IoT Agent.
          */
-        description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)',
+        //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+    //},
 
-        /**
-         * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
-         * Manager.
-         */
-        defaultResource: '/iot/d'
-    },
+    /**
+     * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
+     * Manager.
+     */
+    defaultResource: '/iot/d',
 
     /**
      * Defines the configuration for the Device Registry, where all the information about devices and configuration
@@ -220,3 +220,4 @@ config.defaultKey = 'TEF';
 config.defaultTransport = 'MQTT';
 
 module.exports = config;
+
