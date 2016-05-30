@@ -63,7 +63,7 @@ do_start()
    # Check if already started and exit if so
     status -p ${PID_FILE} ${EXECUTABLE} && return $?
     
-    printf "%-50s" "Starting ${NAME} with ${PARAMS}..."
+    printf "%-50s" "Starting ${NAME} instance ${INSTANCE}..."
     if [[ -x ${EXECUTABLE} ]]; then
         su $IOTA_USER -c "cd ${BASE_DIR}; nohup ${EXECUTABLE} &>> ${LOG_PATH} & echo \$! > ${PID_FILE}"
         echo "Success"
@@ -85,7 +85,7 @@ do_stop()
     # Check if already stopped and exit if so
     status -p ${PID_FILE} ${EXECUTABLE} ||  return $?
 
-    printf "%-50s" "Stopping $NAME..."
+    printf "%-50s" "Stopping $NAME instance ${INSTANCE}..."
     if [ -f "${PID_FILE}" ]; then
         kill -9 $(cat ${PID_FILE})
         RETVAL=$?
