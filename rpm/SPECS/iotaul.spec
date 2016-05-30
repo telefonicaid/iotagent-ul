@@ -24,6 +24,8 @@ This component was designed to work alongside other Telefonica IoT Platform comp
 %define _install_dir /opt/iotaul
 %define _iotaul_log_dir /var/log/iotaul
 %define _iotaul_pid_dir /var/run/iotaul
+%define _iotaul_conf_dir /etc/iotaul.d
+
 
 %define _iotaul_executable iotagent-ul
 
@@ -82,7 +84,7 @@ fi
 # post-install section:
 # -------------------------------------------------------------------------------------------- #
 %post
-echo "[INFO] Configuring application"
+    echo "[INFO] Configuring application"
     echo "[INFO] Creating the home Ultralight IoT Agent directory"
     mkdir -p _install_dir
     echo "[INFO] Creating log & run directory"
@@ -113,7 +115,7 @@ echo "[INFO] Configuring application"
     # Chmod iotagent-ul binary
     chmod guo+x %{_install_dir}/bin/%{_iotaul_executable}
 
-echo "Done"
+    echo "Done"
 
 # -------------------------------------------------------------------------------------------- #
 # pre-uninstall section:
@@ -164,7 +166,6 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/logrotate.d/logrotate-iotaul.conf
 %config /etc/cron.d/cron-logrotate-iotaul-size
 %config /etc/sysconfig/logrotate-iotaul-size
-%config /etc/sysconfig/iotaul.default
 %{_install_dir}
 
 %changelog
