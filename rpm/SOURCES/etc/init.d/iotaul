@@ -48,7 +48,7 @@ EXECUTABLE=$BASE_DIR/bin/iotagent-ul
 . /etc/rc.d/init.d/functions
 
 # Override IOTA_USER, BASE_DIR, PID_DIR, LOG_DIR, CONF_DIR, EXECUTABLE
-[ -f /etc/sysconfig/${NAME}.conf ] && . -f /etc/sysconfig/${NAME}.conf
+[ -f /etc/sysconfig/${NAME}.conf ] && . /etc/sysconfig/${NAME}.conf
 
 test -x ${EXECUTABLE} || exit 5
 
@@ -158,7 +158,7 @@ OPERATION=$1
 INSTANCE=$2
 
 # Find available instances
-INSTANCES=$(ls ${CONF_DIR}/${NAME}.*.conf | cut -f2 -d.)
+INSTANCES=$(ls ${CONF_DIR}/${NAME}.*.conf | cut -f3 -d.)
 RETVAL=0
 if [ -n "$INSTANCE" ]; then
     do_instance $OPERATION $INSTANCE
