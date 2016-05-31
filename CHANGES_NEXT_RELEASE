@@ -13,3 +13,4 @@
 - Add environment variable configuration (#75)
 - Add a prefix for all the environment variables (#82)
 - Change the final command status name (#84)
+- Default resource ignored for measure path (#86)
