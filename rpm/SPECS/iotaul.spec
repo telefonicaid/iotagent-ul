@@ -24,6 +24,8 @@ This component was designed to work alongside other Telefonica IoT Platform comp
 %define _install_dir /opt/iotaul
 %define _iotaul_log_dir /var/log/iotaul
 %define _iotaul_pid_dir /var/run/iotaul
+%define _iotaul_conf_dir /etc/iotaul.d
+
 
 %define _iotaul_executable iotagent-ul
 
@@ -82,7 +84,7 @@ fi
 # post-install section:
 # -------------------------------------------------------------------------------------------- #
 %post
-echo "[INFO] Configuring application"
+    echo "[INFO] Configuring application"
     echo "[INFO] Creating the home Ultralight IoT Agent directory"
     mkdir -p _install_dir
     echo "[INFO] Creating log & run directory"
@@ -106,14 +108,11 @@ echo "[INFO] Configuring application"
 
     # restores old configuration if any
     [ -f /tmp/config.js ] && mv /tmp/config.js %{_install_dir}/config.js
-   
-    # Create the default instance config file as a link
-    ln -s %{_install_dir}/config.js %{_install_dir}/config-default.js
 
     # Chmod iotagent-ul binary
     chmod guo+x %{_install_dir}/bin/%{_iotaul_executable}
 
-echo "Done"
+    echo "Done"
 
 # -------------------------------------------------------------------------------------------- #
 # pre-uninstall section:
@@ -162,9 +161,10 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/init.d/%{_service_name}
 %attr(755, root, root) /etc/init.d/%{_service_name}
 %config /etc/logrotate.d/logrotate-iotaul.conf
+%config /etc/iotaul.d/iotaul.default.conf
 %config /etc/cron.d/cron-logrotate-iotaul-size
 %config /etc/sysconfig/logrotate-iotaul-size
-%config /etc/sysconfig/iotaul.default
+%config /etc/sysconfig/iotaul.conf
 %{_install_dir}
 
 %changelog
