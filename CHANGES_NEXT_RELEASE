@@ -12,8 +12,5 @@
 - MQTT Binding has apiKey and resource mixed up (#71)
 - Add environment variable configuration (#75)
 - Add a prefix for all the environment variables (#82)
-<<<<<<< Updated upstream
-=======
 - Change the final command status name (#84)
 - Default resource ignored for measure path (#86)
->>>>>>> Stashed changes
