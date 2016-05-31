@@ -44,7 +44,7 @@ config.iota = {
         type: 'memory'
     },
     types: {},
-    defaultResource: '',
+    // defaultResource: '',
     service: 'howtoService',
     subservice: '/howto',
     providerUrl: 'http://localhost:4041',
