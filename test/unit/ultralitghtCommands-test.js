@@ -27,7 +27,7 @@ var ulParser = require('../../lib/ulParser'),
     should = require('should');
 
 describe('Ultralight 2.0 Parser: commands', function() {
-    describe('When a command execution request is parsed', function() {
+    describe('When a command execution with multiple parameters is parsed', function() {
         it('should extract the deviceId, the command name, and the parameters', function() {
             var result = ulParser.command('weatherStation167@ping|param1=1|param2=2');
 
@@ -40,6 +40,20 @@ describe('Ultralight 2.0 Parser: commands', function() {
             should.exist(result.params);
             should.exist(result.params.param2);
             result.params.param2.should.equal('2');
+        });
+    });
+    describe('When a command execution with no params and a value is parsed', function() {
+        it('should extract the deviceId, the command name, and the plain text of the value', function() {
+            var result = ulParser.command('weatherStation167@ping|theValue');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            should.exist(result.deviceId);
+            result.deviceId.should.equal('weatherStation167');
+            should.exist(result.command);
+            result.command.should.equal('ping');
+            should.exist(result.value);
+            result.value.should.equal('theValue');
         });
     });
     describe('When a command result is parsed', function() {

@@ -1,7 +1,7 @@
 {
   "name": "iotagent-ul",
   "description": "IoT Agent for the Ultrlight 2.0 protocol",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/dmoranj/iotagent-ul",
   "author": {
     "name": "Daniel Moran",
@@ -26,7 +26,7 @@
     "dateformat": "1.0.12",
     "express": "^4.11.2",
     "body-parser": "1.15.0",
-    "iotagent-node-lib": "1.0.0",
+    "iotagent-node-lib": "2.0.0",
     "logops": "1.0.0-alpha.7",
     "mqtt": "1.7.0",
     "request": "^2.69.0",

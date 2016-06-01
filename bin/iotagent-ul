@@ -44,7 +44,8 @@ function start() {
 
     iotAgent.start(config, function (error) {
         if (error) {
-            logger.error(context, 'Error starting Ultralight 2.0 IoT Agent: [%s] Exiting process', error);
+            logger.error(context, 'Error starting Ultralight 2.0 IoT Agent: [%s] Exiting process',
+                JSON.stringify(error));
         } else {
             logger.info(context, 'Ultralight 2.0 IoT Agent started');
         }

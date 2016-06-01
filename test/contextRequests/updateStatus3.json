@@ -1,19 +1,14 @@
 {
   "contextElements": [
     {
-      "type": "AnMQTTDevice",
+      "type": "MQTTCommandDevice",
       "isPattern": "false",
-      "id": "Second MQTT Device",
+      "id": "Fourth MQTT Device",
       "attributes": [
         {
           "name": "PING_status",
           "type": "commandStatus",
-          "value": "OK"
-        },
-        {
-          "name": "PING_info",
-          "type": "commandResult",
-          "value": "1234567890"
+          "value": "PENDING"
         }
       ]
     }
