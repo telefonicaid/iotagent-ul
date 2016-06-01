@@ -14,3 +14,4 @@
 - Add a prefix for all the environment variables (#82)
 - Change the final command status name (#84)
 - Default resource ignored for measure path (#86)
+- [BUG] IoTA Measure w/ timestamp missing (#88)
