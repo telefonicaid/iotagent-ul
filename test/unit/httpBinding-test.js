@@ -103,6 +103,61 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
+    describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
+        var getOptions = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'GET',
+                qs: {
+                    i: 'MQTT_UNPROVISIONED',
+                    k: '80K09H324HV8732',
+                    d: 'a|23'
+                }
+            },
+            groupCreation = {
+                url: 'http://localhost:4041/iot/services',
+                method: 'POST',
+                json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+                headers: {
+                    'fiware-service': 'TestService',
+                    'fiware-servicepath': '/testingPath'
+                }
+            };
+
+        beforeEach(function(done) {
+            contextBrokerMock = nock('http://10.11.128.16:1026')
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+
+            request(groupCreation, function(error, response, body) {
+                done();
+            });
+        });
+
+        it('should end up with a 200OK status code', function(done) {
+            request(getOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+
     describe('When a measure with timestamp arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -416,7 +471,5 @@ describe('HTTP Transport binding: measures', function() {
                 done();
             });
         });
-
-
     });
 });
