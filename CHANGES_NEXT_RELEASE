@@ -1,2 +1,3 @@
 - FIX Accept initial bar for Ultraligth measures (#98).
 - FIX Allow unprovisioned devices for HTTP UL (#100).
+- FIX Allow for request without a Content-type header (#102);
