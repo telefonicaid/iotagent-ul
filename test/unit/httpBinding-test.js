@@ -103,6 +103,61 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
+    describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
+        var getOptions = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'GET',
+                qs: {
+                    i: 'MQTT_UNPROVISIONED',
+                    k: '80K09H324HV8732',
+                    d: 'a|23'
+                }
+            },
+            groupCreation = {
+                url: 'http://localhost:4041/iot/services',
+                method: 'POST',
+                json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+                headers: {
+                    'fiware-service': 'TestService',
+                    'fiware-servicepath': '/testingPath'
+                }
+            };
+
+        beforeEach(function(done) {
+            contextBrokerMock = nock('http://10.11.128.16:1026')
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+
+            request(groupCreation, function(error, response, body) {
+                done();
+            });
+        });
+
+        it('should end up with a 200OK status code', function(done) {
+            request(getOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+
     describe('When a measure with timestamp arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -298,10 +353,10 @@ describe('HTTP Transport binding: measures', function() {
                 method: 'POST',
                 qs: {
                     i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
-                    k: 'TEF',
+                    k: '1234',
                     t: '2016-05-11T10:12:26.476659Z'
                 },
-                body: 'bat|75.0#tmp|16.25#ill|0.0#pos|43.46321/-3.80446'
+                body: 'bat|75.0'
             },
             provisionOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -314,9 +369,13 @@ describe('HTTP Transport binding: measures', function() {
             };
 
         beforeEach(function(done) {
+            nock.cleanAll();
+
+            contextBrokerMock = nock('http://10.11.128.16:1026')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
@@ -327,13 +386,8 @@ describe('HTTP Transport binding: measures', function() {
 
         it('should end up with a 200OK status code', function(done) {
             request(postOptions, function(error, response, body) {
-                var parsedBody;
-
                 should.not.exist(error);
-                response.statusCode.should.equal(400);
-
-                parsedBody = JSON.parse(body);
-                parsedBody.name.should.equal('UNSUPPORTED_TYPE');
+                response.statusCode.should.equal(200);
 
                 done();
             });
@@ -416,7 +470,5 @@ describe('HTTP Transport binding: measures', function() {
                 done();
             });
         });
-
-
     });
 });
