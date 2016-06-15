@@ -1,1 +1,2 @@
 - Allow unprovisioned devices for MQTT UL #108
+- FIX Protocol attribute not added to the autoprovisioned devices
