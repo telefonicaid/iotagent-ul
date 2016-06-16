@@ -31,7 +31,8 @@ var iotagentUl = require('../../'),
     async = require('async'),
     request = require('request'),
     utils = require('../utils'),
-    contextBrokerMock;
+    contextBrokerMock,
+    iotamMock;
 
 describe('HTTP Transport binding: measures', function() {
     beforeEach(function(done) {
@@ -47,11 +48,23 @@ describe('HTTP Transport binding: measures', function() {
 
         nock.cleanAll();
 
+        iotamMock = nock('http://localhost:8082')
+            .post('/protocols')
+            .reply(200, {});
+
         contextBrokerMock = nock('http://10.11.128.16:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
             .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+        config.iotManager = {
+            host: 'localhost',
+            port: 8082,
+            path: '/protocols',
+            protocol: 'MQTT_UL',
+            description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+        };
 
         iotagentUl.start(config, function() {
             request(provisionOptions, function(error, response, body) {
@@ -155,8 +168,32 @@ describe('HTTP Transport binding: measures', function() {
                 done();
             });
         });
-    });
+        it('should add a protocol to the registered devices', function(done) {
+            var getDeviceOptions = {
+                url: 'http://localhost:4041/iot/devices/MQTT_UNPROVISIONED',
+                method: 'GET',
+                headers: {
+                    'fiware-service': 'TestService',
+                    'fiware-servicepath': '/testingPath'
+                }
+            };
 
+            request(getOptions, function(error, response, body) {
+                request(getDeviceOptions, function(error, response, body) {
+                    var parsedBody;
+
+                    should.not.exist(error);
+
+                    parsedBody = JSON.parse(body);
+
+                    response.statusCode.should.equal(200);
+                    should.exist(parsedBody.protocol);
+                    parsedBody.protocol.should.equal('MQTT_UL');
+                    done();
+                });
+            });
+        });
+    });
 
     describe('When a measure with timestamp arrives for a Device, via HTTP GET', function() {
         var getOptions = {

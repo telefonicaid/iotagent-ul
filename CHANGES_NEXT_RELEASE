@@ -2,3 +2,5 @@
 - FIX Allow unprovisioned devices for HTTP UL (#100).
 - FIX Allow for request without a Content-type header (#102);
 - ADD Optional timestamp for measure groups (#105).
+- Allow unprovisioned devices for MQTT UL #108
+- FIX Protocol attribute not added to the autoprovisioned devices
