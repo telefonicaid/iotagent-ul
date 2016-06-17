@@ -431,6 +431,47 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
+    describe('When a measure arrives to the IoTA for a device belonging to a configuration', function() {
+        var getOptions = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'GET',
+                qs: {
+                    i: 'MQTT_2',
+                    k: '80K09H324HV8732',
+                    d: 'c|23'
+                }
+            },
+            groupCreation = {
+                url: 'http://localhost:4041/iot/services',
+                method: 'POST',
+                json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext',
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
+
+            request(groupCreation, function(error, response, body) {
+                done();
+            });
+        });
+
+        it('should use the configuration values for the attributes alias not included in the device', function(done) {
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
     describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
