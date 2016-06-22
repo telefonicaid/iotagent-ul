@@ -58,7 +58,7 @@ describe('HTTP Transport binding: measures', function() {
             .post('/v1/updateContext')
             .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
-        config.iotManager = {
+        config.iota.iotManager = {
             host: 'localhost',
             port: 8082,
             path: '/protocols',
@@ -75,6 +75,8 @@ describe('HTTP Transport binding: measures', function() {
 
     afterEach(function(done) {
         nock.cleanAll();
+
+        delete config.iota.iotManager;
 
         async.series([
             iotAgentLib.clearAll,
@@ -472,6 +474,64 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
+    describe('When there is a conflict between configuration and devices', function() {
+        var getOptions = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'GET',
+                qs: {
+                    i: 'MQTT_3',
+                    k: '80K09H324HV8732',
+                    d: 'c|23'
+                }
+            },
+            deviceCreation = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice2.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            groupCreation = {
+                url: 'http://localhost:4041/iot/services',
+                method: 'POST',
+                json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            contextBrokerMock = nock('http://10.11.128.16:1026')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext',
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure2.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
+
+            request(groupCreation, function(error, response, body) {
+                request(deviceCreation, function(error, response, body) {
+                    done();
+                });
+            });
+        });
+
+        it('should use the device preference', function(done) {
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
     describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -520,8 +580,12 @@ describe('HTTP Transport binding: measures', function() {
 
             config.iota.timestamp = true;
 
+            nock('http://localhost:8082')
+                .post('/protocols')
+                .reply(200, {});
+
             iotagentUl.stop(function() {
-                iotagentUl.start(config, function() {
+                iotagentUl.start(config, function(error) {
                     request(provisionProduction, function(error, response, body) {
                         done();
                     });

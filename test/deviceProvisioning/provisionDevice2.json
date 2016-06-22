@@ -1,0 +1,22 @@
+{
+  "devices": [
+    {
+      "protocol": "GENERIC_PROTO",
+      "device_id": "MQTT_3",
+      "entity_name": "Second MQTT Device",
+      "entity_type": "AnMQTTDevice",
+      "timezone": "America/Santiago",
+      "attributes": [
+        {
+          "name": "a",
+          "type": "celsius"
+        },
+        {
+          "object_id": "c",
+          "name": "CurrentFlow",
+          "type": "Matrix"
+        }
+      ]
+    }
+  ]
+}
