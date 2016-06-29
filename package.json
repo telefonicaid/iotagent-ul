@@ -26,7 +26,7 @@
     "dateformat": "1.0.12",
     "express": "^4.11.2",
     "body-parser": "1.15.0",
-    "iotagent-node-lib": "2.1.2",
+    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#develop",
     "logops": "1.0.0-alpha.7",
     "mqtt": "1.7.0",
     "request": "^2.69.0",
