@@ -187,6 +187,13 @@ gps|1.2/3.4#t|10
 This will generate two NGSI requests for the same entity, one for each one of the values. Each one of those requests
 can contain any number of attributes.
 
+Measure groups can additionaly have an optional timestamp, with the following syntax:
+```
+2016-06-13T00:35:30Z|lle|100
+```
+The timestamp will be added as a prefix of the measures themselves, separated by a '|'. The attribute will be translated
+to a `TimeInstant` attribute in the final entity.T
+
 ### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:
 ```

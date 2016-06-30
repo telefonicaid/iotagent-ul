@@ -95,6 +95,46 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
+    describe('When a new measure arrives for an unprovisioned Device', function() {
+        var groupCreation = {
+                url: 'http://localhost:4041/iot/services',
+                method: 'POST',
+                json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+                headers: {
+                    'fiware-service': 'TestService',
+                    'fiware-servicepath': '/testingPath'
+                }
+            };
+
+        beforeEach(function(done) {
+            contextBrokerMock = nock('http://10.11.128.16:1026')
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+
+            request(groupCreation, function(error, response, body) {
+                done();
+            });
+        });
+
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            mqttClient.publish('/80K09H324HV8732/MQTT_UNPROVISIONED/attrs/a', '23', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
+
     describe('When a new multiple measure arrives to a Device topic with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
