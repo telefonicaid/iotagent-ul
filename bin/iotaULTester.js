@@ -30,6 +30,7 @@ var fs = require('fs'),
     commandLine = require('iotagent-node-lib').commandLine,
     clUtils = commandLine.clUtils,
     mqtt = require('mqtt'),
+    request = require('request'),
     async = require('async'),
     _ = require('underscore'),
     mqttClient,
@@ -50,8 +51,10 @@ var fs = require('fs'),
         binding: defaultConfig.defaultBinding,
         host: defaultConfig.mqtt.host,
         port: defaultConfig.mqtt.port,
+        httpPort: defaultConfig.http.port,
         apikey: defaultConfig.device.apikey,
-        deviceId: defaultConfig.device.id
+        deviceId: defaultConfig.device.id,
+        httpPath: defaultConfig.http.path
     },
     separator = '\n\n\t',
     token;
@@ -61,6 +64,8 @@ function setConfig(commands) {
     config.port = commands[1];
     config.apikey = commands[2];
     config.deviceId = commands[3];
+    config.httpPath = commands[4];
+    config.httpPort = commands[5];
 }
 
 function getConfig(commands) {
@@ -80,9 +85,21 @@ function mqttPublishHandler(error) {
     clUtils.prompt();
 }
 
+function httpPublishHandler(error, response, body) {
+    if (error) {
+        console.log('There was an error publishing an HTTP measure: %s', error);
+    } else if (response.statusCode !== 200 && response.statusCode !== 201) {
+        console.log('Unexpected status [%s] sending HTTP measure: %s', response.statusCode, body);
+    } else {
+        console.log('HTTP measure accepted');
+    }
+
+    clUtils.prompt();
+}
+
 function checkConnection(fn) {
     return function(commands) {
-        if (mqttClient) {
+        if (mqttClient || config.binding === 'HTTP') {
             fn(commands);
         } else {
             console.log('Please, check your configuration and connect before using MQTT commands.');
@@ -91,9 +108,23 @@ function checkConnection(fn) {
 }
 
 function singleMeasure(commands) {
-    var topic = '/' + config.apikey + '/' + config.deviceId + '/attrs/' + commands[0];
+    if (config.binding === 'MQTT') {
+        var topic = '/' + config.apikey + '/' + config.deviceId + '/attrs/' + commands[0];
 
-    mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
+        mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
+    } else {
+        var httpRequest = {
+            url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
+            method: 'GET',
+            qs: {
+                i: config.deviceId,
+                k: config.apikey,
+                d: commands[0] + '|' + commands[1]
+            }
+        };
+
+        request(httpRequest, httpPublishHandler);
+    }
 }
 
 function sendCommandResult(commands) {
@@ -116,7 +147,7 @@ function parseMultipleAttributes(attributeString) {
 
         for (var i = 0; i < attributes.length; i++) {
             attribute = attributes[i].split('=');
-            result += attribute[0] + '=' + attribute[1];
+            result += attribute[0] + '|' + attribute[1];
 
             if (i !== attributes.length -1) {
                 result += '|';
@@ -131,7 +162,21 @@ function multipleMeasure(commands) {
     var values = parseMultipleAttributes(commands[0]),
         topic = '/' + config.apikey + '/' + config.deviceId + '/attrs';
 
-    mqttClient.publish(topic, values, null, mqttPublishHandler);
+    if (config.binding === 'MQTT') {
+        mqttClient.publish(topic, values, null, mqttPublishHandler);
+    } else {
+        var httpRequest = {
+            url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
+            method: 'GET',
+            qs: {
+                i: config.deviceId,
+                k: config.apikey,
+                d: values
+            }
+        };
+
+        request(httpRequest, httpPublishHandler);
+    }
 }
 
 function connect(commands) {
@@ -142,13 +187,23 @@ function connect(commands) {
     clUtils.prompt();
 }
 
+function selectProtocol(commands) {
+    var allowedProtocols = ['HTTP', 'MQTT'];
+
+    if (allowedProtocols.indexOf(commands[0]) >= 0) {
+        config.binding = commands[0];
+    } else {
+        console.log('\nTried to select wrong protocol [%s]. Allowed values are: MQTT and HTTP.');
+    }
+}
+
 function exitClient() {
     process.exit(0);
 }
 
 var commands = {
     'config': {
-        parameters: ['host', 'port', 'apiKey', 'deviceId'],
+        parameters: ['host', 'port', 'apiKey', 'deviceId', 'httpPath', 'httpPort'],
         description: '\tConfigure the client to emulate the selected device, connecting to the given host.',
         handler: setConfig
     },
@@ -177,6 +232,11 @@ var commands = {
         parameters: ['command', 'result'],
         description: '\tSend the result of a command to the MQTT Broker.',
         handler: checkConnection(sendCommandResult)
+    },
+    'selectProtocol': {
+        parameters: ['newProtocol'],
+        description: '\tSelects which transport protocol to use when sending measures to the target system (HTTP or MQTT).',
+        handler: selectProtocol
     }
 };
 
