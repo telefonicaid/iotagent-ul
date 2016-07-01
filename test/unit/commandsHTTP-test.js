@@ -126,7 +126,7 @@ describe('HTTP Transport binding: commands', function() {
         });
     });
 
-    describe('When a command arrive with a wrong protocol', function() {
+    describe('When a command arrive with a wrong endpoint', function() {
         var commandOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
                 method: 'POST',
@@ -171,7 +171,9 @@ describe('HTTP Transport binding: commands', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatusError.json'))
+                .post('/v1/updateContext', function(body) {
+                    return body.contextElements['0'].attributes['0'].value === 'ERROR';
+                })
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
 
             request(provisionWrongEndpoint, function(error, response, body) {
