@@ -6,3 +6,4 @@
 - FIX Protocol attribute not added to the autoprovisioned devices
 - Use the attributes defined in the Configuration as default alias values (#114)
 - Add HTTP UL testing commands to the command line interpreter (#126)
+- FIX Commands won't write the Error results in the Context Broker.
