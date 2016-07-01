@@ -1,0 +1,19 @@
+{
+  "updateAction": "UPDATE",
+  "contextElements": [
+    {
+      "id": "Wrong MQTT Device",
+      "type": "AnMQTTDevice",
+      "isPattern": "false",
+      "attributes": [
+        {
+          "name": "PING",
+          "type": "command",
+          "value": {
+            "data": "22"
+          }
+        }
+      ]
+    }
+  ]
+}
