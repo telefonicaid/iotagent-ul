@@ -1,0 +1,19 @@
+{
+  "devices": [
+    {
+      "device_id": "MQTT_WRONG",
+      "entity_name": "Wrong MQTT Device",
+      "entity_type": "AnMQTTDevice",
+      "timezone": "America/Santiago",
+      "protocol": "HTTP_UL",
+      "transport": "HTTP",
+      "endpoint": "http://unexistent.com/command",
+      "commands": [
+        {
+          "name": "PING",
+          "type": "command"
+        }
+      ]
+    }
+  ]
+}

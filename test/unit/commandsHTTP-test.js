@@ -125,4 +125,77 @@ describe('HTTP Transport binding: commands', function() {
             });
         });
     });
+
+    describe('When a command arrive with a wrong protocol', function() {
+        var commandOptions = {
+                url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+                method: 'POST',
+                json: utils.readExampleFile('./test/contextRequests/updateCommandWrongEndpoint.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            provisionWrongEndpoint = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/deviceProvisioning/provisionCommandWrongEndpoint.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            contextBrokerMock = nock('http://10.11.128.16:1026')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/NGSI9/registerContext')
+                .reply(200,
+                    utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatusError.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
+
+            request(provisionWrongEndpoint, function(error, response, body) {
+                setTimeout(function() {
+                    done();
+                }, 50);
+            });
+        });
+
+        it('should return a 200 OK without errors', function(done) {
+            request(commandOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+
+        it('should update the status in the Context Broker', function(done) {
+            request(commandOptions, function(error, response, body) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
 });
