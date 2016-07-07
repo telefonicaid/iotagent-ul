@@ -55,6 +55,11 @@ config.http = {
      * Port where the HTTP Ultralight transport binding will be listening for device requests.
      */
     port: 7896
+
+    /**
+     * HTTP Timeout for the http command endpoint (in miliseconds).
+     */
+    //timeout: 1000
 };
 
 config.iota = {
