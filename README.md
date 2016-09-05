@@ -91,14 +91,14 @@ map the external IOTA ports, for external calls: 4041 (Northbound API) and 7896 
 
 ## <a name="usage"/> Usage
 
-## Github installation
+### Github installation
 In order to execute the IOTAgent, just issue the following command from the root folder of the cloned project:
 ```
 bin/iotagent-ul [config file]
 ```
 The optional name of a config file is optional and described in the following section.
 
-## RPM installation
+### RPM installation
 The RPM installs a linux service that can be managed with the typical instructions:
 ```
 service iotaul start
@@ -110,11 +110,11 @@ service iotaul stop
 
 In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.
 
-## Docker installation
+### Docker installation
 The Docker automatically starts listening in the API ports, so there is no need to execute any process in order to
 have the application running. The Docker image will automatically start.
 
-# <a name="packaging"/> Packaging
+## <a name="packaging"/> Packaging
 The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
 in the system.
 
