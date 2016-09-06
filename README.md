@@ -23,7 +23,7 @@ that is used for the implementation of the Northbound APIs. Information about th
 on that global repository. This documentation will only address those features and characteristics that are particular
 to the Ultralight 2.0 IoTAgent.
 
-Additional information about operating the component can be found in the [Operations: logs and alarms]() document.
+Additional information about operating the component can be found in the [Operations: logs and alarms](docs/operations.md) document.
 
 ## <a name="installation"/> Installation
 There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
