@@ -19,7 +19,11 @@ text based protocol aimed to constrained devices and communications where the ba
 resources. This IoTA will provide different transport protocol bindings for the same protocol: HTTP, MQTT...
 
 As is the case in any IoT Agent, this one follows the interaction model defined in the [Node.js IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib),
-that is used for the implementation of the Northbound APIs.
+that is used for the implementation of the Northbound APIs. Information about the IoTAgent's architecture can be found
+on that global repository. This documentation will only address those features and characteristics that are particular
+to the Ultralight 2.0 IoTAgent.
+
+Additional information about operating the component can be found in the [Operations: logs and alarms](docs/operations.md) document.
 
 ## <a name="installation"/> Installation
 There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
