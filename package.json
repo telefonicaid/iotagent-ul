@@ -1,11 +1,7 @@
 {
   "name": "iotagent-ul",
   "description": "IoT Agent for the Ultrlight 2.0 protocol",
-<<<<<<< HEAD
   "version": "1.1.0-next",
-=======
-  "version": "1.1.8",
->>>>>>> 566a8be... FIX Bullets
   "homepage": "https://github.com/dmoranj/iotagent-ul",
   "author": {
     "name": "Daniel Moran",
