@@ -53,6 +53,37 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[0].b.should.equal('18');
         });
     });
+    describe('When a payload with timestamp information is parsed', function() {
+        /* jshint sub:true */
+
+        it('should add a TimeInstant attribute to the array with the value', function() {
+            var result = ulParser.parse('2016-06-13T00:35:30Z|lle|100');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            result.length.should.equal(1);
+            should.exist(result[0]);
+            should.exist(result[0]['TimeInstant']);
+            result[0]['TimeInstant'].should.equal('2016-06-13T00:35:30Z');
+            should.exist(result[0].lle);
+            result[0].lle.should.equal('100');
+        });
+    });
+    describe('When a payload with an initial bar and multiple measures is parsed', function() {
+        it('should return an array with a single object with multiple attributes', function() {
+            var result = ulParser.parse('|c|7|b|18');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            result.length.should.equal(1);
+            should.exist(result[0]);
+            should.exist(result[0].c);
+            result[0].c.should.equal('7');
+            should.exist(result[0].b);
+            result[0].b.should.equal('18');
+        });
+    });
+
     describe('When a payload with two groups of measures and one measure in each group is parsed', function() {
         it('should return an array with two objects with just one attribute', function() {
             var result = ulParser.parse('c|7#b|18');

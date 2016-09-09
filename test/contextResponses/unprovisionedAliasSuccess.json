@@ -1,0 +1,22 @@
+{
+  "contextResponses": [
+    {
+      "contextElement": {
+        "attributes": [
+          {
+            "name": "Correlation",
+            "type": "celsius",
+            "value": ""
+          }
+        ],
+        "type": "AnMQTTDevice",
+        "isPattern": "false",
+        "id": "Second MQTT Device"
+      },
+      "statusCode": {
+        "code": "200",
+        "reasonPhrase": "OK"
+      }
+    }
+  ]
+}

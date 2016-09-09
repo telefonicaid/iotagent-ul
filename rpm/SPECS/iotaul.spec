@@ -168,3 +168,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_install_dir}
 
 %changelog
+
+* Fri Sept 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.2.0
+- FIX Accept initial bar for Ultraligth measures (#98).
+- FIX Allow unprovisioned devices for HTTP UL (#100).
+- FIX Allow for request without a Content-type header (#102);
+- ADD Optional timestamp for measure groups (#105).
+- Allow unprovisioned devices for MQTT UL #108
+- FIX Protocol attribute not added to the autoprovisioned devices
+- Use the attributes defined in the Configuration as default alias values (#114)
+- Add HTTP UL testing commands to the command line interpreter (#126)
+- FIX Commands won't write the Error results in the Context Broker.
+- FIX HTTP Error connecting to CB not decoded
+- Create the Operations Manual #33
+- Improve global documentation.
+- FIX Logger modules not being singleton cause logging inconsistencies (#140)

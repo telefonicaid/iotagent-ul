@@ -22,6 +22,11 @@
  */
 var config = {};
 
+config.http = {
+    path: '/iot/d',
+    port: 7896
+};
+
 config.mqtt = {
     host: 'localhost',
     port: 1883,

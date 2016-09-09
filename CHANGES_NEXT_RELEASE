@@ -1,17 +1,13 @@
-- Doc: configuration section (#46)
-- Doc: "Prerequisites" section for needed middleware (MQTT and MongoDB) (#48)
-- Doc: Strictly following documentation ./create-rpm.sh doesn't work (#45)
-- Fix Iotagent dies after several invalid updates (#53)
-- Enable IPv6 for HTTP protocol (#51)
-- Fix Missing or wrong Content-type generates uninformative error (#57)
-- Implement textual value parameter for commands (#59)
-- Subscribe to the wildcards instead of creating a new subscription for each device (#19)
-- Fixed Docker is not published in dockerhub (#56)
-- Update to last IoTAgent library version
-- Fixed empty device post results in a JS error (#66)
-- MQTT Binding has apiKey and resource mixed up (#71)
-- Add environment variable configuration (#75)
-- Add a prefix for all the environment variables (#82)
-- Change the final command status name (#84)
-- Default resource ignored for measure path (#86)
-- [BUG] IoTA Measure w/ timestamp missing (#88)
+- FIX Accept initial bar for Ultraligth measures (#98).
+- FIX Allow unprovisioned devices for HTTP UL (#100).
+- FIX Allow for request without a Content-type header (#102);
+- ADD Optional timestamp for measure groups (#105).
+- Allow unprovisioned devices for MQTT UL #108
+- FIX Protocol attribute not added to the autoprovisioned devices
+- Use the attributes defined in the Configuration as default alias values (#114)
+- Add HTTP UL testing commands to the command line interpreter (#126)
+- FIX Commands won't write the Error results in the Context Broker.
+- FIX HTTP Error connecting to CB not decoded
+- Create the Operations Manual #33
+- Improve global documentation.
+- FIX Logger modules not being singleton cause logging inconsistencies (#140)

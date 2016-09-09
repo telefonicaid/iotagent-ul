@@ -50,7 +50,7 @@ EXECUTABLE=$BASE_DIR/bin/iotagent-ul
 # Override IOTA_USER, BASE_DIR, PID_DIR, LOG_DIR, CONF_DIR, EXECUTABLE
 [ -f /etc/sysconfig/${NAME}.conf ] && . /etc/sysconfig/${NAME}.conf
 
-[ -x ${EXECUTABLE} ] || exit 5
+[ ! -x ${EXECUTABLE} ] && echo "${EXECUTABLE} is not executable or does not exists" && exit 5
 
 # ================================================================================================
 # Handle single instance start operation
@@ -64,7 +64,7 @@ do_start()
     status -p ${PID_FILE} ${EXECUTABLE} && return $?
     
     printf "%-50s" "Starting ${NAME} instance ${INSTANCE} ..."
-    su $IOTA_USER -c "cd ${BASE_DIR}; nohup ${EXECUTABLE} &>> ${LOG_PATH} & echo \$! > ${PID_FILE}"
+    su $IOTA_USER -p -c "cd ${BASE_DIR}; nohup ${EXECUTABLE} &>> ${LOG_PATH} & echo \$! > ${PID_FILE}"
     printf "%s\n" "$(success)"
     return 0
 }
@@ -111,7 +111,8 @@ do_instance() {
     local INSTANCE=$2
 
     # Loads instance configuration file
-    [ -f ${CONF_DIR}/${NAME}.${INSTANCE}.conf ] && . ${CONF_DIR}/${NAME}.${INSTANCE}.conf
+    set -a
+    [ -f ${CONF_DIR}/${NAME}.${INSTANCE}.conf ] && source ${CONF_DIR}/${NAME}.${INSTANCE}.conf
 
     case ${OPERATION} in
 
@@ -154,7 +155,7 @@ INSTANCE=$2
 INSTANCES=$(ls ${CONF_DIR}/${NAME}.*.conf | cut -f3 -d.)
 RETVAL=0
 if [ -n "$INSTANCE" ]; then
-    [ -f ${CONF_DIR}/${NAME}.${INSTANCE}.conf ] || echo "instance ${INSTANCE} does not exists" && exit 6
+    [ ! -f ${CONF_DIR}/${NAME}.${INSTANCE}.conf ] && echo "Instance ${INSTANCE} does not exists" && exit 6
     do_instance $OPERATION $INSTANCE
     RETVAL=$?
 else

@@ -1,0 +1,22 @@
+{
+  "contextElements": [
+    {
+      "type": "AnMQTTDevice",
+      "isPattern": "false",
+      "id": "Wrong MQTT Device",
+      "attributes": [
+        {
+          "name": "PING_status",
+          "type": "commandStatus",
+          "value": "ERROR"
+        },
+        {
+          "name": "PING_info",
+          "type": "commandResult",
+          "value": "There was an error in the response of a device to a command [ ]:Error: getaddrinfo ENOTFOUND unexistent.com unexistent.com:80"
+        }
+      ]
+    }
+  ],
+  "updateAction": "UPDATE"
+}
