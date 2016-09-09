@@ -10,3 +10,4 @@
 - FIX HTTP Error connecting to CB not decoded
 - Create the Operations Manual #33
 - Improve global documentation.
+- FIX Logger modules not being singleton cause logging inconsistencies (#140)
