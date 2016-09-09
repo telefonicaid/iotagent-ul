@@ -8,6 +8,5 @@
 - Add HTTP UL testing commands to the command line interpreter (#126)
 - FIX Commands won't write the Error results in the Context Broker.
 - FIX HTTP Error connecting to CB not decoded
-- Improve global documentation.
 - Create the Operations Manual #33
 - Improve global documentation.
