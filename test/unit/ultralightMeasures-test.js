@@ -106,6 +106,18 @@ describe('Ultralight 2.0 Parser: measures', function() {
             should.exist(result);
         });
     });
+    describe('When a payload with command results is parsed', function() {
+        it('should return an array with the parsed groups and the command', function() {
+            var result = ulParser.parse('MQTT_2@ping|MADE_OK');
+
+            should.exist(result);
+            result.length.should.equal(1);
+            result[0].command.should.equal('ping');
+            result[0].deviceId.should.equal('MQTT_2');
+            result[0].value.should.equal('MADE_OK');
+
+        });
+    });
     describe('When a payload with an empty measure is found: "a|10||"', function() {
         it('should throw a PARSE_ERROR error', function() {
             var result,

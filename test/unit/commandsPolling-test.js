@@ -116,7 +116,7 @@ describe('HTTP Transport binding: polling commands', function() {
         });
     });
 
-    describe.only('When a device asks for the pending commands', function() {
+    describe('When a device asks for the pending commands', function() {
         var deviceRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -165,14 +165,30 @@ describe('HTTP Transport binding: polling commands', function() {
 
     describe('When a device sends the result for a pending command', function() {
         var commandResponse = {
-            uri: 'http://192.168.179.191:8023/iot/d',
+            uri: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'POST',
             qs: {
-                k: 'apikey',
-                i: 'device_id'
+                i: 'MQTT_2',
+                k: '1234'
             },
-            body: 'device_id_2@ping|MADE_OK'
+            body: 'MQTT_2@PING|MADE_OK'
         };
 
-        it('should update the entity in the Context Broker with the OK status and the result');
+        beforeEach(function(done) {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus5.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus4Success.json'));
+            
+            request(commandOptions, done);
+        });
+        
+        it('should update the entity in the Context Broker with the OK status and the result', function(done) {
+            request(commandResponse, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
     });
 });
