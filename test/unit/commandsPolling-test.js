@@ -180,10 +180,10 @@ describe('HTTP Transport binding: polling commands', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus5.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus4Success.json'));
-            
+
             request(commandOptions, done);
         });
-        
+
         it('should update the entity in the Context Broker with the OK status and the result', function(done) {
             request(commandResponse, function(error, response, body) {
                 contextBrokerMock.done();
