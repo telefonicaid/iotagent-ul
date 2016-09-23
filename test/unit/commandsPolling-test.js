@@ -163,6 +163,8 @@ describe('HTTP Transport binding: polling commands', function() {
         });
     });
 
+    
+
     describe('When a device sends the result for a pending command', function() {
         var commandResponse = {
             uri: 'http://localhost:' + config.http.port + '/iot/d',
