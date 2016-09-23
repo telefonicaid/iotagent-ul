@@ -163,7 +163,9 @@ describe('HTTP Transport binding: polling commands', function() {
         });
     });
 
-    
+    describe('When a device asks for the list of commands and there is more than one command', function() {
+        it('should retrieve the list sepparated by the "#" character');
+    });
 
     describe('When a device sends the result for a pending command', function() {
         var commandResponse = {
@@ -192,5 +194,13 @@ describe('HTTP Transport binding: polling commands', function() {
                 done();
             });
         });
+    });
+
+    describe('When the device sends the result for multiple pending commands', function() {
+        it('should make all the updates in the Context Broker');
+    });
+
+    describe('When a device sends measures and command responses mixed in a message', function() {
+        it('should send both the command updates and the measures to the Context Broker');
     });
 });
