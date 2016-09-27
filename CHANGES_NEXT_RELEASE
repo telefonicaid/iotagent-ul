@@ -1,1 +1,2 @@
 - Polling mode for HTTP commands (#24)
+- Duplicated TimeInstant when an active attribute is mapped to TimeInstant attributes (#150)
