@@ -244,7 +244,7 @@ describe('MQTT Transport binding: measures', function() {
         var provisionProduction = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
                 method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeinstant.json'),
+                json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
                     'fiware-servicepath': '/gardens'
