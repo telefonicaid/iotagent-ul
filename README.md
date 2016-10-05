@@ -2,17 +2,20 @@
 
 ## Index
 
-* [Overview](#overview)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration] (#configuration)
-* [Packaging](#packaging)
-* [Protocol] (#protocol)
-* [Transport Protocol] (#transportprotocol)
-* [Developing new transports] (#transport)
+* [Description](#description)
+* [Build & Install](#installation)
+  * [Usage](#usage)
+  * [Configuration] (#configuration)
+  * [Packaging](#packaging)
+* [API Overview] (#apioverview)
+  * [Protocol] (#protocol)
+  * [Transport Protocol] (#transportprotocol)
+  * [Developing new transports] (#transport)
+* [API Reference Documentation] (#apireference)
 * [Development documentation] (#development)
+* [Testing] (#testing)
 
-## <a name="overview"/> Overview
+## <a name="description"/> Description
 This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
 and NGSI Context Brokers (like [Orion](https://github.com/telefonicaid/fiware-orion)). Ultralight 2.0 is a lightweight
 text based protocol aimed to constrained devices and communications where the bandwidth and device memory may be limited
@@ -26,6 +29,7 @@ to the Ultralight 2.0 IoTAgent.
 Additional information about operating the component can be found in the [Operations: logs and alarms](docs/operations.md) document.
 
 ## <a name="installation"/> Installation
+### Installation
 There are three ways of installing the Ultralight 2.0 Agent: cloning the Github repository, using the RPM or using Docker.
 Regardless of the installation method, there are some middlewares that must be present, as a prerequisite for the component
 installation (no installation instructions are provided for these middlewares):
@@ -44,7 +48,7 @@ Please, follow the links to the official Web Pages to find how can you install e
 
 The following sections describe each installation method in detail.
 
-### Cloning the Github repository
+#### Cloning the Github repository
 
 Clone the repository with the following command:
 ```
@@ -60,7 +64,7 @@ This will download the dependencies for the project, and let it ready to the exe
 When the component is executed from a cloned Github repository, it takes the default config file that can be found
 in the root of the repository.
 
-### Using the RPM
+#### Using the RPM
 To see how to generate the RPM, follow the instructions in [Packaging](#rpm).
 
 To install the RPM, use the YUM tool:
@@ -74,7 +78,7 @@ the executable (as explained in the section [Usage](#usage).
 When this option is used, all the files are installed under the `/opt/iotaul` folder. There you can find the `config.js`
 file to configure the service. Remember to restart the service each time the config file has changed.
 
-### Using Docker
+#### Using Docker
 There are automatic builds of the development version of the IOTAgent published in Docker hub. In order to install
 using the docker version, just execute the following:
 ```
@@ -89,16 +93,16 @@ As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker depe
 In order to link them, deploy them using docker and use the option `--link` as shown in the example. You may also want to
 map the external IOTA ports, for external calls: 4041 (Northbound API) and 7896 (HTTP binding).
 
-## <a name="usage"/> Usage
+### <a name="usage"/> Usage
 
-### Github installation
+#### Github installation
 In order to execute the IOTAgent, just issue the following command from the root folder of the cloned project:
 ```
 bin/iotagent-ul [config file]
 ```
 The optional name of a config file is optional and described in the following section.
 
-### RPM installation
+#### RPM installation
 The RPM installs a linux service that can be managed with the typical instructions:
 ```
 service iotaul start
@@ -110,11 +114,11 @@ service iotaul stop
 
 In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.
 
-### Docker installation
+#### Docker installation
 The Docker automatically starts listening in the API ports, so there is no need to execute any process in order to
 have the application running. The Docker image will automatically start.
 
-## <a name="packaging"/> Packaging
+### <a name="packaging"/> Packaging
 The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
 in the system.
 
@@ -126,7 +130,7 @@ cd rpm
 Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
 number dependent un previous installations.
 
-## <a name="configuration"/> Configuration
+### <a name="configuration"/> Configuration
 
 All the configuration for the IoT Agent resides in the `config.js` file, in the root of the application. This file
 is a JavaSript file, that contains the following sections:
@@ -139,7 +143,7 @@ is described in the global [IoT Agent Library Documentation](https://github.com/
 * **config.defaultTransport**: code of the MQTT transport that will be used to resolve incoming commands and lazy attributes
  in case a transport protocol could not be inferred for the device.
 
-### MQTT Binding configuration
+#### MQTT Binding configuration
 The `config.mqtt` section of the config file contains all the information needed to connect to the MQTT Broker from the
 IoTAgent. The following attributes are accepted:
 
@@ -148,13 +152,13 @@ IoTAgent. The following attributes are accepted:
 * **username**: User name for the IoTAgent in the MQTT broker, if authentication is activated.
 * **password**: Password for the IoTAgent in the MQTT broker, if authentication is activated.
 
-### HTTP Binding configuration
+#### HTTP Binding configuration
 The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
 transport protocol binding. The following options are accepted:
 
 * **port**: port where the southbound HTTP listener will be listening for information from the devices.
 
-### Configuration with environment variables
+#### Configuration with environment variables
 Some of the more common variables can be configured using environment variables. The ones overriding general parameters
 in the `config.iota` set are described in the [IoTA Library Configuration manual](https://github.com/telefonicaid/iotagent-node-lib#configuration).
 
@@ -169,13 +173,13 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_HTTP_HOST            | http.host                           |
 | IOTA_HTTP_PORT            | http.port                           |
 
-
-## <a name="protocol"/> Protocol
-### Description
+## <a name="apioverview"/> API Overview
+### <a name="protocol"/> Protocol
+#### Description
 Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and communications where the
 bandwidth and device memory may be limited resources.
 
-### Measure Payload Syntax
+#### Measure Payload Syntax
 The payload for information update requests is composed of a list of key-value pairs separated by the '|' character. E.g.:
 ```
 t|15|k|abc
@@ -198,7 +202,7 @@ Measure groups can additionaly have an optional timestamp, with the following sy
 The timestamp will be added as a prefix of the measures themselves, separated by a '|'. The attribute will be translated
 to a `TimeInstant` attribute in the final entity.T
 
-### Commands Syntax
+#### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:
 ```
 <device name>@<command name>|<param name>=<value>|....
@@ -221,7 +225,7 @@ weatherStation167@ping|Ping ok
 ```
 In this case, the Weather station replies with a String value indicating everything has worked fine.
 
-# <a name="transportprotocol"/> Transport Protocol
+### <a name="transportprotocol"/> Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
 scenarios.
@@ -230,10 +234,10 @@ This transport protocol binding has not been implemented yet.
 
 The following sections describe the bindings currently supported, or under development.
 
-## HTTP
+#### HTTP
 There are three possible interactions defined in the HTTP binding: requests with GET, requests with POST and commands.
 
-### Requests with GET requests
+##### Requests with GET requests
 A device can report new measures to the IoT Platform using an HTTP GET request to the `/iot/d` path with the following
 query parameters:
 
@@ -244,7 +248,7 @@ query parameters:
 
 Payloads for GET requests should not contain multiple measure groups.
 
-### Requests with POST requests
+##### Requests with POST requests
 Another way of reporting measures is to do it using a POST request. In this case, the payload is passed along as the
 request payload. Two query parameters are still mandatory:
 
@@ -252,7 +256,7 @@ request payload. Two query parameters are still mandatory:
 * **k (API Key)**: API Key for the service the device is registered on.
 * **t (timestamp)**: Timestamp of the measure. Will override the automatic IoTAgent timestamp (optional).
 
-### Sending commands
+##### Sending commands
 When using the HTTP transport, the command handling have two flavours:
 
 * **Push commands**: in this case, the Device **must** be provisioned with the `endpoint` attribute, that will contain
@@ -269,7 +273,7 @@ is described in the protocol section (and its shared with the push commands). Wh
 execution of the command, it will send the response in the same way measurments are reported, but using the **command
 result format** as exposed in the [Protocol section](#protocol).
 
-## MQTT
+#### MQTT
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
@@ -282,7 +286,7 @@ where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the 
 
 This transport protocol binding is still under development.
 
-### Sending a single measure in one message
+##### Sending a single measure in one message
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
 ```
 <apiKey>/<deviceId>/attrs/<attrName>
@@ -290,7 +294,7 @@ In order to send a single measure value to the server, the device must publish t
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
 sending.
 
-### Sending multiple measures in one message
+##### Sending multiple measures in one message
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 ```
 <apiKey>/<deviceId>/attrs
@@ -298,7 +302,7 @@ In order to send multiple measures in a single message, a device must publish a 
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
 payload (with or without measure groups).
 
-### Commands
+##### Commands
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
 where the device is subscribed: the *commands topic*. Once the device has finished with the command, it publishes it result
 to another topic.
@@ -314,7 +318,7 @@ The result of the command must be reported in the following topic:
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
 
-## <a name="transport"/> Developing new transports
+### <a name="transport"/> Developing new transports
 
 The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
 transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
@@ -339,19 +343,12 @@ modules to identify which module should attend the request.
 All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
 IoT Agent Node.js library to interact process incoming requests.
 
-## <a name="development"/> Development documentation
-### Project build
-The project is managed using Grunt Task Runner.
+## <a name="apireference"/> API Reference Documentation
 
-For a list of available task, type
-```bash
-grunt --help
-```
+Apiary reference for the Configuration API can be found [here]().
+More information about IoTAgents and their APIs can be found in the IoTAgent Library [here](https://github.com/telefonicaid/iotagent-node-lib).
 
-The following sections show the available options in detail.
-
-
-### Testing
+## <a name="testing"/> Testing
 [Mocha](http://visionmedia.github.io/mocha/) Test Runner + [Chai](http://chaijs.com/) Assertion Library + [Sinon](http://sinonjs.org/) Spies, stubs.
 
 The test environment is preconfigured to run [BDD](http://chaijs.com/api/bdd/) testing style with
@@ -370,6 +367,16 @@ To generate TAP report in `report/test/unit_tests.tap`, type
 grunt test-report
 ```
 
+## <a name="development"/> Development documentation
+### Project build
+The project is managed using Grunt Task Runner.
+
+For a list of available task, type
+```bash
+grunt --help
+```
+
+The following sections show the available options in detail.
 
 ### Coding guidelines
 jshint, gjslint
