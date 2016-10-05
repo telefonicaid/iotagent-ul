@@ -169,7 +169,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 
-* Fri Sept 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.2.0
+* Tue Oct 04 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.3.0
+- Polling mode for HTTP commands (#24)
+- Duplicated TimeInstant when an active attribute is mapped to TimeInstant attributes (#150)
+
+* Fri Sep 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.2.0
 - FIX Accept initial bar for Ultraligth measures (#98).
 - FIX Allow unprovisioned devices for HTTP UL (#100).
 - FIX Allow for request without a Content-type header (#102);
