@@ -174,7 +174,10 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_HTTP_PORT            | http.port                           |
 
 ## <a name="apioverview"/> API Overview
-### <a name="protocol"/> Protocol
+This section describes the specific South-bound API implemented by this IoTAgent. For the Configuration API and other
+APIs concerning general IoTAgents, check the [API Reference section](#apireference);
+
+### <a name="protocol"/> Ultralight 2.0 Protocol
 #### Description
 Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and communications where the
 bandwidth and device memory may be limited resources.
