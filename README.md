@@ -261,7 +261,13 @@ UL Protocol description. The device will reply with a 200OK response containing 
 result format.
 
 * **Polling commands**: in this case, the Agent does not send any messages to the device, being the later responsible
-of retrieving them from the IoTAgent whenever the device is ready to get commands.
+of retrieving them from the IoTAgent whenever the device is ready to get commands. In order to retrieve commands from
+the IoT Agent, the device will send, as part of a normal measure, the query parameter 'getCmd' with value '1'. As a
+result of this action, the IoTAgent, instead of returning an empty body (the typical response to a measurement report),
+it will return a list of all the commands available for the device, sepparated by the character '#'. The command payload
+is described in the protocol section (and its shared with the push commands). Whenever the device has completed the
+execution of the command, it will send the response in the same way measurments are reported, but using the **command
+result format** as exposed in the [Protocol section](#protocol).
 
 ## MQTT
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
