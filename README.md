@@ -8,7 +8,7 @@
   * [Configuration] (#configuration)
   * [Packaging](#packaging)
 * [API Overview] (#apioverview)
-  * [Protocol] (#protocol)
+  * [Ultralight 2.0 Protocol] (#protocol)
   * [Transport Protocol] (#transportprotocol)
   * [Developing new transports] (#transport)
 * [API Reference Documentation] (#apireference)
