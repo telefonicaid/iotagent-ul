@@ -1,5 +1,9 @@
 # IoT Agent for the Ultralight 2.0 protocol
 
+[![License badge](https://img.shields.io/badge/license-AGPL-blue.svg)](https://opensource.org/licenses/AGPL-3.0)
+[![Docker badge](https://img.shields.io/docker/pulls/fiware/orion.svg)](https://hub.docker.com/r/fiware/iotagent-ul/)
+[![Support badge]( https://img.shields.io/badge/support-sof-yellowgreen.svg)](http://ask.fiware.org)
+
 ## Index
 
 * [Description](#description)
