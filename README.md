@@ -27,6 +27,8 @@ to the Ultralight 2.0 IoTAgent.
 
 Additional information about operating the component can be found in the [Operations: logs and alarms](docs/operations.md) document.
 
+This project is part of [FIWARE](https://www.fiware.org/). Check also the [FIWARE Catalogue entry for the IoTAgents](http://catalogue.fiware.org/enablers/backend-device-management-idas)
+
 ## <a name="installation"/> Installation
 Information about how to install the UL IoTAgent can be found at the corresponding section of the [Installation & Administration Guide](docs/installationguide.md).
 
@@ -41,7 +43,7 @@ More information about IoTAgents and their APIs can be found in the IoTAgent Lib
 
 ## <a name="development"/> Development documentation
 
-Information about developing for the UL IoTAgent can be found at the corresponding section of the [User & Programmers Guide](docs/usermanual.md).
+Information about developing for the UL IoTAgent can be found at the corresponding section of the [User & Programmers Manual](docs/usermanual.md).
 
 ## <a name="testing"/> Testing
 [Mocha](http://visionmedia.github.io/mocha/) Test Runner + [Chai](http://chaijs.com/) Assertion Library + [Sinon](http://sinonjs.org/) Spies, stubs.
