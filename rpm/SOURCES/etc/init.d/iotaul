@@ -6,7 +6,7 @@
 # description: Ultralight 2.0 IoT Agent for Telefonica's IoT Platform
 ### BEGIN INIT INFO
 # Provides: iotaul
-# Required-Start: $local_fs $syslog
+# Required-Start: $local_fs $syslog $network
 # Required-Stop: $local_fs $syslog
 # Default-Start:  345
 # Default-Stop: 90
@@ -37,7 +37,7 @@
 
 
 NAME=iotaul
-IOTA_USER=""
+IOTA_USER="iotaul"
 BASE_DIR=/opt/$NAME
 PID_DIR=/var/run/$NAME
 LOG_DIR=/var/log/$NAME
