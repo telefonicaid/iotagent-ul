@@ -161,6 +161,16 @@ describe('HTTP Transport binding: polling commands', function() {
                 }, 50);
             });
         });
+
+        it('should remove them from the IoTAgent', function(done) {
+            request(deviceRequest, function(error, response, body) {
+                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function(error, list) {
+                    should.not.exist(error);
+                    list.count.should.equal(0);
+                    done();
+                });
+            });
+        });
     });
 
     describe('When a device asks for the list of commands and there is more than one command', function() {
