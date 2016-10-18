@@ -1,3 +1,4 @@
 - Polling mode for HTTP commands (#24)
 - Duplicated TimeInstant when an active attribute is mapped to TimeInstant attributes (#150)
-- Add multientity, bidirectionality and expression plugins #161
+- Add multientity, bidirectionality and expression plugins (#161)
+- Poll commands not removed after device request (#160)
