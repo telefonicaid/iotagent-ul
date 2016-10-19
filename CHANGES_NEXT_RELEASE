@@ -2,3 +2,4 @@
 - Duplicated TimeInstant when an active attribute is mapped to TimeInstant attributes (#150)
 - Add multientity, bidirectionality and expression plugins (#161)
 - Poll commands not removed after device request (#160)
+- Logrotate configure correctly all possible log files (#164)
