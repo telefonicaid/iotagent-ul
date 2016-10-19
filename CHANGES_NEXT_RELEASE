@@ -1,2 +1,3 @@
 - Improve global documentation.
 - Create the Operations Manual #33
+- Logrotate configure correctly all possible log files (#164)
