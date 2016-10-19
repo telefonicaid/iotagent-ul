@@ -11,3 +11,4 @@
 - Create the Operations Manual #33
 - Improve global documentation.
 - FIX Logger modules not being singleton cause logging inconsistencies (#140)
+- Logrotate configure correctly all possible log files (#164)
