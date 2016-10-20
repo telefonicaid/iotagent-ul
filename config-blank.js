@@ -33,6 +33,7 @@ config.http = {
 
 config.iota = {
     logLevel: 'DEBUG',
+    timestamp: true,
     contextBroker: {
         host: 'orion',
         port: '1026'
