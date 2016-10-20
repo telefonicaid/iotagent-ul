@@ -109,7 +109,7 @@ describe('Data Bidirectionality: HTTP', function() {
             request(notificationOptions, function(error, response, body) {
                 iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function(error, list) {
                     should.not.exist(error);
-                    
+
                     list.commands.length.should.equal(3);
                     done();
                 });
