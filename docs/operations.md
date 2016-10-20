@@ -65,6 +65,9 @@ client itself.
 This error will be risen when the IoTA is processing a set of MQTT measures, but cannot find the device they belong to.
 Usually will be caused by unprovisioned or ill-provisioned devices.
 
+#### MEASURES-006: Error before processing device measures [%s]
+
+
 ### Global errors
 #### GLOBAL-001: Error subscribing to topics: %s
 Error subscribing the IoT Agent to the appropriate MQTT Topics. This error can only happen at startup time, and should
