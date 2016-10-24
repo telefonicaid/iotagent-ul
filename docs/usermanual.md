@@ -63,6 +63,13 @@ weatherStation167@ping|Ping ok
 ```
 In this case, the Weather station replies with a String value indicating everything has worked fine.
 
+#### Bidirectionality Syntax
+The latest versions of the Provisioning API allow for the definition of reverse expressions to keep data shared between
+the Context Broker and the device in sync (regardless of whether the data originated in plain data from the device or
+in a transformation expression in the IoTAgent). In this cases, when a reverse expression is defined, whenever the
+bidirectional attribute is modified, the IoTAgent sends a command to the original device, with the name defined in the
+reverse expression attribute and the ID of the device (see Commands Syntax, just above).
+
 ### <a name="transportprotocol"/> Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
