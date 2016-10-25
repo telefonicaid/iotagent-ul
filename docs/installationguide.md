@@ -71,6 +71,22 @@ As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker depe
 In order to link them, deploy them using docker and use the option `--link` as shown in the example. You may also want to
 map the external IOTA ports, for external calls: 4041 (Northbound API) and 7896 (HTTP binding).
 
+#### Build your own Docker image
+There is also the possibility to build your own local Docker image of the IOTAUL component.
+
+To do it, follow the next steps once you have installed Docker in your machine:
+
+1. Navigate to the path where the component repository was cloned.
+2. Launch a Docker build
+    * Using the default NodeJS version of the operating system used defined in FROM keyword of Dockerfile:
+    ```bash
+    sudo docker build -f Dockerfile .
+    ```
+    * Using an alternative NodeJS version:
+    ```bash
+    sudo docker build --build-arg NODEJS_VERSION=0.10.46 -f Dockerfile .
+    ```
+
 ## <a name="usage"/> Usage
 
 #### Github installation
