@@ -126,6 +126,48 @@ describe('HTTP Transport binding: commands', function() {
         });
     });
 
+    describe('When a command arrive to the Agent and the device answers with an error', function() {
+        var commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function() {
+            nock.cleanAll();
+
+            mockedClientServer = nock('http://localhost:9876')
+                .post('/command', 'MQTT_2@PING|data=22')
+                .reply(500, 'MQTT_2@ping|ping ERROR, Command error');
+
+
+            contextBrokerMock = nock('http://192.168.1.1:1026')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatusError2.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatusError2Success.json'));
+        });
+
+        it('should update the status in the Context Broker', function(done) {
+            request(commandOptions, function(error, response, body) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
+
     describe('When a command arrive with a wrong endpoint', function() {
         var commandOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',

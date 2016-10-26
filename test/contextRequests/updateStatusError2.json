@@ -1,0 +1,22 @@
+{
+  "contextElements": [
+    {
+      "type": "AnMQTTDevice",
+      "isPattern": "false",
+      "id": "Second MQTT Device",
+      "attributes": [
+        {
+          "name": "PING_status",
+          "type": "commandStatus",
+          "value": "ERROR"
+        },
+        {
+          "name": "PING_info",
+          "type": "commandResult",
+          "value": "There was an error in the response of a device to a command [500]:ping ERROR, Command error"
+        }
+      ]
+    }
+  ],
+  "updateAction": "UPDATE"
+}

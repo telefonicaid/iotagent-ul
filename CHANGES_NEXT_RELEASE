@@ -3,3 +3,4 @@
 - Add multientity, bidirectionality and expression plugins (#161)
 - Poll commands not removed after device request (#160)
 - Logrotate configure correctly all possible log files (#164)
+- FIX Command error response message not sent to context Broker (#176)
