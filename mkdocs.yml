@@ -10,7 +10,3 @@ theme: readthedocs
 extra_css: ["https://fiware.org/style/fiware_readthedocs.css"]
 pages:
   - Home: 'usermanual.md'
-  - 'User & Programmers Manual':
-    - 'API Walkthrough & Development intro': 'usermanual.md'
-    - 'Operations (logs & alarms)’: 'operations.md'
-    - 'Installation & Administration Manual': 'installationguide.md'
