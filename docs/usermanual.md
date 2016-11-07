@@ -2,17 +2,17 @@
 
 ## Index
 
-* [API Overview] (#apioverview)
-  * [Ultralight 2.0 Protocol] (#protocol)
-  * [Transport Protocol] (#transportprotocol)
-  * [Developing new transports] (#transport)
-* [Development documentation] (#development)
+* [API Overview](#apioverview)
+  * [Ultralight 2.0 Protocol](#ultralight-20-protocol)
+  * [Transport Protocol](#transport-protocol)
+  * [Developing new transports](#developing-new-transports)
+* [Development documentation](#development-documentation)
 
 ## <a name="apioverview"/> API Overview
 This section describes the specific South-bound API implemented by this IoTAgent. For the Configuration API and other
 APIs concerning general IoTAgents, check the [API Reference section](#apireference);
 
-### <a name="protocol"/> Ultralight 2.0 Protocol
+### Ultralight 2.0 Protocol
 #### Description
 Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and communications where the
 bandwidth and device memory may be limited resources.
@@ -70,7 +70,7 @@ in a transformation expression in the IoTAgent). In this cases, when a reverse e
 bidirectional attribute is modified, the IoTAgent sends a command to the original device, with the name defined in the
 reverse expression attribute and the ID of the device (see Commands Syntax, just above).
 
-### <a name="transportprotocol"/> Transport Protocol
+### Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
 scenarios.
@@ -163,7 +163,7 @@ The result of the command must be reported in the following topic:
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
 
-### <a name="transport"/> Developing new transports
+### Developing new transports
 
 The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
 transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
@@ -188,7 +188,7 @@ modules to identify which module should attend the request.
 All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
 IoT Agent Node.js library to interact process incoming requests.
 
-## <a name="development"/> Development documentation
+## Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 
