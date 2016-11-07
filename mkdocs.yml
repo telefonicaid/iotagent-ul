@@ -12,5 +12,7 @@ pages:
   - Home: 'index.md'
   - 'User & Programmers Manual':
     - 'API Walkthrough & Development intro': 'usermanual.md'
+  - 'Installation & Administration Manual': 
+    - 'Installation Guide': 'installationguide.md'
     - 'Operations (logs & alarms)': 'operations.md'
-    - 'Installation & Administration Manual': 'installationguide.md'
+    
