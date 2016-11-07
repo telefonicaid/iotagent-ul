@@ -12,9 +12,7 @@ pages:
   - Home: README.md
   - 'Getting Started': 'README.md#apioverview'
   - 'User & Programmers Manual':
-  - ‘API Walkthrough & Development intro’: ‘docs/usermanual.md’
-  - ‘Operations (logs & alarms)’: ‘docs/operations.md’
-  - 'Docker': ‘Dockerfile’
-  - 'Installation & Administration Manual': ‘docs/installationguide.md’
-
-
+    - ‘API Walkthrough & Development intro’: ‘usermanual.md’
+    - ‘Operations (logs & alarms)’: ‘operations.md’
+    - 'Docker': ‘Dockerfile’
+    - 'Installation & Administration Manual': ‘installationguide.md’
