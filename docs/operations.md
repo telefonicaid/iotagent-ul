@@ -3,12 +3,17 @@
 
 * [Overview](#overview)
 * [Logs](#logs)
+* [Alarms](#alarms)
 * [Error naming code](#errorcode)
 
 
 ## <a name="overview"/>  Overview
 The following document shows all the errors that can appear in the IoTAgent Ultralight 2.0 log file, and gives a brief
 idea of the severity and how to react to those errors.
+
+Take into account that this Agent uses the IoT Agent Library for Node.js, and so can raise its alarms and log errors
+in addition to those particular of this agent. More information about those can be found in the
+[IoT Agent Library Operations Manual](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/operations.md).
 
 ## <a name="logs"/>  Logs
 The following section contains the error log entries that can appear in the IoTA logs, grouped by category.
@@ -78,6 +83,16 @@ connectivity from the IoTAgent to the broker.
 This fatal error will be risen when the IOTAgent cannot make the initial connection to the Mosquitto MQTT broker. If
 this error occurs, check the Mosquitto MQTT broker is up and running and check the connectivity from the IoTAgent to
 the broker.
+
+## <a name="alarms"/> Alarms
+
+The following table shows the alarms that can be raised in the Ultralight 2.0 IoTAgent library. All the alarms are signaled by an
+error log starting with the prefix "Raising [%s]:" (where %s is the alarm name). All the alarms are released by an info
+log with the prefix "Releasing [%s]".
+
+| Alarm name            | Description            |
+|:--------------------- |:---------------------- |
+| MQTTB-ALARM           | Indicates a persistent error accessing the Mosquitto MQTT Broker |
 
 ## <a name="errorcode"/> Error naming code
 Every error has a code composed of a prefix and an ID, codified with the following table:
