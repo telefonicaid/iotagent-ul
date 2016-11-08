@@ -5,3 +5,4 @@
 - Logrotate configure correctly all possible log files (#164)
 - FIX Command error response message not sent to context Broker (#176)
 - FIX Transformed data should include Metadata field (#179)
+- ADD alarms for the Mosquitto server #187Add alarms for the Mosquitto server #187
