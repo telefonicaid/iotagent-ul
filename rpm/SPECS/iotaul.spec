@@ -169,6 +169,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 
+* Tue Nov 09 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.4.0
+- Polling mode for HTTP commands (#24)
+- Duplicated TimeInstant when an active attribute is mapped to TimeInstant attributes (#150)
+- Add multientity, bidirectionality and expression plugins (#161)
+- Poll commands not removed after device request (#160)
+- Logrotate configure correctly all possible log files (#164)
+- FIX Command error response message not sent to context Broker (#176)
+- FIX Transformed data should include Metadata field (#179)
+- ADD alarms for the Mosquitto server #187Add alarms for the Mosquitto server #187
+
 * Tue Oct 04 2016 Daniel Moran <daniel.moranjimenez@telefonica.com> 1.3.0
 - Polling mode for HTTP commands (#24)
 - Duplicated TimeInstant when an active attribute is mapped to TimeInstant attributes (#150)
