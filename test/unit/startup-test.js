@@ -22,7 +22,6 @@
  */
 'use strict';
 var iotagentUl = require('../../'),
-    should = require('should'),
     config = require('../../lib/configService'),
     iotAgentConfig = require('../config-test.js');
 
@@ -52,7 +51,6 @@ describe('Startup tests', function() {
 
         it('should load the environment variables in the internal configuration', function(done) {
             iotagentUl.start(iotAgentConfig, function(error) {
-                should.not.exist(error);
                 config.getConfig().mqtt.host.should.equal('127.0.0.1');
                 config.getConfig().mqtt.port.should.equal('1883');
                 config.getConfig().mqtt.username.should.equal('usermqtt');
