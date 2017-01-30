@@ -33,6 +33,11 @@ config.http = {
     port: 7896
 };
 
+config.amqp = {
+    port: 5672,
+    exchange: 'amq.topic'
+};
+
 config.iota = {
     logLevel: 'FATAL',
     contextBroker: {

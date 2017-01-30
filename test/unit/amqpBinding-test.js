@@ -23,9 +23,87 @@
 
 'use strict';
 
-describe('AMQP Transport binding: measures', function() {
+var iotagentMqtt = require('../../'),
+    config = require('../config-test.js'),
+    nock = require('nock'),
+    async = require('async'),
+    request = require('request'),
+    utils = require('../utils'),
+    iotAgentLib = require('iotagent-node-lib'),
+    amqp = require('amqplib/callback_api'),
+    apply = async.apply,
+    contextBrokerMock,
+    amqpConn,
+    channel;
+
+function startConnection(exchange, callback) {
+    amqp.connect('amqp://localhost', function(err, conn) {
+        amqpConn = conn;
+
+        conn.createChannel(function(err, ch) {
+            ch.assertExchange(exchange, 'topic', {});
+
+            channel = ch;
+            callback(err);
+        });
+    });
+}
+
+describe.only('AMQP Transport binding: measures', function() {
+    beforeEach(function(done) {
+        var provisionOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceAMQP1.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        nock.cleanAll();
+
+        contextBrokerMock = nock('http://192.168.1.1:1026')
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+        async.series([
+            apply(iotagentMqtt.start, config),
+            apply(request, provisionOptions),
+            apply(startConnection, config.amqp.exchange)
+        ], done);
+    });
+
+    afterEach(function(done) {
+        nock.cleanAll();
+
+        amqpConn.close();
+
+        async.series([
+            iotAgentLib.clearAll,
+            iotagentMqtt.stop
+        ], done);
+    });
+
     describe('When a new single measure arrives to a Device routing key', function() {
-        it('should send a new update context request to the Context Broker with just that attribute');
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+        });
+
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            channel.publish(config.amqp.exchange, '/1234/MQTT_2/attrs/a', new Buffer('23'));
+            
+            setTimeout(function() {
+                contextBrokerMock.done();
+                done();
+            }, 100)
+        });
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
