@@ -24,11 +24,18 @@ var config = {};
 
 config.mqtt = {
     host: 'localhost',
-    port: 1883
+    port: 1883,
+    username: 'guest',
+    password: 'guest'
 };
 
 config.http = {
     port: 7896
+};
+
+config.amqp = {
+    port: 5672,
+    exchange: 'amq.topic'
 };
 
 config.iota = {
