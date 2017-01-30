@@ -49,7 +49,7 @@ function startConnection(exchange, callback) {
     });
 }
 
-describe.only('AMQP Transport binding: measures', function() {
+describe('AMQP Transport binding: measures', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
