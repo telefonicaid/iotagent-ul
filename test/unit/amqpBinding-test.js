@@ -98,16 +98,52 @@ describe.only('AMQP Transport binding: measures', function() {
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
             channel.publish(config.amqp.exchange, '/1234/MQTT_2/attrs/a', new Buffer('23'));
-            
+
             setTimeout(function() {
                 contextBrokerMock.done();
                 done();
-            }, 100)
+            }, 100);
         });
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
-        it('should send a new update context request to the Context Broker with just that attribute');
+        var groupCreation = {
+            url: 'http://localhost:4041/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroupAMQP.json'),
+            headers: {
+                'fiware-service': 'TestService',
+                'fiware-servicepath': '/testingPath'
+            }
+        };
+
+        beforeEach(function(done) {
+            contextBrokerMock = nock('http://192.168.1.1:1026')
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'TestService')
+                .matchHeader('fiware-servicepath', '/testingPath')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+
+            request(groupCreation, function(error, response, body) {
+                done();
+            });
+        });
+
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            channel.publish(config.amqp.exchange, '/80K09H324HV8732/MQTT_UNPROVISIONED/attrs/a', new Buffer('23'));
+
+            setTimeout(function() {
+                contextBrokerMock.done();
+                done();
+            }, 100);
+        });
     });
 
     describe('When a new multiple measure arrives to a Device routing key with one measure', function() {
