@@ -132,7 +132,7 @@ is a JavaSript file, that contains the following sections:
 * **config.iota**: general IoT Agent configuration. This group of attributes is common to all types of IoT Agents, and
 is described in the global [IoT Agent Library Documentation](https://github.com/telefonicaid/iotagent-node-lib#configuration).
 * **config.mqtt**: configuration for the MQTT transport protocol binding of the IoTA (described in the following subsections).
-* **config.http**: configuration for the MQTT transport protocol binding of the IoTA (described in the following subsections).
+* **config.http**: configuration for the HTTP transport protocol binding of the IoTA (described in the following subsections).
 * **config.defaultKey**: default API Key, for devices lacking a provided Configuration.
 * **config.defaultTransport**: code of the MQTT transport that will be used to resolve incoming commands and lazy attributes
  in case a transport protocol could not be inferred for the device.
