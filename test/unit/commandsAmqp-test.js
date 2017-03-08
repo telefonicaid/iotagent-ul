@@ -51,7 +51,7 @@ function startConnection(exchange, callback) {
     });
 }
 
-describe('MQTT Transport binding: commands', function() {
+describe('AMQP Transport binding: commands', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -187,6 +187,84 @@ describe('MQTT Transport binding: commands', function() {
     });
 
     describe('When a command update arrives with a single text value', function() {
-        it('should publish the command information in the AMQP topic');
+        var provisionOptionsAlt = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand6.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            configurationOptions = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/services',
+                method: 'POST',
+                json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            },
+            commandOptions = {
+                url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+                method: 'POST',
+                json: utils.readExampleFile('./test/contextRequests/updateCommand3.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            contextBrokerMock = nock('http://192.168.1.1:1026')
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/NGSI9/registerContext')
+                .reply(200,
+                    utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus3.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+            request(configurationOptions, function(error, response, body) {
+                request(provisionOptionsAlt, function(error, response, body) {
+                    done();
+                });
+            });
+        });
+
+        it('should publish the command information in the AMQP topic', function(done) {
+            var commandMsg = 'MQTT_4@PING|22',
+                payload;
+
+            channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
+
+            channel.assertQueue('client-queue', {exclusive: false}, function(err, q) {
+                channel.bindQueue(q.queue, config.amqp.exchange, '.ALTERNATIVE.MQTT_4.cmd');
+
+                channel.consume(q.queue, function(msg) {
+                    payload = msg.content.toString();
+                }, {noAck: true});
+
+                request(commandOptions, function(error, response, body) {
+                    setTimeout(function() {
+                        should.exist(payload);
+                        payload.should.equal(commandMsg);
+                        done();
+                    }, 1000);
+                });
+            });
+        });
     });
 });
