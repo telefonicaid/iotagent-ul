@@ -23,20 +23,153 @@
 
 'use strict';
 
-describe('MQTT Transport binding: commands', function() {
+var iotagentMqtt = require('../../'),
+    config = require('../config-test.js'),
+    nock = require('nock'),
+    async = require('async'),
+    request = require('request'),
+    utils = require('../utils'),
+    should = require('should'),
+    iotAgentLib = require('iotagent-node-lib'),
+    amqp = require('amqplib/callback_api'),
+    apply = async.apply,
+    contextBrokerMock,
+    oldTransport,
+    amqpConn,
+    channel;
 
-    describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
-        it('should return a 200 OK without errors');
-        it('should reply with the appropriate command information');
-        it('should update the status in the Context Broker');
-        it('should publish the command information in the MQTT topic');
+function startConnection(exchange, callback) {
+    amqp.connect('amqp://localhost', function(err, conn) {
+        amqpConn = conn;
+
+        conn.createChannel(function(err, ch) {
+            ch.assertExchange(exchange, 'topic', {});
+
+            channel = ch;
+            callback(err);
+        });
+    });
+}
+
+describe('MQTT Transport binding: commands', function() {
+    beforeEach(function(done) {
+        var provisionOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand5.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        config.logLevel = 'INFO';
+
+        nock.cleanAll();
+
+        contextBrokerMock = nock('http://192.168.1.1:1026')
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/NGSI9/registerContext')
+            .reply(200,
+                utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+
+        contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+        oldTransport = config.defaultTransport;
+        config.defaultTransport = 'AMQP';
+
+        async.series([
+            apply(iotagentMqtt.start, config),
+            apply(request, provisionOptions),
+            apply(startConnection, config.amqp.exchange)
+        ], done);
     });
 
-    describe('When a command update arrives to the MQTT command topic', function() {
+    afterEach(function(done) {
+        nock.cleanAll();
+
+        amqpConn.close();
+
+        config.defaultTransport = oldTransport;
+
+        async.series([
+            iotAgentLib.clearAll,
+            iotagentMqtt.stop
+        ], done);
+    });
+
+    describe.only('When a command arrive to the Agent for a device with the AMQP protocol', function() {
+        var commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus1.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+        });
+
+        it('should return a 200 OK without errors', function(done) {
+            request(commandOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+        it('should reply with the appropriate command information', function(done) {
+            request(commandOptions, function(error, response, body) {
+                should.exist(body);
+                done();
+            });
+        });
+        it('should update the status in the Context Broker', function(done) {
+            request(commandOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+        it('should publish the command information in the AMQP topic', function(done) {
+            var commandMsg = 'MQTT_2@PING|data=22',
+                payload;
+
+            channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
+
+            channel.assertQueue('client-queue', {exclusive: false}, function(err, q) {
+                channel.bindQueue(q.queue, config.amqp.exchange, '/' + config.defaultKey + '/MQTT_2/cmd');
+
+                channel.consume(q.queue, function(msg) {
+                    payload = msg.content.toString();
+                }, {noAck: true});
+
+                request(commandOptions, function(error, response, body) {
+                    setTimeout(function() {
+                        should.exist(payload);
+                        payload.should.equal(commandMsg);
+                        done();
+                    }, 1000);
+                });
+            });
+        });
+    });
+
+    describe('When a command update arrives to the AMQP command topic', function() {
         it('should send an update request to the Context Broker');
     });
 
     describe('When a command update arrives with a single text value', function() {
-        it('should publish the command information in the MQTT topic');
+        it('should publish the command information in the AMQP topic');
     });
 });

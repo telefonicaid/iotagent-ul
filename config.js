@@ -47,6 +47,12 @@ config.mqtt = {
     //password: ''
 };
 
+config.amqp = {
+    exchange: 'iota-exchange',
+    queue: 'iotaqueue',
+    options: {durable: true}
+};
+
 /**
  * Conmfiguration for the HTTP transport binding.
  */
