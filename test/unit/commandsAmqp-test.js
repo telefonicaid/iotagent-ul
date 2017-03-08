@@ -166,7 +166,24 @@ describe('MQTT Transport binding: commands', function() {
     });
 
     describe('When a command update arrives to the AMQP command topic', function() {
-        it('should send an update request to the Context Broker');
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus2.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
+        });
+
+        it('should send an update request to the Context Broker', function(done) {
+            channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
+            channel.publish(
+                config.amqp.exchange, '.1234.MQTT_2.cmdexe', new Buffer('MQTT_2@PING|1234567890'));
+
+            setTimeout(function() {
+                contextBrokerMock.done();
+                done();
+            }, 200);
+        });
     });
 
     describe('When a command update arrives with a single text value', function() {
