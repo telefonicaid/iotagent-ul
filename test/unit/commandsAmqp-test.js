@@ -103,7 +103,7 @@ describe('MQTT Transport binding: commands', function() {
         ], done);
     });
 
-    describe.only('When a command arrive to the Agent for a device with the AMQP protocol', function() {
+    describe('When a command arrive to the Agent for a device with the AMQP protocol', function() {
         var commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
