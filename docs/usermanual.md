@@ -163,6 +163,28 @@ The result of the command must be reported in the following topic:
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
 
+#### AMQP
+
+AMQP stands for Advance Message Queuing protocol, and is one of the most popular protocols for message-queue systems.
+Altough the protocol itself is software independent and allows for a great architectural flexibility, this transport
+binding has been designed to work with RabbitMQ, in a way that closely resembles the MQTT binding (in the previous section).
+
+The binding connects the IoT Agent to an exchange (usually `amq.topic`) and creates two queues (to share between all
+the instances of the IoTAgents in a cluster environment): one for the incoming measures, and another for command
+result update messages (named as the measure one, adding the `_commands` sufix).
+
+For both measure reporting and command update status the mechanism is much the same as in the case of the MQTT binding: all
+the messages must be published to the selected exchange, using the following routing keys:
+
+| Key pattern                           | Meaning                    |
+| ------------------------------------- | -------------------------- |
+| .<apiKey>.<deviceId>.attrs            | Multiple measure reporting |
+| .<apiKey>.<deviceId>.attrs.<attrName> | Single measure reporting   |
+| .<apiKey>.<deviceId>.cmd              | Command reception          |
+| .<apiKey>.<deviceId>.cmdexe           | Command update message     |
+
+The payload is the same as for the other bindings.
+
 ### Developing new transports
 
 The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
