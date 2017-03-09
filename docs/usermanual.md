@@ -166,7 +166,7 @@ The command execution and command reporting payload format is specified under th
 #### AMQP
 
 AMQP stands for Advance Message Queuing protocol, and is one of the most popular protocols for message-queue systems.
-Altough the protocol itself is software independent and allows for a great architectural flexibility, this transport
+Although the protocol itself is software independent and allows for a great architectural flexibility, this transport
 binding has been designed to work with RabbitMQ, in a way that closely resembles the MQTT binding (in the previous section).
 
 The binding connects the IoT Agent to an exchange (usually `amq.topic`) and creates two queues (to share between all
