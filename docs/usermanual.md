@@ -75,9 +75,7 @@ Ultralight 2.0 defines a payload describing measures and commands to share betwe
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
 scenarios.
 
-This transport protocol binding has not been implemented yet.
-
-The following sections describe the bindings currently supported, or under development.
+The following sections describe the bindings currently supported: HTTP, MQTT and AMQP.
 
 #### HTTP
 There are three possible interactions defined in the HTTP binding: requests with GET, requests with POST and commands.
