@@ -75,9 +75,7 @@ Ultralight 2.0 defines a payload describing measures and commands to share betwe
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different
 scenarios.
 
-This transport protocol binding has not been implemented yet.
-
-The following sections describe the bindings currently supported, or under development.
+The following sections describe the bindings currently supported: HTTP, MQTT and AMQP.
 
 #### HTTP
 There are three possible interactions defined in the HTTP binding: requests with GET, requests with POST and commands.
@@ -162,6 +160,31 @@ The result of the command must be reported in the following topic:
 <apiKey>/<deviceId>/cmdexe
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
+
+#### AMQP
+
+[AMQP](https://www.amqp.org/) stands for Advance Message Queuing Protocol, and is one of the most popular protocols for message-queue systems.
+Although the protocol itself is software independent and allows for a great architectural flexibility, this transport
+binding has been designed to work with the [RabbitMQ](https://www.rabbitmq.com/) broker, in a way that closely
+resembles the MQTT binding (in the previous section). In fact, for IoT Platform deployments in need of an scalable MQTT
+Broker, RabbitMQ with the MQTT plugin will be used, connecting the IoT Agent to RabbitMQ through AMQP and the clients
+to RabbitMQ through MQTT.
+
+The binding connects the IoT Agent to an exchange (usually `amq.topic`) and creates two queues (to share between all
+the instances of the IoTAgents in a cluster environment): one for the incoming measures, and another for command
+result update messages (named as the measure one, adding the `_commands` sufix).
+
+For both measure reporting and command update status the mechanism is much the same as in the case of the MQTT binding: all
+the messages must be published to the selected exchange, using the following routing keys:
+
+| Key pattern                           | Meaning                    |
+| ------------------------------------- | -------------------------- |
+| .<apiKey>.<deviceId>.attrs            | Multiple measure reporting |
+| .<apiKey>.<deviceId>.attrs.<attrName> | Single measure reporting   |
+| .<apiKey>.<deviceId>.cmd              | Command reception          |
+| .<apiKey>.<deviceId>.cmdexe           | Command update message     |
+
+The payload is the same as for the other bindings.
 
 ### Developing new transports
 
