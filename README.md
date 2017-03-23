@@ -9,10 +9,10 @@
 
 * [Description](#description)
 * [Build & Install](#installation)
-* [API Overview] (#apioverview)
-* [API Reference Documentation] (#apireference)
-* [Development documentation] (#development)
-* [Testing] (#testing)
+* [API Overview](#apioverview)
+* [API Reference Documentation](#apireference)
+* [Development documentation](#development)
+* [Testing](#testing)
 
 ## <a name="description"/> Description
 This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
