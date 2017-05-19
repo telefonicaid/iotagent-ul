@@ -38,7 +38,7 @@ An Overview of the API can be found in the [User & Programmers Manual](docs/user
 
 ## <a name="apireference"/> API Reference Documentation
 
-Apiary reference for the Configuration API can be found [here]().
+Apiary reference for the Configuration API can be found [here](http://docs.telefonicaiotiotagents.apiary.io/#reference/configuration-api).
 More information about IoTAgents and their APIs can be found in the IoTAgent Library [here](https://github.com/telefonicaid/iotagent-node-lib).
 
 ## <a name="development"/> Development documentation
