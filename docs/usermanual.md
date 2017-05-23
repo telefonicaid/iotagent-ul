@@ -143,6 +143,11 @@ In order to send a single measure value to the server, the device must publish t
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
 sending.
 
+or instance, if using [Mosquitto](https://mosquitto.org/) with a device with ID `id_sen1`, API Key `ABCDEF` and attribute
+IDs `h` and `t`, then humidity measures are reported this way:
+
+    $ mosquitto_pub -t /ABCDEF/id_sen1/attrs/h -m 70 -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+
 ##### Sending multiple measures in one message
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 ```
@@ -150,6 +155,11 @@ In order to send multiple measures in a single message, a device must publish a 
 ```
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
 payload (with or without measure groups).
+
+For instance, if using [Mosquitto](https://mosquitto.org/) with a device with ID `id_sen1`, API Key `ABCDEF` and attribute
+IDs `h` and `t`, then all measures (humidity and temperature) are reported this way:
+
+    $ mosquitto_pub -t /ABCDEF/id_sen1/attrs -m 'h|70|t|15' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
 
 ##### Commands
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
@@ -166,6 +176,58 @@ The result of the command must be reported in the following topic:
 <apiKey>/<deviceId>/cmdexe
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
+
+For instance, if a user wants to send a command `ping` with parameters `data = 22`, he will send the following request
+to the Context Broker regarding an entity called `sen1` of type `sensor`:
+
+```
+{
+  "updateAction": "UPDATE",
+  "contextElements": [
+    {
+      "id": "sen1",
+      "type": "sensor",
+      "isPattern": "false",
+      "attributes": [
+        {
+          "name": "ping",
+          "type": "command",
+          "value": "22"
+        }
+      ]
+    }
+  ]
+}
+```
+
+If the API key associated to de device is `ABCDEF`, and the device ID related to `sen1` entity is `id_sen1`, this
+will generate a message in the `/ABCDEF/id_sen1/cmd` topic with the following payload:
+
+```
+id_sen1@ping|22
+```
+
+If using [Mosquitto](https://mosquitto.org/), such a command is received by running the `mosquitto_sub` script:
+
+    $ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+    /ABCDEF/id_sen1/cmd id_sen1@ping|22
+
+At this point, Context Broker will have updated the value of `ping_status` to `PENDING` for `sen1` entity. Neither
+`ping_info` nor `ping` are updated.
+
+Once the device has executed the command, it can publish its results in the `/ABCDEF/id_sen1/cmdexe` topic with a
+payload with the following format:
+
+```
+id_sen1@ping|1234567890
+```
+
+If using [Mosquitto](https://mosquitto.org/), such command result is sent by running the `mosquitto_pub` script:
+
+    $ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+
+In the end, Context Broker will have updated the values of `ping_info` and `ping_status` to `1234567890` and `OK`,
+respectively. `ping` attribute is never updated.
 
 #### AMQP binding
 [AMQP](https://www.amqp.org/) stands for Advance Message Queuing Protocol, and is one of the most popular protocols for message-queue systems.
