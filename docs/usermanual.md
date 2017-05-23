@@ -5,10 +5,10 @@
 * [API Overview](#apioverview)
   * [Ultralight 2.0 Protocol](#ultralight-20-protocol)
   * [Transport Protocol](#transport-protocol)
-  * [Developing new transports](#developing-new-transports)
+* [Developing new transports](#developing-new-transports)
 * [Development documentation](#development-documentation)
 
-## <a name="apioverview"/> API Overview
+## <a name="apioverview"></a> API Overview
 This section describes the specific South-bound API implemented by this IoTAgent. For the Configuration API and other
 APIs concerning general IoTAgents, check the [API Reference section](#apireference);
 
@@ -39,6 +39,12 @@ Measure groups can additionaly have an optional timestamp, with the following sy
 ```
 The timestamp will be added as a prefix of the measures themselves, separated by a '|'. The attribute will be translated
 to a `TimeInstant` attribute in the final entity.T
+
+#### Active versus passive attributes
+Current version of the agent only supports active attributes, i.e. those attributes actively reported
++by the device to the agent. Passive or lazy attributes, i.e. those attributes whose value is only given upon explicit
++request from the agent, are not implemented. Please check the issue
++[#23](https://github.com/telefonicaid/iotagent-ul/issues/23) for more details and updates regarding its implementation.
 
 #### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:
@@ -77,7 +83,7 @@ scenarios.
 
 The following sections describe the bindings currently supported: HTTP, MQTT and AMQP.
 
-#### HTTP
+#### HTTP binding
 There are three possible interactions defined in the HTTP binding: requests with GET, requests with POST and commands.
 
 ##### Requests with GET requests
@@ -116,7 +122,7 @@ is described in the protocol section (and its shared with the push commands). Wh
 execution of the command, it will send the response in the same way measurments are reported, but using the **command
 result format** as exposed in the [Protocol section](#protocol).
 
-#### MQTT
+#### MQTT binding
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
@@ -161,8 +167,7 @@ The result of the command must be reported in the following topic:
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
 
-#### AMQP
-
+#### AMQP binding
 [AMQP](https://www.amqp.org/) stands for Advance Message Queuing Protocol, and is one of the most popular protocols for message-queue systems.
 Although the protocol itself is software independent and allows for a great architectural flexibility, this transport
 binding has been designed to work with the [RabbitMQ](https://www.rabbitmq.com/) broker, in a way that closely
@@ -186,8 +191,7 @@ the messages must be published to the selected exchange, using the following rou
 
 The payload is the same as for the other bindings.
 
-### Developing new transports
-
+## <a name="developing-new-transports"></a> Developing new transports
 The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
 transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
 Those module must export the following fields:
@@ -211,7 +215,7 @@ modules to identify which module should attend the request.
 All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
 IoT Agent Node.js library to interact process incoming requests.
 
-## Development documentation
+## <a name="development-documentation"></a> Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 
