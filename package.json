@@ -54,7 +54,7 @@
     "istanbul": "~0.1.34",
     "sinon-chai": "2.4.0",
     "timekeeper": "0.0.5",
-    "mongodb": "*",
+    "mongodb": "2.2.10",
     "nock": "*"
   },
   "keywords": []
