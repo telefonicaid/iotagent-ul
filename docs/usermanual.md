@@ -49,14 +49,20 @@ Current version of the agent only supports active attributes, i.e. those attribu
 #### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:
 ```
-<device name>@<command name>|<param name>=<value>|....
+<device name>@<command name>|<command value>
 ```
 This indicates that the device (named 'device_name' in the Context Broker) has to execute the command 'command_name', with
-the given parameters. E.g.:
+the given value. E.g.:
 ```
-weatherStation167@ping|param1=1|param2=2
+Robot1@turn|left
 ```
-This example will tell the Weather Station 167 to reply to a ping message with the provided params.
+This example will tell the Robot 1 to turn to left.
+
+In the case of complex commands requiring parameters, the `command_value` could be used to implement parameter passing. E.g:
+```
+weatherStation167@ping|param1:1|param2:2
+```
+This example will tell the Weather Station 167 to reply to a ping message with the provided params. Note that `=` cannot be used instead of `:` given that `=` is [a forbidden character for Context Broker](https://fiware-orion.readthedocs.io/en/master/user/forbidden_characters/index.html), so the update at CB triggering the command would be never progressed.
 
 Once the command has finished its execution in the device, the reply to the server must adhere to the following format:
 ```
