@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dmoranj/iotagent-ul.git"
+    "url": "https://github.com/telefonicaid/iotagent-ul.git"
   },
   "bugs": {
-    "url": "https://github.com/dmoranj/iotagent-ul/issues"
+    "url": "https://github.com/telefonicaid/iotagent-ul/issues"
   },
   "main": "lib/iotagent-ul",
   "engines": {
