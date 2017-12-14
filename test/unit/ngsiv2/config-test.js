@@ -45,7 +45,7 @@ config.amqp = {
 };
 
 config.iota = {
-    logLevel: 'DEBUG',
+    logLevel: 'FATAL',
     contextBroker: {
         host: '192.168.1.1',
         port: '1026',
@@ -64,10 +64,12 @@ config.iota = {
     providerUrl: 'http://localhost:4041',
     deviceRegistrationDuration: 'P1M',
     defaultType: 'Thing',
-    defaultResource: '/iot/d'
+    defaultResource: '/iot/d',
+    defaultKey: '1234',
+    defaultTransport:'MQTT'
 };
 
-config.defaultKey = '1234';
-config.defaultTransport = 'MQTT';
+//config.defaultKey = '1234';
+//config.defaultTransport = 'MQTT';
 
 module.exports = config;

@@ -1,10 +1,10 @@
 {
   "a": {
-    "value": 23,
-    "type": "Integer"
+    "type": "Integer",
+    "value": 23
   },
   "b": {
-    "value": 98,
-    "type": "Integer"
+    "type": "Integer",
+    "value": 98
   }
 }

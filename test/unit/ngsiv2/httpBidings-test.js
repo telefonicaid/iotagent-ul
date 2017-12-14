@@ -17,12 +17,8 @@
  * License along with iotagent-ul.
  * If not, seehttp://www.gnu.org/licenses/.
  *
- * Modified by: Fernando Mendez Requena  - ATOS Research & Innovation
- * 
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
- *
- * Modified by: Fernando Mendez Requena - ATOS Research & Innovation 
  */
 
 'use strict';
@@ -59,8 +55,8 @@ describe('HTTP Transport binding: measures', function() {
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/MQTTId_2/attrs')
-            .reply(204);
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -103,11 +99,17 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
-                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post('/v2/entities/Second20%MQTT20%Device/attrs', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
                 .reply(204);
         });
 
+        it('should end up with a 200OK status code', function(done) {
+            request(getOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
             request(getOptions, function(error, response, body) {
                 contextBrokerMock.done();
@@ -141,14 +143,14 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v1/updateContext', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/unprovisionedSuccess.json'));
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
                 done();
@@ -211,8 +213,8 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
-                .reply(204);
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/timestampMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -245,8 +247,8 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .reply(204);
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -281,8 +283,8 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204);
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -317,14 +319,14 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204);
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
-                .reply(204);
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondSingleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -359,14 +361,14 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondMultipleMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -410,11 +412,11 @@ describe('HTTP Transport binding: measures', function() {
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             request(provisionOptions, function(error, response, body) {
                 done();
@@ -456,8 +458,8 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/unprovisionedAliasSuccess.json'));
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
                 done();
@@ -506,14 +508,14 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json'))
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/unprovisionedAliasSuccess.json'));
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure2.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
                 request(deviceCreation, function(error, response, body) {
@@ -560,10 +562,10 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
                 .post('/v1/updateContext')
                 .times(12)
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
                 .post('/v1/updateContext', function(body) {
                     var metadatas = 0;
 
@@ -574,7 +576,7 @@ describe('HTTP Transport binding: measures', function() {
                     }
                     return metadatas === body.contextElements[0].attributes.length - 1;
                 })
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             config.iota.timestamp = true;
 
@@ -640,9 +642,9 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/timeInstantDuplicatedSuccess.json'))
-                .post('/v1/updateContext', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
-                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/timeInstantDuplicatedSuccess.json'));
+                .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/timeInstantDuplicated.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'));
 
             config.iota.timestamp = true;
 
