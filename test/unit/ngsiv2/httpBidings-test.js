@@ -55,8 +55,8 @@ describe('HTTP Transport binding: measures', function() {
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .post('/v2/entities/MQTTId_2/attrs')
+            .reply(204); //utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -99,7 +99,7 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second20%MQTT20%Device/attrs', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
+                .post('/v2/entities/Second20%MQTT20%Device/attrs')
                 .reply(204);
         });
 
