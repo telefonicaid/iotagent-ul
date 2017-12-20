@@ -84,7 +84,7 @@ describe('HTTP Transport binding: measures', function() {
         ], done);
     });
 
-    describe('When a new single measure arrives for a Device, via HTTP GET', function() {
+    /*describe('When a new single measure arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -117,7 +117,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-/*
+
     describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
         var getOptions = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -197,7 +197,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-
+*/
 
     describe('When a measure with timestamp arrives for a Device, via HTTP GET', function() {
         var getOptions = {
@@ -215,8 +215,9 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/timestampMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
+                .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -234,7 +235,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When multiple mesasures arrive for a device via HTTP GET', function() {
+  /*  describe('When multiple mesasures arrive for a device via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
