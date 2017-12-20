@@ -9,10 +9,8 @@
         }
       }
     },
-  "TimeInstant":{
+    "TimeInstant":{
       "type": "DateTime",
       "value": "20160530T162522304Z"
     }
 }
-
-
