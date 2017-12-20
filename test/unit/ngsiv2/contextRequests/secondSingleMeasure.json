@@ -1,6 +1,6 @@
 {
   "b": {
-    "value": 98,
-    "type": "Integer"
+    "type": "degrees",
+    "value": "98"
   }
 }

@@ -1,10 +1,10 @@
 {
   "a": {
-    "type": "Integer",
-    "value": 23
+    "type": "celsius",
+    "value": "23"
   },
   "b": {
-    "type": "Integer",
-    "value": 98
+    "type": "degrees",
+    "value": "98"
   }
 }

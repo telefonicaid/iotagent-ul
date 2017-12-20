@@ -1,7 +1,7 @@
 {
     "Correlation":{
-    "type": "Integer",
-    "value": 23
+    	"type": "Integer",
+    	"value": "23"
     }
 
 }
