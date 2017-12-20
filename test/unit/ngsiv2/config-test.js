@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU Affero General Public
  * License along with iotagent-mqtt.
  * If not, seehttp://www.gnu.org/licenses/.
- * 
- * Modified by: Fernando Mendez Requena  - ATOS Research & Innovation
- * 
+ *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
 
@@ -64,12 +62,10 @@ config.iota = {
     providerUrl: 'http://localhost:4041',
     deviceRegistrationDuration: 'P1M',
     defaultType: 'Thing',
-    defaultResource: '/iot/d',
-    defaultKey: '1234',
-    defaultTransport:'MQTT'
+    defaultResource: '/iot/d'
 };
 
-//config.defaultKey = '1234';
-//config.defaultTransport = 'MQTT';
+config.defaultKey = '1234';
+config.defaultTransport = 'MQTT';
 
 module.exports = config;

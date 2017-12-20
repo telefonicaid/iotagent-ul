@@ -55,8 +55,8 @@ describe('HTTP Transport binding: measures', function() {
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/MQTTId_2/attrs')
-            .reply(204); //utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -84,7 +84,6 @@ describe('HTTP Transport binding: measures', function() {
         ], done);
     });
 
-/*
     describe('When a new single measure arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -100,7 +99,7 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second20%MQTT20%Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204);
         });
 
@@ -118,7 +117,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-
+/*
     describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
         var getOptions = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -269,42 +268,42 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 */
-    describe('When a new single measure arrives for a Device, via HTTP POST', function() {
-        var getOptions = {
-            url: 'http://localhost:' + config.http.port + '/iot/d',
-            method: 'POST',
-            qs: {
-                i: 'MQTT_2',
-                k: '1234'
-            },
-            headers: {
-                'Content-type': 'text/plain'
-            },
-            body: 'a|23'
-        };
+    // describe('When a new single measure arrives for a Device, via HTTP POST', function() {
+    //     var getOptions = {
+    //         url: 'http://localhost:' + config.http.port + '/iot/d',
+    //         method: 'POST',
+    //         qs: {
+    //             i: 'MQTT_2',
+    //             k: '1234'
+    //         },
+    //         headers: {
+    //             'Content-type': 'text/plain'
+    //         },
+    //         body: 'a|23'
+    //     };
 
-        beforeEach(function() {
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second20%MQTT20%Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204);
-        });
+    //     beforeEach(function() {
+    //         contextBrokerMock
+    //             .matchHeader('fiware-service', 'smartGondor')
+    //             .matchHeader('fiware-servicepath', '/gardens')
+    //             .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+    //             .reply(204);
+    //     });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
-                should.not.exist(error);
-                response.statusCode.should.equal(200);
-                done();
-            });
-        });
-        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            request(getOptions, function(error, response, body) {
-                contextBrokerMock.done();
-                done();
-            });
-        });
-    });
+    //     it('should end up with a 200OK status code', function(done) {
+    //         request(getOptions, function(error, response, body) {
+    //             should.not.exist(error);
+    //             response.statusCode.should.equal(200);
+    //             done();
+    //         });
+    //     });
+    //     it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+    //         request(getOptions, function(error, response, body) {
+    //             contextBrokerMock.done();
+    //             done();
+    //         });
+    //     });
+    // });
 
    /* describe('When multiple groups of measures arrive, via HTTP POST', function() {
         var getOptions = {
