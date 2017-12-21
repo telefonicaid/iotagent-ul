@@ -1,17 +1,5 @@
 {
-  "contextElements": [
-    {
-      "type": "AnMQTTDevice",
-      "isPattern": "false",
-      "id": "Second MQTT Device",
-      "attributes": [
-        {
-          "name": "a",
-          "type": "celsius",
-          "value": "23"
-        }
-      ]
-    }
-  ],
-  "updateAction": "UPDATE"
-}
+  "a": {
+    "type": "celsius",
+    "value": "23"
+  }

@@ -21,20 +21,20 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
+ 'use strict';
 
-var iotagentUl = require('../../../'),
-    config = require('./config-test.js'),
-    nock = require('nock'),
-    iotAgentLib = require('iotagent-node-lib'),
-    should = require('should'),
-    async = require('async'),
-    request = require('request'),
-    utils = require('../../utils'),
-    contextBrokerMock,
-    iotamMock;
+ var iotagentUl = require('../../../'),
+ config = require('./config-test.js'),
+ nock = require('nock'),
+ iotAgentLib = require('iotagent-node-lib'),
+ should = require('should'),
+ async = require('async'),
+ request = require('request'),
+ utils = require('../../utils'),
+ contextBrokerMock,
+ iotamMock;
 
-describe('HTTP Transport binding: measures', function() {
+ describe('HTTP Transport binding: measures', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -49,14 +49,14 @@ describe('HTTP Transport binding: measures', function() {
         nock.cleanAll();
 
         iotamMock = nock('http://localhost:8082')
-            .post('/protocols')
-            .reply(200, {});
+        .post('/protocols')
+        .reply(200, {});
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
-            .matchHeader('fiware-service', 'smartGondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+        .matchHeader('fiware-service', 'smartGondor')
+        .matchHeader('fiware-servicepath', '/gardens')
+        .post('/v1/updateContext')
+        .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -81,7 +81,7 @@ describe('HTTP Transport binding: measures', function() {
         async.series([
             iotAgentLib.clearAll,
             iotagentUl.stop
-        ], done);
+            ], done);
     });
 
     describe('When a new single measure arrives for a Device, via HTTP GET', function() {
@@ -97,10 +97,10 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function() {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204);
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+            .reply(204);
         });
 
         it('should end up with a 200OK status code', function(done) {
@@ -120,37 +120,37 @@ describe('HTTP Transport binding: measures', function() {
 
     describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
         var getOptions = {
-                url: 'http://localhost:' + config.http.port + '/iot/d',
-                method: 'GET',
-                qs: {
-                    i: 'MQTT_UNPROVISIONED',
-                    k: '80K09H324HV8732',
-                    d: 'a|23'
-                }
-            },
-            groupCreation = {
-                url: 'http://localhost:4041/iot/services',
-                method: 'POST',
-                json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
-                headers: {
-                    'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
-            };
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'GET',
+            qs: {
+                i: 'MQTT_UNPROVISIONED',
+                k: '80K09H324HV8732',
+                d: 'a|23'
+            }
+        },
+        groupCreation = {
+            url: 'http://localhost:4041/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+            headers: {
+                'fiware-service': 'TestService',
+                'fiware-servicepath': '/testingPath'
+            }
+        };
 
         beforeEach(function(done) {
             contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'TestService')
-                .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .matchHeader('fiware-service', 'TestService')
+            .matchHeader('fiware-servicepath', '/testingPath')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
 
             contextBrokerMock
-                .matchHeader('fiware-service', 'TestService')
-                .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+            .matchHeader('fiware-service', 'TestService')
+            .matchHeader('fiware-servicepath', '/testingPath')
+            .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
+            .reply(204);
 
             request(groupCreation, function(error, response, body) {
                 done();
@@ -170,6 +170,7 @@ describe('HTTP Transport binding: measures', function() {
                 done();
             });
         });
+
         it('should add a protocol to the registered devices', function(done) {
             var getDeviceOptions = {
                 url: 'http://localhost:4041/iot/devices/MQTT_UNPROVISIONED',
@@ -197,8 +198,6 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-
-
     describe('When a measure with timestamp arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -213,12 +212,12 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function() {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
                 .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
-        });
+            });
 
         it('should end up with a 200OK status code', function(done) {
             request(getOptions, function(error, response, body) {
@@ -235,7 +234,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-   describe('When multiple mesasures arrive for a device via HTTP GET', function() {
+    describe('When multiple mesasures arrive for a device via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -248,12 +247,12 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function() {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
                 .reply(204); //utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-        });
+            });
 
         it('should end up with a 200OK status code', function(done) {
             request(getOptions, function(error, response, body) {
@@ -271,44 +270,44 @@ describe('HTTP Transport binding: measures', function() {
     });
 
 
-     describe('When a new single measure arrives for a Device, via HTTP POST', function() {
-         var getOptions = {
-             url: 'http://localhost:' + config.http.port + '/iot/d',
-             method: 'POST',
-             qs: {
-                 i: 'MQTT_2',
-                 k: '1234'
-             },
-             headers: {
-                 'Content-type': 'text/plain'
-             },
-             body: 'a|23'
-         };
+    describe('When a new single measure arrives for a Device, via HTTP POST', function() {
+     var getOptions = {
+         url: 'http://localhost:' + config.http.port + '/iot/d',
+         method: 'POST',
+         qs: {
+             i: 'MQTT_2',
+             k: '1234'
+         },
+         headers: {
+             'Content-type': 'text/plain'
+         },
+         body: 'a|23'
+     };
 
-         beforeEach(function() {
-             contextBrokerMock
-                 .matchHeader('fiware-service', 'smartGondor')
-                 .matchHeader('fiware-servicepath', '/gardens')
-                 .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                 .reply(204);
-         });
+     beforeEach(function() {
+         contextBrokerMock
+         .matchHeader('fiware-service', 'smartGondor')
+         .matchHeader('fiware-servicepath', '/gardens')
+         .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+         .reply(204);
+     });
 
-         it('should end up with a 200OK status code', function(done) {
-             request(getOptions, function(error, response, body) {
-                 should.not.exist(error);
-                 response.statusCode.should.equal(200);
-                 done();
-             });
+     it('should end up with a 200OK status code', function(done) {
+         request(getOptions, function(error, response, body) {
+             should.not.exist(error);
+             response.statusCode.should.equal(200);
+             done();
          });
-         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-             request(getOptions, function(error, response, body) {
-                 contextBrokerMock.done();
-                 done();
-             });
+     });
+     it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+         request(getOptions, function(error, response, body) {
+             contextBrokerMock.done();
+             done();
          });
-    });
+     });
+ });
 
- describe('When multiple groups of measures arrive, via HTTP POST', function() {
+    describe('When multiple groups of measures arrive, via HTTP POST', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -324,19 +323,19 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function() {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
 
-            contextBrokerMock
+                contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities/Second%20MQTT%20Device/attrs', 
-                    utils.readExampleFile('./test/contextRequests/secondSingleMeasure.json'))
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
                 .reply(204); //utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
-        });
+            });
 
         it('should end up with a 200OK status code', function(done) {
             request(getOptions, function(error, response, body) {
@@ -369,17 +368,19 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function() {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+                .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
 
-            contextBrokerMock
+                contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondMultipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-        });
+                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
+                .reply(204); //utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
+            });
 
         it('should end up with a 200OK status code', function(done) {
             request(getOptions, function(error, response, body) {
@@ -398,36 +399,36 @@ describe('HTTP Transport binding: measures', function() {
 
     describe('When a request arrives to the IoT Agent without Content-type header', function() {
         var postOptions = {
-                url: 'http://localhost:' + config.http.port + '/iot/d',
-                method: 'POST',
-                qs: {
-                    i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
-                    k: '1234',
-                    t: '2016-05-11T10:12:26.476659Z'
-                },
-                body: 'bat|75.0'
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'POST',
+            qs: {
+                i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
+                k: '1234',
+                t: '2016-05-11T10:12:26.476659Z'
             },
-            provisionOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceProduction.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            body: 'bat|75.0'
+        },
+        provisionOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceProduction.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             nock.cleanAll();
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
-                .post('/v1/updateContext')
-                .reply(200 ,
-                    utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .post('/v1/updateContext')
+            .reply(200 ,
+                utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
-                .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
-                .reply(204, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
+            .reply(204);
 
             request(provisionOptions, function(error, response, body) {
                 done();
@@ -446,36 +447,36 @@ describe('HTTP Transport binding: measures', function() {
 
     describe('When a measure arrives to the IoTA for a device belonging to a configuration', function() {
         var getOptions = {
-                url: 'http://localhost:' + config.http.port + '/iot/d',
-                method: 'GET',
-                qs: {
-                    i: 'MQTT_2',
-                    k: '80K09H324HV8732',
-                    d: 'c|23'
-                }
-            },
-            groupCreation = {
-                url: 'http://localhost:4041/iot/services',
-                method: 'POST',
-                json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'GET',
+            qs: {
+                i: 'MQTT_2',
+                k: '80K09H324HV8732',
+                d: 'c|23'
+            }
+        },
+        groupCreation = {
+            url: 'http://localhost:4041/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json'))
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json'))
                 .reply(204); //utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
-            request(groupCreation, function(error, response, body) {
-                done();
+                request(groupCreation, function(error, response, body) {
+                    done();
+                });
             });
-        });
 
         it('should use the configuration values for the attributes alias not included in the device', function(done) {
             request(getOptions, function(error, response, body) {
@@ -487,53 +488,53 @@ describe('HTTP Transport binding: measures', function() {
 
     describe('When there is a conflict between configuration and devices', function() {
         var getOptions = {
-                url: 'http://localhost:' + config.http.port + '/iot/d',
-                method: 'GET',
-                qs: {
-                    i: 'MQTT_3',
-                    k: '80K09H324HV8732',
-                    d: 'c|23'
-                }
-            },
-            deviceCreation = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice2.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            groupCreation = {
-                url: 'http://localhost:4041/iot/services',
-                method: 'POST',
-                json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'GET',
+            qs: {
+                i: 'MQTT_3',
+                k: '80K09H324HV8732',
+                d: 'c|23'
+            }
+        },
+        deviceCreation = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice2.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        },
+        groupCreation = {
+            url: 'http://localhost:4041/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs')
-                .reply(204);// utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs' ,
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json'))
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20MQTT%20Device/attrs' ,
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json'))
                 .reply(204);// utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
-            request(groupCreation, function(error, response, body) {
-                request(deviceCreation, function(error, response, body) {
-                    done();
+                request(groupCreation, function(error, response, body) {
+                    request(deviceCreation, function(error, response, body) {
+                        done();
+                    });
                 });
             });
-        });
 
         it('should use the device preference', function(done) {
             request(getOptions, function(error, response, body) {
@@ -543,59 +544,63 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-     
-
-     describe('When a real production request arrives to the IoTA', function() {
+    describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
-                url: 'http://localhost:' + config.http.port + '/iot/d',
-                method: 'POST',
-                qs: {
-                    i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
-                    k: '1234',
-                    t: '2016-05-11T10:12:26.476659Z'
-                },
-                headers: {
-                    'Content-type': 'text/plain'
-                },
-                body: 'tmp|24.4#hum|58.0#aco|0.1#apa|0.38#ao3|121.0#' +
-                'no2|115.0#pla|43.4551#plo|-3.83381#poa|28.0#spi|0.0#dia|0.0#mit|1492.0#pos|43.4630608,-3.8345434'
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'POST',
+            qs: {
+                i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
+                k: '1234',
+                t: '2016-05-11T10:12:26.476659Z'
             },
-            provisionProduction = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceProduction.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            headers: {
+                'Content-type': 'text/plain'
+            },
+            body: 'tmp|24.4#hum|58.0#aco|0.1#apa|0.38#ao3|121.0#' +
+            'no2|115.0#pla|43.4551#plo|-3.83381#poa|28.0#spi|0.0#dia|0.0#mit|1492.0#pos|43.4630608,-3.8345434'
+        },
+        provisionProduction = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceProduction.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
-                .reply(204)  //utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
-                .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
-                .times(12)
-                .reply(204) // utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
-                .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function(body) {
-                    var metadatas = 0;
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
+            .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
+            .times(12)
+            .reply(204)
+            .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function(body) {
+                var metadatas = 0;
+                var attributes = 0;
 
-                    for (var i = 0; i < body.contextElements[0].attributes.length; i++) {
-                        if (body.contextElements[0].attributes[i].metadatas) {
-                            metadatas += body.contextElements[0].attributes[i].metadatas.length;
+                for (var attribute in body) {
+                    if (body.hasOwnProperty(attribute)) {
+                        attributes ++;
+                        if(body[attribute].metadata) {
+                            for(var metadata in body[attribute].metadata) {
+                                metadatas ++;
+                            }
                         }
                     }
-                    return metadatas === body.contextElements[0].attributes.length - 1;
-                })
-                .reply(204); //utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                }
+                return metadatas === attributes -1;
+            })
+            .reply(204);
 
             config.iota.timestamp = true;
 
             nock('http://localhost:8082')
-                .post('/protocols')
-                .reply(200, {});
+            .post('/protocols')
+            .reply(200, {});
 
             iotagentUl.stop(function() {
                 iotagentUl.start(config, function(error) {
@@ -627,63 +632,63 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
-        var timeInstantRequest = {
-                url: 'http://localhost:' + config.http.port + '/iot/d',
-                method: 'POST',
-                qs: {
-                    i: 'timestampedDevice',
-                    k: '1234'
-                },
-                headers: {
-                    'Content-type': 'text/plain'
-                },
-                body: 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z'
-            },
-            provisionProduction = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+    // describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
+    //     var timeInstantRequest = {
+    //             url: 'http://localhost:' + config.http.port + '/iot/d',
+    //             method: 'POST',
+    //             qs: {
+    //                 i: 'timestampedDevice',
+    //                 k: '1234'
+    //             },
+    //             headers: {
+    //                 'Content-type': 'text/plain'
+    //             },
+    //             body: 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z'
+    //         },
+    //         provisionProduction = {
+    //             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+    //             method: 'POST',
+    //             json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
+    //             headers: {
+    //                 'fiware-service': 'smartGondor',
+    //                 'fiware-servicepath': '/gardens'
+    //             }
+    //         };
 
-        beforeEach(function(done) {
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/timestampedDevice/attrs')
-                .reply(204)// utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
-                .post('/v2/entities/timestampedDevice/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
-                .reply(204);// utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'));
+    //     beforeEach(function(done) {
+    //         contextBrokerMock
+    //             .matchHeader('fiware-service', 'smartGondor')
+    //             .matchHeader('fiware-servicepath', '/gardens')
+    //             .post('/v1/updateContext')
+    //             .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
+    //             .post('/v2/entities/timestampedDevice/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
+    //             .reply(204);// utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'));
 
-            config.iota.timestamp = true;
+    //         config.iota.timestamp = true;
 
-            nock('http://localhost:8082')
-                .post('/protocols')
-                .reply(200, {});
+    //         nock('http://localhost:8082')
+    //             .post('/protocols')
+    //             .reply(200, {});
 
-            iotagentUl.stop(function() {
-                iotagentUl.start(config, function(error) {
-                    request(provisionProduction, function(error, response, body) {
-                        done();
-                    });
-                });
-            });
-        });
+    //         iotagentUl.stop(function() {
+    //             iotagentUl.start(config, function(error) {
+    //                 request(provisionProduction, function(error, response, body) {
+    //                     done();
+    //                 });
+    //             });
+    //         });
+    //     });
 
-        afterEach(function() {
-            config.iota.timestamp = false;
-        });
+    //     afterEach(function() {
+    //         config.iota.timestamp = false;
+    //     });
 
-        it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
-            request(timeInstantRequest, function(error, response, body) {
-                should.not.exist(error);
-                contextBrokerMock.done();
-                done();
-            });
-        });
-    });
+    //     it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
+    //         request(timeInstantRequest, function(error, response, body) {
+    //             should.not.exist(error);
+    //             contextBrokerMock.done();
+    //             done();
+    //         });
+    //     });
+    // });
 });
