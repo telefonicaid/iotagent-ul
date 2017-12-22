@@ -188,7 +188,7 @@ describe('HTTP Transport binding: polling commands', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/pollingMeasure.json'))
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/pollingMeasure2.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/pollingMeasureSuccess.json'));
 
             contextBrokerMock
