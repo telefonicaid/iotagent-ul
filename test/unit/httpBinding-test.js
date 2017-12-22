@@ -215,7 +215,7 @@ describe('HTTP Transport binding: measures', function() {
 
                     response.statusCode.should.equal(200);
                     should.exist(parsedBody.transport);
-                    parsedBody.transport.should.equal('MQTT');
+                    parsedBody.transport.should.equal('HTTP');
                     done();
                 });
             });
