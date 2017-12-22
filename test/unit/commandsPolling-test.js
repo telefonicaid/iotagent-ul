@@ -204,7 +204,7 @@ describe('HTTP Transport binding: polling commands', function() {
             request(deviceRequest, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
-                body.should.equal('MQTT_2@PING');
+                body.should.equal('MQTT_2@PING|data=22');
                 done();
             });
         });
