@@ -56,7 +56,7 @@
     "sinon-chai": "2.4.0",
     "timekeeper": "0.0.5",
     "mongodb": "2.2.10",
-    "nock": "*"
+    "nock": "7.0.2"
   },
   "keywords": []
 }
