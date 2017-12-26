@@ -180,16 +180,26 @@ describe('HTTP Transport binding: polling commands', function() {
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                getCmd: 1
+                getCmd: 1,
+                d: 'a|23'
             }
         };
+        var deviceRequest_without_payload = {
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'GET',
+            qs: {
+                i: 'MQTT_2',
+                k: '1234',
+                getCmd: 1
+            }
+        };        
 
         beforeEach(function(done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/pollingMeasure2.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/pollingMeasureSuccess2.json'));
+                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/pollingMeasure.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/pollingMeasureSuccess.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -201,7 +211,7 @@ describe('HTTP Transport binding: polling commands', function() {
         });
 
         it('should return a list of the pending commands', function(done) {
-            request(deviceRequest, function(error, response, body) {
+            request(deviceRequest_without_payload, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 body.should.equal('MQTT_2@PING|data=22');
