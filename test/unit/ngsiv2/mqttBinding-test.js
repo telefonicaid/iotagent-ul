@@ -86,7 +86,7 @@ describe('MQTT Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs')//, utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204); // utils.readExampleFile('./test/unit/ngsi2/contextResponses/singleMeasureSuccess.json'));
         });
 
