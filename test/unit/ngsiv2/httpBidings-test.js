@@ -118,7 +118,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
+   /* describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
         var getOptions = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
                 method: 'GET',
