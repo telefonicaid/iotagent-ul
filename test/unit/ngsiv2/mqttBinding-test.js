@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU Affero General Public
  * License along with iotagent-ul.
  * If not, seehttp://www.gnu.org/licenses/.
- 
  * Modified by: Fernando Mendez Requena  - ATOS Research & Innovation
-
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
  */
@@ -79,15 +77,15 @@ describe('MQTT Transport binding: measures', function() {
             iotagentMqtt.stop
         ], done);
     });
-   
-   
+
     describe('When a new single measure arrives to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204); // utils.readExampleFile('./test/unit/ngsi2/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
@@ -124,7 +122,8 @@ describe('MQTT Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
+                .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
                 .reply(204); //, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
@@ -143,14 +142,14 @@ describe('MQTT Transport binding: measures', function() {
     });
 
 
-      
     describe('When a new multiple measure arrives to a Device topic with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204)//utils.readExampleFile('./test/unit/ngsi2/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a single update context request with all the attributes', function(done) {
@@ -164,13 +163,13 @@ describe('MQTT Transport binding: measures', function() {
     });
 
 
-
     describe('When a new multiple measure arrives to a Device topic with a faulty payload', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204);
         });
 
@@ -191,7 +190,7 @@ describe('MQTT Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
                 .reply(204);
         });
@@ -206,21 +205,22 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-    
 
     describe('When a message with multiple measure groups arrives to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204); //, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
-                .reply(204); //, utils.readExampleFile('./test/unit/ngsi2/contextResponses/secondSingleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
@@ -232,22 +232,20 @@ describe('MQTT Transport binding: measures', function() {
             });
         });
     });
-    
-    
 
     describe('When multiple groups of measures arrive, with multiple attributes, to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .reply(204); // utils.readExampleFile('./test/unit/ngsi2/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
                 .reply(204); //, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         });
@@ -280,9 +278,10 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
-                .post('/v2/entities/TimeInstant%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
-                .reply(204) // utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'));
-            
+                .post('/v2/entities/TimeInstant%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
+                .reply(204);
+
             config.iota.timestamp = true;
 
             nock('http://localhost:8082')
@@ -313,5 +312,4 @@ describe('MQTT Transport binding: measures', function() {
             });
         });
     });*/
-
 });

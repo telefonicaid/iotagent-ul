@@ -23,16 +23,16 @@
 
  'use strict';
 
- var iotagentUl = require('../../../'),
- config = require('./config-test.js'),
- nock = require('nock'),
- iotAgentLib = require('iotagent-node-lib'),
- should = require('should'),
- async = require('async'),
- request = require('request'),
- utils = require('../../utils'),
- contextBrokerMock,
- iotamMock;
+var iotagentUl = require('../../../'),
+config = require('./config-test.js'),
+nock = require('nock'),
+iotAgentLib = require('iotagent-node-lib'),
+should = require('should'),
+async = require('async'),
+request = require('request'),
+utils = require('../../utils'),
+contextBrokerMock,
+iotamMock;
 
  describe('HTTP Transport binding: measures', function() {
     beforeEach(function(done) {
@@ -99,7 +99,8 @@
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
             .reply(204);
         });
 
@@ -149,7 +150,8 @@
             contextBrokerMock
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
-            .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
+            .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs',
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
             .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -214,9 +216,9 @@
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+            .post('/v2/entities/Second%20MQTT%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .reply(204);
             });
 
         it('should end up with a 200OK status code', function(done) {
@@ -249,9 +251,9 @@
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+            .post('/v2/entities/Second%20MQTT%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(204);
             });
 
         it('should end up with a 200OK status code', function(done) {
@@ -288,7 +290,8 @@
          contextBrokerMock
          .matchHeader('fiware-service', 'smartGondor')
          .matchHeader('fiware-servicepath', '/gardens')
-         .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+         .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
          .reply(204);
      });
 
@@ -325,16 +328,16 @@
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+            .post('/v2/entities/Second%20MQTT%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+            .reply(204);
 
                 contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
+                .reply(204);
             });
 
         it('should end up with a 200OK status code', function(done) {
@@ -370,16 +373,16 @@
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+            .post('/v2/entities/Second%20MQTT%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+            .reply(204);
 
                 contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
+                .reply(204);
             });
 
         it('should end up with a 200OK status code', function(done) {
@@ -579,20 +582,20 @@
             .times(12)
             .reply(204)
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function(body) {
-                var metadatas = 0;
+                var i = 0;
                 var attributes = 0;
 
                 for (var attribute in body) {
                     if (body.hasOwnProperty(attribute)) {
-                        attributes ++;
-                        if(body[attribute].metadata) {
-                            for(var metadata in body[attribute].metadata) {
-                                metadatas ++;
+                        attributes++;
+                        if (body[attribute].metadata) {
+                            for (i in body[attribute].metadata) {
+                                i++;
                             }
                         }
                     }
                 }
-                return metadatas === attributes -1;
+                return i === attributes - 1;
             })
             .reply(204);
 
@@ -631,8 +634,8 @@
             });
         });
     });
-
-    /*describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
+    /*
+    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
          var timeInstantRequest = {
                  url: 'http://localhost:' + config.http.port + '/iot/d',
                  method: 'POST',
@@ -661,8 +664,9 @@
                  .matchHeader('fiware-servicepath', '/gardens')
                  .post('/v1/updateContext')
                  .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
-                 .post('/v2/entities/timestampedDevice/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
-                 .reply(204);// utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'));
+                 .post('/v2/entities/timestampedDevice/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
+                 .reply(204);
 
              config.iota.timestamp = true;
 
@@ -690,5 +694,5 @@
                  done();
              });
          });
-     });*/
+    });*/
 });

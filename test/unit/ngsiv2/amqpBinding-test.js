@@ -92,8 +92,9 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204);//, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
