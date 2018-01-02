@@ -37,7 +37,7 @@ var iotagentMqtt = require('../../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://localhost', function(err, conn) {
+    amqp.connect('amqp://172.17.0.2', function(err, conn) {
         amqpConn = conn;
 
         conn.createChannel(function(err, ch) {
@@ -87,14 +87,14 @@ describe('AMQP Transport binding: measures', function() {
         ], done);
     });
 
-    describe('When a new single measure arrives to a Device routing key', function() {
+   describe('When a new single measure arrives to a Device routing key', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204) // utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .reply(204); // utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
@@ -106,8 +106,8 @@ describe('AMQP Transport binding: measures', function() {
             }, 100);
         });
     });
-
-    /*describe('When a new measure arrives for an unprovisioned Device', function() {
+    
+    describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
             url: 'http://localhost:4041/iot/services',
             method: 'POST',
@@ -129,8 +129,9 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+                .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs',
+                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
+                .reply(204);
 
             request(groupCreation, function(error, response, body) {
                 done();
@@ -147,13 +148,14 @@ describe('AMQP Transport binding: measures', function() {
         });
     });
 
-    describe('When a new multiple measure arrives to a Device routing key with one measure', function() {
+   describe('When a new multiple measure arrives to a Device routing key with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a single update context request with all the attributes', function(done) {
@@ -171,8 +173,9 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
         });
 
         it('should silently ignore the error (without crashing)', function(done) {
@@ -189,8 +192,9 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+                .reply(204);
         });
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
@@ -208,14 +212,16 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/singleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondSingleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                    utils.readExampleFile('./test/contextRequests/secondSingleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
@@ -232,14 +238,16 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/multipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+                .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/secondMultipleMeasure.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
+                .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
@@ -252,7 +260,7 @@ describe('AMQP Transport binding: measures', function() {
         });
     });
 
-    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
+    /*describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
         var provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
