@@ -37,7 +37,7 @@ var iotagentMqtt = require('../../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://172.17.0.2', function(err, conn) {
+    amqp.connect('amqp://localhost', function(err, conn) {
         amqpConn = conn;
 
         conn.createChannel(function(err, ch) {
@@ -106,8 +106,8 @@ describe('AMQP Transport binding: measures', function() {
             }, 100);
         });
     });
-    
-    describe('When a new measure arrives for an unprovisioned Device', function() {
+
+   describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
             url: 'http://localhost:4041/iot/services',
             method: 'POST',
@@ -173,7 +173,7 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204);
         });
@@ -219,8 +219,8 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs', 
-                    utils.readExampleFile('./test/contextRequests/secondSingleMeasure.json'))
+                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
                 .reply(204);
         });
 
