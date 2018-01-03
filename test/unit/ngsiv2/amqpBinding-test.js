@@ -37,7 +37,7 @@ var iotagentMqtt = require('../../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://172.17.0.2', function(err, conn) {
+    amqp.connect('amqp://localhost', function(err, conn) {
         amqpConn = conn;
 
         conn.createChannel(function(err, ch) {
