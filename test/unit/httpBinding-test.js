@@ -197,7 +197,7 @@ describe('HTTP Transport binding: measures', function() {
         });
         it('should add a transport to the registered devices', function(done) {
             var getDeviceOptions = {
-                url: 'http://localhost:4041/iot/devices/MQTT_UNPROVISIONED',
+                url: 'http://localhost:' + config.iota.server.port +'/iot/devices/MQTT_UNPROVISIONED',
                 method: 'GET',
                 headers: {
                     'fiware-service': 'TestService',
