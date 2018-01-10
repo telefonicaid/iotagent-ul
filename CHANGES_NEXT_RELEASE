@@ -1,0 +1,1 @@
+- Allow get list of commands without sending measures (empty payload) [#234]
