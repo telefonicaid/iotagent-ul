@@ -489,7 +489,7 @@ iotamMock;
         });
     });
 
-    describe('When there is a conflict between configuration and devices', function() {
+    /*describe('When there is a conflict between configuration and devices', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -634,7 +634,6 @@ iotamMock;
             });
         });
     });
-    /*
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
          var timeInstantRequest = {
                  url: 'http://localhost:' + config.http.port + '/iot/d',

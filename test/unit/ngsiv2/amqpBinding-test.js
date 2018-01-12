@@ -260,7 +260,7 @@ describe('AMQP Transport binding: measures', function() {
         });
     });
 
-    /*describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
+    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
         var provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -308,5 +308,5 @@ describe('AMQP Transport binding: measures', function() {
                 done();
             }, 100);
         });
-    });*/
+    });
 });
