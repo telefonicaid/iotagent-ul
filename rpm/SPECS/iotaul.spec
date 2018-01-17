@@ -127,15 +127,15 @@ if [ $1 == 0 ]; then
 
   echo "[INFO] Removing application log files"
   # Log
-  [ -d %{_iotaul_log_dir} ] && rm -rfv %{_iotaul_log_dir}
+  [ -d %{_iotaul_log_dir} ] && rm -rf %{_iotaul_log_dir}
 
   echo "[INFO] Removing application run files"
   # Log
-  [ -d %{_iotaul_pid_dir} ] && rm -rfv %{_iotaul_pid_dir}
+  [ -d %{_iotaul_pid_dir} ] && rm -rf %{_iotaul_pid_dir}
 
   echo "[INFO] Removing application files"
   # Installed files
-  [ -d %{_install_dir} ] && rm -rfv %{_install_dir}
+  [ -d %{_install_dir} ] && rm -rf %{_install_dir}
 
   echo "[INFO] Removing application user"
   userdel -fr %{_project_user}
