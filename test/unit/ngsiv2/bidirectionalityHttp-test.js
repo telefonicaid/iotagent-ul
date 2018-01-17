@@ -23,13 +23,13 @@
 
 'use strict';
 
-var iotagentUl = require('../../'),
-    config = require('../config-test.js'),
+var iotagentUl = require('../../../'),
+    config = require('./config-test.js'),
     nock = require('nock'),
     iotAgentLib = require('iotagent-node-lib'),
     should = require('should'),
     request = require('request'),
-    utils = require('../utils'),
+    utils = require('../../utils'),
     mockedClientServer,
     contextBrokerMock;
 
