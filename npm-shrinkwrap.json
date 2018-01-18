@@ -2260,7 +2260,7 @@
       }
     },
     "iotagent-node-lib": {
-      "version": "git+https://github.com/dcalvoalonso/iotagent-node-lib.git#a4728c805bf1085c0f7d358b88db8580c48a9bca",
+      "version": "git+https://github.com/dcalvoalonso/iotagent-node-lib.git#8a7f2a1a15e90211a7a164e420c3c9b148bbd6e9",
       "requires": {
         "async": "1.5.2",
         "body-parser": "1.15.0",

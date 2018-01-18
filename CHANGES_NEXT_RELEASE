@@ -1,2 +1,4 @@
 - Fix transport in autoprovision device depending on binding [#235]
 - Allow get list of commands without sending measures (empty payload) [#234]
+Add: allow NGSIv2 for updating active attributes at CB, through configuration (#250)
+Add: NGSIv2 support for data transformation plugins (#250)
