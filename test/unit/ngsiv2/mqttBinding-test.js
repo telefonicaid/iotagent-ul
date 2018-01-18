@@ -260,12 +260,11 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-/*
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
         var provisionProduction = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
                 method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
+                 json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
                     'fiware-servicepath': '/gardens'
@@ -311,5 +310,5 @@ describe('MQTT Transport binding: measures', function() {
                 }, 100);
             });
         });
-    });*/
+    });
 });

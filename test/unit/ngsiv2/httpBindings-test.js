@@ -547,7 +547,7 @@ iotamMock;
         });
     });
 
-    /*describe('When a real production request arrives to the IoTA', function() {
+    describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -589,8 +589,11 @@ iotamMock;
                     if (body.hasOwnProperty(attribute)) {
                         attributes++;
                         if (body[attribute].metadata) {
-                            for (i in body[attribute].metadata) {
-                                i++;
+                            for (var metadata in body[attribute].metadata) {
+                                if (body[attribute].metadata.hasOwnProperty(metadata)) {
+                                    i++;
+                                }
+                                
                             }
                         }
                     }
@@ -634,6 +637,7 @@ iotamMock;
             });
         });
     });
+
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
          var timeInstantRequest = {
                  url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -650,7 +654,7 @@ iotamMock;
              provisionProduction = {
                  url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
                  method: 'POST',
-                 json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
+                 json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
                  headers: {
                      'fiware-service': 'smartGondor',
                      'fiware-servicepath': '/gardens'
@@ -663,7 +667,7 @@ iotamMock;
                  .matchHeader('fiware-servicepath', '/gardens')
                  .post('/v1/updateContext')
                  .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
-                 .post('/v2/entities/timestampedDevice/attrs',
+                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                  .reply(204);
 
@@ -693,5 +697,5 @@ iotamMock;
                  done();
              });
          });
-    });*/
+    });
 });

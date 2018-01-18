@@ -277,8 +277,8 @@ describe('AMQP Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
-                .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/timeInstantDuplicated.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'));
+                .post('/v2/entities/TimeInstant%20Device/attrs')
+                .reply(204);
 
             config.iota.timestamp = true;
 
