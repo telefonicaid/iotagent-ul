@@ -19,8 +19,8 @@
  *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
-
- * Modified by: Fernando Mendez Requena  - ATOS Research & Innovation
+ *
+ * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
 var config = {};
 

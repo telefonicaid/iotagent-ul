@@ -19,6 +19,8 @@
  * Modified by: Fernando Mendez Requena  - ATOS Research & Innovation
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
+ *
+ * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
 
 'use strict';

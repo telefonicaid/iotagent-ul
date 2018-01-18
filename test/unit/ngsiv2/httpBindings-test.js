@@ -19,6 +19,8 @@
  *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[iot_support@tid.es]
+ *
+ * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
 
  'use strict';
@@ -588,12 +590,9 @@ iotamMock;
                 for (var attribute in body) {
                     if (body.hasOwnProperty(attribute)) {
                         attributes++;
-                        if (body[attribute].metadata) {
-                            for (var metadata in body[attribute].metadata) {
-                                if (body[attribute].metadata.hasOwnProperty(metadata)) {
-                                    i++;
-                                }
-                                
+                        for (var metadata in body[attribute].metadata) {
+                            if (body[attribute].metadata.hasOwnProperty(metadata)) {
+                                i++;
                             }
                         }
                     }
