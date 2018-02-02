@@ -1,9 +1,9 @@
 {
-	"a": {
+	"temperature": {
 		"type": "celsius",
 		"value": "16"
 	},
-	"b": {
+	"humidity": {
 		"type": "degrees",
 		"value": "34"
 	}

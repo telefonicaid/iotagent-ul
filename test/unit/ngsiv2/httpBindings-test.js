@@ -41,7 +41,7 @@ iotamMock;
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
-            json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice1.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDevice1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -58,7 +58,8 @@ iotamMock;
         .matchHeader('fiware-service', 'smartGondor')
         .matchHeader('fiware-servicepath', '/gardens')
         .post('/v1/updateContext')
-        .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+        //.reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+        .reply(200, '{}');
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -93,7 +94,7 @@ iotamMock;
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'a|23'
+                d: 'temperature|23'
             }
         };
 
@@ -128,13 +129,13 @@ iotamMock;
             qs: {
                 i: 'MQTT_UNPROVISIONED',
                 k: '80K09H324HV8732',
-                d: 'a|23'
+                d: 'temperature|23'
             }
         },
         groupCreation = {
             url: 'http://localhost:4041/iot/services',
             method: 'POST',
-            json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
             headers: {
                 'fiware-service': 'TestService',
                 'fiware-servicepath': '/testingPath'
@@ -146,7 +147,7 @@ iotamMock;
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200, '{}');//utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
 
             contextBrokerMock
@@ -157,7 +158,7 @@ iotamMock;
             .reply(204);
 
             request(groupCreation, function(error, response, body) {
-                done();
+                done();  
             });
         });
 
@@ -210,7 +211,7 @@ iotamMock;
                 i: 'MQTT_2',
                 k: '1234',
                 t: '20160530T162522304Z',
-                d: 'a|23'
+                d: 'temperature|23'
             }
         };
 
@@ -245,7 +246,7 @@ iotamMock;
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'a|23|b|98'
+                d: 'temperature|23|humidity|98'
             }
         };
 
@@ -285,7 +286,7 @@ iotamMock;
          headers: {
              'Content-type': 'text/plain'
          },
-         body: 'a|23'
+         body: 'temperature|23'
      };
 
      beforeEach(function() {
@@ -323,7 +324,7 @@ iotamMock;
             headers: {
                 'Content-type': 'text/plain'
             },
-            body: 'a|23#b|98'
+            body: 'temperature|23#humidity|98'
         };
 
         beforeEach(function() {
@@ -368,7 +369,7 @@ iotamMock;
             headers: {
                 'Content-type': 'text/plain'
             },
-            body: 'a|23|b|98#a|16|b|34'
+            body: 'temperature|23|humidity|98#temperature|16|humidity|34'
         };
 
         beforeEach(function() {
@@ -428,8 +429,7 @@ iotamMock;
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .post('/v1/updateContext')
-            .reply(200 ,
-                utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200 ,'{}');//utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
@@ -525,7 +525,7 @@ iotamMock;
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200, '{}');//utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')

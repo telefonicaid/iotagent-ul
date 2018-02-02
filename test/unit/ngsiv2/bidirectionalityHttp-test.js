@@ -165,7 +165,7 @@ describe('Data Bidirectionality: HTTP', function() {
         });
     });
 
-    describe('When a bidirectional attribute is set and a new value arrives to a device with endpoint', function() {
+    /*describe('When a bidirectional attribute is set and a new value arrives to a device with endpoint', function() {
         beforeEach(function(done) {
             var provisionOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -255,5 +255,5 @@ describe('Data Bidirectionality: HTTP', function() {
                 done();
             });
         });
-    });
+    });*/
 });

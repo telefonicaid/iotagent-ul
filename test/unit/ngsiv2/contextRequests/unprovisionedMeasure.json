@@ -1,6 +1,6 @@
 {
-   "a": {
-          "type": "Integer",
+   "temperature": {
+          "type": "celsius",
           "value": "23"
        }
 }
