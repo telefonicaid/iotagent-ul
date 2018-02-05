@@ -43,7 +43,7 @@ describe('MQTT Transport binding: measures', function() {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
-            json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice1.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDevice1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -61,7 +61,7 @@ describe('MQTT Transport binding: measures', function() {
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200, '{}');
 
         iotagentMqtt.start(config, function() {
             request(provisionOptions, function(error, response, body) {
@@ -91,7 +91,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs/a', '23', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs/temperature', '23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -106,7 +106,7 @@ describe('MQTT Transport binding: measures', function() {
         var groupCreation = {
                 url: 'http://localhost:4041/iot/services',
                 method: 'POST',
-                json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+                json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
                 headers: {
                     'fiware-service': 'TestService',
                     'fiware-servicepath': '/testingPath'
@@ -118,7 +118,7 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, '{}');
 
 
             contextBrokerMock
@@ -126,7 +126,7 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
-                .reply(204); //, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
+                .reply(204);
 
             request(groupCreation, function(error, response, body) {
                 done();
@@ -134,7 +134,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            mqttClient.publish('/80K09H324HV8732/MQTT_UNPROVISIONED/attrs/a', '23', null, function(error) {
+            mqttClient.publish('/80K09H324HV8732/MQTT_UNPROVISIONED/attrs/temperature', '23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -155,7 +155,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a single update context request with all the attributes', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -198,7 +198,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23|b|98', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23|humidity|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -226,7 +226,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23#b|98', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23#humidity|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -249,11 +249,11 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
-                .reply(204); //, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'a|23|b|98#a|16|b|34', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23|humidity|98#temperature|16|humidity|34', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -278,7 +278,7 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
+                .reply(200, '{}')
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);
