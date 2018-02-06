@@ -3,7 +3,7 @@
     {
       "device_id": "MQTT_2",
       "protocol": "GENERIC_PROTO",
-      "entity_name": "Second MQTT Device",
+      "entity_name": "Second UL Device",
       "timezone": "America/Santiago",
       "entity_type": "AnMQTTDevice",
       "transport": "MQTT",

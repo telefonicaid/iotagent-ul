@@ -25,7 +25,7 @@
 
 'use strict';
 
-var iotagentMqtt = require('../../../'),
+var iotagentAMQP = require('../../../'),
     config = require('./config-test.js'),
     nock = require('nock'),
     async = require('async'),
@@ -64,15 +64,16 @@ describe('AMQP Transport binding: measures', function() {
         };
 
         nock.cleanAll();
-
+        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+        // as far as it is a 200 OK
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200, '{}');
 
         async.series([
-            apply(iotagentMqtt.start, config),
+            apply(iotagentAMQP.start, config),
             apply(request, provisionOptions),
             apply(startConnection, config.amqp.exchange)
         ], done);
@@ -85,7 +86,7 @@ describe('AMQP Transport binding: measures', function() {
 
         async.series([
             iotAgentLib.clearAll,
-            iotagentMqtt.stop
+            iotagentAMQP.stop
         ], done);
     });
 
@@ -96,11 +97,11 @@ describe('AMQP Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities/Second%20MQTT%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204); // utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
+                .reply(204);
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs.a', new Buffer('23'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs.temperature', new Buffer('23'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -121,17 +122,19 @@ describe('AMQP Transport binding: measures', function() {
         };
 
         beforeEach(function(done) {
+            // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+            // as far as it is a 200 OK
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+                .reply(200, '{}');
 
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs',
+                .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
                  utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
                 .reply(204);
 
@@ -141,7 +144,7 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.80K09H324HV8732.MQTT_UNPROVISIONED.attrs.a', new Buffer('23'));
+            channel.publish(config.amqp.exchange, '.80K09H324HV8732.UL_UNPROVISIONED.attrs.temperature', new Buffer('23'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -155,13 +158,13 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204);
         });
 
         it('should send a single update context request with all the attributes', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -175,7 +178,7 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204);
         });
@@ -194,13 +197,13 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                      utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
                 .reply(204);
         });
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23|b|98'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23|humidity|98'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -214,20 +217,20 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
                 .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23#b|98'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23#humidity|98'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -240,20 +243,20 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
                 .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23|b|98#a|16|b|34'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23|humidity|98#temperature|16|humidity|34'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -278,7 +281,7 @@ describe('AMQP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
-                .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
+                .reply(200,'{}')
                 .post('/v2/entities/TimeInstant%20Device/attrs')
                 .reply(204);
 
@@ -288,8 +291,8 @@ describe('AMQP Transport binding: measures', function() {
                 .post('/protocols')
                 .reply(200, {});
 
-            iotagentMqtt.stop(function() {
-                iotagentMqtt.start(config, function(error) {
+            iotagentAMQP.stop(function() {
+                iotagentAMQP.start(config, function(error) {
                     request(provisionProduction, function(error, response, body) {
                         done();
                     });

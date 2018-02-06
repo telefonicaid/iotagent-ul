@@ -53,12 +53,12 @@ iotamMock;
         iotamMock = nock('http://localhost:8082')
         .post('/protocols')
         .reply(200, {});
-
+        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+        // as far as it is a 200 OK
         contextBrokerMock = nock('http://192.168.1.1:1026')
         .matchHeader('fiware-service', 'smartGondor')
         .matchHeader('fiware-servicepath', '/gardens')
         .post('/v1/updateContext')
-        //.reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         .reply(200, '{}');
 
         config.iota.iotManager = {
@@ -102,7 +102,7 @@ iotamMock;
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
             .reply(204);
         });
@@ -127,7 +127,7 @@ iotamMock;
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
             qs: {
-                i: 'MQTT_UNPROVISIONED',
+                i: 'UL_UNPROVISIONED',
                 k: '80K09H324HV8732',
                 d: 'temperature|23'
             }
@@ -141,19 +141,19 @@ iotamMock;
                 'fiware-servicepath': '/testingPath'
             }
         };
-
+        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+        // as far as it is a 200 OK
         beforeEach(function(done) {
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v1/updateContext')
-            .reply(200, '{}');//utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-
+            .reply(200, '{}');
 
             contextBrokerMock
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
-            .post('/v2/entities/SensorMachine:MQTT_UNPROVISIONED/attrs',
+            .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
             .reply(204);
 
@@ -178,7 +178,7 @@ iotamMock;
 
         it('should add a protocol to the registered devices', function(done) {
             var getDeviceOptions = {
-                url: 'http://localhost:4041/iot/devices/MQTT_UNPROVISIONED',
+                url: 'http://localhost:4041/iot/devices/UL_UNPROVISIONED',
                 method: 'GET',
                 headers: {
                     'fiware-service': 'TestService',
@@ -219,7 +219,7 @@ iotamMock;
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
             .reply(204);
             });
@@ -254,7 +254,7 @@ iotamMock;
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
                 .reply(204);
             });
@@ -293,7 +293,7 @@ iotamMock;
          contextBrokerMock
          .matchHeader('fiware-service', 'smartGondor')
          .matchHeader('fiware-servicepath', '/gardens')
-         .post('/v2/entities/Second%20MQTT%20Device/attrs',
+         .post('/v2/entities/Second%20UL%20Device/attrs',
             utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
          .reply(204);
      });
@@ -331,14 +331,14 @@ iotamMock;
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
             .reply(204);
 
                 contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+                .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
                 .reply(204);
             });
@@ -376,16 +376,16 @@ iotamMock;
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
             .reply(204);
 
-                contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
-                .reply(204);
+            .reply(204);
             });
 
         it('should end up with a 200OK status code', function(done) {
@@ -426,10 +426,11 @@ iotamMock;
 
         beforeEach(function(done) {
             nock.cleanAll();
-
+            // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+            // as far as it is a 200 OK
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .post('/v1/updateContext')
-            .reply(200 ,'{}');//utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200 ,'{}');
 
             contextBrokerMock
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
@@ -474,9 +475,9 @@ iotamMock;
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs',
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json'))
-                .reply(204); //utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
+            .reply(204);
 
                 request(groupCreation, function(error, response, body) {
                     done();
@@ -496,7 +497,7 @@ iotamMock;
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
             qs: {
-                i: 'MQTT_3',
+                i: 'MQTT_2',
                 k: '80K09H324HV8732',
                 d: 'c|23'
             }
@@ -504,7 +505,7 @@ iotamMock;
         deviceCreation = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
-            json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice2.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDevice2.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -519,24 +520,25 @@ iotamMock;
                 'fiware-servicepath': '/gardens'
             }
         };
-
+        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+        // as far as it is a 200 OK
         beforeEach(function(done) {
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200, '{}');//utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
+            .reply(200, '{}');
 
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/Second%20MQTT%20Device/attrs' ,
+            .post('/v2/entities/Second%20UL%20Device/attrs' ,
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json'))
-                .reply(204);// utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
+            .reply(204);
 
-                request(groupCreation, function(error, response, body) {
-                    request(deviceCreation, function(error, response, body) {
-                        done();
+            request(groupCreation, function(error, response, body) {
+                request(deviceCreation, function(error, response, body) {
+                    done();
                     });
                 });
             });
@@ -573,13 +575,14 @@ iotamMock;
                 'fiware-servicepath': '/gardens'
             }
         };
-
+        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+        // as far as it is a 200 OK
         beforeEach(function(done) {
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
+            .reply(200,'{}')
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
             .times(12)
             .reply(204)
@@ -639,50 +642,52 @@ iotamMock;
 
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
          var timeInstantRequest = {
-                 url: 'http://localhost:' + config.http.port + '/iot/d',
-                 method: 'POST',
-                 qs: {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'POST',
+                qs: {
                      i: 'timestampedDevice',
                      k: '1234'
-                 },
-                 headers: {
-                     'Content-type': 'text/plain'
-                 },
-                 body: 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z'
+                },
+                headers: {
+                    'Content-type': 'text/plain'
+                },
+                body: 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z'
              },
              provisionProduction = {
-                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                 method: 'POST',
-                 json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
-                 headers: {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
+                headers: {
                      'fiware-service': 'smartGondor',
                      'fiware-servicepath': '/gardens'
-                 }
+                }
              };
 
          beforeEach(function(done) {
              contextBrokerMock
-                 .matchHeader('fiware-service', 'smartGondor')
-                 .matchHeader('fiware-servicepath', '/gardens')
-                 .post('/v1/updateContext')
-                 .reply(200, utils.readExampleFile('./test/contextResponses/timeInstantDuplicatedSuccess.json'))
-                 .post('/v2/entities/TimeInstant%20Device/attrs',
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
+                // as far as it is a 200 OK
+                .reply(200, '{}')
+                .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
-                 .reply(204);
+                .reply(204);
 
-             config.iota.timestamp = true;
+            config.iota.timestamp = true;
 
-             nock('http://localhost:8082')
-                 .post('/protocols')
-                 .reply(200, {});
+            nock('http://localhost:8082')
+                .post('/protocols')
+                .reply(200, {});
 
-             iotagentUl.stop(function() {
-                 iotagentUl.start(config, function(error) {
-                     request(provisionProduction, function(error, response, body) {
-                         done();
-                     });
-                 });
-             });
+            iotagentUl.stop(function() {
+                iotagentUl.start(config, function(error) {
+                    request(provisionProduction, function(error, response, body) {
+                        done();
+                    });
+                });
+            });
          });
 
          afterEach(function() {
@@ -691,9 +696,9 @@ iotamMock;
 
          it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
              request(timeInstantRequest, function(error, response, body) {
-                 should.not.exist(error);
-                 contextBrokerMock.done();
-                 done();
+                should.not.exist(error);
+                contextBrokerMock.done();
+                done();
              });
          });
     });

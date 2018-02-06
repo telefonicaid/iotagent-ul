@@ -1,6 +1,6 @@
 {
-    "CurrentFlow": {
-    	"type": "Matrix",
+   "Correlation": {
+    	"type": "Integer",
     	"value": "23"
     }
 

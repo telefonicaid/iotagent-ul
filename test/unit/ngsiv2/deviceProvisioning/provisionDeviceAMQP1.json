@@ -6,7 +6,7 @@
       "entity_name": "Second UL Device",
       "timezone": "America/Santiago",
       "entity_type": "AnMQTTDevice",
-      "transport": "MQTT",
+      "transport": "AMQP",
       "attributes": [
         {
           "name": "temperature",
