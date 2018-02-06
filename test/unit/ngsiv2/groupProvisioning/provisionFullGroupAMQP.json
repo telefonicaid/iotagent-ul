@@ -1,12 +1,13 @@
 {
-  "devices": [
+  "services": [
     {
-      "protocol": "GENERIC_PROTO",
+      "resource": "/iot/d",
+      "apikey": "80K09H324HV8732",
       "transport": "AMQP",
-      "device_id": "MQTT_2",
-      "entity_name": "Second UL Device",
-      "entity_type": "AnMQTTDevice",
-      "timezone": "America/Santiago",
+      "entity_type": "SensorMachine",
+      "cbHost": "http://unexistentHost:1026",
+      "commands": [],
+      "lazy": [],
       "attributes": [
         {
           "name": "temperature",

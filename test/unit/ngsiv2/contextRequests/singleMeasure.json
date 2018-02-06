@@ -1,6 +1,7 @@
 {
   "temperature": {
-     "value": "23",
-     "type": "celsius"
-   }
+       "value": "23",
+       "type": "celsius"
+    }
+
 }
