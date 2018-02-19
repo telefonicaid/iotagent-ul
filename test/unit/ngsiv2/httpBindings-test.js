@@ -122,6 +122,41 @@ iotamMock;
         });
     });
 
+    describe('When a new  Integer single measure arrives for a Device, via HTTP GET', function() {
+        var getOptions = {
+            url: 'http://localhost:' + config.http.port + '/iot/d',
+            method: 'POST',
+            qs: {
+                i: 'MQTT_2',
+                k: '1234',
+                d: 'luminosity|23'
+            }
+        };
+
+        beforeEach(function() {
+            contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20UL%20Device/attrs',
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasureTypeJson.json'))
+            .reply(204);
+        });
+
+        it('should end up with a 200OK status code', function(done) {
+            request(getOptions, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(200);
+                done();
+            });
+        });
+        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
     describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -454,7 +489,7 @@ iotamMock;
     describe('When a measure arrives to the IoTA for a device belonging to a configuration', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
-            method: 'GET',
+            method: 'POST',
             qs: {
                 i: 'MQTT_2',
                 k: '80K09H324HV8732',
@@ -495,7 +530,7 @@ iotamMock;
     describe('When there is a conflict between configuration and devices', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
-            method: 'GET',
+            method: 'POST',
             qs: {
                 i: 'MQTT_2',
                 k: '80K09H324HV8732',
@@ -701,5 +736,5 @@ iotamMock;
                 done();
              });
          });
-    });
+    });*/
 });

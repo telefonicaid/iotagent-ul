@@ -19,7 +19,6 @@
         {
           "name": "Correlation",
           "type": "Integer"
-
         },
         {
           "name": "pollution",

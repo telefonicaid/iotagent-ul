@@ -89,7 +89,7 @@ describe('AMQP Transport binding: measures', function() {
             iotagentAMQP.stop
         ], done);
     });
-/*
+
    describe('When a new single measure arrives to a Device routing key', function() {
         beforeEach(function() {
             contextBrokerMock
@@ -152,7 +152,7 @@ describe('AMQP Transport binding: measures', function() {
             }, 100);
         });
     });
-/*
+
    describe('When a new multiple measure arrives to a Device routing key with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
@@ -313,5 +313,5 @@ describe('AMQP Transport binding: measures', function() {
                 done();
             }, 100);
         });
-    });*/
+    });
 });

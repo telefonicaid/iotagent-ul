@@ -19,7 +19,6 @@
         {
           "name": "luminosity",
           "type": "Integer"
-
         },
         {
           "name": "pollution",
@@ -40,6 +39,10 @@
         {
           "name": "alive",
           "type": "Null"          
+        },
+        {
+          "name": "Correlation",
+          "type": "Integer"
         }
       ]
     }
