@@ -123,13 +123,14 @@ iotamMock;
     });
 
     describe('When a new  Integer single measure arrives for a Device, via HTTP GET', function() {
+
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
-            method: 'POST',
+            method: 'GET',
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'luminosity|23'
+                d: 'luminosity|10|humidity|32|pollution|43.4'
             }
         };
 
@@ -138,7 +139,7 @@ iotamMock;
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
-                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasureTypeJson.json'))
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json'))
             .reply(204);
         });
 
@@ -736,5 +737,5 @@ iotamMock;
                 done();
              });
          });
-    });*/
+    });
 });

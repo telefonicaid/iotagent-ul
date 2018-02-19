@@ -1,0 +1,18 @@
+{
+  "humidity":{
+    "type": "degrees",
+    "value": "32"   
+  },
+  "temperature":{
+    "type": "celsius",
+    "value": "87"    
+  },
+  "luminosity": {
+  	"type": "Integer",
+  	"value": 10
+  },
+  "pollution": {
+  	"type": "Float",
+  	"value": 43.4
+  }
+}
