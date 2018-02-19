@@ -130,7 +130,7 @@ iotamMock;
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'luminosity|10|humidity|32|pollution|43.4'
+                d: 'luminosity|10|humidity|32|pollution|43.4|temperature|10|enabled|true|alive|null|tags|["iot","device"]|configuration|{"firmware":{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }'
             }
         };
 
@@ -556,14 +556,8 @@ iotamMock;
                 'fiware-servicepath': '/gardens'
             }
         };
-        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-        // as far as it is a 200 OK
+
         beforeEach(function(done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-            .matchHeader('fiware-service', 'smartGondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, '{}');
 
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
