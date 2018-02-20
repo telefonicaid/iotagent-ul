@@ -39,7 +39,7 @@ var iotagentAMQP = require('../../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://localhost', function(err, conn) {
+    amqp.connect('amqp://172.18.0.2:5672', function(err, conn) {
         amqpConn = conn;
 
         conn.createChannel(function(err, ch) {
@@ -64,6 +64,8 @@ describe('AMQP Transport binding: measures', function() {
         };
 
         nock.cleanAll();
+
+        config.iota.defaultResource = '/iot/json';
         // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
         // as far as it is a 200 OK
         contextBrokerMock = nock('http://192.168.1.1:1026')
@@ -89,8 +91,8 @@ describe('AMQP Transport binding: measures', function() {
             iotagentAMQP.stop
         ], done);
     });
-
-   describe('When a new single measure arrives to a Device routing key', function() {
+    
+    describe('When a new single measure arrives to a Device routing key', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -109,8 +111,8 @@ describe('AMQP Transport binding: measures', function() {
             }, 100);
         });
     });
-*/
-   describe('When a new measure arrives for an unprovisioned Device', function() {
+    
+    describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
             url: 'http://localhost:4041/iot/services',
             method: 'POST',
@@ -153,7 +155,7 @@ describe('AMQP Transport binding: measures', function() {
         });
     });
 
-   describe('When a new multiple measure arrives to a Device routing key with one measure', function() {
+    describe('When a new multiple measure arrives to a Device routing key with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')

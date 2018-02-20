@@ -107,8 +107,7 @@ describe('Data Bidirectionality: HTTP', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile(
                     './test/contextRequests/createBidirectionalDevice.json'))
-                .reply(200, utils.readExampleFile(
-                    './test/contextResponses/createBidirectionalDeviceSuccess.json'));
+                .reply(200, '{}');
 
             iotagentUl.start(config, function(error) {
                 request(provisionOptions, function(error, response, body) {
@@ -165,7 +164,7 @@ describe('Data Bidirectionality: HTTP', function() {
         });
     });
 
-    /*describe('When a bidirectional attribute is set and a new value arrives to a device with endpoint', function() {
+    describe('When a bidirectional attribute is set and a new value arrives to a device with endpoint', function() {
         beforeEach(function(done) {
             var provisionOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -255,5 +254,5 @@ describe('Data Bidirectionality: HTTP', function() {
                 done();
             });
         });
-    });*/
+    });
 });
