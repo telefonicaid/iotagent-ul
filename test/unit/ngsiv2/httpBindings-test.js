@@ -122,11 +122,11 @@ iotamMock;
         });
     });
 
-    describe('When a new  Integer single measure arrives for a Device, via HTTP GET', function() {
+    describe('When a new multiple differents format types measures arrives for a Device, via HTTP POST', function() {
 
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
-            method: 'GET',
+            method: 'POST',
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
