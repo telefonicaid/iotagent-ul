@@ -65,7 +65,6 @@ describe('AMQP Transport binding: measures', function() {
 
         nock.cleanAll();
 
-        config.iota.defaultResource = '/iot/json';
         // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
         // as far as it is a 200 OK
         contextBrokerMock = nock('http://192.168.1.1:1026')
