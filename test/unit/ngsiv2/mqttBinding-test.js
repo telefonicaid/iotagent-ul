@@ -112,8 +112,11 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just this attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 
-                'luminosity|10|humidity|32|pollution|43.4|temperature|10|enabled|true|alive|null|tags|["iot","device"]|configuration|{"firmware":{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }',
+            mqttClient.publish('/1234/MQTT_2/attrs',
+                'luminosity|10|humidity|32|pollution|43.4|' +
+                'temperature|10|enabled|true|alive|null|tags' +
+                '|["iot","device"]|configuration|{"firmware":' +
+                '{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }',
                  null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
@@ -276,7 +279,9 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23|humidity|98#temperature|16|humidity|34', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23|humidity|' +
+                '98#temperature|16|' +
+                'humidity|34', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();

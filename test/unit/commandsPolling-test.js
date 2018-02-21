@@ -184,7 +184,7 @@ describe('HTTP Transport binding: polling commands', function() {
                 d: 'a|23'
             }
         };
-        var deviceRequest_without_payload = {
+        var deviceRequestWithoutPayload = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
             qs: {
@@ -192,7 +192,7 @@ describe('HTTP Transport binding: polling commands', function() {
                 k: '1234',
                 getCmd: 1
             }
-        };        
+        };
 
         beforeEach(function(done) {
             contextBrokerMock
@@ -211,7 +211,7 @@ describe('HTTP Transport binding: polling commands', function() {
         });
 
         it('should return a list of the pending commands', function(done) {
-            request(deviceRequest_without_payload, function(error, response, body) {
+            request(deviceRequestWithoutPayload, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 body.should.equal('MQTT_2@PING|data=22');

@@ -130,7 +130,10 @@ iotamMock;
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'luminosity|10|humidity|32|pollution|43.4|temperature|10|enabled|true|alive|null|tags|["iot","device"]|configuration|{"firmware":{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }'
+                d: 'luminosity|10|humidity|32|' +
+                'pollution|43.4|temperature|10|' +
+                'enabled|true|alive|null|tags|["iot","device"]|' +
+                'configuration|{"firmware":{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }'
             }
         };
 
@@ -194,7 +197,7 @@ iotamMock;
             .reply(204);
 
             request(groupCreation, function(error, response, body) {
-                done();  
+                done();
             });
         });
 
@@ -466,7 +469,7 @@ iotamMock;
             // as far as it is a 200 OK
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .post('/v1/updateContext')
-            .reply(200 ,'{}');
+            .reply(200 , '{}');
 
             contextBrokerMock
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
@@ -612,7 +615,7 @@ iotamMock;
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200,'{}')
+            .reply(200, '{}')
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
             .times(12)
             .reply(204)
