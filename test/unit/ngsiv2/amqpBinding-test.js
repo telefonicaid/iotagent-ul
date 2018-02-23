@@ -272,7 +272,7 @@ describe('AMQP Transport binding: measures', function() {
         var provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
-            json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -284,8 +284,9 @@ describe('AMQP Transport binding: measures', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
-                .reply(200, '{}')
-                .post('/v2/entities/TimeInstant%20Device/attrs')
+                .reply(200, {})
+                .post('/v2/entities/TimeInstant%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);
 
             config.iota.timestamp = true;
