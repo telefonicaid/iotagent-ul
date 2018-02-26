@@ -169,6 +169,11 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Feb 26 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.6.0
+- Update ioagent-node-lib to 2.6.x
+- Fix transport in autoprovision device depending on binding (#235)
+- Allow get list of commands without sending measures (empty payload) (#234)
+
 * Wed Oct 18 2017 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.5.0
 - FEATURE update node version to 4.8.4
 - Update MongoDB driver in order to fix NODE-818 error (#210)
