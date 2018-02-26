@@ -1,2 +1,0 @@
-- Fix transport in autoprovision device depending on binding [#235]
-- Allow get list of commands without sending measures (empty payload) [#234]
