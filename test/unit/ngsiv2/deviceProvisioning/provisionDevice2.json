@@ -38,7 +38,7 @@
         },
         {
           "name": "alive",
-          "type": "Null"          
+          "type": "None"          
         }
       ]
     }

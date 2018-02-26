@@ -142,6 +142,13 @@ describe('Data Bidirectionality: HTTP', function() {
                         longitudeFound = false;
 
                     for (var i = 0; i < list.commands.length; i++) {
+
+                        if (list.commands[i].name === 'location' &&
+                            list.commands[i].type === 'geo:point' &&
+                            list.commands[i].value === '0,0') {
+                            latitudeFound = true;
+                        }
+
                         if (list.commands[i].name === 'latitude' &&
                             list.commands[i].type === 'string' &&
                             list.commands[i].value === '-9.6') {
@@ -216,8 +223,7 @@ describe('Data Bidirectionality: HTTP', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile(
                     './test/contextRequests/createBidirectionalDevice.json'))
-                .reply(200, utils.readExampleFile(
-                    './test/contextResponses/createBidirectionalDeviceSuccess.json'));
+                .reply(200, {});
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')

@@ -24,7 +24,7 @@
     "value": true
   },
   "alive": {
-    "type": "Null",
+    "type": "None",
     "value": null
   },
   "configuration": {

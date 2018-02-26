@@ -23,20 +23,20 @@
  * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
 
- 'use strict';
+'use strict';
 
 var iotagentUl = require('../../../'),
-config = require('./config-test.js'),
-nock = require('nock'),
-iotAgentLib = require('iotagent-node-lib'),
-should = require('should'),
-async = require('async'),
-request = require('request'),
-utils = require('../../utils'),
-contextBrokerMock,
-iotamMock;
+    config = require('./config-test.js'),
+    nock = require('nock'),
+    iotAgentLib = require('iotagent-node-lib'),
+    should = require('should'),
+    async = require('async'),
+    request = require('request'),
+    utils = require('../../utils'),
+    contextBrokerMock,
+    iotamMock;
 
- describe('HTTP Transport binding: measures', function() {
+describe('HTTP Transport binding: measures', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -59,7 +59,7 @@ iotamMock;
         .matchHeader('fiware-service', 'smartGondor')
         .matchHeader('fiware-servicepath', '/gardens')
         .post('/v1/updateContext')
-        .reply(200, '{}');
+        .reply(200, {});
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -86,7 +86,7 @@ iotamMock;
             iotagentUl.stop
             ], done);
     });
-
+    
     describe('When a new single measure arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -132,7 +132,7 @@ iotamMock;
                 k: '1234',
                 d: 'luminosity|10|humidity|32|' +
                 'pollution|43.4|temperature|10|' +
-                'enabled|true|alive|null|tags|["iot","device"]|' +
+                'enabled|true|alive|None|tags|["iot","device"]|' +
                 'configuration|{"firmware":{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }'
             }
         };
@@ -187,7 +187,7 @@ iotamMock;
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v1/updateContext')
-            .reply(200, '{}');
+            .reply(200, {});
 
             contextBrokerMock
             .matchHeader('fiware-service', 'TestService')
@@ -316,41 +316,41 @@ iotamMock;
 
     describe('When a new single measure arrives for a Device, via HTTP POST', function() {
      var getOptions = {
-         url: 'http://localhost:' + config.http.port + '/iot/d',
-         method: 'POST',
-         qs: {
-             i: 'MQTT_2',
-             k: '1234'
-         },
-         headers: {
+        url: 'http://localhost:' + config.http.port + '/iot/d',
+        method: 'POST',
+        qs: {
+            i: 'MQTT_2',
+            k: '1234'
+        },
+        headers: {
              'Content-type': 'text/plain'
-         },
-         body: 'temperature|23'
+        },
+        body: 'temperature|23'
      };
 
      beforeEach(function() {
-         contextBrokerMock
-         .matchHeader('fiware-service', 'smartGondor')
-         .matchHeader('fiware-servicepath', '/gardens')
-         .post('/v2/entities/Second%20UL%20Device/attrs',
-            utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-         .reply(204);
+        contextBrokerMock
+        .matchHeader('fiware-service', 'smartGondor')
+        .matchHeader('fiware-servicepath', '/gardens')
+        .post('/v2/entities/Second%20UL%20Device/attrs',
+           utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+        .reply(204);
      });
 
      it('should end up with a 200OK status code', function(done) {
-         request(getOptions, function(error, response, body) {
-             should.not.exist(error);
-             response.statusCode.should.equal(200);
-             done();
-         });
+        request(getOptions, function(error, response, body) {
+           should.not.exist(error);
+           response.statusCode.should.equal(200);
+           done();
+        });
      });
      it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-         request(getOptions, function(error, response, body) {
-             contextBrokerMock.done();
-             done();
-         });
-     });
- });
+            request(getOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
 
     describe('When multiple groups of measures arrive, via HTTP POST', function() {
         var getOptions = {
@@ -374,12 +374,12 @@ iotamMock;
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
             .reply(204);
 
-                contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
+            contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
-                .reply(204);
+            .reply(204);
             });
 
         it('should end up with a 200OK status code', function(done) {
@@ -469,9 +469,7 @@ iotamMock;
             // as far as it is a 200 OK
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .post('/v1/updateContext')
-            .reply(200 , '{}');
-
-            contextBrokerMock
+            .reply(200 , {})
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
             .reply(204);
 
@@ -489,7 +487,7 @@ iotamMock;
             });
         });
     });
-
+    
     describe('When a measure arrives to the IoTA for a device belonging to a configuration', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -497,13 +495,13 @@ iotamMock;
             qs: {
                 i: 'MQTT_2',
                 k: '80K09H324HV8732',
-                d: 'c|23'
+                d: 'Correlation|23'
             }
         },
         groupCreation = {
             url: 'http://localhost:4041/iot/services',
             method: 'POST',
-            json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionAliasGroup.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -530,7 +528,7 @@ iotamMock;
             });
         });
     });
-
+    
     describe('When there is a conflict between configuration and devices', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -538,7 +536,7 @@ iotamMock;
             qs: {
                 i: 'MQTT_2',
                 k: '80K09H324HV8732',
-                d: 'c|23'
+                d: 'Correlation|23'
             }
         },
         deviceCreation = {
@@ -583,7 +581,7 @@ iotamMock;
             });
         });
     });
-
+    
     describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -615,7 +613,7 @@ iotamMock;
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
-            .reply(200, '{}')
+            .reply(200, {})
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
             .times(12)
             .reply(204)
@@ -703,7 +701,7 @@ iotamMock;
                 .post('/v1/updateContext')
                 // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
                 // as far as it is a 200 OK
-                .reply(200, '{}')
+                .reply(200, {})
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);
