@@ -1,7 +1,7 @@
 {
   "devices": [
     {
-      "device_id": "MQTT_2",
+      "device_id": "HTTP_2",
       "protocol": "GENERIC_PROTO",
       "entity_name": "Second UL Device",
       "timezone": "America/Santiago",

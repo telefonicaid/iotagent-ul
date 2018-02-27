@@ -232,11 +232,11 @@ describe('Data Bidirectionality: HTTP', function() {
                 .reply(204);
 
             mockedClientServer = nock('http://localhost:9876')
-                .post('/command', 'MQTT_2@location|12.4, -9.6')
+                .post('/command', 'HTTP_2@location|12.4, -9.6')
                 .reply(200, '')
-                .post('/command', 'MQTT_2@latitude|-9.6')
+                .post('/command', 'HTTP_2@latitude|-9.6')
                 .reply(200, '')
-                .post('/command', 'MQTT_2@longitude|12.4')
+                .post('/command', 'HTTP_2@longitude|12.4')
                 .reply(200, '');
 
             iotagentUl.start(config, function(error) {

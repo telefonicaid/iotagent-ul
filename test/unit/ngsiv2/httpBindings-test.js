@@ -92,7 +92,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '1234',
                 d: 'temperature|23'
             }
@@ -128,7 +128,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '1234',
                 d: 'luminosity|10|humidity|32|' +
                 'pollution|43.4|temperature|10|' +
@@ -247,7 +247,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '1234',
                 t: '20160530T162522304Z',
                 d: 'temperature|23'
@@ -283,7 +283,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '1234',
                 d: 'temperature|23|humidity|98'
             }
@@ -319,7 +319,7 @@ describe('HTTP Transport binding: measures', function() {
         url: 'http://localhost:' + config.http.port + '/iot/d',
         method: 'POST',
         qs: {
-            i: 'MQTT_2',
+            i: 'HTTP_2',
             k: '1234'
         },
         headers: {
@@ -357,7 +357,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '1234'
             },
             headers: {
@@ -402,7 +402,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '1234'
             },
             headers: {
@@ -493,7 +493,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '80K09H324HV8732',
                 d: 'Correlation|23'
             }
@@ -534,7 +534,7 @@ describe('HTTP Transport binding: measures', function() {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             qs: {
-                i: 'MQTT_2',
+                i: 'HTTP_2',
                 k: '80K09H324HV8732',
                 d: 'Correlation|23'
             }
@@ -608,12 +608,10 @@ describe('HTTP Transport binding: measures', function() {
         };
         // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
         // as far as it is a 200 OK
-        beforeEach(function(done) {
+         beforeEach(function(done) {
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, {})
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
             .times(12)
             .reply(204)
@@ -635,12 +633,6 @@ describe('HTTP Transport binding: measures', function() {
             })
             .reply(204);
 
-            config.iota.timestamp = true;
-
-            nock('http://localhost:8082')
-            .post('/protocols')
-            .reply(200, {});
-
             iotagentUl.stop(function() {
                 iotagentUl.start(config, function(error) {
                     request(provisionProduction, function(error, response, body) {
@@ -658,6 +650,7 @@ describe('HTTP Transport binding: measures', function() {
             request(postOptions, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
+
                 done();
             });
         });
@@ -666,6 +659,7 @@ describe('HTTP Transport binding: measures', function() {
             request(postOptions, function(error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
+
                 done();
             });
         });
