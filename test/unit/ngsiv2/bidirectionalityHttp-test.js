@@ -107,7 +107,7 @@ describe('Data Bidirectionality: HTTP', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile(
                     './test/contextRequests/createBidirectionalDevice.json'))
-                .reply(200, '{}');
+                .reply(200, {});
 
             iotagentUl.start(config, function(error) {
                 request(provisionOptions, function(error, response, body) {
@@ -145,7 +145,7 @@ describe('Data Bidirectionality: HTTP', function() {
 
                         if (list.commands[i].name === 'location' &&
                             list.commands[i].type === 'geo:point' &&
-                            list.commands[i].value === '0,0') {
+                            list.commands[i].value === '-9.6, 12.4') {
                             latitudeFound = true;
                         }
 
@@ -232,11 +232,11 @@ describe('Data Bidirectionality: HTTP', function() {
                 .reply(204);
 
             mockedClientServer = nock('http://localhost:9876')
-                .post('/command', 'HTTP_2@location|12.4, -9.6')
+                .post('/command', 'MQTT_2@location|12.4, -9.6')
                 .reply(200, '')
-                .post('/command', 'HTTP_2@latitude|-9.6')
+                .post('/command', 'MQTT_2@latitude|-9.6')
                 .reply(200, '')
-                .post('/command', 'HTTP_2@longitude|12.4')
+                .post('/command', 'MQTT_2@longitude|12.4')
                 .reply(200, '');
 
             iotagentUl.start(config, function(error) {

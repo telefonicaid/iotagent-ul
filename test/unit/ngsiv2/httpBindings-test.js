@@ -581,7 +581,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-    
+    /*
     describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -663,7 +663,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-
+    */
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
          var timeInstantRequest = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
