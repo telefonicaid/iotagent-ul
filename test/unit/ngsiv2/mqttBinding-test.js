@@ -101,7 +101,7 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-    describe('When a new multiple different format types measures arrives for a Device, via HTTP GET', function() {
+    describe('When a new multiple different format types measures arrives for a Device', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
