@@ -612,9 +612,8 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
-            .times(12)
-            .reply(204)
+            .post('v1/updateContext')
+            .reply(200, {})
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function(body) {
                 var i = 0;
                 var attributes = 0;
