@@ -1,6 +1,6 @@
 {
   "name": "iotagent-ul",
-  "version": "1.6.0",
+  "version": "1.6.0-next",
   "dependencies": {
     "amqplib": {
       "version": "0.5.2",
