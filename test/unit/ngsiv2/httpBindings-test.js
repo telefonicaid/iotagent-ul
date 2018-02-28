@@ -86,7 +86,7 @@ describe('HTTP Transport binding: measures', function() {
             iotagentUl.stop
             ], done);
     });
-    
+
     describe('When a new single measure arrives for a Device, via HTTP GET', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -487,7 +487,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-    
+
     describe('When a measure arrives to the IoTA for a device belonging to a configuration', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -528,7 +528,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-    
+
     describe('When there is a conflict between configuration and devices', function() {
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -581,7 +581,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-    /*
+
     describe('When a real production request arrives to the IoTA', function() {
         var postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -612,8 +612,12 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('v1/updateContext')
+            .post('/v1/updateContext')
             .reply(200, {})
+            // Note: The expected body payload is not set explicitly since this mock will be used to
+            // intercept requests from the IOTA to the CB for each one of the different observations.
+            // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
+            // and just check the structure of the payload programmatically.
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function(body) {
                 var i = 0;
                 var attributes = 0;
@@ -630,7 +634,14 @@ describe('HTTP Transport binding: measures', function() {
                 }
                 return i === attributes - 1;
             })
+            .times(13)
             .reply(204);
+
+            config.iota.timestamp = true;
+
+            nock('http://localhost:8082')
+            .post('/protocols')
+            .reply(200, {});
 
             iotagentUl.stop(function() {
                 iotagentUl.start(config, function(error) {
@@ -663,7 +674,7 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
-    */
+
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
          var timeInstantRequest = {
                 url: 'http://localhost:' + config.http.port + '/iot/d',
