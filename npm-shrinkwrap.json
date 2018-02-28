@@ -1,6 +1,6 @@
 {
   "name": "iotagent-ul",
-  "version": "1.5.0-next",
+  "version": "1.6.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -2260,7 +2260,7 @@
       }
     },
     "iotagent-node-lib": {
-      "version": "git+https://github.com/dcalvoalonso/iotagent-node-lib.git#8a7f2a1a15e90211a7a164e420c3c9b148bbd6e9",
+      "version": "git+https://github.com/dcalvoalonso/iotagent-node-lib.git#a60cb4d89404d8a06891be6b7f5970daec773558",
       "requires": {
         "async": "1.5.2",
         "body-parser": "1.15.0",
