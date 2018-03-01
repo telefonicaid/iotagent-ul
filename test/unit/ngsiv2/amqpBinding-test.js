@@ -90,7 +90,7 @@ describe('AMQP Transport binding: measures', function() {
             iotagentUl.stop
         ], done);
     });
-
+    
     describe('When a new single measure arrives to a Device routing key', function() {
         beforeEach(function() {
             contextBrokerMock
@@ -174,7 +174,7 @@ describe('AMQP Transport binding: measures', function() {
             }, 100);
         });
     });
-
+    
     describe('When a new multiple measure arrives to a Device routing key with a faulty payload', function() {
         beforeEach(function() {
             contextBrokerMock
@@ -189,11 +189,12 @@ describe('AMQP Transport binding: measures', function() {
             channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('notAULPayload '));
 
             setTimeout(function() {
+            //FIXME/TODO
                 done();
             }, 100);
         });
     });
-
+    
     describe('When single message with multiple measures arrive to a Device routing key', function() {
         beforeEach(function() {
             contextBrokerMock
