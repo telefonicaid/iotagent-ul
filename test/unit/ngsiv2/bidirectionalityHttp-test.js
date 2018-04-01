@@ -139,14 +139,14 @@ describe('Data Bidirectionality: HTTP', function() {
             request(notificationOptions, function(error, response, body) {
                 iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function(error, list) {
                     var latitudeFound = false,
-                        longitudeFound = false;
+                        longitudeFound = false,
+                        pointFound = false;
 
                     for (var i = 0; i < list.commands.length; i++) {
-
                         if (list.commands[i].name === 'location' &&
                             list.commands[i].type === 'geo:point' &&
-                            list.commands[i].value === '-9.6, 12.4') {
-                            latitudeFound = true;
+                            list.commands[i].value === '12.4, -9.6') {
+                            pointFound = true;
                         }
 
                         if (list.commands[i].name === 'latitude' &&
@@ -162,6 +162,7 @@ describe('Data Bidirectionality: HTTP', function() {
                         }
                     }
 
+                    pointFound.should.equal(true);
                     latitudeFound.should.equal(true);
                     longitudeFound.should.equal(true);
 
