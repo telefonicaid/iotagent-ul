@@ -2260,7 +2260,7 @@
       }
     },
     "iotagent-node-lib": {
-      "version": "git+https://github.com/dcalvoalonso/iotagent-node-lib.git#a60cb4d89404d8a06891be6b7f5970daec773558",
+      "version": "git+https://github.com/dcalvoalonso/iotagent-node-lib.git#5b6cc936de58d3fb30b33e37e37d5daf996fd473",
       "requires": {
         "async": "1.5.2",
         "body-parser": "1.15.0",
@@ -2282,16 +2282,16 @@
       },
       "dependencies": {
         "colors": {
-          "version": "1.1.2",
-          "resolved": "https://registry.npmjs.org/colors/-/colors-1.1.2.tgz",
-          "integrity": "sha1-FopHAXVran9RoSzgyXv6KMCE7WM="
+          "version": "1.2.1",
+          "resolved": "https://registry.npmjs.org/colors/-/colors-1.2.1.tgz",
+          "integrity": "sha512-s8+wktIuDSLffCywiwSxQOMqtPxML11a/dtHE17tMn4B1MSWw/C22EKf7M2KGUBcDaVFEGT+S8N02geDXeuNKg=="
         },
         "logops": {
           "version": "1.0.0",
           "resolved": "https://registry.npmjs.org/logops/-/logops-1.0.0.tgz",
           "integrity": "sha1-RTdh2vumwKa/PJMZeJt4gs5Nqrw=",
           "requires": {
-            "colors": "1.1.2",
+            "colors": "1.2.1",
             "json-stringify-safe": "5.0.1",
             "lodash": "4.17.4",
             "serr": "0.3.0"
