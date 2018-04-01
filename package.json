@@ -29,7 +29,6 @@
     "express": "^4.11.2",
     "iotagent-node-lib": "https://github.com/dcalvoalonso/iotagent-node-lib.git#task/activeAttsNgsi2",
     "logops": "1.0.0-alpha.7",
-    "moment": "^2.20.1",
     "mongodb": "2.2.10",
     "mqtt": "1.7.0",
     "request": "2.39.0 - 2.81.0",
@@ -57,7 +56,8 @@
     "sinon-chai": "2.4.0",
     "timekeeper": "0.0.5",
     "mongodb": "2.2.10",
-    "nock": "9.0.14"
+    "nock": "9.0.14",
+    "moment": "^2.20.1"
   },
   "keywords": []
 }
