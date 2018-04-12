@@ -1,4 +1,2 @@
-- Fix transport in autoprovision device depending on binding [#235]
-- Allow get list of commands without sending measures (empty payload) [#234]
 - Add: allow NGSIv2 for updating active attributes at CB, throught configuration based on iotagent-node-lib(#233)
 
