@@ -192,15 +192,7 @@ describe('MQTT Transport binding: measures', function() {
 
 
     describe('When a new multiple measure arrives to a Device topic with a faulty payload', function() {
-        beforeEach(function() {
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .reply(204);
-        });
-
+       
         it('should silently ignore the error (without crashing)', function(done) {
             mqttClient.publish('/1234/MQTT_2/attrs', 'notAULPayload ', null, function(error) {
                 setTimeout(function() {
