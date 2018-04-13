@@ -65,8 +65,8 @@ describe('HTTP Transport binding: measures', function() {
             host: 'localhost',
             port: 8082,
             path: '/protocols',
-            protocol: 'MQTT_UL',
-            description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+            protocol: 'HTTP_UL',
+            description: 'HTTP Ultralight 2.0 IoT Agent (Node.js version)'
         };
 
         iotagentUl.start(config, function() {
@@ -235,7 +235,7 @@ describe('HTTP Transport binding: measures', function() {
 
                     response.statusCode.should.equal(200);
                     should.exist(parsedBody.protocol);
-                    parsedBody.protocol.should.equal('MQTT_UL');
+                    parsedBody.protocol.should.equal('HTTP_UL');
                     done();
                 });
             });
