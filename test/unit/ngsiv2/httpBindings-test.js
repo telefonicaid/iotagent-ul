@@ -122,7 +122,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When a new multiple differents format types measures arrives for a Device, via HTTP POST', function() {
+    describe('When new multiple differents format types measures arrives for a Device, via HTTP POST', function() {
 
         var getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
@@ -183,13 +183,14 @@ describe('HTTP Transport binding: measures', function() {
         // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
         // as far as it is a 200 OK
         beforeEach(function(done) {
-            contextBrokerMock
+
+            contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v1/updateContext')
             .reply(200, {});
 
-            contextBrokerMock
+            contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',

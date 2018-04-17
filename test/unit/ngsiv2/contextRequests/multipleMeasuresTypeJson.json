@@ -1,6 +1,6 @@
 {
   "luminosity": {
-    "type": "Integer",
+    "type": "Number",
     "value": 10
   },
   "humidity":{
@@ -8,7 +8,7 @@
     "value": "32"   
   },
   "pollution": {
-    "type": "Float",
+    "type": "Number",
     "value": 43.4
   },
   "temperature": {

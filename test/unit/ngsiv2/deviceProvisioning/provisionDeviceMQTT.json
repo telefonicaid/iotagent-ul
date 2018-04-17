@@ -18,11 +18,11 @@
         },
         {
           "name": "luminosity",
-          "type": "Integer"
+          "type": "Number"
         },
         {
           "name": "pollution",
-          "type": "Float"
+          "type": "Number"
         },
         {
           "name": "configuration",
@@ -42,7 +42,7 @@
         },
         {
           "name": "Correlation",
-          "type": "Integer"
+          "type": "Number"
         }
       ]
     }
