@@ -183,7 +183,7 @@ describe('HTTP Transport binding: measures', function() {
         // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
         // as far as it is a 200 OK
         beforeEach(function(done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
+            contextBrokerMock
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v1/updateContext')
@@ -467,7 +467,6 @@ describe('HTTP Transport binding: measures', function() {
             nock.cleanAll();
             // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
             // as far as it is a 200 OK
-            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
             .post('/v1/updateContext')
