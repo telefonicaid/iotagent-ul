@@ -467,12 +467,13 @@ describe('HTTP Transport binding: measures', function() {
             nock.cleanAll();
             // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
             // as far as it is a 200 OK
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-            
+            contextBrokerMock = nock('http://192.168.1.1:1026');
+
             contextBrokerMock
             .post('/v1/updateContext')
             .reply(200 , {})
-            .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs')
+            .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
+                utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json'))
             .reply(204);
 
             request(provisionOptions, function(error, response, body) {
