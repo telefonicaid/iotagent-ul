@@ -31,7 +31,6 @@
     "logops": "1.0.0-alpha.7",
     "mqtt": "1.7.0",
     "request": "^2.69.0",
-    "mongodb": "2.2.10",
     "underscore": "1.8.3"
   },
   "devDependencies": {
@@ -55,7 +54,6 @@
     "istanbul": "~0.1.34",
     "sinon-chai": "2.4.0",
     "timekeeper": "0.0.5",
-    "mongodb": "2.2.10",
     "nock": "7.0.2"
   },
   "keywords": []
