@@ -55,8 +55,7 @@
     "sinon-chai": "2.4.0",
     "timekeeper": "0.0.5",
     "nock": "9.0.14",
-    "moment": "^2.20.1",
-    "nock": "7.0.2"
+    "moment": "^2.20.1"
   },
   "keywords": []
 }
