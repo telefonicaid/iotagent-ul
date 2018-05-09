@@ -1,2 +1,2 @@
-- Add: allow NGSIv2 for updating active attributes at CB, throught configuration based on iotagent-node-lib(#233)
-
+- Remove mongodb dependence from packages.json (already in iota-node-lib)
+- Add: allow NGSIv2 for updating active attributes at CB, throught configuration based on 
