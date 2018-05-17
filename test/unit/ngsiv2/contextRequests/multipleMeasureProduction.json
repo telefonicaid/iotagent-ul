@@ -1,0 +1,36 @@
+{
+	"batteryLevel": {
+		"type": "float",
+		"value": "75.0",
+		"metadata": {
+			"TimeInstant": {
+				"type": "DateTime",
+				"value": "2016-05-11T10:12:26.476659Z"
+			}
+		}
+	},
+	"TimeInstant": {
+		"type": "DateTime",
+		"value": "2016-05-11T10:12:26.476659Z"
+	},
+	"att_name": {
+		"type": "string",
+		"value": "value",
+		"metadata": {
+			"TimeInstant": {
+				"type": "DateTime",
+				"value": "2016-05-11T10:12:26.476659Z"
+			}
+		}
+	},
+	"coords": {
+		"type": "string",
+		"value": "WGS84",
+		"metadata": {
+			"TimeInstant": {
+				"type": "DateTime",
+				"value": "2016-05-11T10:12:26.476659Z"
+			}
+		}
+	}
+}

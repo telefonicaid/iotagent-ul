@@ -1,0 +1,39 @@
+{
+  "luminosity": {
+    "type": "Number",
+    "value": 10
+  },
+  "humidity":{
+    "type": "degrees",
+    "value": "32"   
+  },
+  "pollution": {
+    "type": "Number",
+    "value": 43.4
+  },
+  "temperature": {
+    "type": "celsius",
+    "value": "10"
+  },
+  "tags": {
+    "type": "Array",
+    "value": ["iot","device"]
+  },
+  "enabled": {
+    "type": "Boolean",
+    "value": true
+  },
+  "alive": {
+    "type": "None",
+    "value": null
+  },
+  "configuration": {
+    "type": "Object",
+    "value": {
+      "firmware": {
+        "version": "1.1.0",
+        "hash": "cf23df2207d99a74fbe169e3eba035e633b65d94"
+      }
+    }
+  }
+}

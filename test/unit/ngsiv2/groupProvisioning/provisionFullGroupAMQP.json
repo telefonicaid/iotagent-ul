@@ -1,0 +1,23 @@
+{
+  "services": [
+    {
+      "resource": "/iot/d",
+      "apikey": "80K09H324HV8732",
+      "transport": "AMQP",
+      "entity_type": "SensorMachine",
+      "cbHost": "http://unexistentHost:1026",
+      "commands": [],
+      "lazy": [],
+      "attributes": [
+        {
+          "name": "temperature",
+          "type": "celsius"
+        },
+        {
+          "name": "humidity",
+          "type": "degrees"
+        }
+      ]
+    }
+  ]
+}

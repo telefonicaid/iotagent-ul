@@ -1,0 +1,50 @@
+{
+  "devices": [
+    {
+      "device_id": "HTTP_2",
+      "protocol": "GENERIC_PROTO",
+      "entity_name": "Second UL Device",
+      "timezone": "America/Santiago",
+      "entity_type": "AnMQTTDevice",
+      "transport": "MQTT",
+      "attributes": [
+        {
+          "name": "temperature",
+          "type": "celsius"
+        },
+        {
+          "name": "humidity",
+          "type": "degrees"
+        },
+        {
+          "name": "luminosity",
+          "type": "Number"
+        },
+        {
+          "name": "pollution",
+          "type": "Number"
+        },
+        {
+          "name": "configuration",
+          "type": "Object"
+        },
+        {
+          "name": "tags",
+          "type": "Array"
+        },
+        {
+          "name": "enabled",
+          "type": "Boolean"
+        },
+        {
+          "name": "alive",
+          "type": "None"          
+        },
+        {
+          "name": "Correlation",
+          "type": "Number"
+        }
+      ]
+    }
+  ]
+}

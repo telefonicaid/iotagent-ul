@@ -1,0 +1,16 @@
+{
+  "temperature": {
+    "type": "float",
+    "value": "24.4",
+    "metadata": {
+      "TimeInstant": {
+        "type": "DateTime",
+        "value": "2016-09-26T12:19:26.476659Z"
+      }
+    }
+  },
+  "TimeInstant": {
+    "type": "DateTime",
+    "value": "2016-09-26T12:19:26.476659Z"
+  }
+}

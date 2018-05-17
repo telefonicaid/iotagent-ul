@@ -1,0 +1,18 @@
+{
+  "services": [
+    {
+      "resource": "/iot/d",
+      "apikey": "80K09H324HV8732",
+      "entity_type": "SensorMachine",
+      "cbHost": "http://unexistentHost:1026",
+      "commands": [],
+      "lazy": [],
+      "attributes": [
+        {
+          "name": "temperature",
+          "type": "celsius"
+        }
+      ]
+    }
+  ]
+}

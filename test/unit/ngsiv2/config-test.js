@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Telefonica Investigación y Desarrollo, S.A.U
+ * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
  *
  * This file is part of iotagent-mqtt
  *
@@ -22,30 +22,51 @@
  *
  * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
+var config = {};
 
-'use strict';
-
-module.exports = {
-    MEASURES_SUFIX: 'attrs',
-    CONFIGURATION_COMMAND_SUFIX: 'cmdexe',
-    CONFIGURATION_VALUES_SUFIX: 'values',
-
-    DATE_FORMAT: 'yyyymmdd\'T\'HHMMss\'Z\'',
-
-    TIMESTAMP_ATTRIBUTE: 'TimeInstant',
-    TIMESTAMP_TYPE: 'ISO8601',
-    TIMESTAMP_TYPE_NGSI2: 'DateTime',
-
-    HTTP_MEASURE_PATH: '/iot/d',
-
-    DEFAULT_ATTRIBUTE_TYPE: 'string',
-
-    COMMAND_STATUS_PENDING: 'PENDING',
-    COMMAND_STATUS_ERROR: 'ERROR',
-    COMMAND_STATUS_COMPLETED: 'OK',
-
-    MQTTB_ALARM: 'MQTTB-ALARM',
-
-    AMQP_DEFAULT_EXCHANGE: 'amq.topic',
-    AMQP_DEFAULT_QUEUE: 'iotaqueue'
+config.mqtt = {
+    host: 'localhost',
+    port: 1883,
+    username: 'guest',
+    password: 'guest'
 };
+
+config.http = {
+    port: 7896
+};
+
+config.amqp = {
+    port: 5672,
+    exchange: 'amq.topic',
+    queue: 'iota_queue',
+    options: {durable: true}
+};
+
+config.iota = {
+    logLevel: 'FATAL',
+    autocast: true,
+    contextBroker: {
+        host: '192.168.1.1',
+        port: '1026',
+        ngsiVersion: 'v2'
+    },
+    server: {
+        port: 4041
+    },
+    deviceRegistry: {
+        type: 'memory'
+    },
+
+    types: {},
+    service: 'howtoService',
+    subservice: '/howto',
+    providerUrl: 'http://localhost:4041',
+    deviceRegistrationDuration: 'P1M',
+    defaultType: 'Thing',
+    defaultResource: '/iot/d'
+};
+
+config.defaultKey = '1234';
+config.defaultTransport = 'HTTP';
+
+module.exports = config;

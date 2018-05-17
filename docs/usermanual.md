@@ -82,6 +82,17 @@ in a transformation expression in the IoTAgent). In this cases, when a reverse e
 bidirectional attribute is modified, the IoTAgent sends a command to the original device, with the name defined in the
 reverse expression attribute and the ID of the device (see Commands Syntax, just above).
 
+
+#### Casting to Json native format
+Ultralight 2.0 defines a method that allows to use native JSON types in the NGSIv2. For example:
+The IotAgent receives this UL measure:
+```
+t|10|s|true|l|78.8
+```
+then the NGSIv2 update uses ```10```(number), ```true``` (boolean) and ```78.8``` (number) instead of "10" (string), "true" (string) and "78.8" (string).
+
+This functionality relies on string measures casting feature implemented in the iotagent library. In order to use it, the `autocast` configuration parameter has to be set to true. Please see [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration) for further information.
+
 ### Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
 specify a single transport protocol. Instead, different transport protocol bindings can be established for different

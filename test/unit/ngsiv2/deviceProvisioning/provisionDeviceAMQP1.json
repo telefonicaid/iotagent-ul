@@ -1,0 +1,22 @@
+{
+  "devices": [
+    {
+      "protocol": "GENERIC_PROTO",
+      "transport": "AMQP",
+      "device_id": "MQTT_2",
+      "entity_name": "Second UL Device",
+      "entity_type": "AnMQTTDevice",
+      "timezone": "America/Santiago",
+      "attributes": [
+        {
+          "name": "temperature",
+          "type": "celsius"
+        },
+        {
+          "name": "humidity",
+          "type": "degrees"
+        }
+      ]
+    }
+  ]
+}

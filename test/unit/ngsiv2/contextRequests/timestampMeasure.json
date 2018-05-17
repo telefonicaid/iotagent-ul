@@ -1,0 +1,16 @@
+{
+  "temperature":{
+    "type": "celsius",
+    "value": "23",
+    "metadata":{
+        "TimeInstant":{
+          "type": "DateTime",
+          "value": "20160530T162522304Z"
+        }
+      }
+    },
+    "TimeInstant":{
+      "type": "DateTime",
+      "value": "20160530T162522304Z"
+    }
+}
