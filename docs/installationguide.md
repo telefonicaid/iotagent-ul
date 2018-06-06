@@ -166,7 +166,7 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_PORT            | mqtt.port                           |
 | IOTA_MQTT_USERNAME        | mqtt.username                       |
 | IOTA_MQTT_PASSWORD        | mqtt.password                       |
-| IOTA_MQTT_OOS             | mqtt.qos                            |
+| IOTA_MQTT_QOS             | mqtt.qos                            |
 | IOTA_MQTT_RETAIN          | mqtt.retain                         |
 | IOTA_HTTP_HOST            | http.host                           |
 | IOTA_HTTP_PORT            | http.port                           |
