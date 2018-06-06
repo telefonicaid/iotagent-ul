@@ -49,12 +49,12 @@ config.mqtt = {
     /**
       * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
       */
-    qos: 2,
+    qos: 0,
 
     /**
       * Retain flag. (default is true).
       */
-    retain: true
+    retain: false
 };
 
 config.amqp = {

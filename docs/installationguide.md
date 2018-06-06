@@ -145,8 +145,8 @@ IoTAgent. The following attributes are accepted:
 * **port**: Port where the MQTT Broker is listening
 * **username**: User name for the IoTAgent in the MQTT broker, if authentication is activated.
 * **password**: Password for the IoTAgent in the MQTT broker, if authentication is activated.
-* **qos**: QoS level: at most once (0), at least once (1), exactly once (2). (default is 2).
-* **retain**: retain flag ( default is true).
+* **qos**: QoS level: at most once (0), at least once (1), exactly once (2). (default is 0).
+* **retain**: retain flag (default is false).
 
 #### HTTP Binding configuration
 The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP

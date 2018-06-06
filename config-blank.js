@@ -25,8 +25,8 @@ var config = {};
 config.mqtt = {
     host: 'mosquitto',
     port: 1883,
-    qos: 2,
-    retain: true
+    qos: 0,
+    retain: false
 };
 
 config.http = {
