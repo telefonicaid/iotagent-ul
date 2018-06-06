@@ -145,6 +145,8 @@ IoTAgent. The following attributes are accepted:
 * **port**: Port where the MQTT Broker is listening
 * **username**: User name for the IoTAgent in the MQTT broker, if authentication is activated.
 * **password**: Password for the IoTAgent in the MQTT broker, if authentication is activated.
+* **qos**: QoS level: at most once (0), at least once (1), exactly once (2). (default is 0).
+* **retain**: retain flag (default is false).
 
 #### HTTP Binding configuration
 The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
@@ -164,5 +166,7 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_PORT            | mqtt.port                           |
 | IOTA_MQTT_USERNAME        | mqtt.username                       |
 | IOTA_MQTT_PASSWORD        | mqtt.password                       |
+| IOTA_MQTT_QOS             | mqtt.qos                            |
+| IOTA_MQTT_RETAIN          | mqtt.retain                         |
 | IOTA_HTTP_HOST            | http.host                           |
 | IOTA_HTTP_PORT            | http.port                           |

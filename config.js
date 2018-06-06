@@ -34,7 +34,7 @@ config.mqtt = {
     /**
      * Port where the MQTT Broker is listening
      */
-    port: 1883
+    port: 1883,
 
     /**
      * User name for the IoTAgent in the MQTT broker, if authentication is activated.
@@ -45,6 +45,16 @@ config.mqtt = {
      * Password for the IoTAgent in the MQTT broker, if authentication is activated.
      */
     //password: ''
+
+    /**
+      * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
+      */
+    qos: 0,
+
+    /**
+      * Retain flag. (default is true).
+      */
+    retain: false
 };
 
 config.amqp = {
