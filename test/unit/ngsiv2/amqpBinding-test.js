@@ -65,13 +65,11 @@ describe('AMQP Transport binding: measures', function() {
 
         nock.cleanAll();
 
-        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-        // as far as it is a 200 OK
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, '{}');
+            .post('/v2/entities')
+            .reply(201);
 
         async.series([
             apply(iotagentUl.start, config),
@@ -123,13 +121,12 @@ describe('AMQP Transport binding: measures', function() {
         };
 
         beforeEach(function(done) {
-            // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-            // as far as it is a 200 OK
+
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v1/updateContext')
-                .reply(200, '{}');
+                .post('/v2/entities')
+                .reply(201);
 
 
             contextBrokerMock
@@ -277,8 +274,8 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext')
-                .reply(200, {})
+                .post('/v2/entities')
+                .reply(201)
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);

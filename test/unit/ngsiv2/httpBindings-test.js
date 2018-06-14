@@ -53,13 +53,12 @@ describe('HTTP Transport binding: measures', function() {
         iotamMock = nock('http://localhost:8082')
         .post('/protocols')
         .reply(200, {});
-        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-        // as far as it is a 200 OK
+
         contextBrokerMock = nock('http://192.168.1.1:1026')
         .matchHeader('fiware-service', 'smartGondor')
         .matchHeader('fiware-servicepath', '/gardens')
-        .post('/v1/updateContext')
-        .reply(200, {});
+        .post('/v2/entities')
+        .reply(201);
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -180,15 +179,14 @@ describe('HTTP Transport binding: measures', function() {
                 'fiware-servicepath': '/testingPath'
             }
         };
-        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-        // as far as it is a 200 OK
+
         beforeEach(function(done) {
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
-            .post('/v1/updateContext')
-            .reply(200, {});
+            .post('/v2/entities')
+            .reply(201);
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
@@ -466,12 +464,10 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function(done) {
             nock.cleanAll();
-            // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-            // as far as it is a 200 OK
 
             contextBrokerMock
-            .post('/v1/updateContext')
-            .reply(200 , {})
+            .post('/v2/entities')
+            .reply(201)
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json'))
             .reply(204);
@@ -609,14 +605,13 @@ describe('HTTP Transport binding: measures', function() {
                 'fiware-servicepath': '/gardens'
             }
         };
-        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-        // as far as it is a 200 OK
+
          beforeEach(function(done) {
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, {})
+            .post('/v2/entities')
+            .reply(201)
             // Note: The expected body payload is not set explicitly since this mock will be used to
             // intercept requests from the IOTA to the CB for each one of the different observations.
             // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
@@ -705,10 +700,8 @@ describe('HTTP Transport binding: measures', function() {
              contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext')
-                // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-                // as far as it is a 200 OK
-                .reply(200, {})
+                .post('/v2/entities')
+                .reply(201)
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);

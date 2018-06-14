@@ -56,13 +56,12 @@ describe('MQTT Transport binding: measures', function() {
             keepalive: 0,
             connectTimeout: 60 * 60 * 1000
         });
-        // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-        // as far as it is a 200 OK
+
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, '{}');
+            .post('/v2/entities')
+            .reply(201);
 
         iotagentUL.start(config, function() {
             request(provisionOptions, function(error, response, body) {
@@ -138,13 +137,12 @@ describe('MQTT Transport binding: measures', function() {
             };
 
         beforeEach(function(done) {
-            // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-            // as far as it is a 200 OK
+
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v1/updateContext')
-                .reply(200, '{}');
+                .post('/v2/entities')
+                .reply(201);
 
 
             contextBrokerMock
@@ -294,13 +292,12 @@ describe('MQTT Transport binding: measures', function() {
             };
 
         beforeEach(function(done) {
-            // Note: /v1/updateContext response is not processed by IOTA so its content is irrelevant,
-            // as far as it is a 200 OK
+
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext')
-                .reply(200, '{}')
+                .post('/v2/entities')
+                .reply(201)
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);
