@@ -39,12 +39,12 @@ config.mqtt = {
     /**
      * User name for the IoTAgent in the MQTT broker, if authentication is activated.
      */
-    //username: ''
+    //username: '',
 
     /**
      * Password for the IoTAgent in the MQTT broker, if authentication is activated.
      */
-    //password: ''
+    //password: '',
 
     /**
       * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
@@ -58,6 +58,27 @@ config.mqtt = {
 };
 
 config.amqp = {
+    /**
+     * Host where the AMQP Broker is located.
+     */
+    host: 'localhost',
+
+    /**
+     * Port where the AMQP Broker is listening
+     */
+    port: 5672,
+
+    /**
+     * User name for the IoTAgent in the MQTT broker, if authentication is activated.
+     */
+    //username: '',
+
+    /**
+     * Password for the IoTAgent in the MQTT broker, if authentication is activated.
+     */
+    //password: '',
+
+    vhost: '/',
     exchange: 'iota-exchange',
     queue: 'iotaqueue',
     options: {durable: true}
