@@ -57,8 +57,8 @@ describe('HTTP Transport binding: measures', function() {
         contextBrokerMock = nock('http://192.168.1.1:1026')
         .matchHeader('fiware-service', 'smartGondor')
         .matchHeader('fiware-servicepath', '/gardens')
-        .post('/v2/entities')
-        .reply(201);
+        .post('/v2/entities?options=upsert')
+        .reply(204);
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -185,8 +185,8 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
-            .post('/v2/entities')
-            .reply(201);
+            .post('/v2/entities?options=upsert')
+            .reply(204);
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
@@ -466,8 +466,8 @@ describe('HTTP Transport binding: measures', function() {
             nock.cleanAll();
 
             contextBrokerMock
-            .post('/v2/entities')
-            .reply(201)
+            .post('/v2/entities?options=upsert')
+            .reply(204)
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json'))
             .reply(204);
@@ -610,8 +610,8 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities')
-            .reply(201)
+            .post('/v2/entities?options=upsert')
+            .reply(204)
             // Note: The expected body payload is not set explicitly since this mock will be used to
             // intercept requests from the IOTA to the CB for each one of the different observations.
             // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
@@ -700,8 +700,8 @@ describe('HTTP Transport binding: measures', function() {
              contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities')
-                .reply(201)
+                .post('/v2/entities?options=upsert')
+                .reply(204)
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
                 .reply(204);
