@@ -54,6 +54,9 @@ describe('HTTP Transport binding: measures', function() {
         .post('/protocols')
         .reply(200, {});
 
+        // This mock does not check the payload since the aim of the test is not to verify
+        // device provisioning functionality. Appropriate verification is done in tests under
+        // provisioning folder of iotagent-node-lib
         contextBrokerMock = nock('http://192.168.1.1:1026')
         .matchHeader('fiware-service', 'smartGondor')
         .matchHeader('fiware-servicepath', '/gardens')
@@ -182,6 +185,9 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function(done) {
 
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
             contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'TestService')
             .matchHeader('fiware-servicepath', '/testingPath')
@@ -464,7 +470,9 @@ describe('HTTP Transport binding: measures', function() {
 
         beforeEach(function(done) {
             nock.cleanAll();
-
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
             contextBrokerMock
             .post('/v2/entities?options=upsert')
             .reply(204)
@@ -607,6 +615,9 @@ describe('HTTP Transport binding: measures', function() {
         };
 
          beforeEach(function(done) {
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
             contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
@@ -697,6 +708,9 @@ describe('HTTP Transport binding: measures', function() {
              };
 
          beforeEach(function(done) {
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
              contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
