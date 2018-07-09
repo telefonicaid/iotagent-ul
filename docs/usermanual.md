@@ -100,7 +100,7 @@ In addition, the device has to be provisioned using the right types for the attr
 * Type "None" for null
 
 As a consecuence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
-autprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default
+autoprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default
 type "string").
 
 ### Transport Protocol
