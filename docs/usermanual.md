@@ -93,13 +93,13 @@ then the NGSIv2 update uses ```10```(number), ```true``` (boolean) and ```78.8``
 
 This functionality relies on string measures casting feature implemented in the iotagent library. In order to use it, the `autocast` configuration parameter has to be set to true. Please see [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration) for further information.
 
-In addition, the device has to be provisioned using the right types for the attributes to be casted, which are:
+In addition, the device has to be provisioned using the right types for the attributes to be cast, which are:
 
 * Type "Number" for integer or float numbers
 * Type "Boolean" for boolean
 * Type "None" for null
 
-As a consecuence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
+As a consequence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
 autoprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default
 type "string").
 
