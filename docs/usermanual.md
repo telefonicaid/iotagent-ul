@@ -83,7 +83,7 @@ bidirectional attribute is modified, the IoTAgent sends a command to the origina
 reverse expression attribute and the ID of the device (see Commands Syntax, just above).
 
 
-#### Casting to Json native format
+#### Casting to JSON native format
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSIv2. For example:
 The IotAgent receives this UL measure:
 ```
@@ -92,6 +92,16 @@ t|10|s|true|l|78.8
 then the NGSIv2 update uses ```10```(number), ```true``` (boolean) and ```78.8``` (number) instead of "10" (string), "true" (string) and "78.8" (string).
 
 This functionality relies on string measures casting feature implemented in the iotagent library. In order to use it, the `autocast` configuration parameter has to be set to true. Please see [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration) for further information.
+
+In addition, the device has to be provisioned using the right types for the attributes to be cast, which are:
+
+* Type "Number" for integer or float numbers
+* Type "Boolean" for boolean
+* Type "None" for null
+
+As a consequence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
+autoprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default
+type "string").
 
 ### Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
