@@ -68,7 +68,7 @@ config.amqp = {
  */
 config.http = {
     /**
-     * Port where the HTTP Ultralight transport binding will be listening for device requests.
+     * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
      */
     port: 7896
 };
@@ -102,11 +102,11 @@ config.iota = {
     },
 
     /**
-     * Configuration of the Northbound server of the IoT Agent.
+     * Configuration of the North Port of the IoT Agent.
      */
     server: {
         /**
-         * Port where the IoT Agent will be listening for requests.
+         * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
         port: 4061
     },
@@ -180,7 +180,7 @@ config.iota = {
         port: '27017',
 
         /**
-         * Name of the Mongo database that will be created to store IOTAgent data.
+         * Name of the Mongo database that will be created to store IoT Agent data.
          */
         db: 'iotagentul'
 
@@ -191,7 +191,7 @@ config.iota = {
     },
 
     /**
-     *  Types array for static configuration of services. Check documentation in the IoTAgent Library for Node.js for
+     *  Types array for static configuration of services. Check documentation in the IoT Agent Library for Node.js for
      *  further details:
      *
      *      https://github.com/telefonicaid/iotagent-node-lib#type-configuration
@@ -199,17 +199,17 @@ config.iota = {
     types: {},
 
     /**
-     * Default service, for IOTA installations that won't require preregistration.
+     * Default service, for IoT Agent installations that won't require preregistration.
      */
     service: 'howtoService',
 
     /**
-     * Default subservice, for IOTA installations that won't require preregistration.
+     * Default subservice, for IoT Agent installations that won't require preregistration.
      */
     subservice: '/howto',
 
     /**
-     * URL Where the IOTA Will listen for incoming updateContext and queryContext requests (for commands and passive
+     * URL Where the IoT Agent Will listen for incoming updateContext and queryContext requests (for commands and passive
      * attributes). This URL will be sent in the Context Registration requests.
      */
     providerUrl: 'http://localhost:4061',
@@ -220,7 +220,7 @@ config.iota = {
     deviceRegistrationDuration: 'P1Y',
 
     /**
-     * Default type, for IOTA installations that won't require preregistration.
+     * Default type, for IoT Agent installations that won't require preregistration.
      */
     defaultType: 'Thing'
 };

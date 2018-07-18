@@ -2,9 +2,9 @@
 
 ## Index
 
-* [API Overview](#apioverview)
-  * [Ultralight 2.0 Protocol](#ultralight-20-protocol)
-  * [Transport Protocol](#transport-protocol)
+* [API Overview](#api-overview)
+    + [Ultralight 2.0 Protocol](#ultralight-20-protocol)
+    + [Transport Protocol](#transport-protocol)
 * [Developing new transports](#developing-new-transports)
 * [Development documentation](#development-documentation)
 
@@ -289,7 +289,7 @@ the messages must be published to the selected exchange, using the following rou
 
 The payload is the same as for the other bindings.
 
-## <a name="developing-new-transports"></a> Developing new transports
+## Developing new transports
 The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
 transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
 Those module must export the following fields:
@@ -313,7 +313,7 @@ modules to identify which module should attend the request.
 All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
 IoT Agent Node.js library to interact process incoming requests.
 
-## <a name="development-documentation"></a> Development documentation
+## Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 

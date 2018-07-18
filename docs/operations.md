@@ -4,7 +4,7 @@
 * [Overview](#overview)
 * [Logs](#logs)
 * [Alarms](#alarms)
-* [Error naming code](#errorcode)
+* [Error naming code](#error-naming-code)
 
 
 ## Overview
