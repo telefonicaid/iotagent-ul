@@ -3,3 +3,4 @@
 - Add: allow NGSIv2 for updating active attributes at CB, throught configuration based on iotagent-node-lib(#233)
 - Fix: parameter order for the MEASURE-001 error message (#264)
 - Using precise dependencies (~=) in packages.json
+- Fix: upgrade mqtt dep from 1.7.0 to 1.14.1
