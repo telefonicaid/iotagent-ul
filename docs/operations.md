@@ -4,10 +4,10 @@
 * [Overview](#overview)
 * [Logs](#logs)
 * [Alarms](#alarms)
-* [Error naming code](#errorcode)
+* [Error naming code](#error-naming-code)
 
 
-## <a name="overview"/>  Overview
+## Overview
 The following document shows all the errors that can appear in the IoTAgent Ultralight 2.0 log file, and gives a brief
 idea of the severity and how to react to those errors.
 
@@ -15,7 +15,7 @@ Take into account that this Agent uses the IoT Agent Library for Node.js, and so
 in addition to those particular of this agent. More information about those can be found in the
 [IoT Agent Library Operations Manual](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/operations.md).
 
-## <a name="logs"/>  Logs
+## Logs
 The following section contains the error log entries that can appear in the IoTA logs, grouped by category.
 
 ### Command errors
@@ -42,7 +42,7 @@ it will indicate a IoTAgent problem with the South Bound connectivity.
 
 #### COMMANDS-005: Error updating error information for device [%s]
 This error log indicates that a connectivity problem happened when the IoT Agent was trying to report an error sending
-information to a device. If this log appears, it means the IoTAgent has problems both in the South and North network
+information to a device. If this log appears, it means the IoTAgent has problems both in the Northern and Southern network
 interfaces, and it most probably indicates a general network accesing problem for the IoTA.
 
 ### Measure errors
@@ -84,7 +84,7 @@ This fatal error will be risen when the IOTAgent cannot make the initial connect
 this error occurs, check the Mosquitto MQTT broker is up and running and check the connectivity from the IoTAgent to
 the broker.
 
-## <a name="alarms"/> Alarms
+## Alarms
 
 The following table shows the alarms that can be raised in the Ultralight 2.0 IoTAgent library. All the alarms are signaled by an
 error log starting with the prefix "Raising [%s]:" (where %s is the alarm name). All the alarms are released by an info
@@ -100,7 +100,7 @@ while the 'Severity' criterium is as follows:
 * **Major** - The system has a problem that degrades the service and must be addressed
 * **Warning** - It is happening something that must be notified
 
-## <a name="errorcode"/> Error naming code
+## Error naming code
 Every error has a code composed of a prefix and an ID, codified with the following table:
 
 | Prefix           | Type of operation      |

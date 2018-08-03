@@ -2,13 +2,13 @@
 
 ## Index
 
-* [API Overview](#apioverview)
-  * [Ultralight 2.0 Protocol](#ultralight-20-protocol)
-  * [Transport Protocol](#transport-protocol)
+* [API Overview](#api-overview)
+    + [Ultralight 2.0 Protocol](#ultralight-20-protocol)
+    + [Transport Protocol](#transport-protocol)
 * [Developing new transports](#developing-new-transports)
 * [Development documentation](#development-documentation)
 
-## <a name="apioverview"></a> API Overview
+## API Overview
 This section describes the specific South-bound API implemented by this IoTAgent. For the Configuration API and other
 APIs concerning general IoTAgents, check the [API Reference section](#apireference);
 
@@ -18,15 +18,18 @@ Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices
 bandwidth and device memory may be limited resources.
 
 #### Measure Payload Syntax
-The payload for information update requests is composed of a list of key-value pairs separated by the '|' character. E.g.:
+The payload for information update requests is composed of a list of key-value pairs separated by the `|` character. E.g.:
+
 ```
 t|15|k|abc
 ```
+
 In this example, two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted.
 Values in Ultralight 2.0 are not typed (everything is treated as a string).
 
-Multiple groups of measures can be combined into a single request, using the '#' character. In that case, a different
+Multiple groups of measures can be combined into a single request, using the `#` character. In that case, a different
 NGSI request will be generated for each group of measures. E.g.:
+
 ```
 gps|1.2/3.4#t|10
 ```
@@ -34,6 +37,7 @@ This will generate two NGSI requests for the same entity, one for each one of th
 can contain any number of attributes.
 
 Measure groups can additionaly have an optional timestamp, with the following syntax:
+
 ```
 2016-06-13T00:35:30Z|lle|100
 ```
@@ -83,7 +87,7 @@ bidirectional attribute is modified, the IoTAgent sends a command to the origina
 reverse expression attribute and the ID of the device (see Commands Syntax, just above).
 
 
-#### Casting to Json native format
+#### Casting to JSON native format
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSIv2. For example:
 The IotAgent receives this UL measure:
 ```
@@ -92,6 +96,16 @@ t|10|s|true|l|78.8
 then the NGSIv2 update uses ```10```(number), ```true``` (boolean) and ```78.8``` (number) instead of "10" (string), "true" (string) and "78.8" (string).
 
 This functionality relies on string measures casting feature implemented in the iotagent library. In order to use it, the `autocast` configuration parameter has to be set to true. Please see [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration) for further information.
+
+In addition, the device has to be provisioned using the right types for the attributes to be cast, which are:
+
+* Type "Number" for integer or float numbers
+* Type "Boolean" for boolean
+* Type "None" for null
+
+As a consequence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
+autoprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default
+type "string").
 
 ### Transport Protocol
 Ultralight 2.0 defines a payload describing measures and commands to share between devices and servers but, does not
@@ -132,11 +146,11 @@ result format.
 
 * **Polling commands**: in this case, the Agent does not send any messages to the device, being the later responsible
 of retrieving them from the IoTAgent whenever the device is ready to get commands. In order to retrieve commands from
-the IoT Agent, the device will send the query parameter 'getCmd' with value '1' as part of a normal measure. As a result 
-of this action, the IoTAgent, instead of returning an empty body (the typical response to a measurement report), will return 
-a list of all the commands available for the device, sepparated by the character '#'. The command payload is described 
-in the protocol section (and its shared with the push commands). Whenever the device has completed the execution of the 
-command, it will send the response in the same way measurements are reported, but using the **command result format** as 
+the IoT Agent, the device will send the query parameter 'getCmd' with value '1' as part of a normal measure. As a result
+of this action, the IoTAgent, instead of returning an empty body (the typical response to a measurement report), will return
+a list of all the commands available for the device, sepparated by the character '#'. The command payload is described
+in the protocol section (and its shared with the push commands). Whenever the device has completed the execution of the
+command, it will send the response in the same way measurements are reported, but using the **command result format** as
 exposed in the [Protocol section](#protocol).
 
 Some additional remarks regarding polling commands:
@@ -275,7 +289,7 @@ the messages must be published to the selected exchange, using the following rou
 
 The payload is the same as for the other bindings.
 
-## <a name="developing-new-transports"></a> Developing new transports
+## Developing new transports
 The Ultralight 2.0 IoT Agent can work with multiple different transports for the same Ultralight 2.0 payload. Those
 transports are dinamically loaded when the Agent starts, by looking in the `lib/bindings` folder for Node.js Modules.
 Those module must export the following fields:
@@ -299,7 +313,7 @@ modules to identify which module should attend the request.
 All the methods **must** call the callback before exiting (with or without error). Bindings will use methods in the
 IoT Agent Node.js library to interact process incoming requests.
 
-## <a name="development-documentation"></a> Development documentation
+## Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 

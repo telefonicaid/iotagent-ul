@@ -37,12 +37,12 @@ config.mqtt = {
     port: 1883
 
     /**
-     * User name for the IoTAgent in the MQTT broker, if authentication is activated.
+     * User name for the IoT Agent in the MQTT broker, if authentication is activated.
      */
     //username: ''
 
     /**
-     * Password for the IoTAgent in the MQTT broker, if authentication is activated.
+     * Password for the IoT Agent in the MQTT broker, if authentication is activated.
      */
     //password: ''
 };
@@ -64,7 +64,7 @@ config.iota = {
     logLevel: 'DEBUG',
 
     /**
-     * When this flag is active, the IoTAgent will add the TimeInstant attribute to every entity created, as well
+     * When this flag is active, the IoT Agent will add the TimeInstant attribute to every entity created, as well
      * as a TimeInstant metadata to each attribute, with the current timestamp.
      */
     timestamp: true,
@@ -86,17 +86,17 @@ config.iota = {
     },
 
     /**
-     * Configuration of the Northbound server of the IoT Agent.
+     * Configuration of the North Port of the IoT Agent.
      */
     server: {
         /**
-         * Port where the IoT Agent will be listening for requests.
+         * North Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
         port: 4061
     },
 
     /**
-     * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
+     * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoT Agents
      * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
      */
     //iotManager: {
@@ -175,7 +175,7 @@ config.iota = {
     },
 
     /**
-     *  Types array for static configuration of services. Check documentation in the IoTAgent Library for Node.js for
+     *  Types array for static configuration of services. Check documentation in the IoT Agent Library for Node.js for
      *  further details:
      *
      *      https://github.com/telefonicaid/iotagent-node-lib#type-configuration

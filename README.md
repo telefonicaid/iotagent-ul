@@ -8,44 +8,45 @@
 ## Index
 
 * [Description](#description)
-* [Build & Install](#installation)
-* [API Overview](#apioverview)
-* [API Reference Documentation](#apireference)
-* [Development documentation](#development)
+* [Installation](#installation)
+* [API Overview](#api-overview)
+* [API Reference Documentation](#api-reference-documentation)
+* [Development documentation](#development-documentation)
 * [Testing](#testing)
 
-## <a name="description"/> Description
+## Description
 This *Internet of Things Agent* is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol
 and NGSI Context Brokers (like [Orion](https://github.com/telefonicaid/fiware-orion)). Ultralight 2.0 is a lightweight
 text based protocol aimed to constrained devices and communications where the bandwidth and device memory may be limited
-resources. This IoTA will provide different transport protocol bindings for the same protocol: HTTP, MQTT...
+resources. This IoT Agent will provide different transport protocol bindings for the same protocol: HTTP, MQTT...
 
 As is the case in any IoT Agent, this one follows the interaction model defined in the [Node.js IoT Agent Library](https://github.com/telefonicaid/iotagent-node-lib),
-that is used for the implementation of the Northbound APIs. Information about the IoTAgent's architecture can be found
-on that global repository. This documentation will only address those features and characteristics that are particular
-to the Ultralight 2.0 IoTAgent.
+that is used for the implementation of the APIs found on the IoT Agent's North Port.
+Information about the architecture of the IoT Agent can be found on that global repository.
+This documentation will only address those features and characteristics
+that are particular to the Ultralight 2.0 IoT Agent.
 
 Additional information about operating the component can be found in the [Operations: logs and alarms](docs/operations.md) document.
 
 This project is part of [FIWARE](https://www.fiware.org/). Check also the [FIWARE Catalogue entry for the IoTAgents](http://catalogue.fiware.org/enablers/backend-device-management-idas)
 
-## <a name="installation"/> Installation
+## Installation
 Information about how to install the UL IoTAgent can be found at the corresponding section of the [Installation & Administration Guide](docs/installationguide.md).
 
-## <a name="apioverview"/> API Overview
+## API Overview
 
 An Overview of the API can be found in the [User & Programmers Manual](docs/usermanual.md).
 
-## <a name="apireference"/> API Reference Documentation
+## API Reference Documentation
 
 Apiary reference for the Configuration API can be found [here](http://docs.telefonicaiotiotagents.apiary.io/#reference/configuration-api).
 More information about IoTAgents and their APIs can be found in the IoTAgent Library [here](https://github.com/telefonicaid/iotagent-node-lib).
 
-## <a name="development"/> Development documentation
+## Development documentation
 
 Information about developing for the UL IoTAgent can be found at the corresponding section of the [User & Programmers Manual](docs/usermanual.md).
 
-## <a name="testing"/> Testing
+## Testing
 [Mocha](https://mochajs.org/) Test Runner + [Chai](http://chaijs.com/) Assertion Library + [Sinon](http://sinonjs.org/) Spies, stubs.
 
 The test environment is preconfigured to run [BDD](http://chaijs.com/api/bdd/) testing style with
