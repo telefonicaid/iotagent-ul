@@ -160,6 +160,19 @@ IoT Agent. The following attributes are accepted:
 * **qos**: QoS level: at most once (`0`), at least once (`1`), exactly once (`2`). (default is `0`).
 * **retain**: retain flag (default is `false`).
 
+#### AMQP Binding configuration
+The `config.amqp` section of the config file contains all the information needed to connect to the AMQP Broker from the
+IoTAgent. The following attributes are accepted:
+
+* **host**: Host where the AMQP Broker is located.
+* **port**: Port where the AMQP Broker is listening
+* **username**: User name for the IoTAgent in the AMQP broker, if authentication is activated.
+* **password**: Password for the IoTAgent in the AMQP broker, if authentication is activated.
+* **vhost**: The virtual host configured for this agent.
+* **queue**: Queue name.
+* **exchange**: Exchange name.
+* **options**: Options for the channel [assertExchange](http://www.squaremobius.net/amqp.node/channel_api.html#channel_assertExchange).
+
 #### HTTP Binding configuration
 The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
 transport protocol binding. The following options are accepted:

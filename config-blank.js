@@ -29,6 +29,18 @@ config.mqtt = {
     retain: false
 };
 
+config.amqp = {
+    host: 'rabbitmq',
+    port: 5672,
+    username: 'guest',
+    password: 'guest',
+    vhost: '/',
+    exchange: 'iota-exchange',
+    queue: 'iotaqueue',
+    options: {durable: true}
+};
+
+
 config.http = {
     port: 7896
 };
