@@ -167,6 +167,8 @@ IoT Agent. The following attributes are accepted:
 
 * **host**: Host where the AMQP Broker is located.
 * **port**: Port where the AMQP Broker is listening
+* **username**: User name for the IoT Agent in the AMQP broker
+* **password**: Password for the IoT Agent in the AMQP broker
 * **exchange**: Exchange in the AMQP broker
 * **queue**: Queue in the AMQP broker
 * **durable**: durable queue flag (default is `false`).
@@ -193,6 +195,8 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_RETAIN          | mqtt.retain                         |
 | IOTA_AMQP_HOST            | amqp.host                           |
 | IOTA_AMQP_PORT            | amqp.port                           |
+| IOTA_AMQP_USERNAME        | amqp.username                       |
+| IOTA_AMQP_PASSWORD        | amqp.password                       |
 | IOTA_AMQP_EXCHANGE        | amqp.exchange                       |
 | IOTA_AMQP_QUEUE           | amqp.queue                          |
 | IOTA_AMQP_DURABLE         | amqp.durable                        |
