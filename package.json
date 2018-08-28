@@ -52,7 +52,7 @@
     "chai": "3.5.0",
     "sinon": "1.17.4",
     "istanbul": "~0.1.34",
-    "sinon-chai": "2.4.0",
+    "sinon-chai": "2.8.0",
     "timekeeper": "0.0.5",
     "nock": "9.0.14",
     "moment": "~2.20.1"
