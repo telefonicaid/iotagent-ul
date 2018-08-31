@@ -172,6 +172,8 @@ IoT Agent. The following attributes are accepted:
 * **exchange**: Exchange in the AMQP broker
 * **queue**: Queue in the AMQP broker
 * **durable**: durable queue flag (default is `false`).
+* **retries**: Number of AMQP connection errror retries (default is 5).
+* **retryTime**: Time between AMQP connection retries (default is 5'').
 
 #### HTTP Binding configuration
 The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
@@ -200,5 +202,7 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_AMQP_EXCHANGE        | amqp.exchange                       |
 | IOTA_AMQP_QUEUE           | amqp.queue                          |
 | IOTA_AMQP_DURABLE         | amqp.durable                        |
+| IOTA_AMQP_RETRIES         | amqp.retries                        |
+| IOTA_AMQP_RETRY_TIME      | amqp.retryTime                      |
 | IOTA_HTTP_HOST            | http.host                           |
 | IOTA_HTTP_PORT            | http.port                           |
