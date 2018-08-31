@@ -173,7 +173,7 @@ IoT Agent. The following attributes are accepted:
 * **queue**: Queue in the AMQP broker
 * **durable**: durable queue flag (default is `false`).
 * **retries**: Number of AMQP connection errror retries (default is 5).
-* **retryTime**: Time between AMQP connection retries (default is 5'').
+* **retryTime**: Time between AMQP connection retries (default is 5 seconds).
 
 #### HTTP Binding configuration
 The `config.http` section of the config file contains all the information needed to start the HTTP server for the HTTP
