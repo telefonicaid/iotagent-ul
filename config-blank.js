@@ -29,6 +29,16 @@ config.mqtt = {
     retain: false
 };
 
+config.amqp = {
+    host: 'localhost',
+    port: 5672,
+    // username: 'guest',
+    // password: 'guest',
+    exchange: 'iota-exchange',
+    queue: 'iotaqueue',
+    options: {durable: true}
+};
+
 config.http = {
     port: 7896
 };
