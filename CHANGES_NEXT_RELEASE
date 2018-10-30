@@ -1,3 +1,4 @@
+Add: use timestamp configuration from group device
 Add: use NodeJS 8 in dockerfile
 Fix: check QoS option for MQTT commands
 Feature: use AMQP message handler, add reconnections and error handlers
