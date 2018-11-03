@@ -29,7 +29,7 @@ WORKDIR /opt/iotaul
 RUN \
   apt-get update && \
   apt-get install -y git && \
-  npm install -g grunt-cli && \
+  npm install pm2@3.2.2 -g && \
   echo "INFO: npm install --production..." && \
   cd /opt/iotaul && npm install --production && \
   # Clean apt cache
@@ -37,4 +37,8 @@ RUN \
   apt-get remove -y git && \
   apt-get -y autoremove
 
-ENTRYPOINT bin/iotagent-ul config-blank.js
+USER node
+ENV NODE_ENV=production
+
+ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
+CMD ["-- ", "onfig-blank.js"]
