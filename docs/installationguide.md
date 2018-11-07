@@ -1,7 +1,5 @@
 # Installation & Administration Guide
 
-## Index
-
 * [Installation](#installation)
 * [Usage](#usage)
 * [Packaging](#packaging)
