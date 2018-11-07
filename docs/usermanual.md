@@ -1,7 +1,5 @@
 # User & Programmers Manual
 
-## Index
-
 * [API Overview](#api-overview)
     + [Ultralight 2.0 Protocol](#ultralight-20-protocol)
     + [Transport Protocol](#transport-protocol)
@@ -216,7 +214,7 @@ The command execution and command reporting payload format is specified under th
 For instance, if a user wants to send a command `ping` with parameters `data = 22`, he will send the following request
 to the Context Broker regarding an entity called `sen1` of type `sensor`:
 
-```
+```json
 {
   "updateAction": "UPDATE",
   "contextElements": [
@@ -245,8 +243,9 @@ id_sen1@ping|22
 
 If using [Mosquitto](https://mosquitto.org/), such a command is received by running the `mosquitto_sub` script:
 
-    $ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
-    /ABCDEF/id_sen1/cmd id_sen1@ping|22
+```bash
+$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /ABCDEF/id_sen1/cmd id_sen1@ping|22
+```
 
 At this point, Context Broker will have updated the value of `ping_status` to `PENDING` for `sen1` entity. Neither
 `ping_info` nor `ping` are updated.
@@ -260,7 +259,9 @@ id_sen1@ping|1234567890
 
 If using [Mosquitto](https://mosquitto.org/), such command result is sent by running the `mosquitto_pub` script:
 
-    $ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```bash
+$ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```
 
 In the end, Context Broker will have updated the values of `ping_info` and `ping_status` to `1234567890` and `OK`,
 respectively. `ping` attribute is never updated.
@@ -407,7 +408,8 @@ grunt init-dev-env
 
 We strongly suggest you to make an automatic execution of this task for every developer simply by adding the following
 lines to your `package.json`
-```
+
+```json
 {
   "scripts": {
      "postinstall": "grunt init-dev-env"
