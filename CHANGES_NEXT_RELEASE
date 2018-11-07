@@ -4,7 +4,7 @@ Fix: check QoS option for MQTT commands
 Feature: use AMQP message handler, add reconnections and error handlers
 Feature: add and use AMQP config env vars (#268)
 Fix: upgrade mqtt dep from 1.14.1 to 2.18.8
-Fix: use PM2 in Dockerfile (#336)
+Fix: use PM2 in Dockerfile
 Fix: updating dependencies due to known vulnerabilities in the previous ones
 	async: 1.5.2 -> 2.6.1
 	body-parser: 1.15.0 -> 1.18.3
