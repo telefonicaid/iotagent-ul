@@ -378,38 +378,7 @@ npm run test:coverage
 
 ### Clean
 
-<<<<<<< HEAD
 Removes `node_modules` and `coverage` folders, and  `package-lock.json` file so that a fresh copy of the project is restored. 
-=======
-Update the contributors for the project
-```bash
-grunt contributors
-```
-
-
-### Development environment
-
-Initialize your environment with git hooks.
-```bash
-grunt init-dev-env
-```
-
-We strongly suggest you to make an automatic execution of this task for every developer simply by adding the following
-lines to your `package.json`
-
-```json
-{
-  "scripts": {
-     "postinstall": "grunt init-dev-env"
-  }
-}
-```
-
-
-### Site generation
-
-There is a grunt task to generate the GitHub pages of the project, publishing also coverage, complexity and JSDocs pages.
-In order to initialize the GitHub pages, use:
 
 ```bash
 # Use git-bash on Windows
