@@ -1,7 +1,5 @@
 # User & Programmers Manual
 
-## Index
-
 * [API Overview](#api-overview)
     + [Ultralight 2.0 Protocol](#ultralight-20-protocol)
     + [Transport Protocol](#transport-protocol)
@@ -216,7 +214,7 @@ The command execution and command reporting payload format is specified under th
 For instance, if a user wants to send a command `ping` with parameters `data = 22`, he will send the following request
 to the Context Broker regarding an entity called `sen1` of type `sensor`:
 
-```
+```json
 {
   "updateAction": "UPDATE",
   "contextElements": [
@@ -245,8 +243,9 @@ id_sen1@ping|22
 
 If using [Mosquitto](https://mosquitto.org/), such a command is received by running the `mosquitto_sub` script:
 
-    $ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
-    /ABCDEF/id_sen1/cmd id_sen1@ping|22
+```bash
+$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /ABCDEF/id_sen1/cmd id_sen1@ping|22
+```
 
 At this point, Context Broker will have updated the value of `ping_status` to `PENDING` for `sen1` entity. Neither
 `ping_info` nor `ping` are updated.
@@ -260,7 +259,9 @@ id_sen1@ping|1234567890
 
 If using [Mosquitto](https://mosquitto.org/), such command result is sent by running the `mosquitto_pub` script:
 
-    $ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```bash
+$ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```
 
 In the end, Context Broker will have updated the values of `ping_info` and `ping_status` to `1234567890` and `OK`,
 respectively. `ping` attribute is never updated.
@@ -377,7 +378,38 @@ npm run test:coverage
 
 ### Clean
 
+<<<<<<< HEAD
 Removes `node_modules` and `coverage` folders, and  `package-lock.json` file so that a fresh copy of the project is restored. 
+=======
+Update the contributors for the project
+```bash
+grunt contributors
+```
+
+
+### Development environment
+
+Initialize your environment with git hooks.
+```bash
+grunt init-dev-env
+```
+
+We strongly suggest you to make an automatic execution of this task for every developer simply by adding the following
+lines to your `package.json`
+
+```json
+{
+  "scripts": {
+     "postinstall": "grunt init-dev-env"
+  }
+}
+```
+
+
+### Site generation
+
+There is a grunt task to generate the GitHub pages of the project, publishing also coverage, complexity and JSDocs pages.
+In order to initialize the GitHub pages, use:
 
 ```bash
 # Use git-bash on Windows
