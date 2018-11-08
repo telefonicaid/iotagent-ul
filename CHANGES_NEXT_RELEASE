@@ -21,6 +21,7 @@ Fix: updating development dependencies due to known vulnerabilities in the previ
     moment: ~2.20.1 -> ~2.22.2
     timekeeper: 0.0.5 -> 2.1.2
 Remove: old unused development dependencies
+        closure-linter-wrapper
 	sinon-chai
 	sinon
 	chai
