@@ -32,7 +32,7 @@
     "body-parser": "1.18.3",
     "dateformat": "3.0.3",
     "express": "~4.16.4",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#2c766e707fc7cc2172c3aebe631c652a36edc5a7",
+    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#task/restore_filterByAttributeObjectIds",
     "logops": "1.0.0",
     "mqtt": "2.18.8",
     "request": "2.88.0",
