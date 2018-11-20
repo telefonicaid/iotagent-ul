@@ -41,5 +41,38 @@ RUN \
 USER node
 ENV NODE_ENV=production
 
+ENV MQTT_HOST=localhost \
+    MQTT_PORT=1883 \ 
+    MQTT_QOS=1 \
+    MQTT_RETAIN=false
+
+ENV AMQP_HOST=localhost \
+    AMQP_PORT=5672 \
+    AMQP_EXCHANGE=iota-exchange \
+    AMQP_QUEUE=iotaqueue \
+    AMQP_OPTIONS_DURABLE=true
+
+ENV HTTP_PORT=7896
+
+ENV IOTA_LOGLEVEL=DEBUG \
+    IOTA_TIMESTAMP=true \
+    IOTA_CONTEXTBROKER_HOST=localhost \
+    IOTA_CONTEXTBROKER_PORT=1026 \
+    IOTA_SERVER_PORT=4061 \
+    IOTA_DEFAULTRESOURCE=/iot/d \
+    IOTA_CONTEXTBROKER_HOST=mongodb \
+    IOTA_MONGODB_HOST=localhost \
+    IOTA_MONGODB_PORT=27017 \
+    IOTA_MONGODB_DB=iotagentul
+
+ENV IOTA_SERVICE=howtoService \
+    IOTA_SUBERVICE=/howto \
+    IOTA_PROVIDERURL=http://localhost:4061 \
+    IOTA_DEFAULTREGISTRATIONDURATION=P1Y \
+    IOTA_DEFAULTTYPE=Thing
+
+ENV DEFAULTKEY=TEF \
+    DEFAULTTRANSPORT=MQTT
+
 ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
 CMD ["-- ", "config.js"]

@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
  *
@@ -29,42 +31,42 @@ config.mqtt = {
     /**
      * Host where the MQTT Broker is located.
      */
-    host: 'localhost',
+    host: process.env.MQTT_HOST || 'localhost',
 
     /**
      * Port where the MQTT Broker is listening
      */
-    port: 1883,
+    port: int(process.env.MQTT_PORT) || 1883,
 
     /**
      * User name for the IoTAgent in the MQTT broker, if authentication is activated.
      */
-    //username: ''
+    //username: process.env.MQTT_USERNAME || ''
 
     /**
      * Password for the IoTAgent in the MQTT broker, if authentication is activated.
      */
-    //password: ''
+    //password: process.env.MQTT_PASSWORD || ''
 
     /**
       * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
       */
-    qos: 0,
+    qos: int(process.env.MQTT_QOS) || 0,
 
     /**
       * Retain flag. (default is true).
       */
-    retain: false
+    retain: bool(process.env.MQTT_RETAIN) || false
 };
 
 config.amqp = {
-    host: 'localhost',
-    port: 5672,
-    // username: 'guest',
-    // password: 'guest',
-    exchange: 'iota-exchange',
-    queue: 'iotaqueue',
-    options: {durable: true}
+    host:       process.env.AMQP_HOST || 'localhost',
+    port:   int(process.env.AMQP_PORT) || 5672,
+    // username: process.env.AMQP_USERNAME ||'guest',
+    // password: process.env.AMQP_PASSWORD ||'guest',
+    exchange:   process.env.AMQP_EXCHANGE ||'iota-exchange',
+    queue:      process.env.AMQP_QUEUE ||'iotaqueue',
+    options: {durable: bool(process.env.AMQP_OPTIONS_DURABLE) || true}
 };
 
 /**
@@ -74,20 +76,20 @@ config.http = {
     /**
      * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
      */
-    port: 7896
+    port: process.env.HTTP_PORT ||7896
 };
 
 config.iota = {
     /**
      * Configures the log level. Appropriate values are: FATAL, ERROR, INFO, WARN and DEBUG.
      */
-    logLevel: 'DEBUG',
+    logLevel: process.env.IOTA_LOGLEVEL || 'DEBUG',
 
     /**
      * When this flag is active, the IoTAgent will add the TimeInstant attribute to every entity created, as well
      * as a TimeInstant metadata to each attribute, with the current timestamp.
      */
-    timestamp: true,
+    timestamp: bool(process.env.IOTA_TIMESTAMP) || true,
     
     /**
      * Context Broker configuration. Defines the connection information to the instance of the Context Broker where
@@ -97,12 +99,12 @@ config.iota = {
         /**
          * Host where the Context Broker is located.
          */
-        host: 'localhost',
+        host: process.env.IOTA_CONTEXTBROKER_HOST || 'localhost',
 
         /**
          * Port where the Context Broker is listening.
          */
-        port: '1026'
+        port: process.env.IOTA_CONTEXTBROKER_PORT || '1026'
     },
 
     /**
@@ -112,7 +114,7 @@ config.iota = {
         /**
          * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
-        port: 4061
+        port: process.env.IOTA_SERVER_PORT || 4061
     },
 
     /**
@@ -150,7 +152,7 @@ config.iota = {
      * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
      * Manager.
      */
-    defaultResource: '/iot/d',
+    defaultResource: process.env.IOTA_DEFAULTRESOURCE ||  '/iot/d',
 
     /**
      * Defines the configuration for the Device Registry, where all the information about devices and configuration
@@ -163,7 +165,7 @@ config.iota = {
      *             from the 'mongoDb' configuration property.
      */
     deviceRegistry: {
-        type: 'mongodb'
+        type: process.env.IOTA_CONTEXTBROKER_HOST || 'mongodb'
     },
 
     /**
@@ -175,18 +177,18 @@ config.iota = {
          * Host where MongoDB is located. If the MongoDB used is a replicaSet, this property will contain a
          * comma-separated list of the instance names or IPs.
          */
-        host: 'localhost',
+        host: process.env.IOTA_MONGODB_HOST || 'localhost',
 
         /**
          * Port where MongoDB is listening. In the case of a replicaSet, all the instances are supposed to be listening
          * in the same port.
          */
-        port: '27017',
+        port: process.env.IOTA_MONGODB_PORT || '27017',
 
         /**
          * Name of the Mongo database that will be created to store IoT Agent data.
          */
-        db: 'iotagentul'
+        db: process.env.IOTA_MONGODB_DB || 'iotagentul'
 
         /**
          * Name of the set in case the Mongo database is configured as a Replica Set. Optional otherwise.
@@ -205,39 +207,53 @@ config.iota = {
     /**
      * Default service, for IoT Agent installations that won't require preregistration.
      */
-    service: 'howtoService',
+    service: process.env.IOTA_SERVICE || 'howtoService',
 
     /**
      * Default subservice, for IoT Agent installations that won't require preregistration.
      */
-    subservice: '/howto',
+    subservice: process.env.IOTA_SUBERVICE || '/howto',
 
     /**
      * URL Where the IoT Agent Will listen for incoming updateContext and queryContext requests (for commands and passive
      * attributes). This URL will be sent in the Context Registration requests.
      */
-    providerUrl: 'http://localhost:4061',
+    providerUrl: process.env.IOTA_PROVIDERURL || 'http://localhost:4061',
 
     /**
      * Default maximum expire date for device registrations.
      */
-    deviceRegistrationDuration: 'P1Y',
+    deviceRegistrationDuration: process.env.IOTA_DEFAULTREGISTRATIONDURATION || 'P1Y',
 
     /**
      * Default type, for IoT Agent installations that won't require preregistration.
      */
-    defaultType: 'Thing'
+    defaultType: process.env.IOTA_DEFAULTTYPE || 'Thing'
 };
 
 /**
  * Default API Key, to use with device that have been provisioned without a Configuration Group.
  */
-config.defaultKey = 'TEF';
+config.defaultKey = process.env.DEFAULTKEY || 'TEF';
 
 /**
  * Default transport protocol when no transport is provisioned through the Device Provisioning API.
  */
-config.defaultTransport = 'MQTT';
+config.defaultTransport = process.env.DEFAULTTRANSPORT || 'MQTT';
+
+function bool(str) {
+    if (str === void 0) return false;
+    return str.toLowerCase() === 'true';
+  }
+  
+  function int(str) {
+    if (!str) return 0;
+    return parseInt(str, 10);
+  }
+  
+  function float(str) {
+    if (!str) return 0;
+    return parseFloat(str, 10);
+  }
 
 module.exports = config;
-
