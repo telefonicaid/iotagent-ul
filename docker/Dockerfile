@@ -70,4 +70,4 @@ USER node
 ENV NODE_ENV=production
 
 ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
-CMD ["-- ", "config-blank.js"]
+CMD ["-- ", "config.js"]
