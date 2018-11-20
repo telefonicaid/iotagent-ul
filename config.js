@@ -36,7 +36,7 @@ config.mqtt = {
     /**
      * Port where the MQTT Broker is listening
      */
-    port: int(process.env.MQTT_PORT) || 1883,
+    port: +process.env.MQTT_PORT || 1883,
 
     /**
      * User name for the IoTAgent in the MQTT broker, if authentication is activated.
@@ -51,22 +51,24 @@ config.mqtt = {
     /**
       * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
       */
-    qos: int(process.env.MQTT_QOS) || 0,
+    qos: +process.env.MQTT_QOS || 0,
 
     /**
       * Retain flag. (default is true).
       */
-    retain: bool(process.env.MQTT_RETAIN) || false
+    retain: (process.env.MQTT_RETAIN || 'true') === 'true'
 };
 
 config.amqp = {
     host:       process.env.AMQP_HOST || 'localhost',
-    port:   int(process.env.AMQP_PORT) || 5672,
-    // username: process.env.AMQP_USERNAME ||'guest',
-    // password: process.env.AMQP_PASSWORD ||'guest',
-    exchange:   process.env.AMQP_EXCHANGE ||'iota-exchange',
-    queue:      process.env.AMQP_QUEUE ||'iotaqueue',
-    options: {durable: bool(process.env.AMQP_OPTIONS_DURABLE) || true}
+    port:      +process.env.AMQP_PORT || 5672,
+    // username: process.env.AMQP_USERNAME || 'guest',
+    // password: process.env.AMQP_PASSWORD || 'guest',
+    exchange:   process.env.AMQP_EXCHANGE || 'iota-exchange',
+    queue:      process.env.AMQP_QUEUE || 'iotaqueue',
+    options: { 
+        durable: (process.env.AMQP_OPTIONS_DURABLE || 'true') === 'true' 
+    }
 };
 
 /**
@@ -76,7 +78,7 @@ config.http = {
     /**
      * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
      */
-    port: process.env.HTTP_PORT ||7896
+    port: +process.env.HTTP_PORT || 7896
 };
 
 config.iota = {
@@ -89,7 +91,7 @@ config.iota = {
      * When this flag is active, the IoTAgent will add the TimeInstant attribute to every entity created, as well
      * as a TimeInstant metadata to each attribute, with the current timestamp.
      */
-    timestamp: bool(process.env.IOTA_TIMESTAMP) || true,
+    timestamp: (process.env.IOTA_TIMESTAMP || 'true') === 'true',
     
     /**
      * Context Broker configuration. Defines the connection information to the instance of the Context Broker where
@@ -114,7 +116,7 @@ config.iota = {
         /**
          * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
-        port: process.env.IOTA_SERVER_PORT || 4061
+        port: +process.env.IOTA_SERVER_PORT || 4061
     },
 
     /**
@@ -240,20 +242,5 @@ config.defaultKey = process.env.DEFAULTKEY || 'TEF';
  * Default transport protocol when no transport is provisioned through the Device Provisioning API.
  */
 config.defaultTransport = process.env.DEFAULTTRANSPORT || 'MQTT';
-
-function bool(str) {
-    if (str === void 0) return false;
-    return str.toLowerCase() === 'true';
-  }
-  
-  function int(str) {
-    if (!str) return 0;
-    return parseInt(str, 10);
-  }
-  
-  function float(str) {
-    if (!str) return 0;
-    return parseFloat(str, 10);
-  }
 
 module.exports = config;
