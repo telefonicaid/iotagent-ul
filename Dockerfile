@@ -24,8 +24,9 @@ FROM node:${NODE_VERSION}
 
 MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 
-COPY . /opt/iotaul/
 WORKDIR /opt/iotaul
+
+COPY package*.json ./
 
 RUN \
   apt-get update && \
@@ -37,6 +38,8 @@ RUN \
   apt-get clean && \
   apt-get remove -y git && \
   apt-get -y autoremove
+
+COPY . ./
 
 USER node
 ENV NODE_ENV=production
@@ -60,7 +63,7 @@ ENV IOTA_LOGLEVEL=DEBUG \
     IOTA_CONTEXTBROKER_PORT=1026 \
     IOTA_SERVER_PORT=4061 \
     IOTA_DEFAULTRESOURCE=/iot/d \
-    IOTA_CONTEXTBROKER_HOST=mongodb \
+    IOTA_DEVICEREGISTRY_TYPE=mongodb \
     IOTA_MONGODB_HOST=localhost \
     IOTA_MONGODB_PORT=27017 \
     IOTA_MONGODB_DB=iotagentul

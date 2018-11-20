@@ -167,7 +167,7 @@ config.iota = {
      *             from the 'mongoDb' configuration property.
      */
     deviceRegistry: {
-        type: process.env.IOTA_CONTEXTBROKER_HOST || 'mongodb'
+        type: process.env.IOTA_DEVICEREGISTRY_TYPE || 'mongodb'
     },
 
     /**
