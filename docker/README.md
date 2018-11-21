@@ -1,5 +1,8 @@
 # FIWARE IoT Agent for the Ultralight 2.0 protocol
 
+[![FIWARE IoT Agents](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
+[![](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/iot-agents.svg)](https://stackoverflow.com/questions/tagged/fiware+iot)
+
 An Internet of Things Agent for the Ultralight 2.0 protocol (with
 [AMQP](https://www.amqp.org/), [HTTP](https://www.w3.org/Protocols/) and
 [MQTT](https://mqtt.org/) transports). This IoT Agent is designed to be a bridge
