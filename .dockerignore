@@ -1,7 +1,7 @@
 coverage/
 docs/
 ghpages/
-mode_modules/
+node_modules/
 test/
 rpm/
 README.md
