@@ -33,7 +33,7 @@
     "dateformat": "3.0.3",
     "express": "~4.16.4",
     "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
-    "logops": "1.0.0",
+    "logops": "1.0.8",
     "mqtt": "2.18.8",
     "request": "2.88.0",
     "underscore": "1.9.1"
