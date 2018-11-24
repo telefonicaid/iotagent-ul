@@ -20,7 +20,6 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information
 check the FIWARE Catalogue entry for the
 [IoT Agents](https://github.com/Fiware/catalogue/tree/master/iot-agents).
 
-
 ## How to use this image
 
 The IoT Agent must be instantiated and connected to an instance of the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/), a sample `docker-compose` file can be found below. If the
@@ -29,16 +28,16 @@ The IoT Agent must be instantiated and connected to an instance of the [Orion Co
 ```yml
 version: '3.1'
 
-services:
+volumes:
+  mongodb:
 
+services:
   iot-agent:
     image: fiware/iotagent-ul
     hostname: iot-agent
     container_name: fiware-iot-agent
     depends_on:
         - mongo-db
-    networks:
-        - default
     expose:
         - "4041"
         - "7896"
@@ -52,18 +51,16 @@ services:
         - "IOTA_REGISTRY_TYPE=mongodb"
         - "IOTA_MONGO_HOST=mongo-db"
         - "IOTA_MONGO_PORT=27017"
-        - "IOTA_MONGO_DB=iotagentul"
+        - "IOTA_MONGO_DB=iotagent-ul"
         - "IOTA_HTTP_PORT=7896"
         - "IOTA_PROVIDER_URL=http://iot-agent:4041"
 
   mongodb:
     image: mongo:3.6
-    hostname: mongodb
+    hostname: mongo-db
     container_name: db-mongo
     ports:
         - "27017:27017"
-    networks:
-        - default
     command: --bind_ip_all --smallfiles
     volumes:
        - mongodb:/data
@@ -74,8 +71,6 @@ services:
     container_name: fiware-orion
     depends_on:
         - mongodb
-    networks:
-        - default
     expose:
         - "1026"
     ports:
@@ -127,7 +122,7 @@ The [Dockerfile](https://github.com/telefonicaid/iotagent-ul/blob/master/docker/
 docker build -t iot-agent . --build-arg DOWNLOAD_TYPE=latest
 ```
 
-* You can alter this to obtain the last **stable** release run this Docker file with the parameters
+* You can alter this to obtain the last **stable** release run this `Dockerfile` with the build argument `DOWNLOAD_TYPE=stable`
 
 ```console
 docker build -t iot-agent . --build-arg DOWNLOAD_TYPE=stable
