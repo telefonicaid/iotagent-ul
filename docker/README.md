@@ -22,8 +22,11 @@ check the FIWARE Catalogue entry for the
 
 ## How to use this image
 
-The IoT Agent must be instantiated and connected to an instance of the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/), a sample `docker-compose` file can be found below. If the
-`IOTA_REGISTRY_TYPE=mongodb`, a [MongoDB](https://www.mongodb.com/) database instance is also required.
+The IoT Agent must be instantiated and connected to an instance of the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/), a sample `docker-compose` file can be found below.
+
+If the `IOTA_REGISTRY_TYPE=mongodb`, a [MongoDB](https://www.mongodb.com/) database instance is also required - the example below assumes that you
+have a `/data` directory in your hosting system in order to hold database
+files (please amend the attached volume to suit your own configuration)"
 
 ```yml
 version: '3.1'
@@ -66,7 +69,7 @@ services:
        - mongodb:/data
 
   orion:
-    image: fiware/orion:2.0.0
+    image: fiware/orion
     hostname: orion
     container_name: fiware-orion
     depends_on:
@@ -77,8 +80,6 @@ services:
         - "1026:1026"
     command: -dbhost mongodb
 ```
-
-
 
 
 ## Configuration with environment variables
