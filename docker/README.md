@@ -147,7 +147,7 @@ docker build -t iot-agent . --build-arg GITHUB_ACCOUNT=<your account> --build-ar
 Alternatively, if you want to build directly from your own sources, please copy the existing
 `Dockerfile` into file the root of the repository and amend it to copy over your local source using :
 
-```
+```Dockerfile
 COPY . /opt/iotaul/
 ```
 
