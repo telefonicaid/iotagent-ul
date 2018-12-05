@@ -32,6 +32,7 @@ var iotagentUl = require('../../'),
     request = require('request'),
     utils = require('../utils'),
     contextBrokerMock,
+    contextBrokerUnprovMock,
     iotamMock;
 
 describe('HTTP Transport binding: measures', function() {
@@ -139,14 +140,14 @@ describe('HTTP Transport binding: measures', function() {
             };
 
         beforeEach(function(done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
+            contextBrokerUnprovMock = nock('http://unexistentHost:1026')
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
 
-            contextBrokerMock
+            contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
@@ -166,7 +167,7 @@ describe('HTTP Transport binding: measures', function() {
         });
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
             request(getOptions, function(error, response, body) {
-                contextBrokerMock.done();
+                contextBrokerUnprovMock.done();
                 done();
             });
         });
