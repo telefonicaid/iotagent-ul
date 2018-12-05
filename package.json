@@ -16,7 +16,7 @@
   },
   "main": "lib/iotagent-ul",
   "engines": {
-    "node": ">=4.8.4"
+    "node": ">=6"
   },
   "scripts": {
     "clean": "rm -rf package-lock.json && rm -rf node_modules && rm -rf coverage",
@@ -33,7 +33,7 @@
     "dateformat": "3.0.3",
     "express": "~4.16.4",
     "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
-    "logops": "1.0.8",
+    "logops": "2.1.0",
     "mqtt": "2.18.8",
     "request": "2.88.0",
     "underscore": "1.9.1"
