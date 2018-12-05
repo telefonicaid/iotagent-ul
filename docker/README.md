@@ -27,7 +27,7 @@ The IoT Agent must be instantiated and connected to an instance of the [Orion Co
 If the `IOTA_REGISTRY_TYPE=mongodb`, a [MongoDB](https://www.mongodb.com/) database instance
 is also required - the example below assumes that you
 have a `/data` directory in your hosting system in order to hold database
-files (please amend the attached volume to suit your own configuration)"
+files - please amend the attached volume to suit your own configuration.
 
 ```yml
 version: '3.1'
