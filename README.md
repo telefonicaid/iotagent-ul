@@ -60,12 +60,14 @@ Additional information about operating the component can be found in the
 
 Information about how to install the IoT Agent for Ultralight can be found at
 the corresponding section of the
-[Installation & Administration Guide](https://fiware-iotagent-ul.readthedocs.io/en/latest/installationguide).
+[Installation & Administration Guide](docs/installationguide.md).
+
+A `Dockerfile` is also available for your use - further information can be found [here](docker/README.md)
 
 ## Usage
 
 Information about how to use the IoT Agent can be found in the
-[User & Programmers Manual](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual).
+[User & Programmers Manual](docs/usermanual.md).
 
 ## API
 
@@ -73,6 +75,8 @@ Apiary reference for the Configuration API can be found
 [here](http://docs.telefonicaiotiotagents.apiary.io/#reference/configuration-api).
 More information about IoT Agents and their APIs can be found in the IoT Agent
 Library [documentation](https://iotagent-node-lib.rtfd.io/).
+
+The latest IoT Agent for Ultralight documentation is also available on [ReadtheDocs](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
 
 ## Testing
 
@@ -110,7 +114,7 @@ follows:
 
 ---
 
-## Licence
+## License
 
 The IoT Agent for Ultralight is licensed under Affero General Public License
 (GPL) version 3.
