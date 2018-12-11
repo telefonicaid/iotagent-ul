@@ -76,30 +76,18 @@ Library [documentation](https://iotagent-node-lib.rtfd.io/).
 
 ## Testing
 
-[Mocha](https://mochajs.org/) Test Runner + [Chai](http://chaijs.com/) Assertion
-Library + [Sinon](http://sinonjs.org/) Spies, stubs.
+[Mocha](http://visionmedia.github.io/mocha/) Test Runner + [Should.js](https://shouldjs.github.io/) Assertion Library.
 
-The test environment is preconfigured to run [BDD](http://chaijs.com/api/bdd/)
-testing style with `chai.expect` and `chai.should()` available globally while
-executing tests, as well as the
-[Sinon-Chai](http://chaijs.com/plugins/sinon-chai) plugin.
+The test environment is preconfigured to run BDD testing style.
 
-Module mocking during testing can be done with
-[proxyquire](https://github.com/thlorenz/proxyquire)
+Module mocking during testing can be done with [proxyquire](https://github.com/thlorenz/proxyquire)
 
 To run tests, type
 
 ```console
-grunt test
+npm test
 ```
 
-Tests reports can be used together with Jenkins to monitor project quality
-metrics by means of TAP or XUnit plugins. To generate TAP report in
-`report/test/unit_tests.tap`, type
-
-```console
-grunt test-report
-```
 
 ## Quality Assurance
 
