@@ -36,7 +36,6 @@ check the FIWARE Catalogue entry for the
 -   [Usage](#usage)
 -   [API](#api)
 -   [Testing](#testing)
--   [Quality Assurance](#quality-assurance)
 -   [License](#license)
 
 ## Background
@@ -95,26 +94,6 @@ To run tests, type
 ```console
 npm test
 ```
-
-
-## Quality Assurance
-
-This project is part of [FIWARE](https://fiware.org/) and has been rated as
-follows:
-
--   **Version Tested:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Version&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.version&colorB=blue)
--   **Documentation:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Completeness&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.docCompleteness&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Usability&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.docSoundness&colorB=blue)
--   **Responsiveness:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Time%20to%20Respond&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.timeToCharge&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Time%20to%20Fix&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.timeToFix&colorB=blue)
--   **FIWARE Testing:**
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Tests%20Passed&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.failureRate&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Scalability&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.scalability&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Performance&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.performance&colorB=blue)
-    ![ ](https://img.shields.io/badge/dynamic/json.svg?label=Stability&url=https://fiware.github.io/catalogue/json/iotagent_ul.json&query=$.stability&colorB=blue)
 
 ---
 
