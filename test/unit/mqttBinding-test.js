@@ -32,6 +32,7 @@ var iotagentMqtt = require('../../'),
     request = require('request'),
     utils = require('../utils'),
     contextBrokerMock,
+    contextBrokerUnprovMock,
     mqttClient;
 
 describe('MQTT Transport binding: measures', function() {
@@ -107,14 +108,14 @@ describe('MQTT Transport binding: measures', function() {
             };
 
         beforeEach(function(done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
+            contextBrokerUnprovMock = nock('http://unexistentHost:1026')
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
 
-            contextBrokerMock
+            contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
@@ -128,7 +129,7 @@ describe('MQTT Transport binding: measures', function() {
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
             mqttClient.publish('/80K09H324HV8732/MQTT_UNPROVISIONED/attrs/a', '23', null, function(error) {
                 setTimeout(function() {
-                    contextBrokerMock.done();
+                    contextBrokerUnprovMock.done();
                     done();
                 }, 100);
             });
