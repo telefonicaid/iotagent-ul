@@ -29,7 +29,7 @@ information in the case you want to use old versions:
     hotfixes were developed on the base version, this branch contains such hotfixes.
 * Documentation corresponding to old versions can be found at [readthedocs.io](https://fiware-iotagent-ul.readthedocs.io).Use the panel in the right bottom corner to navigate to the right version.
     
-* Docker images corresponding to iotagent-json can be found at [Dockerhub](https://hub.docker.com/r/fiware/iotagent-ul/tags/).
+* Docker images corresponding to iotagent-ul can be found at [Dockerhub](https://hub.docker.com/r/fiware/iotagent-ul/tags/).
 
 The following table provides information about the last iotagent-ul version supporting currently removed features:
 
