@@ -71,6 +71,7 @@ A `Dockerfile` is also available for your use - further information can be found
 
 Information about how to use the IoT Agent can be found in the
 [User & Programmers Manual](docs/usermanual.md).
+The following features are listed as [deprecated](https://github.com/telefonicaid/iotagent-ul/tree/master/docs/deprecated.md)
 
 ## API
 
