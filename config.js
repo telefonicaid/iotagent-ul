@@ -78,7 +78,7 @@ config.http = {
     /**
      * HTTP Timeout for the http command endpoint (in miliseconds).
      */
-    timeout: 1000
+    //timeout: 1000
 };
 
 config.iota = {
