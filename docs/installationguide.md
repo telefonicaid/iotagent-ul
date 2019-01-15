@@ -178,7 +178,7 @@ The `config.http` section of the config file contains all the information needed
 transport protocol binding. The following options are accepted:
 
 * **port**: South Port where the HTTP listener will be listening for information from the devices.
-* **timeout**: HTTP Timeout for the http command endpoint (in miliseconds).
+* **timeout**: HTTP Timeout for the HTTP endpoint (in miliseconds).
 
 #### Configuration with environment variables
 Some of the more common variables can be configured using environment variables. The ones overriding general parameters
