@@ -178,6 +178,7 @@ The `config.http` section of the config file contains all the information needed
 transport protocol binding. The following options are accepted:
 
 * **port**: South Port where the HTTP listener will be listening for information from the devices.
+* **timeout**: HTTP Timeout for the http command endpoint (in miliseconds).
 
 #### Configuration with environment variables
 Some of the more common variables can be configured using environment variables. The ones overriding general parameters
@@ -204,3 +205,4 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_AMQP_RETRY_TIME      | amqp.retryTime                      |
 | IOTA_HTTP_HOST            | http.host                           |
 | IOTA_HTTP_PORT            | http.port                           |
+| IOTA_HTTP_TIMEOUT         | http.timeout                        |
