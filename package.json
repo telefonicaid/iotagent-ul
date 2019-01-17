@@ -36,7 +36,8 @@
     "logops": "2.1.0",
     "mqtt": "2.18.8",
     "request": "2.88.0",
-    "underscore": "1.9.1"
+    "underscore": "1.9.1",
+    "uuid": "~3.3.2"
   },
   "devDependencies": {
     "istanbul": "~0.4.5",
