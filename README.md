@@ -6,6 +6,7 @@
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/iot-agents.svg)](https://stackoverflow.com/questions/tagged/fiware+iot)
 <br/>
 [![Documentation badge](https://img.shields.io/readthedocs/fiware-iotagent-ul.svg)](http://fiware-iotagent-ul.readthedocs.org/en/latest/?badge=latest)
+[![Build badge](https://img.shields.io/travis/telefonicaid/iotagent-ul.svg)](https://travis-ci.org/telefonicaid/iotagent-ul/)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/iot-ultralight.svg)
 
 An Internet of Things Agent for the Ultralight 2.0 protocol (with
