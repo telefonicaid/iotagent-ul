@@ -153,7 +153,7 @@ describe('MQTT Transport binding: measures', function() {
                 .reply(204);
 
 
-            contextBroke    rUnprovMock
+            contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
