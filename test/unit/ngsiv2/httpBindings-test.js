@@ -107,6 +107,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
         });
 
@@ -146,6 +147,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
         });
 
@@ -200,6 +202,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/testingPath')
             .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
+            .query({type: 'SensorMachine'})
             .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -266,6 +269,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
             });
 
@@ -301,8 +305,9 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .reply(204);
-            });
+            .query({type: 'AnMQTTDevice'})
+            .reply(204);
+        });
 
         it('should end up with a 200OK status code', function(done) {
             request(getOptions, function(error, response, body) {
@@ -340,7 +345,8 @@ describe('HTTP Transport binding: measures', function() {
         .matchHeader('fiware-servicepath', '/gardens')
         .post('/v2/entities/Second%20UL%20Device/attrs',
            utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-        .reply(204);
+            .query({type: 'AnMQTTDevice'})
+            .reply(204);
      });
 
      it('should end up with a 200OK status code', function(done) {
@@ -378,6 +384,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
 
             contextBrokerMock
@@ -385,6 +392,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
             });
 
@@ -423,6 +431,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
 
             contextBrokerMock
@@ -430,6 +439,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
             });
 
@@ -479,6 +489,7 @@ describe('HTTP Transport binding: measures', function() {
             .reply(204)
             .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json'))
+             .query({type: 'repeater:illuminance'})
             .reply(204);
 
             request(provisionOptions, function(error, response, body) {
@@ -522,6 +533,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs',
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
 
                 request(groupCreation, function(error, response, body) {
@@ -573,6 +585,7 @@ describe('HTTP Transport binding: measures', function() {
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v2/entities/Second%20UL%20Device/attrs' ,
                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json'))
+            .query({type: 'AnMQTTDevice'})
             .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -644,6 +657,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
                 return i === attributes - 1;
             })
+            .query({type: 'repeater:illuminance'})
             .times(13)
             .reply(204);
 
@@ -719,6 +733,7 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(204)
                 .post('/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
+                 .query({type: 'clock'})
                 .reply(204);
 
             config.iota.timestamp = true;
