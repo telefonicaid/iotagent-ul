@@ -26,233 +26,258 @@
 'use strict';
 
 var fs = require('fs'),
-  defaultConfig = require('../client-config.js'),
-  commandLine = require('iotagent-node-lib').commandLine,
-  clUtils = commandLine.clUtils,
-  mqtt = require('mqtt'),
-  request = require('request'),
-  async = require('async'),
-  _ = require('underscore'),
-  mqttClient,
-  configCb = {
-    host: 'localhost',
-    port: 1026,
-    service: 'tester',
-    subservice: '/test',
-  },
-  configIot = {
-    host: 'localhost',
-    port: 4041,
-    name: 'default',
-    service: 'tester',
-    subservice: '/test',
-  },
-  config = {
-    binding: defaultConfig.defaultBinding,
-    host: defaultConfig.mqtt.host,
-    port: defaultConfig.mqtt.port,
-    httpPort: defaultConfig.http.port,
-    apikey: defaultConfig.device.apikey,
-    deviceId: defaultConfig.device.id,
-    httpPath: defaultConfig.http.path,
-  },
-  separator = '\n\n\t',
-  token;
+    defaultConfig = require('../client-config.js'),
+    commandLine = require('iotagent-node-lib').commandLine,
+    clUtils = commandLine.clUtils,
+    mqtt = require('mqtt'),
+    request = require('request'),
+    async = require('async'),
+    _ = require('underscore'),
+    mqttClient,
+    configCb = {
+        host: 'localhost',
+        port: 1026,
+        service: 'tester',
+        subservice: '/test',
+    },
+    configIot = {
+        host: 'localhost',
+        port: 4041,
+        name: 'default',
+        service: 'tester',
+        subservice: '/test',
+    },
+    config = {
+        binding: defaultConfig.defaultBinding,
+        host: defaultConfig.mqtt.host,
+        port: defaultConfig.mqtt.port,
+        httpPort: defaultConfig.http.port,
+        apikey: defaultConfig.device.apikey,
+        deviceId: defaultConfig.device.id,
+        httpPath: defaultConfig.http.path,
+    },
+    separator = '\n\n\t',
+    token;
 
 function setConfig(commands) {
-  config.host = commands[0];
-  config.port = commands[1];
-  config.apikey = commands[2];
-  config.deviceId = commands[3];
-  config.httpPath = commands[4];
-  config.httpPort = commands[5];
+    config.host = commands[0];
+    config.port = commands[1];
+    config.apikey = commands[2];
+    config.deviceId = commands[3];
+    config.httpPath = commands[4];
+    config.httpPort = commands[5];
 }
 
 function getConfig(commands) {
-  console.log('\nCurrent configuration:\n\n');
-  console.log(JSON.stringify(config, null, 4));
-  console.log('\n');
-  clUtils.prompt();
+    console.log('\nCurrent configuration:\n\n');
+    console.log(JSON.stringify(config, null, 4));
+    console.log('\n');
+    clUtils.prompt();
 }
 
 function mqttPublishHandler(error) {
-  if (error) {
-    console.log('There was an error publishing to the MQTT broker: %s', error);
-  } else {
-    console.log('Message successfully published');
-  }
+    if (error) {
+        console.log(
+            'There was an error publishing to the MQTT broker: %s',
+            error
+        );
+    } else {
+        console.log('Message successfully published');
+    }
 
-  clUtils.prompt();
+    clUtils.prompt();
 }
 
 function httpPublishHandler(error, response, body) {
-  if (error) {
-    console.log('There was an error publishing an HTTP measure: %s', error);
-  } else if (response.statusCode !== 200 && response.statusCode !== 201) {
-    console.log(
-      'Unexpected status [%s] sending HTTP measure: %s',
-      response.statusCode,
-      body
-    );
-  } else {
-    console.log('HTTP measure accepted');
-  }
+    if (error) {
+        console.log('There was an error publishing an HTTP measure: %s', error);
+    } else if (response.statusCode !== 200 && response.statusCode !== 201) {
+        console.log(
+            'Unexpected status [%s] sending HTTP measure: %s',
+            response.statusCode,
+            body
+        );
+    } else {
+        console.log('HTTP measure accepted');
+    }
 
-  clUtils.prompt();
+    clUtils.prompt();
 }
 
 function checkConnection(fn) {
-  return function(commands) {
-    if (mqttClient || config.binding === 'HTTP') {
-      fn(commands);
-    } else {
-      console.log(
-        'Please, check your configuration and connect before using MQTT commands.'
-      );
-    }
-  };
+    return function(commands) {
+        if (mqttClient || config.binding === 'HTTP') {
+            fn(commands);
+        } else {
+            console.log(
+                'Please, check your configuration and connect before using MQTT commands.'
+            );
+        }
+    };
 }
 
 function singleMeasure(commands) {
-  if (config.binding === 'MQTT') {
-    var topic =
-      '/' + config.apikey + '/' + config.deviceId + '/attrs/' + commands[0];
+    if (config.binding === 'MQTT') {
+        var topic =
+            '/' +
+            config.apikey +
+            '/' +
+            config.deviceId +
+            '/attrs/' +
+            commands[0];
 
-    mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
-  } else {
-    var httpRequest = {
-      url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
-      method: 'GET',
-      qs: {
-        i: config.deviceId,
-        k: config.apikey,
-        d: commands[0] + '|' + commands[1],
-      },
-    };
+        mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
+    } else {
+        var httpRequest = {
+            url:
+                'http://' +
+                config.host +
+                ':' +
+                config.httpPort +
+                config.httpPath,
+            method: 'GET',
+            qs: {
+                i: config.deviceId,
+                k: config.apikey,
+                d: commands[0] + '|' + commands[1],
+            },
+        };
 
-    request(httpRequest, httpPublishHandler);
-  }
+        request(httpRequest, httpPublishHandler);
+    }
 }
 
 function sendCommandResult(commands) {
-  var topic = '/' + config.apikey + '/' + config.deviceId + '/cmdexe',
-    payload = config.deviceId + '@' + commands[0] + '|' + commands[1];
+    var topic = '/' + config.apikey + '/' + config.deviceId + '/cmdexe',
+        payload = config.deviceId + '@' + commands[0] + '|' + commands[1];
 
-  mqttClient.publish(topic, payload, null, mqttPublishHandler);
+    mqttClient.publish(topic, payload, null, mqttPublishHandler);
 }
 
 function parseMultipleAttributes(attributeString) {
-  var result, attributes, attribute;
+    var result, attributes, attribute;
 
-  if (!attributeString) {
-    result = null;
-  } else {
-    attributes = attributeString.split(';');
-    result = '';
+    if (!attributeString) {
+        result = null;
+    } else {
+        attributes = attributeString.split(';');
+        result = '';
 
-    for (var i = 0; i < attributes.length; i++) {
-      attribute = attributes[i].split('=');
-      result += attribute[0] + '|' + attribute[1];
+        for (var i = 0; i < attributes.length; i++) {
+            attribute = attributes[i].split('=');
+            result += attribute[0] + '|' + attribute[1];
 
-      if (i !== attributes.length - 1) {
-        result += '|';
-      }
+            if (i !== attributes.length - 1) {
+                result += '|';
+            }
+        }
     }
-  }
 
-  return result;
+    return result;
 }
 
 function multipleMeasure(commands) {
-  var values = parseMultipleAttributes(commands[0]),
-    topic = '/' + config.apikey + '/' + config.deviceId + '/attrs';
+    var values = parseMultipleAttributes(commands[0]),
+        topic = '/' + config.apikey + '/' + config.deviceId + '/attrs';
 
-  if (config.binding === 'MQTT') {
-    mqttClient.publish(topic, values, null, mqttPublishHandler);
-  } else {
-    var httpRequest = {
-      url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
-      method: 'GET',
-      qs: {
-        i: config.deviceId,
-        k: config.apikey,
-        d: values,
-      },
-    };
+    if (config.binding === 'MQTT') {
+        mqttClient.publish(topic, values, null, mqttPublishHandler);
+    } else {
+        var httpRequest = {
+            url:
+                'http://' +
+                config.host +
+                ':' +
+                config.httpPort +
+                config.httpPath,
+            method: 'GET',
+            qs: {
+                i: config.deviceId,
+                k: config.apikey,
+                d: values,
+            },
+        };
 
-    request(httpRequest, httpPublishHandler);
-  }
+        request(httpRequest, httpPublishHandler);
+    }
 }
 
 function connect(commands) {
-  console.log('\nConnecting to MQTT Broker...');
+    console.log('\nConnecting to MQTT Broker...');
 
-  mqttClient = mqtt.connect(
-    'mqtt://' + config.host,
-    defaultConfig.mqtt.options
-  );
+    mqttClient = mqtt.connect(
+        'mqtt://' + config.host,
+        defaultConfig.mqtt.options
+    );
 
-  clUtils.prompt();
+    clUtils.prompt();
 }
 
 function selectProtocol(commands) {
-  var allowedProtocols = ['HTTP', 'MQTT'];
+    var allowedProtocols = ['HTTP', 'MQTT'];
 
-  if (allowedProtocols.indexOf(commands[0]) >= 0) {
-    config.binding = commands[0];
-  } else {
-    console.log(
-      '\nTried to select wrong protocol [%s]. Allowed values are: MQTT and HTTP.'
-    );
-  }
+    if (allowedProtocols.indexOf(commands[0]) >= 0) {
+        config.binding = commands[0];
+    } else {
+        console.log(
+            '\nTried to select wrong protocol [%s]. Allowed values are: MQTT and HTTP.'
+        );
+    }
 }
 
 function exitClient() {
-  process.exit(0);
+    process.exit(0);
 }
 
 var commands = {
-  config: {
-    parameters: ['host', 'port', 'apiKey', 'deviceId', 'httpPath', 'httpPort'],
-    description:
-      '\tConfigure the client to emulate the selected device, connecting to the given host.',
-    handler: setConfig,
-  },
-  showConfig: {
-    parameters: [],
-    description:
-      '\tConfigure the client to emulate the selected device, connecting to the given host.',
-    handler: getConfig,
-  },
-  connect: {
-    parameters: [],
-    description: '\tConnect to the MQTT broker.',
-    handler: connect,
-  },
-  singleMeasure: {
-    parameters: ['attribute', 'value'],
-    description:
-      '\tSend the given value for the selected attribute to the MQTT broker.',
-    handler: checkConnection(singleMeasure),
-  },
-  multipleMeasure: {
-    parameters: ['attributes'],
-    description:
-      '\tSend a collection of attributes to the MQTT broker, using JSON format. The "attributes"\n' +
-      '\tstring should have the following syntax: name=value[;name=value]*',
-    handler: checkConnection(multipleMeasure),
-  },
-  mqttCommand: {
-    parameters: ['command', 'result'],
-    description: '\tSend the result of a command to the MQTT Broker.',
-    handler: checkConnection(sendCommandResult),
-  },
-  selectProtocol: {
-    parameters: ['newProtocol'],
-    description:
-      '\tSelects which transport protocol to use when sending measures to the target system (HTTP or MQTT).',
-    handler: selectProtocol,
-  },
+    config: {
+        parameters: [
+            'host',
+            'port',
+            'apiKey',
+            'deviceId',
+            'httpPath',
+            'httpPort',
+        ],
+        description:
+            '\tConfigure the client to emulate the selected device, connecting to the given host.',
+        handler: setConfig,
+    },
+    showConfig: {
+        parameters: [],
+        description:
+            '\tConfigure the client to emulate the selected device, connecting to the given host.',
+        handler: getConfig,
+    },
+    connect: {
+        parameters: [],
+        description: '\tConnect to the MQTT broker.',
+        handler: connect,
+    },
+    singleMeasure: {
+        parameters: ['attribute', 'value'],
+        description:
+            '\tSend the given value for the selected attribute to the MQTT broker.',
+        handler: checkConnection(singleMeasure),
+    },
+    multipleMeasure: {
+        parameters: ['attributes'],
+        description:
+            '\tSend a collection of attributes to the MQTT broker, using JSON format. The "attributes"\n' +
+            '\tstring should have the following syntax: name=value[;name=value]*',
+        handler: checkConnection(multipleMeasure),
+    },
+    mqttCommand: {
+        parameters: ['command', 'result'],
+        description: '\tSend the result of a command to the MQTT Broker.',
+        handler: checkConnection(sendCommandResult),
+    },
+    selectProtocol: {
+        parameters: ['newProtocol'],
+        description:
+            '\tSelects which transport protocol to use when sending measures to the target system (HTTP or MQTT).',
+        handler: selectProtocol,
+    },
 };
 
 commands = _.extend(commandLine.commands, commands);

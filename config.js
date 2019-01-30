@@ -26,211 +26,211 @@ var config = {};
  * Configuration for the MQTT binding.
  */
 config.mqtt = {
-  /**
-   * Host where the MQTT Broker is located.
-   */
-  host: 'localhost',
+    /**
+     * Host where the MQTT Broker is located.
+     */
+    host: 'localhost',
 
-  /**
-   * Port where the MQTT Broker is listening
-   */
-  port: 1883,
+    /**
+     * Port where the MQTT Broker is listening
+     */
+    port: 1883,
 
-  /**
-   * User name for the IoTAgent in the MQTT broker, if authentication is activated.
-   */
-  //username: ''
+    /**
+     * User name for the IoTAgent in the MQTT broker, if authentication is activated.
+     */
+    //username: ''
 
-  /**
-   * Password for the IoTAgent in the MQTT broker, if authentication is activated.
-   */
-  //password: ''
+    /**
+     * Password for the IoTAgent in the MQTT broker, if authentication is activated.
+     */
+    //password: ''
 
-  /**
-   * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
-   */
-  qos: 0,
+    /**
+     * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
+     */
+    qos: 0,
 
-  /**
-   * Retain flag. (default is true).
-   */
-  retain: false,
+    /**
+     * Retain flag. (default is true).
+     */
+    retain: false,
 };
 
 config.amqp = {
-  host: 'localhost',
-  port: 5672,
-  // username: 'guest',
-  // password: 'guest',
-  exchange: 'iota-exchange',
-  queue: 'iotaqueue',
-  options: { durable: true },
+    host: 'localhost',
+    port: 5672,
+    // username: 'guest',
+    // password: 'guest',
+    exchange: 'iota-exchange',
+    queue: 'iotaqueue',
+    options: { durable: true },
 };
 
 /**
  * Conmfiguration for the HTTP transport binding.
  */
 config.http = {
-  /**
-   * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
-   */
-  port: 7896,
-  /**
-   * HTTP Timeout for the http command endpoint (in miliseconds).
-   */
-  //timeout: 1000
+    /**
+     * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
+     */
+    port: 7896,
+    /**
+     * HTTP Timeout for the http command endpoint (in miliseconds).
+     */
+    //timeout: 1000
 };
 
 config.iota = {
-  /**
-   * Configures the log level. Appropriate values are: FATAL, ERROR, INFO, WARN and DEBUG.
-   */
-  logLevel: 'DEBUG',
-
-  /**
-   * When this flag is active, the IoTAgent will add the TimeInstant attribute to every entity created, as well
-   * as a TimeInstant metadata to each attribute, with the current timestamp.
-   */
-  timestamp: true,
-
-  /**
-   * Context Broker configuration. Defines the connection information to the instance of the Context Broker where
-   * the IoT Agent will send the device data.
-   */
-  contextBroker: {
     /**
-     * Host where the Context Broker is located.
+     * Configures the log level. Appropriate values are: FATAL, ERROR, INFO, WARN and DEBUG.
      */
-    host: 'localhost',
+    logLevel: 'DEBUG',
 
     /**
-     * Port where the Context Broker is listening.
+     * When this flag is active, the IoTAgent will add the TimeInstant attribute to every entity created, as well
+     * as a TimeInstant metadata to each attribute, with the current timestamp.
      */
-    port: '1026',
-  },
-
-  /**
-   * Configuration of the North Port of the IoT Agent.
-   */
-  server: {
-    /**
-     * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
-     */
-    port: 4061,
-  },
-
-  /**
-   * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
-   * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
-   */
-  //iotManager: {
-  /**
-   * Host where the IoT Manager is located.
-   */
-  //host: 'localhost',
-
-  /**
-   * Port where the IoT Manager is listening.
-   */
-  //port: 8082,
-
-  /**
-   * Path where the IoT Manager accepts subscriptions.
-   */
-  //path: '/protocols',
-
-  /**
-   * Protocol code identifying this IoT Agent.
-   */
-  //protocol: 'MQTT_UL',
-
-  /**
-   * Textual description of this IoT Agent.
-   */
-  //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
-  //},
-
-  /**
-   * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
-   * Manager.
-   */
-  defaultResource: '/iot/d',
-
-  /**
-   * Defines the configuration for the Device Registry, where all the information about devices and configuration
-   * groups will be stored. There are currently just two types of registries allowed:
-   *
-   * - 'memory': transient memory-based repository for testing purposes. All the information in the repository is
-   *             wiped out when the process is restarted.
-   *
-   * - 'mongodb': persistent MongoDB storage repository. All the details for the MongoDB configuration will be read
-   *             from the 'mongoDb' configuration property.
-   */
-  deviceRegistry: {
-    type: 'mongodb',
-  },
-
-  /**
-   * Mongo DB configuration section. This section will only be used if the deviceRegistry property has the type
-   * 'mongodb'.
-   */
-  mongodb: {
-    /**
-     * Host where MongoDB is located. If the MongoDB used is a replicaSet, this property will contain a
-     * comma-separated list of the instance names or IPs.
-     */
-    host: 'localhost',
+    timestamp: true,
 
     /**
-     * Port where MongoDB is listening. In the case of a replicaSet, all the instances are supposed to be listening
-     * in the same port.
+     * Context Broker configuration. Defines the connection information to the instance of the Context Broker where
+     * the IoT Agent will send the device data.
      */
-    port: '27017',
+    contextBroker: {
+        /**
+         * Host where the Context Broker is located.
+         */
+        host: 'localhost',
+
+        /**
+         * Port where the Context Broker is listening.
+         */
+        port: '1026',
+    },
 
     /**
-     * Name of the Mongo database that will be created to store IoT Agent data.
+     * Configuration of the North Port of the IoT Agent.
      */
-    db: 'iotagentul',
+    server: {
+        /**
+         * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
+         */
+        port: 4061,
+    },
 
     /**
-     * Name of the set in case the Mongo database is configured as a Replica Set. Optional otherwise.
+     * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
+     * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
      */
-    //replicaSet: ''
-  },
+    //iotManager: {
+    /**
+     * Host where the IoT Manager is located.
+     */
+    //host: 'localhost',
 
-  /**
-   *  Types array for static configuration of services. Check documentation in the IoT Agent Library for Node.js for
-   *  further details:
-   *
-   *      https://github.com/telefonicaid/iotagent-node-lib#type-configuration
-   */
-  types: {},
+    /**
+     * Port where the IoT Manager is listening.
+     */
+    //port: 8082,
 
-  /**
-   * Default service, for IoT Agent installations that won't require preregistration.
-   */
-  service: 'howtoService',
+    /**
+     * Path where the IoT Manager accepts subscriptions.
+     */
+    //path: '/protocols',
 
-  /**
-   * Default subservice, for IoT Agent installations that won't require preregistration.
-   */
-  subservice: '/howto',
+    /**
+     * Protocol code identifying this IoT Agent.
+     */
+    //protocol: 'MQTT_UL',
 
-  /**
-   * URL Where the IoT Agent Will listen for incoming updateContext and queryContext requests (for commands and passive
-   * attributes). This URL will be sent in the Context Registration requests.
-   */
-  providerUrl: 'http://localhost:4061',
+    /**
+     * Textual description of this IoT Agent.
+     */
+    //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+    //},
 
-  /**
-   * Default maximum expire date for device registrations.
-   */
-  deviceRegistrationDuration: 'P1Y',
+    /**
+     * Default resource of the IoT Agent. This value must be different for every IoT Agent connecting to the IoT
+     * Manager.
+     */
+    defaultResource: '/iot/d',
 
-  /**
-   * Default type, for IoT Agent installations that won't require preregistration.
-   */
-  defaultType: 'Thing',
+    /**
+     * Defines the configuration for the Device Registry, where all the information about devices and configuration
+     * groups will be stored. There are currently just two types of registries allowed:
+     *
+     * - 'memory': transient memory-based repository for testing purposes. All the information in the repository is
+     *             wiped out when the process is restarted.
+     *
+     * - 'mongodb': persistent MongoDB storage repository. All the details for the MongoDB configuration will be read
+     *             from the 'mongoDb' configuration property.
+     */
+    deviceRegistry: {
+        type: 'mongodb',
+    },
+
+    /**
+     * Mongo DB configuration section. This section will only be used if the deviceRegistry property has the type
+     * 'mongodb'.
+     */
+    mongodb: {
+        /**
+         * Host where MongoDB is located. If the MongoDB used is a replicaSet, this property will contain a
+         * comma-separated list of the instance names or IPs.
+         */
+        host: 'localhost',
+
+        /**
+         * Port where MongoDB is listening. In the case of a replicaSet, all the instances are supposed to be listening
+         * in the same port.
+         */
+        port: '27017',
+
+        /**
+         * Name of the Mongo database that will be created to store IoT Agent data.
+         */
+        db: 'iotagentul',
+
+        /**
+         * Name of the set in case the Mongo database is configured as a Replica Set. Optional otherwise.
+         */
+        //replicaSet: ''
+    },
+
+    /**
+     *  Types array for static configuration of services. Check documentation in the IoT Agent Library for Node.js for
+     *  further details:
+     *
+     *      https://github.com/telefonicaid/iotagent-node-lib#type-configuration
+     */
+    types: {},
+
+    /**
+     * Default service, for IoT Agent installations that won't require preregistration.
+     */
+    service: 'howtoService',
+
+    /**
+     * Default subservice, for IoT Agent installations that won't require preregistration.
+     */
+    subservice: '/howto',
+
+    /**
+     * URL Where the IoT Agent Will listen for incoming updateContext and queryContext requests (for commands and passive
+     * attributes). This URL will be sent in the Context Registration requests.
+     */
+    providerUrl: 'http://localhost:4061',
+
+    /**
+     * Default maximum expire date for device registrations.
+     */
+    deviceRegistrationDuration: 'P1Y',
+
+    /**
+     * Default type, for IoT Agent installations that won't require preregistration.
+     */
+    defaultType: 'Thing',
 };
 
 /**
