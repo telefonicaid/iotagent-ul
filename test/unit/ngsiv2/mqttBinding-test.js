@@ -37,9 +37,7 @@ var iotagentUL = require('../../../'),
     contextBrokerUnprovMock,
     mqttClient;
 
-
 describe('MQTT Transport binding: measures', function() {
-
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -47,16 +45,19 @@ describe('MQTT Transport binding: measures', function() {
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceMQTT.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens'
-            }
+                'fiware-servicepath': '/gardens',
+            },
         };
 
         nock.cleanAll();
 
-        mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
-            keepalive: 0,
-            connectTimeout: 60 * 60 * 1000
-        });
+        mqttClient = mqtt.connect(
+            'mqtt://' + config.mqtt.host,
+            {
+                keepalive: 0,
+                connectTimeout: 60 * 60 * 1000,
+            }
+        );
 
         // This mock does not check the payload since the aim of the test is not to verify
         // device provisioning functionality. Appropriate verification is done in tests under
@@ -78,10 +79,7 @@ describe('MQTT Transport binding: measures', function() {
         nock.cleanAll();
         mqttClient.end();
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentUL.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentUL.stop], done);
     });
 
     describe('When a new single measure arrives to a Device topic', function() {
@@ -89,9 +87,11 @@ describe('MQTT Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -110,37 +110,42 @@ describe('MQTT Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
         it('should send a new update context request to the Context Broker with just this attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs',
+            mqttClient.publish(
+                '/1234/MQTT_2/attrs',
                 'luminosity|10|humidity|32|pollution|43.4|' +
-                'temperature|10|enabled|true|alive|null|tags' +
-                '|["iot","device"]|configuration|{"firmware":' +
-                '{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }',
-                 null, function(error) {
-                setTimeout(function() {
-                    contextBrokerMock.done();
-                    done();
-                }, 100);
-            });
+                    'temperature|10|enabled|true|alive|null|tags' +
+                    '|["iot","device"]|configuration|{"firmware":' +
+                    '{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }',
+                null,
+                function(error) {
+                    setTimeout(function() {
+                        contextBrokerMock.done();
+                        done();
+                    }, 100);
+                }
+            );
         });
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
-                url: 'http://localhost:4041/iot/services',
-                method: 'POST',
-                json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
-                headers: {
-                    'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
-            };
+            url: 'http://localhost:4041/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
+            headers: {
+                'fiware-service': 'TestService',
+                'fiware-servicepath': '/testingPath',
+            },
+        };
 
         beforeEach(function(done) {
             // This mock does not check the payload since the aim of the test is not to verify
@@ -152,13 +157,14 @@ describe('MQTT Transport binding: measures', function() {
                 .post('/v2/entities?options=upsert')
                 .reply(204);
 
-
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
-                .query({type: 'SensorMachine'})
+                .post(
+                    '/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json')
+                )
+                .query({ type: 'SensorMachine' })
                 .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -176,15 +182,16 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-
     describe('When a new multiple measure arrives to a Device topic with one measure', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -198,9 +205,7 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-
     describe('When a new multiple measure arrives to a Device topic with a faulty payload', function() {
-
         it('should silently ignore the error (without crashing)', function(done) {
             mqttClient.publish('/1234/MQTT_2/attrs', 'notAULPayload ', null, function(error) {
                 setTimeout(function() {
@@ -210,17 +215,16 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-
-
-
     describe('When single message with multiple measures arrive to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -234,23 +238,26 @@ describe('MQTT Transport binding: measures', function() {
         });
     });
 
-
     describe('When a message with multiple measure groups arrives to a Device topic', function() {
         beforeEach(function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -269,42 +276,49 @@ describe('MQTT Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
-                .query({type: 'AnMQTTDevice'})
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
+                )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23|humidity|' +
-                '98#temperature|16|' +
-                'humidity|34', null, function(error) {
-                setTimeout(function() {
-                    contextBrokerMock.done();
-                    done();
-                }, 100);
-            });
+            mqttClient.publish(
+                '/1234/MQTT_2/attrs',
+                'temperature|23|humidity|' + '98#temperature|16|' + 'humidity|34',
+                null,
+                function(error) {
+                    setTimeout(function() {
+                        contextBrokerMock.done();
+                        done();
+                    }, 100);
+                }
+            );
         });
     });
 
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
         var provisionProduction = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                 json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens',
+            },
+        };
 
         beforeEach(function(done) {
             // This mock does not check the payload since the aim of the test is not to verify
@@ -315,9 +329,11 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .post('/v2/entities/TimeInstant%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
-                .query({type: 'clock'})
+                .post(
+                    '/v2/entities/TimeInstant%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
+                )
+                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
@@ -342,12 +358,15 @@ describe('MQTT Transport binding: measures', function() {
         it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
             mqttClient.publish(
                 '/1234/timestampedDevice/attrs',
-                'tmp|24.4|tt|2016-09-26T12:19:26.476659Z', null, function(error) {
-                setTimeout(function() {
-                    contextBrokerMock.done();
-                    done();
-                }, 100);
-            });
+                'tmp|24.4|tt|2016-09-26T12:19:26.476659Z',
+                null,
+                function(error) {
+                    setTimeout(function() {
+                        contextBrokerMock.done();
+                        done();
+                    }, 100);
+                }
+            );
         });
     });
 });

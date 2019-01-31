@@ -43,8 +43,8 @@ describe('HTTP Transport binding: measures', function() {
             json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens'
-            }
+                'fiware-servicepath': '/gardens',
+            },
         };
 
         nock.cleanAll();
@@ -64,7 +64,7 @@ describe('HTTP Transport binding: measures', function() {
             port: 8082,
             path: '/protocols',
             protocol: 'MQTT_UL',
-            description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+            description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)',
         };
 
         iotagentUl.start(config, function() {
@@ -79,10 +79,7 @@ describe('HTTP Transport binding: measures', function() {
 
         delete config.iota.iotManager;
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentUl.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentUl.stop], done);
     });
 
     describe('When a new single measure arrives for a Device, via HTTP GET', function() {
@@ -92,8 +89,8 @@ describe('HTTP Transport binding: measures', function() {
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'a|23'
-            }
+                d: 'a|23',
+            },
         };
 
         beforeEach(function() {
@@ -126,8 +123,8 @@ describe('HTTP Transport binding: measures', function() {
                 qs: {
                     i: 'MQTT_UNPROVISIONED',
                     k: '80K09H324HV8732',
-                    d: 'a|23'
-                }
+                    d: 'a|23',
+                },
             },
             groupCreation = {
                 url: 'http://localhost:4041/iot/services',
@@ -135,8 +132,8 @@ describe('HTTP Transport binding: measures', function() {
                 json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
                 headers: {
                     'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
+                    'fiware-servicepath': '/testingPath',
+                },
             };
 
         beforeEach(function(done) {
@@ -145,7 +142,6 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -177,8 +173,8 @@ describe('HTTP Transport binding: measures', function() {
                 method: 'GET',
                 headers: {
                     'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
+                    'fiware-servicepath': '/testingPath',
+                },
             };
 
             request(getOptions, function(error, response, body) {
@@ -202,8 +198,8 @@ describe('HTTP Transport binding: measures', function() {
                 method: 'GET',
                 headers: {
                     'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
+                    'fiware-servicepath': '/testingPath',
+                },
             };
 
             request(getOptions, function(error, response, body) {
@@ -231,8 +227,8 @@ describe('HTTP Transport binding: measures', function() {
                 i: 'MQTT_2',
                 k: '1234',
                 t: '2016-05-30T16:25:22.304Z',
-                d: 'a|23'
-            }
+                d: 'a|23',
+            },
         };
 
         beforeEach(function() {
@@ -265,8 +261,8 @@ describe('HTTP Transport binding: measures', function() {
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
-                d: 'a|23|b|98'
-            }
+                d: 'a|23|b|98',
+            },
         };
 
         beforeEach(function() {
@@ -297,12 +293,12 @@ describe('HTTP Transport binding: measures', function() {
             method: 'POST',
             qs: {
                 i: 'MQTT_2',
-                k: '1234'
+                k: '1234',
             },
             headers: {
-                'Content-type': 'text/plain'
+                'Content-type': 'text/plain',
             },
-            body: 'a|23'
+            body: 'a|23',
         };
 
         beforeEach(function() {
@@ -333,12 +329,12 @@ describe('HTTP Transport binding: measures', function() {
             method: 'POST',
             qs: {
                 i: 'MQTT_2',
-                k: '1234'
+                k: '1234',
             },
             headers: {
-                'Content-type': 'text/plain'
+                'Content-type': 'text/plain',
             },
-            body: 'a|23#b|98'
+            body: 'a|23#b|98',
         };
 
         beforeEach(function() {
@@ -375,12 +371,12 @@ describe('HTTP Transport binding: measures', function() {
             method: 'POST',
             qs: {
                 i: 'MQTT_2',
-                k: '1234'
+                k: '1234',
             },
             headers: {
-                'Content-type': 'text/plain'
+                'Content-type': 'text/plain',
             },
-            body: 'a|23|b|98#a|16|b|34'
+            body: 'a|23|b|98#a|16|b|34',
         };
 
         beforeEach(function() {
@@ -419,9 +415,9 @@ describe('HTTP Transport binding: measures', function() {
                 qs: {
                     i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
                     k: '1234',
-                    t: '2016-05-11T10:12:26.476659Z'
+                    t: '2016-05-11T10:12:26.476659Z',
                 },
-                body: 'bat|75.0'
+                body: 'bat|75.0',
             },
             provisionOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -429,8 +425,8 @@ describe('HTTP Transport binding: measures', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceProduction.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
+                    'fiware-servicepath': '/gardens',
+                },
             };
 
         beforeEach(function(done) {
@@ -466,25 +462,27 @@ describe('HTTP Transport binding: measures', function() {
                 qs: {
                     i: 'MQTT_2',
                     k: '80K09H324HV8732',
-                    d: 'c|23'
-                }
+                    d: 'c|23',
+                },
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services' ,
+                url: 'http://localhost:4041/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
+                    'fiware-servicepath': '/gardens',
+                },
             };
 
         beforeEach(function(done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext',
-                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure.json'))
+                .post(
+                    '/v1/updateContext',
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure.json')
+                )
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
@@ -507,8 +505,8 @@ describe('HTTP Transport binding: measures', function() {
                 qs: {
                     i: 'MQTT_3',
                     k: '80K09H324HV8732',
-                    d: 'c|23'
-                }
+                    d: 'c|23',
+                },
             },
             deviceCreation = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -516,8 +514,8 @@ describe('HTTP Transport binding: measures', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice2.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
+                    'fiware-servicepath': '/gardens',
+                },
             },
             groupCreation = {
                 url: 'http://localhost:4041/iot/services',
@@ -525,8 +523,8 @@ describe('HTTP Transport binding: measures', function() {
                 json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
+                    'fiware-servicepath': '/gardens',
+                },
             };
 
         beforeEach(function(done) {
@@ -539,8 +537,10 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext',
-                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure2.json'))
+                .post(
+                    '/v1/updateContext',
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure2.json')
+                )
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
@@ -565,13 +565,14 @@ describe('HTTP Transport binding: measures', function() {
                 qs: {
                     i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
                     k: '1234',
-                    t: '2016-05-11T10:12:26.476659Z'
+                    t: '2016-05-11T10:12:26.476659Z',
                 },
                 headers: {
-                    'Content-type': 'text/plain'
+                    'Content-type': 'text/plain',
                 },
-                body: 'tmp|24.4#hum|58.0#aco|0.1#apa|0.38#ao3|121.0#' +
-                'no2|115.0#pla|43.4551#plo|-3.83381#poa|28.0#spi|0.0#dia|0.0#mit|1492.0#pos|43.4630608,-3.8345434'
+                body:
+                    'tmp|24.4#hum|58.0#aco|0.1#apa|0.38#ao3|121.0#' +
+                    'no2|115.0#pla|43.4551#plo|-3.83381#poa|28.0#spi|0.0#dia|0.0#mit|1492.0#pos|43.4630608,-3.8345434',
             },
             provisionProduction = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -579,8 +580,8 @@ describe('HTTP Transport binding: measures', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionDeviceProduction.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
+                    'fiware-servicepath': '/gardens',
+                },
             };
 
         beforeEach(function(done) {
@@ -646,12 +647,12 @@ describe('HTTP Transport binding: measures', function() {
                 method: 'POST',
                 qs: {
                     i: 'timestampedDevice',
-                    k: '1234'
+                    k: '1234',
                 },
                 headers: {
-                    'Content-type': 'text/plain'
+                    'Content-type': 'text/plain',
                 },
-                body: 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z'
+                body: 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z',
             },
             provisionProduction = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
@@ -659,8 +660,8 @@ describe('HTTP Transport binding: measures', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
+                    'fiware-servicepath': '/gardens',
+                },
             };
 
         beforeEach(function(done) {
