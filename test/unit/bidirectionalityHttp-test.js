@@ -40,8 +40,8 @@ describe('Data Bidirectionality: HTTP', function() {
         json: utils.readExampleFile('./test/subscriptionRequests/bidirectionalNotification.json'),
         headers: {
             'fiware-service': 'smartGondor',
-            'fiware-servicepath': '/gardens',
-        },
+            'fiware-servicepath': '/gardens'
+        }
     };
 
     afterEach(function(done) {
@@ -60,8 +60,8 @@ describe('Data Bidirectionality: HTTP', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionCommandBidirectional.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             };
 
             nock.cleanAll();
@@ -166,8 +166,8 @@ describe('Data Bidirectionality: HTTP', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionCommandBidirectionalWithUrl.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             };
 
             nock.cleanAll();

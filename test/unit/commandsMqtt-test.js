@@ -43,8 +43,8 @@ describe('MQTT Transport binding: commands', function() {
             json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         config.logLevel = 'INFO';
@@ -55,7 +55,7 @@ describe('MQTT Transport binding: commands', function() {
             'mqtt://' + config.mqtt.host,
             {
                 keepalive: 0,
-                connectTimeout: 60 * 60 * 1000,
+                connectTimeout: 60 * 60 * 1000
             }
         );
 
@@ -95,8 +95,8 @@ describe('MQTT Transport binding: commands', function() {
             json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         beforeEach(function() {
@@ -173,8 +173,8 @@ describe('MQTT Transport binding: commands', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand3.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             },
             configurationOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/services',
@@ -182,8 +182,8 @@ describe('MQTT Transport binding: commands', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             },
             commandOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
@@ -191,8 +191,8 @@ describe('MQTT Transport binding: commands', function() {
                 json: utils.readExampleFile('./test/contextRequests/updateCommand3.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             };
 
         beforeEach(function(done) {

@@ -43,8 +43,8 @@ describe('MQTT Transport binding: measures', function() {
             json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         nock.cleanAll();
@@ -53,7 +53,7 @@ describe('MQTT Transport binding: measures', function() {
             'mqtt://' + config.mqtt.host,
             {
                 keepalive: 0,
-                connectTimeout: 60 * 60 * 1000,
+                connectTimeout: 60 * 60 * 1000
             }
         );
 
@@ -103,8 +103,8 @@ describe('MQTT Transport binding: measures', function() {
             json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
             headers: {
                 'fiware-service': 'TestService',
-                'fiware-servicepath': '/testingPath',
-            },
+                'fiware-servicepath': '/testingPath'
+            }
         };
 
         beforeEach(function(done) {
@@ -247,8 +247,8 @@ describe('MQTT Transport binding: measures', function() {
             json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         beforeEach(function(done) {

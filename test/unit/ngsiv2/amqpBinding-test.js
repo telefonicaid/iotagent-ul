@@ -63,8 +63,8 @@ describe('AMQP Transport binding: measures', function() {
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceAMQP1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         nock.cleanAll();
@@ -82,7 +82,7 @@ describe('AMQP Transport binding: measures', function() {
             [
                 apply(iotagentUl.start, config),
                 apply(request, provisionOptions),
-                apply(startConnection, config.amqp.exchange),
+                apply(startConnection, config.amqp.exchange)
             ],
             done
         );
@@ -126,8 +126,8 @@ describe('AMQP Transport binding: measures', function() {
             json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroupAMQP.json'),
             headers: {
                 'fiware-service': 'TestService',
-                'fiware-servicepath': '/testingPath',
-            },
+                'fiware-servicepath': '/testingPath'
+            }
         };
 
         beforeEach(function(done) {
@@ -304,8 +304,8 @@ describe('AMQP Transport binding: measures', function() {
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         beforeEach(function(done) {

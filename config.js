@@ -54,7 +54,7 @@ config.mqtt = {
     /**
      * Retain flag. (default is true).
      */
-    retain: false,
+    retain: false
 };
 
 config.amqp = {
@@ -64,7 +64,7 @@ config.amqp = {
     // password: 'guest',
     exchange: 'iota-exchange',
     queue: 'iotaqueue',
-    options: { durable: true },
+    options: { durable: true }
 };
 
 /**
@@ -74,7 +74,7 @@ config.http = {
     /**
      * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
      */
-    port: 7896,
+    port: 7896
     /**
      * HTTP Timeout for the http command endpoint (in miliseconds).
      */
@@ -106,7 +106,7 @@ config.iota = {
         /**
          * Port where the Context Broker is listening.
          */
-        port: '1026',
+        port: '1026'
     },
 
     /**
@@ -116,7 +116,7 @@ config.iota = {
         /**
          * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
-        port: 4061,
+        port: 4061
     },
 
     /**
@@ -167,7 +167,7 @@ config.iota = {
      *             from the 'mongoDb' configuration property.
      */
     deviceRegistry: {
-        type: 'mongodb',
+        type: 'mongodb'
     },
 
     /**
@@ -190,7 +190,7 @@ config.iota = {
         /**
          * Name of the Mongo database that will be created to store IoT Agent data.
          */
-        db: 'iotagentul',
+        db: 'iotagentul'
 
         /**
          * Name of the set in case the Mongo database is configured as a Replica Set. Optional otherwise.
@@ -230,7 +230,7 @@ config.iota = {
     /**
      * Default type, for IoT Agent installations that won't require preregistration.
      */
-    defaultType: 'Thing',
+    defaultType: 'Thing'
 };
 
 /**

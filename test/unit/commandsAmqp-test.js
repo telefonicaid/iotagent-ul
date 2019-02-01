@@ -63,8 +63,8 @@ describe('AMQP Transport binding: commands', function() {
             json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand5.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         config.logLevel = 'INFO';
@@ -90,7 +90,7 @@ describe('AMQP Transport binding: commands', function() {
             [
                 apply(iotagentMqtt.start, config),
                 apply(request, provisionOptions),
-                apply(startConnection, config.amqp.exchange),
+                apply(startConnection, config.amqp.exchange)
             ],
             done
         );
@@ -113,8 +113,8 @@ describe('AMQP Transport binding: commands', function() {
             json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens',
-            },
+                'fiware-servicepath': '/gardens'
+            }
         };
 
         beforeEach(function() {
@@ -199,8 +199,8 @@ describe('AMQP Transport binding: commands', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand6.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             },
             configurationOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/services',
@@ -208,8 +208,8 @@ describe('AMQP Transport binding: commands', function() {
                 json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             },
             commandOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
@@ -217,8 +217,8 @@ describe('AMQP Transport binding: commands', function() {
                 json: utils.readExampleFile('./test/contextRequests/updateCommand3.json'),
                 headers: {
                     'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens',
-                },
+                    'fiware-servicepath': '/gardens'
+                }
             };
 
         beforeEach(function(done) {

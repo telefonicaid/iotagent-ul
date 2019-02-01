@@ -38,14 +38,14 @@ var fs = require('fs'),
         host: 'localhost',
         port: 1026,
         service: 'tester',
-        subservice: '/test',
+        subservice: '/test'
     },
     configIot = {
         host: 'localhost',
         port: 4041,
         name: 'default',
         service: 'tester',
-        subservice: '/test',
+        subservice: '/test'
     },
     config = {
         binding: defaultConfig.defaultBinding,
@@ -54,7 +54,7 @@ var fs = require('fs'),
         httpPort: defaultConfig.http.port,
         apikey: defaultConfig.device.apikey,
         deviceId: defaultConfig.device.id,
-        httpPath: defaultConfig.http.path,
+        httpPath: defaultConfig.http.path
     },
     separator = '\n\n\t',
     token;
@@ -119,8 +119,8 @@ function singleMeasure(commands) {
             qs: {
                 i: config.deviceId,
                 k: config.apikey,
-                d: commands[0] + '|' + commands[1],
-            },
+                d: commands[0] + '|' + commands[1]
+            }
         };
 
         request(httpRequest, httpPublishHandler);
@@ -169,8 +169,8 @@ function multipleMeasure(commands) {
             qs: {
                 i: config.deviceId,
                 k: config.apikey,
-                d: values,
-            },
+                d: values
+            }
         };
 
         request(httpRequest, httpPublishHandler);
@@ -206,41 +206,41 @@ var commands = {
     config: {
         parameters: ['host', 'port', 'apiKey', 'deviceId', 'httpPath', 'httpPort'],
         description: '\tConfigure the client to emulate the selected device, connecting to the given host.',
-        handler: setConfig,
+        handler: setConfig
     },
     showConfig: {
         parameters: [],
         description: '\tConfigure the client to emulate the selected device, connecting to the given host.',
-        handler: getConfig,
+        handler: getConfig
     },
     connect: {
         parameters: [],
         description: '\tConnect to the MQTT broker.',
-        handler: connect,
+        handler: connect
     },
     singleMeasure: {
         parameters: ['attribute', 'value'],
         description: '\tSend the given value for the selected attribute to the MQTT broker.',
-        handler: checkConnection(singleMeasure),
+        handler: checkConnection(singleMeasure)
     },
     multipleMeasure: {
         parameters: ['attributes'],
         description:
             '\tSend a collection of attributes to the MQTT broker, using JSON format. The "attributes"\n' +
             '\tstring should have the following syntax: name=value[;name=value]*',
-        handler: checkConnection(multipleMeasure),
+        handler: checkConnection(multipleMeasure)
     },
     mqttCommand: {
         parameters: ['command', 'result'],
         description: '\tSend the result of a command to the MQTT Broker.',
-        handler: checkConnection(sendCommandResult),
+        handler: checkConnection(sendCommandResult)
     },
     selectProtocol: {
         parameters: ['newProtocol'],
         description:
             '\tSelects which transport protocol to use when sending measures to the target system (HTTP or MQTT).',
-        handler: selectProtocol,
-    },
+        handler: selectProtocol
+    }
 };
 
 commands = _.extend(commandLine.commands, commands);

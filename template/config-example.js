@@ -34,7 +34,7 @@ config.mqtt = {
     /**
      * Port where the MQTT Broker is listening
      */
-    port: 1883,
+    port: 1883
 
     /**
      * User name for the IoT Agent in the MQTT broker, if authentication is activated.
@@ -54,7 +54,7 @@ config.http = {
     /**
      * Port where the HTTP Ultralight transport binding will be listening for device requests.
      */
-    port: 7896,
+    port: 7896
 };
 
 config.iota = {
@@ -82,7 +82,7 @@ config.iota = {
         /**
          * Port where the Context Broker is listening.
          */
-        port: '1026',
+        port: '1026'
     },
 
     /**
@@ -92,7 +92,7 @@ config.iota = {
         /**
          * North Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
-        port: 4061,
+        port: 4061
     },
 
     /**
@@ -143,7 +143,7 @@ config.iota = {
      *             from the 'mongoDb' configuration property.
      */
     deviceRegistry: {
-        type: 'mongodb',
+        type: 'mongodb'
     },
 
     /**
@@ -166,7 +166,7 @@ config.iota = {
         /**
          * Name of the Mongo database that will be created to store IOTAgent data.
          */
-        db: 'iotagentul',
+        db: 'iotagentul'
 
         /**
          * Name of the set in case the Mongo database is configured as a Replica Set. Optional otherwise.
@@ -206,7 +206,7 @@ config.iota = {
     /**
      * Default type, for IOTA installations that won't require preregistration.
      */
-    defaultType: 'Thing',
+    defaultType: 'Thing'
 };
 
 /**
