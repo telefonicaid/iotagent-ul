@@ -119,6 +119,16 @@ config.iota = {
         port: 4061
     },
 
+    authentication: {
+        enabled: false,
+        type: 'keystone',
+        header: 'X-Auth-Token',
+        host: 'localhost',
+        port: '5000',
+        user: 'IOTA_AUTH_USER',
+        password: 'IOTA_AUTH_PASSWORD'
+    },
+
     /**
      * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
      * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.

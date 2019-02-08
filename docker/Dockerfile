@@ -86,10 +86,11 @@ RUN \
 	# Remove Git and clean apt cache
 	apt-get clean && \
 	apt-get remove -y git && \
-	apt-get -y autoremove
+	apt-get -y autoremove && \
+	chmod +x docker/entrypoint.sh
 
 USER node
 ENV NODE_ENV=production
 
-ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
+ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["-- ", "config.js"]

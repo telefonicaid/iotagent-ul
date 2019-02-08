@@ -90,7 +90,7 @@ Docker container is driven by environment variables such as those shown below:
 
 * `IOTA_CB_HOST`  - Hostname of the context broker to update context
 * `IOTA_CB_PORT`  - Port that context broker listens on to update context
-* `IOTA_NORTH_PORT` - Port used for configuring the IoT Agent and receiving context 
+* `IOTA_NORTH_PORT` - Port used for configuring the IoT Agent and receiving context
   updates from the context broker
 * `IOTA_REGISTRY_TYPE` - Whether to hold IoT device info in memory or in a database
 * `IOTA_MONGO_HOST` - The hostname of MongoDB - used for holding device and service
@@ -103,7 +103,7 @@ Docker container is driven by environment variables such as those shown below:
 
 ### Further Information
 
-The full set of overrides for the general parameters applicable to all IoT Agents are 
+The full set of overrides for the general parameters applicable to all IoT Agents are
 described in the Configuration section of the IoT Agent Library
 [Installation Guide](https://iotagent-node-lib.readthedocs.io/en/latest/installationguide/index.html#configuration).
 
@@ -152,3 +152,12 @@ COPY . /opt/iotaul/
 ```
 
 Full instructions can be found within the `Dockerfile` itself.
+
+### Docker Secrets
+
+As an alternative to passing sensitive information via environment variables, `_FILE` may be appended to some sensitive environment variables, causing the initialization script to load the values for those variables from files present in the container. In particular, this can be used to load passwords from Docker secrets stored in `/run/secrets/<secret_name>` files.
+
+Currently, this the `_FILE` suffix is supported for:
+
+* `IOTA_AUTH_USER`
+* `IOTA_AUTH_PASSWORD`
