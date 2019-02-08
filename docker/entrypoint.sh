@@ -41,4 +41,4 @@ else
     fi
 fi
 
-pm2 start /bin/iotagent-ul
+pm2 start /opt/iotaul/bin/iotagent-ul
