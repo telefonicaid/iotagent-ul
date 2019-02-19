@@ -93,3 +93,6 @@ ENV NODE_ENV=production
 
 ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
 CMD ["-- ", "config.js"]
+
+# Expose 4041 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE 4041 7896
