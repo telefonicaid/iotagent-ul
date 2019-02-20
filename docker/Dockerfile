@@ -91,8 +91,8 @@ RUN \
 USER node
 ENV NODE_ENV=production
 
+# Expose 4041 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE ${IOTA_NORTH_PORT} ${IOTA_HTTP_PORT}
+
 ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
 CMD ["-- ", "config.js"]
-
-# Expose 4041 for NORTH PORT, 7896 for HTTP PORT
-EXPOSE 4041 7896
