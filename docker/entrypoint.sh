@@ -62,4 +62,4 @@ else
     fi
 fi
 
-pm2 start /opt/iotaul/bin/iotagent-ul --no-daemon
+pm2-runtime /opt/iotaul/bin/iotagent-ul
