@@ -57,7 +57,7 @@ services:
         - "IOTA_MONGO_PORT=27017"
         - "IOTA_MONGO_DB=iotagent-ul"
         - "IOTA_HTTP_PORT=7896"
-        - "IOTA_PROVIDER_URL=http://iot-agent:4041"
+        - "IOTA_PROVIDER_URL=http://iot-agent:4061"
 
   mongodb:
     image: mongo:3.6
