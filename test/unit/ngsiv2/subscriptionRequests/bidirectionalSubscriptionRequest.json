@@ -14,7 +14,7 @@
   },
   "notification":{
     "http":{
-      "url":"http://localhost:4041/notify"
+      "url":"http://localhost:4061/notify"
     },
     "attrs":[
       "location"

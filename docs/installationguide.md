@@ -63,7 +63,7 @@ There are automatic builds of the development version of the IOTAgent published 
 using the docker version, just execute the following:
 
 ```bash
-docker run -d --link orion:orion --link mosquitto:mosquitto --link mongo:mongo -p 7896:7896 -p 4041:4041 telefonicaiot/iotagent-ul
+docker run -d --link orion:orion --link mosquitto:mosquitto --link mongo:mongo -p 7896:7896 -p 4061:4061 telefonicaiot/iotagent-ul
 ```
 As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker dependencies to work:
 
@@ -72,7 +72,7 @@ As you can see, the Ultralight 2.0 (as any other IOTA) requires some docker depe
 * **mosquitto**: Mosquitto MQTT broker, to deal with MQTT based requests.
 
 In order to link them, deploy them using docker and use the option `--link` as shown in the example. You may also want to
-map the external IoT Agent North and South ports, for external calls: 4041 (NGSI Interactions
+map the external IoT Agent North and South ports, for external calls: 4061 (NGSI Interactions
 for traffic north of the IoT Agent) and 7896 (HTTP binding for traffic south of the IoT Agent).
 
 #### Build your own Docker image
