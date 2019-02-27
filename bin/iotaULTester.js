@@ -42,7 +42,7 @@ var fs = require('fs'),
     },
     configIot = {
         host: 'localhost',
-        port: 4041,
+        port: 4061,
         name: 'default',
         service: 'tester',
         subservice: '/test'

@@ -43,21 +43,21 @@ services:
     depends_on:
         - mongodb
     expose:
-        - "4041"
+        - "4061"
         - "7896"
     ports:
-        - "4041:4041"
+        - "4061:4061"
         - "7896:7896"
     environment:
         - "IOTA_CB_HOST=orion"
         - "IOTA_CB_PORT=1026"
-        - "IOTA_NORTH_PORT=4041"
+        - "IOTA_NORTH_PORT=4061"
         - "IOTA_REGISTRY_TYPE=mongodb"
         - "IOTA_MONGO_HOST=mongo-db"
         - "IOTA_MONGO_PORT=27017"
         - "IOTA_MONGO_DB=iotagent-ul"
         - "IOTA_HTTP_PORT=7896"
-        - "IOTA_PROVIDER_URL=http://iot-agent:4041"
+        - "IOTA_PROVIDER_URL=http://iot-agent:4061"
 
   mongodb:
     image: mongo:3.6

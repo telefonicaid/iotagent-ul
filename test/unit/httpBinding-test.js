@@ -127,7 +127,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services',
+                url: 'http://localhost:4061/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
                 headers: {
@@ -169,7 +169,7 @@ describe('HTTP Transport binding: measures', function() {
         });
         it('should add a protocol to the registered devices', function(done) {
             var getDeviceOptions = {
-                url: 'http://localhost:4041/iot/devices/MQTT_UNPROVISIONED',
+                url: 'http://localhost:4061/iot/devices/MQTT_UNPROVISIONED',
                 method: 'GET',
                 headers: {
                     'fiware-service': 'TestService',
@@ -466,7 +466,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services',
+                url: 'http://localhost:4061/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
@@ -518,7 +518,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services',
+                url: 'http://localhost:4061/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
