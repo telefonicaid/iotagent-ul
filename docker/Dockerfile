@@ -54,7 +54,6 @@ MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 RUN if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
-		RELEASE_CONCAT=$(echo "$SOURCE_BRANCH" | tr / -); \
 		echo "INFO: Building Latest Development from ${SOURCE_BRANCH} branch."; \
 	elif [ "${DOWNLOAD}" = "stable" ]; \
 	then \
@@ -64,6 +63,7 @@ RUN if [ "${DOWNLOAD}" = "latest" ] ; \
 	 	RELEASE="${DOWNLOAD}"; \
 	 	echo "INFO: Building Release: ${RELEASE}"; \
 	fi && \
+	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
 	# Ensure that unzip is installed, and download the sources
 	apt-get update && \
 	apt-get install -y  --no-install-recommends unzip && \
