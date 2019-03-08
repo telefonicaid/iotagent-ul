@@ -24,6 +24,7 @@ FROM node:${NODE_VERSION}
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=iotagent-ul
 ARG DOWNLOAD=latest
+ARG SOURCE_BRANCH=master
 
 # Copying Build time arguments to environment variables so they are persisted at run time and can be 
 # inspected within a running container.
@@ -52,8 +53,9 @@ MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 #
 RUN if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
-		RELEASE="master"; \
-		echo "INFO: Building Latest Development"; \
+		RELEASE="${SOURCE_BRANCH}"; \
+		RELEASE_CONCAT=$(echo "$SOURCE_BRANCH" | tr / -); \
+		echo "INFO: Building Latest Development from ${SOURCE_BRANCH} branch."; \
 	elif [ "${DOWNLOAD}" = "stable" ]; \
 	then \
 		RELEASE=$(curl -s https://api.github.com/repos/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/releases/latest | grep 'tag_name' | cut -d\" -f4); \
@@ -68,7 +70,7 @@ RUN if [ "${DOWNLOAD}" = "latest" ] ; \
 	wget --no-check-certificate -O source.zip https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip && \
 	unzip source.zip && \
 	rm source.zip && \
-	mv "${GITHUB_REPOSITORY}-${RELEASE}" /opt/iotaul && \
+	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul && \
 	# Remove unzip and clean apt cache
 	apt-get clean && \
 	apt-get remove -y unzip && \
