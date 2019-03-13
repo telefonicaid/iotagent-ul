@@ -19,7 +19,7 @@
 # For those usages not covered by the GNU Affero General Public License
 # please contact with: [daniel.moranjimenez@telefonica.com]
 
-ARG NODE_VERSION=8.12.0-slim
+ARG NODE_VERSION=8.15.0-slim
 FROM node:${NODE_VERSION}
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=iotagent-ul
@@ -90,6 +90,9 @@ RUN \
 
 USER node
 ENV NODE_ENV=production
+
+# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
 
 ENTRYPOINT ["pm2-runtime", "bin/iotagent-ul"]
 CMD ["-- ", "config.js"]

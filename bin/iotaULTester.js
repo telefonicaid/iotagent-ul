@@ -42,7 +42,7 @@ var fs = require('fs'),
     },
     configIot = {
         host: 'localhost',
-        port: 4041,
+        port: 4061,
         name: 'default',
         service: 'tester',
         subservice: '/test'
@@ -180,11 +180,8 @@ function multipleMeasure(commands) {
 function connect(commands) {
     console.log('\nConnecting to MQTT Broker...');
 
-    mqttClient = mqtt.connect(
-        'mqtt://' + config.host,
-        defaultConfig.mqtt.options
-    );
-
+    // prettier-ignore
+    mqttClient = mqtt.connect('mqtt://' + config.host, defaultConfig.mqtt.options);
     clUtils.prompt();
 }
 

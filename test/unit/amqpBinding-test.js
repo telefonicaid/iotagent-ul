@@ -112,7 +112,7 @@ describe('AMQP Transport binding: measures', function() {
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
-            url: 'http://localhost:4041/iot/services',
+            url: 'http://localhost:4061/iot/services',
             method: 'POST',
             json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroupAMQP.json'),
             headers: {

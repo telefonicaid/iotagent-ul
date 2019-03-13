@@ -91,6 +91,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -113,6 +114,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -136,7 +138,7 @@ describe('MQTT Transport binding: measures', function() {
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
-            url: 'http://localhost:4041/iot/services',
+            url: 'http://localhost:4061/iot/services',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
             headers: {
@@ -162,6 +164,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json')
                 )
+                .query({ type: 'SensorMachine' })
                 .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -188,6 +191,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -220,6 +224,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -242,6 +247,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
@@ -251,6 +257,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -273,6 +280,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
@@ -282,6 +290,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -324,6 +333,7 @@ describe('MQTT Transport binding: measures', function() {
                     '/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
                 )
+                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;

@@ -25,3 +25,6 @@ before_install:
 
 before_script:
   - npm run lint
+
+after_script: 
+  - npm run test:coveralls

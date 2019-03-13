@@ -106,6 +106,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -147,6 +148,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -176,7 +178,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services',
+                url: 'http://localhost:4061/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
                 headers: {
@@ -202,6 +204,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json')
                 )
+                .query({ type: 'SensorMachine' })
                 .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -225,7 +228,7 @@ describe('HTTP Transport binding: measures', function() {
 
         it('should add a protocol to the registered devices', function(done) {
             var getDeviceOptions = {
-                url: 'http://localhost:4041/iot/devices/UL_UNPROVISIONED',
+                url: 'http://localhost:4061/iot/devices/UL_UNPROVISIONED',
                 method: 'GET',
                 headers: {
                     'fiware-service': 'TestService',
@@ -270,6 +273,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -307,6 +311,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -347,6 +352,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -387,6 +393,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
@@ -396,6 +403,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -436,6 +444,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
@@ -445,6 +454,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -496,6 +506,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json')
                 )
+                .query({ type: 'repeater:illuminance' })
                 .reply(204);
 
             request(provisionOptions, function(error, response, body) {
@@ -524,7 +535,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services',
+                url: 'http://localhost:4061/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
@@ -541,6 +552,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -576,7 +588,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services',
+                url: 'http://localhost:4061/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
@@ -593,6 +605,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json')
                 )
+                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -665,6 +678,7 @@ describe('HTTP Transport binding: measures', function() {
                     }
                     return i === attributes - 1;
                 })
+                .query({ type: 'repeater:illuminance' })
                 .times(13)
                 .reply(204);
 
@@ -742,6 +756,7 @@ describe('HTTP Transport binding: measures', function() {
                     '/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
                 )
+                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
