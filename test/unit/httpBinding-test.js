@@ -79,10 +79,7 @@ describe('HTTP Transport binding: measures', function() {
 
         delete config.iota.iotManager;
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentUl.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentUl.stop], done);
     });
 
     describe('When a new single measure arrives for a Device, via HTTP GET', function() {
@@ -145,7 +142,6 @@ describe('HTTP Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -470,7 +466,7 @@ describe('HTTP Transport binding: measures', function() {
                 }
             },
             groupCreation = {
-                url: 'http://localhost:4041/iot/services' ,
+                url: 'http://localhost:4041/iot/services',
                 method: 'POST',
                 json: utils.readExampleFile('./test/groupProvisioning/provisionAliasGroup.json'),
                 headers: {
@@ -483,8 +479,10 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext',
-                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure.json'))
+                .post(
+                    '/v1/updateContext',
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure.json')
+                )
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
@@ -539,8 +537,10 @@ describe('HTTP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext',
-                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure2.json'))
+                .post(
+                    '/v1/updateContext',
+                    utils.readExampleFile('./test/contextRequests/unprovisionedAliasMeasure2.json')
+                )
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
             request(groupCreation, function(error, response, body) {
@@ -570,8 +570,9 @@ describe('HTTP Transport binding: measures', function() {
                 headers: {
                     'Content-type': 'text/plain'
                 },
-                body: 'tmp|24.4#hum|58.0#aco|0.1#apa|0.38#ao3|121.0#' +
-                'no2|115.0#pla|43.4551#plo|-3.83381#poa|28.0#spi|0.0#dia|0.0#mit|1492.0#pos|43.4630608,-3.8345434'
+                body:
+                    'tmp|24.4#hum|58.0#aco|0.1#apa|0.38#ao3|121.0#' +
+                    'no2|115.0#pla|43.4551#plo|-3.83381#poa|28.0#spi|0.0#dia|0.0#mit|1492.0#pos|43.4630608,-3.8345434'
             },
             provisionProduction = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices',

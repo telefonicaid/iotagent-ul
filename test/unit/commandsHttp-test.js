@@ -51,8 +51,7 @@ describe('HTTP Transport binding: commands', function() {
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/NGSI9/registerContext')
-            .reply(200,
-                utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+            .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
         contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
@@ -144,7 +143,6 @@ describe('HTTP Transport binding: commands', function() {
                 .post('/command', 'MQTT_2@PING|data=22')
                 .reply(500, 'MQTT_2@ping|ping ERROR, Command error');
 
-
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -195,8 +193,7 @@ describe('HTTP Transport binding: commands', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/NGSI9/registerContext')
-                .reply(200,
-                    utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+                .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')

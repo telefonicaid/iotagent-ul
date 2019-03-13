@@ -40,16 +40,19 @@ var iotagentUl = require('../../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://localhost', function(err, conn) {
-        amqpConn = conn;
+    amqp.connect(
+        'amqp://localhost',
+        function(err, conn) {
+            amqpConn = conn;
 
-        conn.createChannel(function(err, ch) {
-            ch.assertExchange(exchange, 'topic', {});
+            conn.createChannel(function(err, ch) {
+                ch.assertExchange(exchange, 'topic', {});
 
-            channel = ch;
-            callback(err);
-        });
-    });
+                channel = ch;
+                callback(err);
+            });
+        }
+    );
 }
 
 describe('AMQP Transport binding: measures', function() {
@@ -75,11 +78,14 @@ describe('AMQP Transport binding: measures', function() {
             .post('/v2/entities?options=upsert')
             .reply(204);
 
-        async.series([
-            apply(iotagentUl.start, config),
-            apply(request, provisionOptions),
-            apply(startConnection, config.amqp.exchange)
-        ], done);
+        async.series(
+            [
+                apply(iotagentUl.start, config),
+                apply(request, provisionOptions),
+                apply(startConnection, config.amqp.exchange)
+            ],
+            done
+        );
     });
 
     afterEach(function(done) {
@@ -87,10 +93,7 @@ describe('AMQP Transport binding: measures', function() {
 
         amqpConn.close();
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentUl.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentUl.stop], done);
     });
 
     describe('When a new single measure arrives to a Device routing key', function() {
@@ -98,8 +101,10 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                )
                 .reply(204);
         });
 
@@ -134,12 +139,13 @@ describe('AMQP Transport binding: measures', function() {
                 .post('/v2/entities?options=upsert')
                 .reply(204);
 
-
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
-                 utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json'))
+                .post(
+                    '/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json')
+                )
                 .reply(204);
 
             request(groupCreation, function(error, response, body) {
@@ -148,8 +154,11 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.80K09H324HV8732.UL_UNPROVISIONED.attrs.temperature',
-                new Buffer('23'));
+            channel.publish(
+                config.amqp.exchange,
+                '.80K09H324HV8732.UL_UNPROVISIONED.attrs.temperature',
+                new Buffer('23')
+            );
 
             setTimeout(function() {
                 contextBrokerUnprovMock.done();
@@ -163,8 +172,10 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                )
                 .reply(204);
         });
 
@@ -196,8 +207,10 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
+                )
                 .reply(204);
         });
 
@@ -216,15 +229,19 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                )
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
+                )
                 .reply(204);
         });
 
@@ -242,21 +259,28 @@ describe('AMQP Transport binding: measures', function() {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
+                )
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json'))
+                .post(
+                    '/v2/entities/Second%20UL%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
+                )
                 .reply(204);
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs',
-                new Buffer('temperature|23|humidity|98#temperature|16|humidity|34'));
+            channel.publish(
+                config.amqp.exchange,
+                '.1234.MQTT_2.attrs',
+                new Buffer('temperature|23|humidity|98#temperature|16|humidity|34')
+            );
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -285,8 +309,10 @@ describe('AMQP Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .post('/v2/entities/TimeInstant%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json'))
+                .post(
+                    '/v2/entities/TimeInstant%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
+                )
                 .reply(204);
 
             config.iota.timestamp = true;
@@ -309,8 +335,11 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.timestampedDevice.attrs',
-                new Buffer('tmp|24.4|tt|2016-09-26T12:19:26.476659Z'));
+            channel.publish(
+                config.amqp.exchange,
+                '.1234.timestampedDevice.attrs',
+                new Buffer('tmp|24.4|tt|2016-09-26T12:19:26.476659Z')
+            );
 
             setTimeout(function() {
                 contextBrokerMock.done();
