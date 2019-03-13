@@ -51,10 +51,13 @@ describe('MQTT Transport binding: commands', function() {
 
         nock.cleanAll();
 
-        mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
-            keepalive: 0,
-            connectTimeout: 60 * 60 * 1000
-        });
+        mqttClient = mqtt.connect(
+            'mqtt://' + config.mqtt.host,
+            {
+                keepalive: 0,
+                connectTimeout: 60 * 60 * 1000
+            }
+        );
 
         mqttClient.subscribe('/1234/MQTT_2/cmd', null);
 
@@ -62,8 +65,7 @@ describe('MQTT Transport binding: commands', function() {
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/NGSI9/registerContext')
-            .reply(200,
-                utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+            .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
         contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
@@ -83,22 +85,19 @@ describe('MQTT Transport binding: commands', function() {
         mqttClient.unsubscribe('/1234/MQTT_2/cmd', null);
         mqttClient.end();
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentMqtt.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
     describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
         var commandOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
-                method: 'POST',
-                json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function() {
             contextBrokerMock
@@ -203,8 +202,7 @@ describe('MQTT Transport binding: commands', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/NGSI9/registerContext')
-                .reply(200,
-                    utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+                .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -247,7 +245,6 @@ describe('MQTT Transport binding: commands', function() {
                     done();
                 }, 100);
             });
-
         });
     });
 });

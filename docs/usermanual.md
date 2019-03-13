@@ -18,7 +18,7 @@ bandwidth and device memory may be limited resources.
 #### Measure Payload Syntax
 The payload for information update requests is composed of a list of key-value pairs separated by the `|` character. E.g.:
 
-```
+```text
 t|15|k|abc
 ```
 
@@ -28,7 +28,7 @@ Values in Ultralight 2.0 are not typed (everything is treated as a string).
 Multiple groups of measures can be combined into a single request, using the `#` character. In that case, a different
 NGSI request will be generated for each group of measures. E.g.:
 
-```
+```text
 gps|1.2/3.4#t|10
 ```
 This will generate two NGSI requests for the same entity, one for each one of the values. Each one of those requests
@@ -36,7 +36,7 @@ can contain any number of attributes.
 
 Measure groups can additionaly have an optional timestamp, with the following syntax:
 
-```
+```text
 2016-06-13T00:35:30Z|lle|100
 ```
 The timestamp will be added as a prefix of the measures themselves, separated by a '|'. The attribute will be translated
@@ -50,29 +50,31 @@ Current version of the agent only supports active attributes, i.e. those attribu
 
 #### Commands Syntax
 Commands are messages sent to the device from the IoT Agent. A command has the following format:
-```
+
+```text
 <device name>@<command name>|<command value>
 ```
 This indicates that the device (named 'device_name' in the Context Broker) has to execute the command 'command_name', with
 the given value. E.g.:
-```
+
+```text
 Robot1@turn|left
 ```
 This example will tell the Robot 1 to turn to left.
 
 In the case of complex commands requiring parameters, the `command_value` could be used to implement parameter passing. E.g:
-```
+```text
 weatherStation167@ping|param1=1|param2=2
 ```
 This example will tell the Weather Station 167 to reply to a ping message with the provided params.
 
 Once the command has finished its execution in the device, the reply to the server must adhere to the following format:
-```
+```text
 <device name>@<command name>|result
 ```
 Where `device_name` and `command_name` must be the same ones used in the command execution, and the result is the
 final result of the command. E.g.:
-```
+```text
 weatherStation167@ping|Ping ok
 ```
 In this case, the Weather station replies with a String value indicating everything has worked fine.
@@ -88,7 +90,7 @@ reverse expression attribute and the ID of the device (see Commands Syntax, just
 #### Casting to JSON native format
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSIv2. For example:
 The IotAgent receives this UL measure:
-```
+```text
 t|10|s|true|l|78.8
 ```
 then the NGSIv2 update uses ```10```(number), ```true``` (boolean) and ```78.8``` (number) instead of "10" (string), "true" (string) and "78.8" (string).
@@ -162,7 +164,7 @@ is based on publish-subscribe mechanisms over a hierarchical set of topics defin
 
 This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All
 the topics used with the MQTT protocol contain the same prefix:
-```
+```text
 <apiKey>/<deviceId>
 ```
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
@@ -171,7 +173,7 @@ This transport protocol binding is still under development.
 
 ##### Sending a single measure in one message
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
-```
+```text
 <apiKey>/<deviceId>/attrs/<attrName>
 ```
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
@@ -180,11 +182,13 @@ sending.
 or instance, if using [Mosquitto](https://mosquitto.org/) with a device with ID `id_sen1`, API Key `ABCDEF` and attribute
 IDs `h` and `t`, then humidity measures are reported this way:
 
+```bash
     $ mosquitto_pub -t /ABCDEF/id_sen1/attrs/h -m 70 -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```
 
 ##### Sending multiple measures in one message
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
-```
+```text
 <apiKey>/<deviceId>/attrs
 ```
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
@@ -193,20 +197,21 @@ payload (with or without measure groups).
 For instance, if using [Mosquitto](https://mosquitto.org/) with a device with ID `id_sen1`, API Key `ABCDEF` and attribute
 IDs `h` and `t`, then all measures (humidity and temperature) are reported this way:
 
+```bash
     $ mosquitto_pub -t /ABCDEF/id_sen1/attrs -m 'h|70|t|15' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
-
+```
 ##### Commands
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
 where the device is subscribed: the *commands topic*. Once the device has finished with the command, it publishes it result
 to another topic.
 
 The *commands topic*, where the client will be subscribed has the following format:
-```
+```text
 <apiKey>/<deviceId>/cmd
 ```
 
 The result of the command must be reported in the following topic:
-```
+```text
 <apiKey>/<deviceId>/cmdexe
 ```
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
@@ -237,7 +242,7 @@ to the Context Broker regarding an entity called `sen1` of type `sensor`:
 If the API key associated to de device is `ABCDEF`, and the device ID related to `sen1` entity is `id_sen1`, this
 will generate a message in the `/ABCDEF/id_sen1/cmd` topic with the following payload:
 
-```
+```text
 id_sen1@ping|22
 ```
 
@@ -253,7 +258,7 @@ At this point, Context Broker will have updated the value of `ping_status` to `P
 Once the device has executed the command, it can publish its results in the `/ABCDEF/id_sen1/cmdexe` topic with a
 payload with the following format:
 
-```
+```text
 id_sen1@ping|1234567890
 ```
 
@@ -378,9 +383,19 @@ npm run test:coverage
 
 ### Clean
 
-Removes `node_modules` and `coverage` folders, and  `package-lock.json` file so that a fresh copy of the project is restored. 
+Removes `node_modules` and `coverage` folders, and  `package-lock.json` file so that a fresh copy of the project is restored.
 
 ```bash
 # Use git-bash on Windows
 npm run clean
+```
+
+### Prettify Code
+
+Runs the [prettier](https://prettier.io) code formatter to ensure consistent code style (whitespacing, parameter
+placement and breakup of long lines etc.) within the codebase.
+
+```bash
+# Use git-bash on Windows
+npm run prettier
 ```

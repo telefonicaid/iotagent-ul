@@ -49,10 +49,13 @@ describe('MQTT Transport binding: measures', function() {
 
         nock.cleanAll();
 
-        mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
-            keepalive: 0,
-            connectTimeout: 60 * 60 * 1000
-        });
+        mqttClient = mqtt.connect(
+            'mqtt://' + config.mqtt.host,
+            {
+                keepalive: 0,
+                connectTimeout: 60 * 60 * 1000
+            }
+        );
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
@@ -71,10 +74,7 @@ describe('MQTT Transport binding: measures', function() {
         nock.cleanAll();
         mqttClient.end();
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentMqtt.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
     describe('When a new single measure arrives to a Device topic', function() {
@@ -98,14 +98,14 @@ describe('MQTT Transport binding: measures', function() {
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
-                url: 'http://localhost:4061/iot/services',
-                method: 'POST',
-                json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
-                headers: {
-                    'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
-            };
+            url: 'http://localhost:4061/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
+            headers: {
+                'fiware-service': 'TestService',
+                'fiware-servicepath': '/testingPath'
+            }
+        };
 
         beforeEach(function(done) {
             contextBrokerUnprovMock = nock('http://unexistentHost:1026')
@@ -113,7 +113,6 @@ describe('MQTT Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -243,14 +242,14 @@ describe('MQTT Transport binding: measures', function() {
 
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
         var provisionProduction = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             contextBrokerMock
@@ -283,12 +282,15 @@ describe('MQTT Transport binding: measures', function() {
         it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
             mqttClient.publish(
                 '/1234/timestampedDevice/attrs',
-                'tmp|24.4|tt|2016-09-26T12:19:26.476659Z', null, function(error) {
-                setTimeout(function() {
-                    contextBrokerMock.done();
-                    done();
-                }, 100);
-            });
+                'tmp|24.4|tt|2016-09-26T12:19:26.476659Z',
+                null,
+                function(error) {
+                    setTimeout(function() {
+                        contextBrokerMock.done();
+                        done();
+                    }, 100);
+                }
+            );
         });
     });
 });

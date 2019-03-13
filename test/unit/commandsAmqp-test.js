@@ -40,16 +40,19 @@ var iotagentMqtt = require('../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://localhost', function(err, conn) {
-        amqpConn = conn;
+    amqp.connect(
+        'amqp://localhost',
+        function(err, conn) {
+            amqpConn = conn;
 
-        conn.createChannel(function(err, ch) {
-            ch.assertExchange(exchange, 'topic', {});
+            conn.createChannel(function(err, ch) {
+                ch.assertExchange(exchange, 'topic', {});
 
-            channel = ch;
-            callback(err);
-        });
-    });
+                channel = ch;
+                callback(err);
+            });
+        }
+    );
 }
 
 describe('AMQP Transport binding: commands', function() {
@@ -72,8 +75,7 @@ describe('AMQP Transport binding: commands', function() {
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/NGSI9/registerContext')
-            .reply(200,
-                utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+            .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
         contextBrokerMock
             .matchHeader('fiware-service', 'smartGondor')
@@ -84,11 +86,14 @@ describe('AMQP Transport binding: commands', function() {
         oldTransport = config.defaultTransport;
         config.defaultTransport = 'AMQP';
 
-        async.series([
-            apply(iotagentMqtt.start, config),
-            apply(request, provisionOptions),
-            apply(startConnection, config.amqp.exchange)
-        ], done);
+        async.series(
+            [
+                apply(iotagentMqtt.start, config),
+                apply(request, provisionOptions),
+                apply(startConnection, config.amqp.exchange)
+            ],
+            done
+        );
     });
 
     afterEach(function(done) {
@@ -98,10 +103,7 @@ describe('AMQP Transport binding: commands', function() {
 
         config.defaultTransport = oldTransport;
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentMqtt.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
     describe('When a command arrive to the Agent for a device with the AMQP protocol', function() {
@@ -148,12 +150,16 @@ describe('AMQP Transport binding: commands', function() {
 
             channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
 
-            channel.assertQueue('client-queue', {exclusive: false}, function(err, q) {
+            channel.assertQueue('client-queue', { exclusive: false }, function(err, q) {
                 channel.bindQueue(q.queue, config.amqp.exchange, '.' + config.defaultKey + '.MQTT_2.cmd');
 
-                channel.consume(q.queue, function(msg) {
-                    payload = msg.content.toString();
-                }, {noAck: true});
+                channel.consume(
+                    q.queue,
+                    function(msg) {
+                        payload = msg.content.toString();
+                    },
+                    { noAck: true }
+                );
 
                 request(commandOptions, function(error, response, body) {
                     setTimeout(function() {
@@ -177,8 +183,7 @@ describe('AMQP Transport binding: commands', function() {
 
         it('should send an update request to the Context Broker', function(done) {
             channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
-            channel.publish(
-                config.amqp.exchange, '.1234.MQTT_2.cmdexe', new Buffer('MQTT_2@PING|1234567890'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.cmdexe', new Buffer('MQTT_2@PING|1234567890'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -223,8 +228,7 @@ describe('AMQP Transport binding: commands', function() {
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/NGSI9/registerContext')
-                .reply(200,
-                    utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+                .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -251,12 +255,16 @@ describe('AMQP Transport binding: commands', function() {
 
             channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
 
-            channel.assertQueue('client-queue', {exclusive: false}, function(err, q) {
+            channel.assertQueue('client-queue', { exclusive: false }, function(err, q) {
                 channel.bindQueue(q.queue, config.amqp.exchange, '.ALTERNATIVE.MQTT_4.cmd');
 
-                channel.consume(q.queue, function(msg) {
-                    payload = msg.content.toString();
-                }, {noAck: true});
+                channel.consume(
+                    q.queue,
+                    function(msg) {
+                        payload = msg.content.toString();
+                    },
+                    { noAck: true }
+                );
 
                 request(commandOptions, function(error, response, body) {
                     setTimeout(function() {
