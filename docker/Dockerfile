@@ -94,8 +94,8 @@ RUN \
 USER node
 ENV NODE_ENV=production
 
-# Expose 4041 for NORTH PORT, 7896 for HTTP PORT
-EXPOSE ${IOTA_NORTH_PORT:-4041} ${IOTA_HTTP_PORT:-7896}
+# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
 
 ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["-- ", "config.js"]

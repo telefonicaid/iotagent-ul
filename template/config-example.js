@@ -68,7 +68,7 @@ config.iota = {
      * as a TimeInstant metadata to each attribute, with the current timestamp.
      */
     timestamp: true,
-    
+
     /**
      * Context Broker configuration. Defines the connection information to the instance of the Context Broker where
      * the IoT Agent will send the device data.
@@ -100,30 +100,30 @@ config.iota = {
      * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
      */
     //iotManager: {
-        /**
-         * Host where the IoT Manager is located.
-         */
-        //host: 'localhost',
+    /**
+     * Host where the IoT Manager is located.
+     */
+    //host: 'localhost',
 
-        /**
-         * Port where the IoT Manager is listening.
-         */
-        //port: 8082,
+    /**
+     * Port where the IoT Manager is listening.
+     */
+    //port: 8082,
 
-        /**
-         * Path where the IoT Manager accepts subscriptions.
-         */
-        //path: '/protocols',
+    /**
+     * Path where the IoT Manager accepts subscriptions.
+     */
+    //path: '/protocols',
 
-        /**
-         * Protocol code identifying this IoT Agent.
-         */
-        //protocol: 'MQTT_UL',
+    /**
+     * Protocol code identifying this IoT Agent.
+     */
+    //protocol: 'MQTT_UL',
 
-        /**
-         * Textual description of this IoT Agent.
-         */
-        //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+    /**
+     * Textual description of this IoT Agent.
+     */
+    //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
     //},
 
     /**
@@ -220,4 +220,3 @@ config.defaultKey = 'TEF';
 config.defaultTransport = 'MQTT';
 
 module.exports = config;
-

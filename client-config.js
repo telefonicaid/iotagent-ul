@@ -39,7 +39,7 @@ config.mqtt = {
 config.device = {
     id: 'myDeviceId',
     apikey: '1234'
-}
+};
 
 config.defaultBinding = 'mqtt';
 

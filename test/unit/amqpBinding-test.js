@@ -38,16 +38,19 @@ var iotagentMqtt = require('../../'),
     channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://localhost', function(err, conn) {
-        amqpConn = conn;
+    amqp.connect(
+        'amqp://localhost',
+        function(err, conn) {
+            amqpConn = conn;
 
-        conn.createChannel(function(err, ch) {
-            ch.assertExchange(exchange, 'topic', {});
+            conn.createChannel(function(err, ch) {
+                ch.assertExchange(exchange, 'topic', {});
 
-            channel = ch;
-            callback(err);
-        });
-    });
+                channel = ch;
+                callback(err);
+            });
+        }
+    );
 }
 
 describe('AMQP Transport binding: measures', function() {
@@ -70,11 +73,14 @@ describe('AMQP Transport binding: measures', function() {
             .post('/v1/updateContext')
             .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
-        async.series([
-            apply(iotagentMqtt.start, config),
-            apply(request, provisionOptions),
-            apply(startConnection, config.amqp.exchange)
-        ], done);
+        async.series(
+            [
+                apply(iotagentMqtt.start, config),
+                apply(request, provisionOptions),
+                apply(startConnection, config.amqp.exchange)
+            ],
+            done
+        );
     });
 
     afterEach(function(done) {
@@ -82,10 +88,7 @@ describe('AMQP Transport binding: measures', function() {
 
         amqpConn.close();
 
-        async.series([
-            iotAgentLib.clearAll,
-            iotagentMqtt.stop
-        ], done);
+        async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
     describe('When a new single measure arrives to a Device routing key', function() {
@@ -109,7 +112,7 @@ describe('AMQP Transport binding: measures', function() {
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
         var groupCreation = {
-            url: 'http://localhost:4041/iot/services',
+            url: 'http://localhost:4061/iot/services',
             method: 'POST',
             json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroupAMQP.json'),
             headers: {
@@ -124,7 +127,6 @@ describe('AMQP Transport binding: measures', function() {
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
-
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -292,8 +294,11 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.timestampedDevice.attrs',
-                new Buffer('tmp|24.4|tt|2016-09-26T12:19:26.476659Z'));
+            channel.publish(
+                config.amqp.exchange,
+                '.1234.timestampedDevice.attrs',
+                new Buffer('tmp|24.4|tt|2016-09-26T12:19:26.476659Z')
+            );
 
             setTimeout(function() {
                 contextBrokerMock.done();

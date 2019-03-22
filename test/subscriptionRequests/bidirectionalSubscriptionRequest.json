@@ -6,7 +6,7 @@
       "id":"Second MQTT Device"
     }
   ],
-  "reference":"http://localhost:4041/notify",
+  "reference":"http://localhost:4061/notify",
   "duration":"P1M",
   "notifyConditions":[
     {

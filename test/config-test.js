@@ -38,7 +38,7 @@ config.amqp = {
     port: 5672,
     exchange: 'amq.topic',
     queue: 'iota_queue',
-    options: {durable: true}
+    options: { durable: true }
 };
 
 config.iota = {
@@ -48,7 +48,7 @@ config.iota = {
         port: '1026'
     },
     server: {
-        port: 4041
+        port: 4061
     },
     deviceRegistry: {
         type: 'memory'
@@ -56,7 +56,7 @@ config.iota = {
     types: {},
     service: 'howtoService',
     subservice: '/howto',
-    providerUrl: 'http://localhost:4041',
+    providerUrl: 'http://localhost:4061',
     deviceRegistrationDuration: 'P1M',
     defaultType: 'Thing',
     defaultResource: '/iot/d'

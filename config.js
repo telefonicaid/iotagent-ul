@@ -47,13 +47,13 @@ config.mqtt = {
     //password: ''
 
     /**
-      * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
-      */
+     * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
+     */
     qos: 0,
 
     /**
-      * Retain flag. (default is true).
-      */
+     * Retain flag. (default is true).
+     */
     retain: false
 };
 
@@ -64,7 +64,7 @@ config.amqp = {
     // password: 'guest',
     exchange: 'iota-exchange',
     queue: 'iotaqueue',
-    options: {durable: true}
+    options: { durable: true }
 };
 
 /**
@@ -74,7 +74,7 @@ config.http = {
     /**
      * South Port where the Ultralight transport binding for HTTP will be listening for device requests.
      */
-    port: 7896,
+    port: 7896
     /**
      * HTTP Timeout for the http command endpoint (in miliseconds).
      */
@@ -92,7 +92,7 @@ config.iota = {
      * as a TimeInstant metadata to each attribute, with the current timestamp.
      */
     timestamp: true,
-    
+
     /**
      * Context Broker configuration. Defines the connection information to the instance of the Context Broker where
      * the IoT Agent will send the device data.
@@ -124,36 +124,36 @@ config.iota = {
      * For the authentication mechanism to work, the authentication attribute in the configuration has to be fully
      * configured, and the authentication.enabled subattribute should have the value `true`.
      *
-     * The Username and password should be considered as sensitive data and should not be stored in plaintext. 
+     * The Username and password should be considered as sensitive data and should not be stored in plaintext.
      * Either encrypt the config and decrypt when initializing the instance or use environment variables secured by
      * docker secrets.
      */
     //authentication: {
-        //enabled: false,
-        /**
-        * Type of the Identity Manager which is used when authenticating the IoT Agent.
-        */
-        //type: 'keystone',
-        /**
-        * Name of the additional header passed to hold the identity of the IoT Agent
-        */
-        //header: 'X-Auth-Token',
-        /**
-        * Hostname of the Identity Manager.
-        */
-        //host: 'localhost',
-        /**
-        * Port of the Identity Manager.
-        */
-        //port: '5000',
-        /**
-        * Username for the IoT Agent - Note this should not be stored in plaintext.
-        */
-        //user: 'IOTA_AUTH_USER',
-        /**
-        * Password for the IoT Agent - Note this should not be stored in plaintext.
-        */
-        //password: 'IOTA_AUTH_PASSWORD'
+    //enabled: false,
+    /**
+     * Type of the Identity Manager which is used when authenticating the IoT Agent.
+     */
+    //type: 'keystone',
+    /**
+     * Name of the additional header passed to hold the identity of the IoT Agent
+     */
+    //header: 'X-Auth-Token',
+    /**
+     * Hostname of the Identity Manager.
+     */
+    //host: 'localhost',
+    /**
+     * Port of the Identity Manager.
+     */
+    //port: '5000',
+    /**
+     * Username for the IoT Agent - Note this should not be stored in plaintext.
+     */
+    //user: 'IOTA_AUTH_USER',
+    /**
+     * Password for the IoT Agent - Note this should not be stored in plaintext.
+     */
+    //password: 'IOTA_AUTH_PASSWORD'
     //},
 
     /**
@@ -161,30 +161,30 @@ config.iota = {
      * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
      */
     //iotManager: {
-        /**
-         * Host where the IoT Manager is located.
-         */
-        //host: 'localhost',
+    /**
+     * Host where the IoT Manager is located.
+     */
+    //host: 'localhost',
 
-        /**
-         * Port where the IoT Manager is listening.
-         */
-        //port: 8082,
+    /**
+     * Port where the IoT Manager is listening.
+     */
+    //port: 8082,
 
-        /**
-         * Path where the IoT Manager accepts subscriptions.
-         */
-        //path: '/protocols',
+    /**
+     * Path where the IoT Manager accepts subscriptions.
+     */
+    //path: '/protocols',
 
-        /**
-         * Protocol code identifying this IoT Agent.
-         */
-        //protocol: 'MQTT_UL',
+    /**
+     * Protocol code identifying this IoT Agent.
+     */
+    //protocol: 'MQTT_UL',
 
-        /**
-         * Textual description of this IoT Agent.
-         */
-        //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
+    /**
+     * Textual description of this IoT Agent.
+     */
+    //description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
     //},
 
     /**
@@ -281,4 +281,3 @@ config.defaultKey = 'TEF';
 config.defaultTransport = 'MQTT';
 
 module.exports = config;
-
