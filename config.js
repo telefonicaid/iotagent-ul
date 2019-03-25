@@ -132,12 +132,13 @@ config.iota = {
     //enabled: false,
     /**
      * Type of the Identity Manager which is used when authenticating the IoT Agent.
+     * Either 'oauth2' or 'keystone'
      */
     //type: 'keystone',
     /**
-     * Name of the additional header passed to hold the identity of the IoT Agent
+     * Name of the additional header passed to retrieve the identity of the IoT Agent
      */
-    //header: 'X-Auth-Token',
+    //header: 'Authorization',
     /**
      * Hostname of the Identity Manager.
      */
@@ -147,13 +148,37 @@ config.iota = {
      */
     //port: '5000',
     /**
-     * Username for the IoT Agent - Note this should not be stored in plaintext.
+     * URL of the Identity Manager - a combination of the above
+     */
+    //url: 'localhost:5000',
+    /**
+     * KEYSTONE ONLY: Username for the IoT Agent
+     *  - Note this should not be stored in plaintext.
      */
     //user: 'IOTA_AUTH_USER',
     /**
-     * Password for the IoT Agent - Note this should not be stored in plaintext.
+     * KEYSTONE ONLY: Password for the IoT Agent
+     *    - Note this should not be stored in plaintext.
      */
-    //password: 'IOTA_AUTH_PASSWORD'
+    //password: 'IOTA_AUTH_PASSWORD',
+    /**
+     * OAUTH2 ONLY: URL path for retrieving the token
+     */
+    //tokenPath: '/oauth2/token',
+    /**
+     * OAUTH2 ONLY: Flag to indicate whether or not the token needs to be periodically refreshed.
+     */
+    //permanentToken: true,
+    /**
+     * OAUTH2 ONLY: ClientId for the IoT Agent
+     *    - Note this should not be stored in plaintext.
+     */
+    //clientId: 'IOTA_AUTH_CLIENT_ID',
+    /**
+     * OAUTH2 ONLY: ClientSecret for the IoT Agent
+     *    - Note this should not be stored in plaintext.
+     */
+    //clientSecret: 'IOTA_AUTH_CLIENT_SECRET'
     //},
 
     /**
