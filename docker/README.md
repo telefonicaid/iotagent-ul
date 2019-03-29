@@ -105,7 +105,7 @@ Further settings for IoT Agent for Ultralight itself - such as specific configur
 found in the IoT Agent for Ultralight
 [Installation Guide](https://fiware-iotagent-ul.readthedocs.io/en/latest/installationguide/index.html#configuration).
 
-## How to build your own image
+## How to build an image
 
 The [Dockerfile](https://github.com/telefonicaid/iotagent-ul/blob/master/docker/Dockerfile) associated with this image
 can be used to build an image in several ways:
@@ -130,12 +130,19 @@ docker build -t iot-agent . --build-arg DOWNLOAD=stable
 docker build -t iot-agent . --build-arg DOWNLOAD=1.7.0
 ```
 
--   To download code from your own fork of the GitHub repository add the `GITHUB_ACCOUNT` and `GITHUB_REPOSITORY`
-    arguments to the `docker build` command.
+## Building from your own fork
+
+-   To download code from your own fork of the GitHub repository add the `GITHUB_ACCOUNT`, `GITHUB_REPOSITORY`
+    and `SOURCE_BRANCH` arguments (default `master`) to the `docker build` command.
 
 ```console
-docker build -t iot-agent . --build-arg GITHUB_ACCOUNT=<your account> --build-arg GITHUB_REPOSITORY=<your repo>
+docker build -t iot-agent . \
+    --build-arg GITHUB_ACCOUNT=<your account> \
+    --build-arg GITHUB_REPOSITORY=<your repo> \
+    --build-arg SOURCE_BRANCH=<your branch>
 ```
+
+## Building from your own source files
 
 Alternatively, if you want to build directly from your own sources, please copy the existing `Dockerfile` into file the
 root of the repository and amend it to copy over your local source using :
