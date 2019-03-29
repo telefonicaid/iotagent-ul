@@ -132,8 +132,8 @@ docker build -t iot-agent . --build-arg DOWNLOAD=1.7.0
 
 ## Building from your own fork
 
--   To download code from your own fork of the GitHub repository add the `GITHUB_ACCOUNT`, `GITHUB_REPOSITORY`
-    and `SOURCE_BRANCH` arguments (default `master`) to the `docker build` command.
+To download code from your own fork of the GitHub repository add the `GITHUB_ACCOUNT`, `GITHUB_REPOSITORY`
+and `SOURCE_BRANCH` arguments (default `master`) to the `docker build` command.
 
 ```console
 docker build -t iot-agent . \
