@@ -170,6 +170,8 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Apr 26 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.50
+
 * Mon Aug 06 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
 - Update iotagent-node-lib to 2.7.x
 - Add: allow NGSIv2 for updating active attributes at CB, throught configuration based on iotagent-node-lib(#233)
