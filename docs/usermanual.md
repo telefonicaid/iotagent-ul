@@ -1,7 +1,5 @@
 # User & Programmers Manual
 
-## Index
-
 * [API Overview](#api-overview)
     + [Ultralight 2.0 Protocol](#ultralight-20-protocol)
     + [Transport Protocol](#transport-protocol)
@@ -64,9 +62,9 @@ This example will tell the Robot 1 to turn to left.
 
 In the case of complex commands requiring parameters, the `command_value` could be used to implement parameter passing. E.g:
 ```
-weatherStation167@ping|param1:1|param2:2
+weatherStation167@ping|param1=1|param2=2
 ```
-This example will tell the Weather Station 167 to reply to a ping message with the provided params. Note that `=` cannot be used instead of `:` given that `=` is [a forbidden character for Context Broker](https://fiware-orion.readthedocs.io/en/master/user/forbidden_characters/index.html), so the update at CB triggering the command would be never progressed.
+This example will tell the Weather Station 167 to reply to a ping message with the provided params.
 
 Once the command has finished its execution in the device, the reply to the server must adhere to the following format:
 ```
@@ -137,10 +135,10 @@ request payload. Two query parameters are still mandatory:
 * **t (timestamp)**: Timestamp of the measure. Will override the automatic IoTAgent timestamp (optional).
 
 ##### Sending commands
+MQTT devices commands are always push. For HTTP Devices commands to be push they **must** be provisioned with the `endpoint` attribute, that will contain the URL where the IoT Agent will send the received commands. Otherwise the command will be poll.
 When using the HTTP transport, the command handling have two flavours:
 
-* **Push commands**: in this case, the Device **must** be provisioned with the `endpoint` attribute, that will contain
-the URL where the IoT Agent will send the received commands. The request payload format will be the one described in the
+* **Push commands**: The request payload format will be the one described in the
 UL Protocol description. The device will reply with a 200OK response containing the result of the command in the UL2.0
 result format.
 
@@ -216,7 +214,7 @@ The command execution and command reporting payload format is specified under th
 For instance, if a user wants to send a command `ping` with parameters `data = 22`, he will send the following request
 to the Context Broker regarding an entity called `sen1` of type `sensor`:
 
-```
+```json
 {
   "updateAction": "UPDATE",
   "contextElements": [
@@ -245,8 +243,9 @@ id_sen1@ping|22
 
 If using [Mosquitto](https://mosquitto.org/), such a command is received by running the `mosquitto_sub` script:
 
-    $ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
-    /ABCDEF/id_sen1/cmd id_sen1@ping|22
+```bash
+$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /ABCDEF/id_sen1/cmd id_sen1@ping|22
+```
 
 At this point, Context Broker will have updated the value of `ping_status` to `PENDING` for `sen1` entity. Neither
 `ping_info` nor `ping` are updated.
@@ -260,7 +259,9 @@ id_sen1@ping|1234567890
 
 If using [Mosquitto](https://mosquitto.org/), such command result is sent by running the `mosquitto_pub` script:
 
-    $ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```bash
+$ mosquitto_pub -t /ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+```
 
 In the end, Context Broker will have updated the values of `ping_info` and `ping_status` to `1234567890` and `OK`,
 respectively. `ping` attribute is never updated.
@@ -314,52 +315,54 @@ All the methods **must** call the callback before exiting (with or without error
 IoT Agent Node.js library to interact process incoming requests.
 
 ## Development documentation
+
 ### Project build
-The project is managed using Grunt Task Runner.
+The project is managed using npm.
 
 For a list of available task, type
 ```bash
-grunt --help
+npm run
 ```
 
 The following sections show the available options in detail.
 
+### Testing
+[Mocha](http://visionmedia.github.io/mocha/) Test Runner + [Should.js](https://shouldjs.github.io/) Assertion Library.
+
+The test environment is preconfigured to run BDD testing style.
+
+Module mocking during testing can be done with [proxyquire](https://github.com/thlorenz/proxyquire)
+
+To run tests, type
+
+```bash
+npm test
+```
+
 ### Coding guidelines
-jshint, gjslint
+jshint
 
-Uses provided .jshintrc and .gjslintrc flag files. The latter requires Python and its use can be disabled
-while creating the project skeleton with grunt-init.
+Uses provided .jshintrc flag file.
 To check source code style, type
-```bash
-grunt lint
-```
 
-Checkstyle reports can be used together with Jenkins to monitor project quality metrics by means of Checkstyle
-and Violations plugins.
-To generate Checkstyle and JSLint reports under `report/lint/`, type
 ```bash
-grunt lint-report
+npm run lint
 ```
-
 
 ### Continuous testing
 
 Support for continuous testing by modifying a src file or a test.
 For continuous testing, type
+
 ```bash
-grunt watch
+npm run test:watch
 ```
 
+If you want to continuously check also source code style, use instead:
 
-### Source Code documentation
-dox-foundation
-
-Generates HTML documentation under `site/doc/`. It can be used together with jenkins by means of DocLinks plugin.
-For compiling source code documentation, type
 ```bash
-grunt doc
+npm run watch
 ```
-
 
 ### Code Coverage
 Istanbul
@@ -367,72 +370,17 @@ Istanbul
 Analizes the code coverage of your tests.
 
 To generate an HTML coverage report under `site/coverage/` and to print out a summary, type
+
 ```bash
 # Use git-bash on Windows
-grunt coverage
+npm run test:coverage
 ```
 
-To generate a Cobertura report in `report/coverage/cobertura-coverage.xml` that can be used together with Jenkins to
-monitor project quality metrics by means of Cobertura plugin, type
+### Clean
+
+Removes `node_modules` and `coverage` folders, and  `package-lock.json` file so that a fresh copy of the project is restored. 
+
 ```bash
 # Use git-bash on Windows
-grunt coverage-report
+npm run clean
 ```
-
-
-### Code complexity
-Plato
-
-Analizes code complexity using Plato and stores the report under `site/report/`. It can be used together with jenkins
-by means of DocLinks plugin.
-For complexity report, type
-```bash
-grunt complexity
-```
-
-### PLC
-
-Update the contributors for the project
-```bash
-grunt contributors
-```
-
-
-### Development environment
-
-Initialize your environment with git hooks.
-```bash
-grunt init-dev-env
-```
-
-We strongly suggest you to make an automatic execution of this task for every developer simply by adding the following
-lines to your `package.json`
-```
-{
-  "scripts": {
-     "postinstall": "grunt init-dev-env"
-  }
-}
-```
-
-
-### Site generation
-
-There is a grunt task to generate the GitHub pages of the project, publishing also coverage, complexity and JSDocs pages.
-In order to initialize the GitHub pages, use:
-
-```bash
-grunt init-pages
-```
-
-This will also create a site folder under the root of your repository. This site folder is detached from your repository's
-history, and associated to the gh-pages branch, created for publishing. This initialization action should be done only
-once in the project history. Once the site has been initialized, publish with the following command:
-
-```bash
-grunt site
-```
-
-This command will only work after the developer has executed init-dev-env (that's the goal that will create the detached site).
-
-This command will also launch the coverage, doc and complexity task (see in the above sections).
