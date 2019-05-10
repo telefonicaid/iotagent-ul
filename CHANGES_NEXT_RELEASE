@@ -1,4 +1,4 @@
 Fix: modified engine version >=6 in packages.json
 Fix: update logops dependency from 1.0.8 to 2.1.0
 Add: config.http.timeout (and associated enviroment variable IOTA_HTTP_TIMEOUT)(#97)
-Upgrade NodeJS version from 8.12.0 to 8.15.0 in Dockerfile due to security issues
+Upgrade NodeJS version from 8.12.0 to 8.16.0 in Dockerfile due to security issues
