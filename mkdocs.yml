@@ -1,9 +1,10 @@
 site_name: Fiware-iotagent-ul
 site_url: https://fiware-iotagent-ul.readthedocs.org
-repo_url: https://github.com/telefonicaid/iotagent-ul.git
+repo_url: https://github.com/telefonicaid/iotagent-ul
 site_description: IoT Agent Ultralight2.0 (HTTP or MQTT) Documentation
 docs_dir: docs
 site_dir: html
+edit_uri: edit/master/docs/
 markdown_extensions: [toc,fenced_code]
 use_directory_urls: false
 theme: readthedocs
