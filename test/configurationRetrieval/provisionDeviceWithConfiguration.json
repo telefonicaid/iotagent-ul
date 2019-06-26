@@ -2,14 +2,20 @@
   "devices": [
     {
       "protocol": "GENERIC_PROTO",
-      "device_id": "MQTT",
-      "entity_name": "MQTT Device",
+      "transport": "MQTT",
+      "device_id": "MQTT_device_1",
       "entity_type": "AnMQTTDevice",
+      "entity_name": "MQTT Device 1",
       "timezone": "America/Santiago",
       "attributes": [
         {
-        { "object_id":  "pi",
+          "object_id":  "pi",
           "name": "pollingInterval",
+          "type": "seconds"
+        },
+        {
+          "object_id":  "pbi",
+          "name": "publishInterval",
           "type": "seconds"
         },
         {
