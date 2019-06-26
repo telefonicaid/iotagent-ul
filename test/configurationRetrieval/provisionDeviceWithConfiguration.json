@@ -1,0 +1,26 @@
+{
+  "devices": [
+    {
+      "protocol": "GENERIC_PROTO",
+      "device_id": "MQTT",
+      "entity_name": "MQTT Device",
+      "entity_type": "AnMQTTDevice",
+      "timezone": "America/Santiago",
+      "attributes": [
+        {
+        { "object_id":  "pi",
+          "name": "pollingInterval",
+          "type": "seconds"
+        },
+        {
+          "name": "a",
+          "type": "celsius"
+        },
+        {
+          "name": "b",
+          "type": "degrees"
+        }
+      ]
+    }
+  ]
+}
