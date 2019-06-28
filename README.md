@@ -82,6 +82,30 @@ The test environment is preconfigured to run BDD testing style.
 
 Module mocking during testing can be done with [proxyquire](https://github.com/thlorenz/proxyquire)
 
+In order to successfuly run the tests, on the local machine three services must be running:
+
+-   **mosquitto** MQTT broker;
+-   **mongo** Database;
+-   **rabbitmq** AMQP broker/server;
+
+They can be run using Docker:
+
+```shell
+docker pull ansi/mosquitto
+docker pull mongo
+docker pull rabbitmq
+
+docker run -d -p 1883:1883   -l mosquitto ansi/mosquitto
+docker run -d -p 27017:27017 -l mongodb mongo
+docker run -d -p 5672:5672   -l rabbitmq rabbitmq
+```
+
+The required libraries, if missing, can be installed with:
+
+```
+npm install
+```
+
 To run tests, type
 
 ```console

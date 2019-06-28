@@ -1,0 +1,1 @@
+- Add: configuration retrieval support in MQTT transport (#361).

@@ -240,6 +240,71 @@ attribute IDs `h` and `t`, then all measures (humidity and temperature) are repo
     $ mosquitto_pub -t /ABCDEF/id_sen1/attrs -m 'h|70|t|15' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
 ```
 
+##### Configuration retrieval
+
+The protocol offers a mechanism for the devices to retrieve its configuration (or any other value it needs from those
+stored in the Context Broker). Two topics are created in order to support this feature: a topic for configuration
+commands and a topic to receive configuration information.
+
+**Currenty, only the MQTT binding supports Configuration retrieval.**
+
+##### Configuration command topic
+
+```text
+/{{apikey}}/{{deviceid}}/configuration/commands
+```
+
+The IoT Agent listens in this topic for requests coming from the device. The messages must contain an Ultralight 2.0
+payload with the following format:
+
+```text
+{{type}}|{{fields}}
+```
+
+-   **type**: indicates the type of command the device is sending. See below for accepted values.
+-   **fields**: array with the names of the values to be retrieved from the Context Broker entity representing the
+    device, separated by the `|` character.
+
+This command will trigger a query to the CB that will, as a result, end up with a new message posted to the
+Configuration information topic (described bellow).
+
+E.g.:
+
+```text
+configuration|pollingInterval|publishInterval
+```
+
+There are two accepted values for the configuration command types:
+
+-   ~~`subscription`: this command will generate a subscription in the Context Broker that will be triggered whenever
+    any of the selected values change. In case the value has changed, all the attributes will be retrieved.~~
+-   `configuration`: this commands will generate a single request to the Context Broker from the IoTAgent, that will
+    trigger a single publish message in the values topic.
+
+**Currenty, only the configuration command type is supported.**
+
+##### Configuration information topic
+
+```text
+/{{apikey}}/{{deviceid}}/configuration/values
+```
+
+Every device must subscribe to this topic, so it can receive configuration information. Whenever the device requests any
+information from the IoTA, the information will be posted in this topic. The information is published in the same format
+used in multiple command reporting: a plain Ultralight 2.0 text with:
+
+-   the `device id` and `command type` separated by the `@`character;
+-   a `|` character;
+-   a list of `attribute=value` requested pairs separated by the `|` character.
+
+An additional parameter called `dt` is added with the system current time.
+
+E.g.:
+
+```text
+device_1@configuration|pollingInterval=200|publishInterval=80|dt=20190626T154200Z
+```
+
 ##### Commands
 
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
