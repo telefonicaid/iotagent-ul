@@ -276,7 +276,7 @@ configuration|pollingInterval|publishInterval
 
 There are two accepted values for the configuration command types:
 
--   ~~ `subscription`: this command will generate a subscription in the Context Broker that will be triggered whenever
+-   ~~`subscription`: this command will generate a subscription in the Context Broker that will be triggered whenever
     any of the selected values change. In case the value has changed, all the attributes will be retrieved.~~
 -   `configuration`: this commands will generate a single request to the Context Broker from the IoTAgent, that will
     trigger a single publish message in the values topic.
