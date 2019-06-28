@@ -1,0 +1,21 @@
+{
+  "entities": [
+    {
+      "type": "AnMQTTDevice",
+      "isPattern": "false",
+      "id": "MQTT Device 1"
+    }
+  ],
+  "reference": "http://localhost:4061/notify",
+  "duration": "P1M",
+  "notifyConditions": [
+    {
+      "type": "ONCHANGE",
+      "condValues": [
+        "pollingInterval",
+        "publishInterval"
+      ]
+    }
+  ],
+  "attributes" : ["pollingInterval", "publishInterval"]
+}
