@@ -244,9 +244,10 @@ attribute IDs `h` and `t`, then all measures (humidity and temperature) are repo
 
 The protocol offers a mechanism for the devices to retrieve its configuration (or any other value it needs from those
 stored in the Context Broker). Two topics are created in order to support this feature: a topic for configuration
-commands and a topic to receive configuration information.
+commands and a topic to receive configuration information. This mechanism can be enabled or disabled using a
+configuration flag, `configRetrieval`.
 
-**Currenty, only the MQTT binding supports Configuration retrieval.**
+This mechanism and the bidirectionality plugin cannot be simultaneously activated.
 
 ##### Configuration command topic
 
@@ -276,12 +277,10 @@ configuration|pollingInterval|publishInterval
 
 There are two accepted values for the configuration command types:
 
--   ~~`subscription`: this command will generate a subscription in the Context Broker that will be triggered whenever
-    any of the selected values change. In case the value has changed, all the attributes will be retrieved.~~
+-   `subscription`: this command will generate a subscription in the Context Broker that will be triggered whenever any
+    of the selected values change. In case the value has changed, all the attributes will be retrieved.
 -   `configuration`: this commands will generate a single request to the Context Broker from the IoTAgent, that will
     trigger a single publish message in the values topic.
-
-**Currenty, only the configuration command type is supported.**
 
 ##### Configuration information topic
 
