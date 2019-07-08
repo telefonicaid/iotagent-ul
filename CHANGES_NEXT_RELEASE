@@ -1,0 +1,2 @@
+ADD Reconnect when MQTT closes connection (including mqtt retries and keepalive conf options)
+
