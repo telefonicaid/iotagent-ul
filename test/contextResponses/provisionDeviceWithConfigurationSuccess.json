@@ -1,0 +1,37 @@
+{
+  "contextResponses": [
+    {
+      "contextElement": {
+        "attributes": [
+          {
+            "name": "pollingInterval",
+            "type": "seconds",
+            "value": ""
+          },
+          {
+            "name": "publishInterval",
+            "type": "seconds",
+            "value": ""
+          },
+          {
+            "name": "temperature",
+            "type": "celsius",
+            "value": ""
+          },
+          {
+            "name": "humidity",
+            "type": "degrees",
+            "value": ""
+          }
+        ],
+        "type": "AnMQTTDevice",
+        "isPattern": "false",
+        "id": "MQTT_device_1"
+      },
+      "statusCode": {
+        "code": "200",
+        "reasonPhrase": "OK"
+      }
+    }
+  ]
+}
