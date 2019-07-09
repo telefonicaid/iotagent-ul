@@ -40,5 +40,23 @@ function delay(ms) {
     };
 }
 
+function parseConfigurationResponse(payload) {
+    var _device = payload.split('@'),
+        _fields = _device[1].split('|'),
+        _attributes = _fields.slice(1, _fields.lenght),
+        _result = {};
+
+    _result.device = _device[0];
+    _result.type = _fields[0];
+
+    _attributes.forEach(function(item, index) {
+        var _attribute = item.split('=');
+        _result[_attribute[0]] = _attribute[1];
+    });
+
+    return _result;
+}
+
 exports.readExampleFile = readExampleFile;
+exports.parseConfigurationResponse = parseConfigurationResponse;
 exports.delay = delay;

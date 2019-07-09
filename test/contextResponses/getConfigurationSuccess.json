@@ -1,0 +1,27 @@
+{
+  "contextResponses": [
+    {
+      "contextElement": {
+        "attributes": [
+          {
+            "name": "pollingInterval",
+            "type": "number",
+            "value": "200"
+          },
+          {
+            "name": "publishInterval",
+            "type": "number",
+            "value": "80"
+          }
+        ],
+        "id": "AnMQTTDevice:MQTT_device_1",
+        "isPattern": "false",
+        "type": "AnMQTTDevice"
+      },
+      "statusCode": {
+        "code": "200",
+        "reasonPhrase": "OK"
+      }
+    }
+  ]
+}

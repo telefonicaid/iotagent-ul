@@ -1,0 +1,13 @@
+{
+  "entities": [
+    {
+      "type": "AnMQTTDevice",
+      "isPattern": "false",
+      "id": "MQTT Device 1"
+    }
+  ],
+  "attributes" : [
+    "pollingInterval",
+    "publishInterval"
+  ]
+}
