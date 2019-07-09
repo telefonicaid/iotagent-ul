@@ -1,1 +1,3 @@
+- Add: reconnect when MQTT closes connection (including mqtt retries and keepalive conf options)
 - Add: configuration retrieval support in MQTT transport (#361).
+
