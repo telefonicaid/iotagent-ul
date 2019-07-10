@@ -172,7 +172,7 @@ fi
 %changelog
 
 * Wed Jul 10 2019 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.7.60
-
+- Add: reconnect when MQTT closes connection (including mqtt retries and keepalive conf options)
 * Fri Apr 26 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.50
 
 * Mon Aug 06 2018 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.7.0
