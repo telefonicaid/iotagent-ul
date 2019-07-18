@@ -296,6 +296,12 @@ config.iota = {
 };
 
 /**
+ * flag indicating whether the incoming notifications to the IoTAgent should be processed using the bidirectionality
+ * plugin from the latest versions of the library or the UL-specific configuration retrieval mechanism.
+ */
+config.configRetrieval = false;
+
+/**
  * Default API Key, to use with device that have been provisioned without a Configuration Group.
  */
 config.defaultKey = 'TEF';
