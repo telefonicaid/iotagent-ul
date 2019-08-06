@@ -54,7 +54,23 @@ config.mqtt = {
     /**
      * Retain flag. (default is true).
      */
-    retain: false
+    retain: false,
+
+    /**
+     * Number of MQTT connection error retries (default is 5).
+     */
+    retries: 5,
+
+    /**
+     * Time between MQTT connection retries (default is 5 seconds).
+     */
+    retryTime: 5,
+
+    /**
+     * Time to keep connection open between client and MQTT broker (default is 0 seconds)
+     */
+    keepalive: 0
+
 };
 
 config.amqp = {
