@@ -171,6 +171,9 @@ IoT Agent. The following attributes are accepted:
 -   **password**: Password for the IoT Agent in the MQTT broker, if authentication is activated.
 -   **qos**: QoS level: at most once (`0`), at least once (`1`), exactly once (`2`). (default is `0`).
 -   **retain**: retain flag (default is `false`).
+-   **retries**: Number of MQTT connection error retries (default is 5).
+-   **retryTime**: Time between MQTT connection retries (default is 5 seconds).
+-   **keepalive**: Time to keep connection open between client and MQTT broker (default is 0 seconds)
 
 #### AMQP Binding configuration
 
@@ -211,6 +214,9 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_PASSWORD   | mqtt.password           |
 | IOTA_MQTT_QOS        | mqtt.qos                |
 | IOTA_MQTT_RETAIN     | mqtt.retain             |
+| IOTA_MQTT_RETRIES    | mqtt.retries            |
+| IOTA_MQTT_RETRY_TIME | mqtt.retryTime          |
+| IOTA_MQTT_KEEPALIVE  | mqtt.keepalive          |
 | IOTA_AMQP_HOST       | amqp.host               |
 | IOTA_AMQP_PORT       | amqp.port               |
 | IOTA_AMQP_USERNAME   | amqp.username           |
