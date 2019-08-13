@@ -170,6 +170,12 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue Aug 13 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.10.0
+- Set Nodejs 8 as minimum version in packages.json (effectively removing Nodev6 from supported versions)
+- Add: reconnect when MQTT closes connection (including mqtt retries and keepalive conf options)
+- Add: configuration retrieval support in MQTT transport (#361)
+- Upgrade iotagent-node-lib dependency from 2.9.0 to 2.10.0
+
 * Wed May 22 2019 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.9.0
 - Set Nodejs 6 version in packages.json (effectively removing Nodev4 as supported version)
 - Add: config.http.timeout (and associated enviroment variable IOTA_HTTP_TIMEOUT)(#97)
