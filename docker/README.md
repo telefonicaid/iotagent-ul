@@ -132,8 +132,8 @@ docker build -t iot-agent . --build-arg DOWNLOAD=1.7.0
 
 ## Building from your own fork
 
-To download code from your own fork of the GitHub repository add the `GITHUB_ACCOUNT`, `GITHUB_REPOSITORY`
-and `SOURCE_BRANCH` arguments (default `master`) to the `docker build` command.
+To download code from your own fork of the GitHub repository add the `GITHUB_ACCOUNT`, `GITHUB_REPOSITORY` and
+`SOURCE_BRANCH` arguments (default `master`) to the `docker build` command.
 
 ```console
 docker build -t iot-agent . \
@@ -152,6 +152,19 @@ COPY . /opt/iotaul/
 ```
 
 Full instructions can be found within the `Dockerfile` itself.
+
+### Using PM2
+
+The IoT Agent within the Docker image can be run encapsulated within the [pm2](http://pm2.keymetrics.io/) Process
+Manager by adding the `PM2_ENABLED` environment variable.
+
+```console
+docker run --name iotagent -e PM2_ENABLED=true -d fiware/iotagent-ul
+```
+
+Use of pm2 is **disabled** by default. It is unnecessary and counterproductive to add an additional process manager if
+your dockerized environment is already configured to restart Node.js processes whenever they exit (e.g. when using
+Kubenetes)
 
 ### Docker Secrets
 
