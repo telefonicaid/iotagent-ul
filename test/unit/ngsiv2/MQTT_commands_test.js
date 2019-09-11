@@ -26,6 +26,7 @@
 'use strict';
 
 var iotagentMqtt = require('../../../'),
+    mqtt = require('mqtt'),
     config = require('./config-test.js'),
     nock = require('nock'),
     should = require('should'),
@@ -33,15 +34,15 @@ var iotagentMqtt = require('../../../'),
     async = require('async'),
     request = require('request'),
     utils = require('../../utils'),
-    mockedClientServer,
-    contextBrokerMock;
+    contextBrokerMock,
+    mqttClient;
 
-describe('HTTP: Commands', function() {
+describe('MQTT: Commands', function() {
     beforeEach(function(done) {
         var provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
-            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand2.json'),
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand1.json'),
             headers: {
                 'fiware-service': 'smartGondor',
                 'fiware-servicepath': '/gardens'
@@ -51,6 +52,16 @@ describe('HTTP: Commands', function() {
         config.logLevel = 'INFO';
 
         nock.cleanAll();
+
+        mqttClient = mqtt.connect(
+            'mqtt://' + config.mqtt.host,
+            {
+                keepalive: 0,
+                connectTimeout: 60 * 60 * 1000
+            }
+        );
+
+        mqttClient.subscribe('/1234/MQTT_2/cmd', null);
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
@@ -73,10 +84,13 @@ describe('HTTP: Commands', function() {
 
     afterEach(function(done) {
         nock.cleanAll();
+        mqttClient.unsubscribe('/1234/MQTT_2/cmd', null);
+        mqttClient.end();
+
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe('When a command arrive to the Agent for a device with the HTTP protocol', function() {
+    describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
         var commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
             method: 'POST',
@@ -96,21 +110,6 @@ describe('HTTP: Commands', function() {
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
-                )
-                .reply(204);
-
-            mockedClientServer = nock('http://localhost:9876')
-                .post('/command', function(body) {
-                    return body === 'MQTT_2@PING|data=22';
-                })
-                .reply(200, 'MQTT_2@PING|data=22');
         });
 
         it('should return a 204 OK without errors', function(done) {
@@ -122,18 +121,43 @@ describe('HTTP: Commands', function() {
         });
         it('should update the status in the Context Broker', function(done) {
             request(commandOptions, function(error, response, body) {
+                contextBrokerMock.done();
+                done();
+            });
+        });
+        it('should publish the command information in the MQTT topic', function(done) {
+            var commandMsg = 'MQTT_2@PING|data=22',
+                payload;
+
+            mqttClient.on('message', function(topic, data) {
+                payload = data.toString();
+            });
+
+            request(commandOptions, function(error, response, body) {
                 setTimeout(function() {
-                    contextBrokerMock.done();
+                    should.exist(payload);
+                    payload.should.equal(commandMsg);
                     done();
                 }, 100);
             });
         });
-        it('should publish the command information in the MQTT topic', function(done) {
-            request(commandOptions, function(error, response, body) {
+    });
+
+    describe('When a command update arrives to the MQTT command topic', function() {
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/op/update', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus2.json'))
+                .reply(204);
+        });
+
+        it('should send an update request to the Context Broker', function(done) {
+            mqttClient.publish('/1234/MQTT_2/cmdexe', 'MQTT_2@PING|1234567890', null, function(error) {
                 setTimeout(function() {
-                    mockedClientServer.done();
+                    contextBrokerMock.done();
                     done();
-                }, 100);
+                }, 200);
             });
         });
     });
