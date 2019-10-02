@@ -1,26 +1,26 @@
 /*
  * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
  *
- * This file is part of iotagent-mqtt
+ * This file is part of iotagent-ul
  *
- * iotagent-mqtt is free software: you can redistribute it and/or
+ * iotagent-ul is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the License,
  * or (at your option) any later version.
  *
- * iotagent-mqtt is distributed in the hope that it will be useful,
+ * iotagent-ul is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public
- * License along with iotagent-mqtt.
- * If not, seehttp://www.gnu.org/licenses/.
+ * License along with iotagent-ul.
+ * If not, see http://www.gnu.org/licenses/.
  *
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-var config = {};
+let config = {};
 
 /**
  * Configuration for the MQTT binding.
@@ -70,7 +70,6 @@ config.mqtt = {
      * Time to keep connection open between client and MQTT broker (default is 0 seconds)
      */
     keepalive: 0
-
 };
 
 config.amqp = {
@@ -84,7 +83,7 @@ config.amqp = {
 };
 
 /**
- * Conmfiguration for the HTTP transport binding.
+ * Configuration for the HTTP transport binding.
  */
 config.http = {
     /**
@@ -92,7 +91,7 @@ config.http = {
      */
     port: 7896
     /**
-     * HTTP Timeout for the http command endpoint (in miliseconds).
+     * HTTP Timeout for the http command endpoint (in milliseconds).
      */
     //timeout: 1000
 };
@@ -199,7 +198,8 @@ config.iota = {
 
     /**
      * Configuration for the IoT Manager. If the IoT Agent is part of a configuration composed of multiple IoTAgents
-     * coordinated by an IoT Manager, this section defines the information that will be used to connect with that manager.
+     * coordinated by an IoT Manager, this section defines the information that will be used to connect with that
+     * manager.
      */
     //iotManager: {
     /**
@@ -295,8 +295,8 @@ config.iota = {
     subservice: '/howto',
 
     /**
-     * URL Where the IoT Agent Will listen for incoming updateContext and queryContext requests (for commands and passive
-     * attributes). This URL will be sent in the Context Registration requests.
+     * URL Where the IoT Agent Will listen for incoming updateContext and queryContext requests (for commands and
+     * passive attributes). This URL will be sent in the Context Registration requests.
      */
     providerUrl: 'http://localhost:4061',
 
@@ -326,5 +326,11 @@ config.defaultKey = 'TEF';
  * Default transport protocol when no transport is provisioned through the Device Provisioning API.
  */
 config.defaultTransport = 'MQTT';
+
+/**
+ * flag indicating whether the node server will be executed in multi-core option (true) or it will be a
+ * single-thread one (false).
+ */
+//config.multiCore = false;
 
 module.exports = config;
