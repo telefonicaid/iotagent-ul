@@ -17,6 +17,7 @@ services:
   - mongodb
 
 install:
+  - npm run clean
   - npm install
 
 jobs:
