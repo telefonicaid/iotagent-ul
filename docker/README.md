@@ -220,5 +220,4 @@ than 100 GB RAM, you will want to increase this value to match the available RAM
 > cores).
 
 If you want to get more details about the configuration of the system and node.js for high performance scenarios, please
-refer to the
-[Installation Guide](https://fiware-iotagent-ul.rtfd.io/en/latest/installationguide/index.html#configuration).
+refer to the [Installation Guide](https://fiware-iotagent-ul.rtfd.io/en/latest/installationguide/index.html).

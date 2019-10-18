@@ -159,8 +159,6 @@ JavaScript file, that contains the following sections:
 -   **config.defaultKey**: default API Key, for devices lacking a provided Configuration.
 -   **config.defaultTransport**: code of the MQTT transport that will be used to resolve incoming commands and lazy
     attributes in case a transport protocol could not be inferred for the device.
--   **multiCore**: this (optional) flag enables the execution of the IoT Agent in multi-cores if it is `true` or in
-    single-thread if it is either `false` or not specified.
 
 #### MQTT Binding configuration
 
