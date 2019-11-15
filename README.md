@@ -24,7 +24,7 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information 
 [IoT Agents](https://github.com/Fiware/catalogue/tree/master/iot-agents).
 
 | :books: [Documentation](https://fiware-iotagent-ul.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/iotagent-ul/) | :dart: [Roadmap](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/roadmap.md) |
-| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 
 
 ## Contents
@@ -68,8 +68,8 @@ The following features are listed as [deprecated](docs/deprecated.md).
 ## API
 
 Apiary reference for the Configuration API can be found
-[here](https://telefonicaiotiotagents.docs.apiary.io/#reference/configuration-api). More information about IoT Agents and
-their APIs can be found in the IoT Agent Library [documentation](https://iotagent-node-lib.readthedocs.io/).
+[here](https://telefonicaiotiotagents.docs.apiary.io/#reference/configuration-api). More information about IoT Agents
+and their APIs can be found in the IoT Agent Library [documentation](https://iotagent-node-lib.readthedocs.io/).
 
 The latest IoT Agent for Ultralight documentation is also available on
 [ReadtheDocs](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
@@ -84,7 +84,7 @@ Module mocking during testing can be done with [proxyquire](https://github.com/t
 
 In order to successfuly run the tests, on the local machine three services must be running:
 
--   **mosquitto** MQTT broker;
+-   **mosquitto** MQTT v5 broker;
 -   **mongo** Database;
 -   **rabbitmq** AMQP broker/server;
 
