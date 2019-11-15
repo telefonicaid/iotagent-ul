@@ -197,7 +197,7 @@ This section specifies the topics and messages allowed when using MQTT as the tr
 the topics used with the MQTT protocol contain the same prefix:
 
 ```text
-/json/<apiKey>/<deviceId>
+/ul/<apiKey>/<deviceId>
 ```
 
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
@@ -209,7 +209,7 @@ This transport protocol binding is still under development.
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
 
 ```text
-<apiKey>/<deviceId>/attrs/<attrName>
+/ul/<apiKey>/<deviceId>/attrs/<attrName>
 ```
 
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
@@ -219,7 +219,7 @@ or instance, if using [Mosquitto](https://mosquitto.org/) with a device with ID 
 attribute IDs `h` and `t`, then humidity measures are reported this way:
 
 ```bash
-    $ mosquitto_pub -t /json/ABCDEF/id_sen1/attrs/h -m 70 -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+    $ mosquitto_pub -t /ul/ABCDEF/id_sen1/attrs/h -m 70 -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
 ```
 
 ##### Sending multiple measures in one message
@@ -227,7 +227,7 @@ attribute IDs `h` and `t`, then humidity measures are reported this way:
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 
 ```text
-<apiKey>/<deviceId>/attrs
+/ul/<apiKey>/<deviceId>/attrs
 ```
 
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
@@ -237,7 +237,7 @@ For instance, if using [Mosquitto](https://mosquitto.org/) with a device with ID
 attribute IDs `h` and `t`, then all measures (humidity and temperature) are reported this way:
 
 ```bash
-    $ mosquitto_pub -t /json/ABCDEF/id_sen1/attrs -m 'h|70|t|15' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+    $ mosquitto_pub -t /ul/ABCDEF/id_sen1/attrs -m 'h|70|t|15' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
 ```
 
 ##### Configuration retrieval
@@ -252,7 +252,7 @@ This mechanism and the bidirectionality plugin cannot be simultaneously activate
 ##### Configuration command topic
 
 ```text
-/{{apikey}}/{{deviceid}}/configuration/commands
+/ul/{{apikey}}/{{deviceid}}/configuration/commands
 ```
 
 The IoT Agent listens in this topic for requests coming from the device. The messages must contain an Ultralight 2.0
@@ -285,7 +285,7 @@ There are two accepted values for the configuration command types:
 ##### Configuration information topic
 
 ```text
-/{{apikey}}/{{deviceid}}/configuration/values
+/ul/{{apikey}}/{{deviceid}}/configuration/values
 ```
 
 Every device must subscribe to this topic, so it can receive configuration information. Whenever the device requests any
@@ -313,13 +313,13 @@ result to another topic.
 The _commands topic_, where the client will be subscribed has the following format:
 
 ```text
-<apiKey>/<deviceId>/cmd
+/ul/<apiKey>/<deviceId>/cmd
 ```
 
 The result of the command must be reported in the following topic:
 
 ```text
-<apiKey>/<deviceId>/cmdexe
+/ul/<apiKey>/<deviceId>/cmdexe
 ```
 
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
@@ -357,13 +357,13 @@ id_sen1@ping|22
 If using [Mosquitto](https://mosquitto.org/), such a command is received by running the `mosquitto_sub` script:
 
 ```bash
-$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /json/ABCDEF/id_sen1/cmd id_sen1@ping|22
+$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /ul/ABCDEF/id_sen1/cmd id_sen1@ping|22
 ```
 
 At this point, Context Broker will have updated the value of `ping_status` to `PENDING` for `sen1` entity. Neither
 `ping_info` nor `ping` are updated.
 
-Once the device has executed the command, it can publish its results in the `/json/ABCDEF/id_sen1/cmdexe` topic with a
+Once the device has executed the command, it can publish its results in the `/ul/ABCDEF/id_sen1/cmdexe` topic with a
 payload with the following format:
 
 ```text
@@ -373,7 +373,7 @@ id_sen1@ping|1234567890
 If using [Mosquitto](https://mosquitto.org/), such command result is sent by running the `mosquitto_pub` script:
 
 ```bash
-$ mosquitto_pub -t /json/ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
+$ mosquitto_pub -t /ul/ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password>
 ```
 
 In the end, Context Broker will have updated the values of `ping_info` and `ping_status` to `1234567890` and `OK`,
