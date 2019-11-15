@@ -209,7 +209,7 @@ This transport protocol binding is still under development.
 In order to send a single measure value to the server, the device must publish the plain value to the following topic:
 
 ```text
-<apiKey>/<deviceId>/attrs/<attrName>
+/ul/<apiKey>/<deviceId>/attrs/<attrName>
 ```
 
 Where `<apiKey>` and `<deviceId>` have the typical meaning and `<attrName>` is the name of the measure the device is
@@ -227,7 +227,7 @@ attribute IDs `h` and `t`, then humidity measures are reported this way:
 In order to send multiple measures in a single message, a device must publish a message in the following topic:
 
 ```text
-<apiKey>/<deviceId>/attrs
+/ul/<apiKey>/<deviceId>/attrs
 ```
 
 Where `<apiKey>` and `<deviceId>` have the typical meaning. The payload of such message should be a legal Ultralight 2.0
@@ -252,7 +252,7 @@ This mechanism and the bidirectionality plugin cannot be simultaneously activate
 ##### Configuration command topic
 
 ```text
-/{{apikey}}/{{deviceid}}/configuration/commands
+/ul/{{apikey}}/{{deviceid}}/configuration/commands
 ```
 
 The IoT Agent listens in this topic for requests coming from the device. The messages must contain an Ultralight 2.0
@@ -285,7 +285,7 @@ There are two accepted values for the configuration command types:
 ##### Configuration information topic
 
 ```text
-/{{apikey}}/{{deviceid}}/configuration/values
+/ul/{{apikey}}/{{deviceid}}/configuration/values
 ```
 
 Every device must subscribe to this topic, so it can receive configuration information. Whenever the device requests any
@@ -313,13 +313,13 @@ result to another topic.
 The _commands topic_, where the client will be subscribed has the following format:
 
 ```text
-<apiKey>/<deviceId>/cmd
+/ul/<apiKey>/<deviceId>/cmd
 ```
 
 The result of the command must be reported in the following topic:
 
 ```text
-<apiKey>/<deviceId>/cmdexe
+/ul/<apiKey>/<deviceId>/cmdexe
 ```
 
 The command execution and command reporting payload format is specified under the Ultralight 2.0 Commands Syntax, above.
