@@ -59,7 +59,7 @@ describe('MQTT Transport binding: commands', function() {
             }
         );
 
-        mqttClient.subscribe('/ul/1234/MQTT_2/cmd', null);
+        mqttClient.subscribe('/1234/MQTT_2/cmd', null);
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
@@ -82,7 +82,7 @@ describe('MQTT Transport binding: commands', function() {
 
     afterEach(function(done) {
         nock.cleanAll();
-        mqttClient.unsubscribe('/ul/1234/MQTT_2/cmd', null);
+        mqttClient.unsubscribe('/1234/MQTT_2/cmd', null);
         mqttClient.end();
 
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
@@ -157,7 +157,7 @@ describe('MQTT Transport binding: commands', function() {
         });
 
         it('should send an update request to the Context Broker', function(done) {
-            mqttClient.publish('/ul/1234/MQTT_2/cmdexe', 'MQTT_2@PING|1234567890', null, function(error) {
+            mqttClient.publish('/1234/MQTT_2/cmdexe', 'MQTT_2@PING|1234567890', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -218,7 +218,7 @@ describe('MQTT Transport binding: commands', function() {
 
             request(configurationOptions, function(error, response, body) {
                 request(provisionOptionsAlt, function(error, response, body) {
-                    mqttClient.subscribe('/ul/ALTERNATIVE/MQTT_4/cmd', null);
+                    mqttClient.subscribe('/ALTERNATIVE/MQTT_4/cmd', null);
 
                     done();
                 });
@@ -226,7 +226,7 @@ describe('MQTT Transport binding: commands', function() {
         });
 
         afterEach(function(done) {
-            mqttClient.unsubscribe('/ul/ALTERNATIVE/MQTT_4/cmd', null);
+            mqttClient.unsubscribe('/ALTERNATIVE/MQTT_4/cmd', null);
             done();
         });
 

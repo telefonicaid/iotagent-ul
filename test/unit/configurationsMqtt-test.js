@@ -98,19 +98,19 @@ describe('MQTT Transport binding: configurations', function() {
                     .post('/v1/queryContext', utils.readExampleFile('./test/contextRequests/getConfiguration.json'))
                     .reply(200, utils.readExampleFile('./test/contextResponses/getConfigurationSuccess.json'));
 
-                mqttClient.subscribe('/ul/1234/MQTT_device_1/configuration/values', null);
+                mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
 
                 configurationReceived = false;
             });
 
             afterEach(function(done) {
-                mqttClient.unsubscribe('/ul/1234/MQTT_device_1/configuration/values', null);
+                mqttClient.unsubscribe('/1234/MQTT_device_1/configuration/values', null);
 
                 done();
             });
 
             it('should ask the Context Broker for the request attributes', function(done) {
-                mqttClient.publish('/ul/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                     setTimeout(function() {
                         contextBrokerMock.done();
                         done();
@@ -129,7 +129,7 @@ describe('MQTT Transport binding: configurations', function() {
                         result.publishInterval === '80';
                 });
 
-                mqttClient.publish('/ul/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                     setTimeout(function() {
                         configurationReceived.should.equal(true);
                         done();
@@ -144,7 +144,7 @@ describe('MQTT Transport binding: configurations', function() {
                     configurationReceived = result.dt && result.dt.should.match(/^\d{8}T\d{6}Z$/);
                 });
 
-                mqttClient.publish('/ul/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                mqttClient.publish('//1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                     setTimeout(function() {
                         should.exist(configurationReceived);
                         done();
@@ -168,19 +168,19 @@ describe('MQTT Transport binding: configurations', function() {
                 )
                 .reply(200, utils.readExampleFile('./test/configurationRetrieval/subscriptionResponse.json'));
 
-            mqttClient.subscribe('/ul/1234/MQTT_device_1/configuration/values', null);
+            mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
 
             configurationReceived = false;
         });
 
         afterEach(function(done) {
-            mqttClient.unsubscribe('/ul/1234/MQTT_device_1/configuration/values', null);
+            mqttClient.unsubscribe('/1234/MQTT_device_1/configuration/values', null);
 
             done();
         });
 
         it('should create a subscription in the ContextBroker', function(done) {
-            mqttClient.publish('/ul/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -205,7 +205,7 @@ describe('MQTT Transport binding: configurations', function() {
                 configurationReceived = result.pollingInterval === '60' && result.publishInterval === '600';
             });
 
-            mqttClient.publish('/ul/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                 setTimeout(function() {
                     request(optionsNotify, function(error, response, body) {
                         setTimeout(function() {
@@ -222,7 +222,7 @@ describe('MQTT Transport binding: configurations', function() {
         var values = 'notallowedtype|pollingInterval|publishInterval';
 
         it('should silently ignore the error (without crashing)', function(done) {
-            mqttClient.publish('/ul/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                 setTimeout(function() {
                     done();
                 }, 100);
