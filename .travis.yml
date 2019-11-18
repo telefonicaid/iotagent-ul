@@ -57,8 +57,8 @@ jobs:
       node_js: 12
 
       before_install:
-        - docker pull ansi/mosquitto
-        - docker run -d -p 1883:1883 -l mosquitto ansi/mosquitto
+        - docker pull eclipse-mosquitto:1.6.7
+        - docker run -d -p 1883:1883 -l mosquitto eclipse-mosquitto:1.6.7
 
       before_script:
         - npm run lint
