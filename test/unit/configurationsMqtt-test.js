@@ -144,7 +144,7 @@ describe('MQTT Transport binding: configurations', function() {
                     configurationReceived = result.dt && result.dt.should.match(/^\d{8}T\d{6}Z$/);
                 });
 
-                mqttClient.publish('//1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
                     setTimeout(function() {
                         should.exist(configurationReceived);
                         done();
