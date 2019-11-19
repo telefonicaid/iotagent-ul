@@ -203,8 +203,8 @@ of a command) are prefixed with the agent procotol:
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
 
 All topis published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
-by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/ul/FF957A98/cmd` and 
-`/ul/FF957A98/configuration/values` ).
+by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and 
+`/FF957A98/MyDeviceId/configuration/values` ).
 
 This transport protocol binding is still under development.
 
