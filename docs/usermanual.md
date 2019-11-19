@@ -193,14 +193,18 @@ Some additional remarks regarding polling commands:
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
-This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All
-the topics used with the MQTT protocol contain the same prefix:
+This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All 
+the topics subscribed by the agent (to send measures, to configuration command retrieval or to get result 
+of a command) are prefixed with the agent procotol:
 
 ```text
 /ul/<apiKey>/<deviceId>
 ```
-
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
+
+All topis published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
+by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/ul/FF957A98/cmd` and 
+`/ul/FF957A98/configuration/values` ).
 
 This transport protocol binding is still under development.
 
@@ -285,7 +289,7 @@ There are two accepted values for the configuration command types:
 ##### Configuration information topic
 
 ```text
-/ul/{{apikey}}/{{deviceid}}/configuration/values
+/{{apikey}}/{{deviceid}}/configuration/values
 ```
 
 Every device must subscribe to this topic, so it can receive configuration information. Whenever the device requests any
@@ -313,7 +317,7 @@ result to another topic.
 The _commands topic_, where the client will be subscribed has the following format:
 
 ```text
-/ul/<apiKey>/<deviceId>/cmd
+/<apiKey>/<deviceId>/cmd
 ```
 
 The result of the command must be reported in the following topic:
@@ -348,7 +352,7 @@ to the Context Broker regarding an entity called `sen1` of type `sensor`:
 ```
 
 If the API key associated to de device is `ABCDEF`, and the device ID related to `sen1` entity is `id_sen1`, this will
-generate a message in the `/json/ABCDEF/id_sen1/cmd` topic with the following payload:
+generate a message in the `/ABCDEF/id_sen1/cmd` topic with the following payload:
 
 ```text
 id_sen1@ping|22
@@ -357,7 +361,7 @@ id_sen1@ping|22
 If using [Mosquitto](https://mosquitto.org/), such a command is received by running the `mosquitto_sub` script:
 
 ```bash
-$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /ul/ABCDEF/id_sen1/cmd id_sen1@ping|22
+$ mosquitto_sub -v -t /# -h <mosquitto_broker> -p <mosquitto_port> -u <user> -P <password> /ABCDEF/id_sen1/cmd id_sen1@ping|22
 ```
 
 At this point, Context Broker will have updated the value of `ping_status` to `PENDING` for `sen1` entity. Neither
