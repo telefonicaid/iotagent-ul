@@ -96,7 +96,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs/temperature', '23', null, function(error) {
+            mqttClient.publish('/ul/1234/MQTT_2/attrs/temperature', '23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -120,7 +120,7 @@ describe('MQTT Transport binding: measures', function() {
 
         it('should send a new update context request to the Context Broker with just this attribute', function(done) {
             mqttClient.publish(
-                '/1234/MQTT_2/attrs',
+                '/ul/1234/MQTT_2/attrs',
                 'luminosity|10|humidity|32|pollution|43.4|' +
                     'temperature|10|enabled|true|alive|null|tags' +
                     '|["iot","device"]|configuration|{"firmware":' +
@@ -173,7 +173,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            mqttClient.publish('/80K09H324HV8732/UL_UNPROVISIONED/attrs/temperature', '23', null, function(error) {
+            mqttClient.publish('/ul/80K09H324HV8732/UL_UNPROVISIONED/attrs/temperature', '23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerUnprovMock.done();
                     done();
@@ -196,7 +196,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a single update context request with all the attributes', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23', null, function(error) {
+            mqttClient.publish('/ul/1234/MQTT_2/attrs', 'temperature|23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -207,7 +207,7 @@ describe('MQTT Transport binding: measures', function() {
 
     describe('When a new multiple measure arrives to a Device topic with a faulty payload', function() {
         it('should silently ignore the error (without crashing)', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'notAULPayload ', null, function(error) {
+            mqttClient.publish('/ul/1234/MQTT_2/attrs', 'notAULPayload ', null, function(error) {
                 setTimeout(function() {
                     done();
                 }, 100);
@@ -229,7 +229,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23|humidity|98', null, function(error) {
+            mqttClient.publish('/ul/1234/MQTT_2/attrs', 'temperature|23|humidity|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -262,7 +262,7 @@ describe('MQTT Transport binding: measures', function() {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            mqttClient.publish('/1234/MQTT_2/attrs', 'temperature|23#humidity|98', null, function(error) {
+            mqttClient.publish('/ul/1234/MQTT_2/attrs', 'temperature|23#humidity|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -296,7 +296,7 @@ describe('MQTT Transport binding: measures', function() {
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
             mqttClient.publish(
-                '/1234/MQTT_2/attrs',
+                '/ul/1234/MQTT_2/attrs',
                 'temperature|23|humidity|' + '98#temperature|16|' + 'humidity|34',
                 null,
                 function(error) {
@@ -357,7 +357,7 @@ describe('MQTT Transport binding: measures', function() {
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
             mqttClient.publish(
-                '/1234/timestampedDevice/attrs',
+                '/ul/1234/timestampedDevice/attrs',
                 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z',
                 null,
                 function(error) {
