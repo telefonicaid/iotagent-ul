@@ -9,7 +9,8 @@ addons:
 
 branches:
   only:
-    - master
+    - secmotic_fiQare
+    - secmotic_fiQare_swagger
 
 services:
   - rabbitmq
