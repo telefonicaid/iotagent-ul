@@ -2,7 +2,7 @@
   "name": "iotagent-ul",
   "license": "AGPL-3.0-only",
   "description": "IoT Agent for the Ultrlight 2.0 protocol",
-  "version": "1.11.0-next",
+  "version": "1.12.0-next",
   "homepage": "https://github.com/telefonicaid/iotagent-ul",
   "author": {
     "name": "Daniel Moran",
@@ -40,7 +40,7 @@
     "express": "~4.16.4",
     "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
     "logops": "2.1.0",
-    "mqtt": "2.18.8",
+    "mqtt": "3.0.0",
     "request": "2.88.0",
     "underscore": "1.9.1"
   },
