@@ -170,7 +170,7 @@ fi
 %{_install_dir}
 
 %changelog
-* Mon Nov 20 2019 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
+* Wed Nov 20 2019 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.12.0
 - Allow use protocol ("/ul") in all mqtt topics subscribed by the agent (#287)
 - Use MQTT v5 shared subscriptions to avoid dupplicated messages per agent type (upgrade mqtt dep from 2.18.8 to 3.0.0). Needs MQTT v5 broker like mosquitto 1.6+
 - Use AMQP durable option in assertExchange
