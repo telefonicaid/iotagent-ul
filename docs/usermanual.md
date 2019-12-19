@@ -193,17 +193,18 @@ Some additional remarks regarding polling commands:
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
-This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All 
-the topics subscribed by the agent (to send measures, to configuration command retrieval or to get result 
-of a command) are prefixed with the agent procotol:
+This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All
+the topics subscribed by the agent (to send measures, to configuration command retrieval or to get result of a command)
+are prefixed with the agent procotol:
 
 ```text
 /ul/<apiKey>/<deviceId>
 ```
+
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
 
 All topis published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
-by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and 
+by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and
 `/FF957A98/MyDeviceId/configuration/values` ).
 
 This transport protocol binding is still under development.
@@ -543,4 +544,95 @@ To ensure consistent Markdown formatting run the following:
 ```bash
 # Use git-bash on Windows
 npm run prettier:text
+```
+
+### Swagger
+
+In order to run Swagger, you need to execute the IoT Agent
+(https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#usage) and then you can access to:
+
+```
+<server_host>:7896/api-docs
+```
+
+If you want to test the HTTP Protocol, two importants points:
+
+-   you should know that other services are needed (see
+    https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#installation):
+
+    -   Mosquitto
+    -   Mongo
+    -   Rabbitmq
+    -   Orion
+
+-   you need to Provisioning a Device and Provisioning a Service Group (see this tutorial
+    https://fiware-tutorials.readthedocs.io/en/latest/iot-agent/index.html#connecting-iot-devices)
+
+For example, you could use this script:
+
+```
+//additional services
+docker pull ansi/mosquitto
+docker pull mongo
+docker pull rabbitmq
+docker pull fiware/orion
+
+docker run -d --name mosquitto_container -p 1883:1883 -l mosquitto ansi/mosquitto
+docker run -d --name mongo_container -p 27017:27017 -l mongodb mongo
+docker run -d --name rabbitmq_container -p 5672:5672 -l rabbitmq rabbitmq
+docker run -d --name orion_container --link mongo_container:mongo_container -p 1026:1026 fiware/orion -dbhost mongo_container
+
+//clone repo
+git clone https://github.com/fiqare-secmotic/iotagent-ul.git
+cd iotagent-ul/
+
+//IoT Agent
+npm install
+bin/iotagent-ul
+
+// Provisioning a Service Group
+curl -X POST \
+  http://localhost:4061/iot/services \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+ "services": [
+   {
+     "apikey":      "4jggokgpepnvsb2uv4s40d59ovh",
+     "cbroker":     "http://localhost:1026",
+     "entity_type": "Thing",
+     "resource":    "/iot/d"
+   }
+ ]
+}'
+
+// Provisioning a Device
+curl -X POST \
+  http://localhost:4061/iot/devices \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+ "devices": [
+   {
+     "device_id":   "motion001",
+     "entity_name": "urn:ngsd-ld:Motion:001",
+     "entity_type": "Motion",
+     "protocol":    "PDI-IoTA-UltraLight",
+     "timezone":    "Europe/Berlin",
+     "attributes": [
+       { "object_id": "c", "name":"count", "type":"Integer"}
+      ],
+      "static_attributes": [
+         {"name":"refStore", "type": "Relationship","value": "urn:ngsi-ld:Store:001"}
+      ]
+   }
+ ]
+}
+'
+
+//Finally, go to locahost:7896/api-docs
 ```
