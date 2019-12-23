@@ -548,8 +548,9 @@ npm run prettier:text
 
 ### Swagger
 
-In order to run Swagger, you need to execute the IoT Agent
-(https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#usage) and then you can access to:
+In order to run Swagger, you need to execute the
+[IoT Agent](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#usage) and then you can
+access to:
 
 ```
 <server_host>:7896/api-docs
