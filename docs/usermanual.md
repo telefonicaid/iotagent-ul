@@ -203,8 +203,8 @@ are prefixed with the agent procotol:
 
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
 
-All topis published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
-by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and
+All topics published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
+by the protocol, in this case `/ul`, just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and
 `/FF957A98/MyDeviceId/configuration/values` ).
 
 This transport protocol binding is still under development.
@@ -558,19 +558,19 @@ In order to run Swagger, you need to execute the IoT Agent
 If you want to test the HTTP Protocol, two importants points:
 
 -   you should know that other services are needed (see
-    https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#installation):
+    [installation](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#installation)):
 
     -   Mosquitto
     -   Mongo
     -   Rabbitmq
     -   Orion
 
--   you need to Provisioning a Device and Provisioning a Service Group (see this tutorial
-    https://fiware-tutorials.readthedocs.io/en/latest/iot-agent/index.html#connecting-iot-devices)
+-   you need to Provisioning a Device and Provisioning a Service Group (see this
+    [tutorial](https://fiware-tutorials.readthedocs.io/en/latest/iot-agent/index.html#connecting-iot-devices))
 
 For example, you could use this script:
 
-```
+```bash
 //additional services
 docker pull ansi/mosquitto
 docker pull mongo
