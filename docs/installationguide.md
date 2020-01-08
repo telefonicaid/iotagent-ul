@@ -173,7 +173,8 @@ IoT Agent. The following attributes are accepted:
 -   **retain**: retain flag (default is `false`).
 -   **retries**: Number of MQTT connection error retries (default is 5).
 -   **retryTime**: Time between MQTT connection retries (default is 5 seconds).
--   **keepalive**: Time to keep connection open between client and MQTT broker (default is 0 seconds)
+-   **keepalive**: Time to keep connection open between client and MQTT broker (default is 0 seconds). If you experience
+    disconnnection problems using 0 (as the one described in [this case](https://github.com/telefonicaid/iotagent-json/issues/455)) a value greater than 0 is recommended. 
 
 #### AMQP Binding configuration
 
