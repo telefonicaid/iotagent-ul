@@ -548,92 +548,9 @@ npm run prettier:text
 
 ### Swagger
 
-In order to run Swagger, you need to execute the
-[IoT Agent](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#usage) and then you can
-access to:
+In order to run Swagger, you need to execute the IOT Agent (as explained [here](installationguide.md#usage) and then you
+can access to:
 
 ```
 <server_host>:7896/api-docs
-```
-
-If you want to test the HTTP Protocol, two importants points:
-
--   you should know that other services are needed (see
-    [installation](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/installationguide.md#installation)):
-
-    -   Mosquitto
-    -   Mongo
-    -   Rabbitmq
-    -   Orion
-
--   you need to Provisioning a Device and Provisioning a Service Group (see this
-    [tutorial](https://fiware-tutorials.readthedocs.io/en/latest/iot-agent/index.html#connecting-iot-devices))
-
-For example, you could use this script:
-
-```bash
-//additional services
-docker pull ansi/mosquitto
-docker pull mongo
-docker pull rabbitmq
-docker pull fiware/orion
-
-docker run -d --name mosquitto_container -p 1883:1883 -l mosquitto ansi/mosquitto
-docker run -d --name mongo_container -p 27017:27017 -l mongodb mongo
-docker run -d --name rabbitmq_container -p 5672:5672 -l rabbitmq rabbitmq
-docker run -d --name orion_container --link mongo_container:mongo_container -p 1026:1026 fiware/orion -dbhost mongo_container
-
-//clone repo
-git clone https://github.com/fiqare-secmotic/iotagent-ul.git
-cd iotagent-ul/
-
-//IoT Agent
-npm install
-bin/iotagent-ul
-
-// Provisioning a Service Group
-curl -X POST \
-  http://localhost:4061/iot/services \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -H 'fiware-service: openiot' \
-  -H 'fiware-servicepath: /' \
-  -d '{
- "services": [
-   {
-     "apikey":      "4jggokgpepnvsb2uv4s40d59ovh",
-     "cbroker":     "http://localhost:1026",
-     "entity_type": "Thing",
-     "resource":    "/iot/d"
-   }
- ]
-}'
-
-// Provisioning a Device
-curl -X POST \
-  http://localhost:4061/iot/devices \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -H 'fiware-service: openiot' \
-  -H 'fiware-servicepath: /' \
-  -d '{
- "devices": [
-   {
-     "device_id":   "motion001",
-     "entity_name": "urn:ngsd-ld:Motion:001",
-     "entity_type": "Motion",
-     "protocol":    "PDI-IoTA-UltraLight",
-     "timezone":    "Europe/Berlin",
-     "attributes": [
-       { "object_id": "c", "name":"count", "type":"Integer"}
-      ],
-      "static_attributes": [
-         {"name":"refStore", "type": "Relationship","value": "urn:ngsi-ld:Store:001"}
-      ]
-   }
- ]
-}
-'
-
-//Finally, go to locahost:7896/api-docs
 ```
