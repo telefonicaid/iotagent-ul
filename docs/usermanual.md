@@ -554,3 +554,6 @@ can access to:
 ```
 <server_host>:7896/api-docs
 ```
+
+The swagger documentation provided at /api-docs covers the HTTP southbound interface of the agent. The northbound HTTP
+interface is not covered.
