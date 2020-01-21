@@ -20,12 +20,13 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-'use strict';
 
-var fs = require('fs');
+/* eslint-disable no-unused-vars */
+
+const fs = require('fs');
 
 function readExampleFile(name, raw) {
-    var text = null;
+    let text = null;
     try {
         text = fs.readFileSync(name, 'UTF8');
     } catch (e) {
@@ -42,16 +43,16 @@ function delay(ms) {
 }
 
 function parseConfigurationResponse(payload) {
-    var _device = payload.split('@'),
-        _fields = _device[1].split('|'),
-        _attributes = _fields.slice(1, _fields.lenght),
-        _result = {};
+    const _device = payload.split('@');
+    const _fields = _device[1].split('|');
+    const _attributes = _fields.slice(1, _fields.lenght);
+    const _result = {};
 
     _result.device = _device[0];
     _result.type = _fields[0];
 
     _attributes.forEach(function(item, index) {
-        var _attribute = item.split('=');
+        const _attribute = item.split('=');
         _result[_attribute[0]] = _attribute[1];
     });
 

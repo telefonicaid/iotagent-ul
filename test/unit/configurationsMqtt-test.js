@@ -21,24 +21,24 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
 
-var iotagentMqtt = require('../../'),
-    mqtt = require('mqtt'),
-    config = require('../config-test.js'),
-    nock = require('nock'),
-    should = require('should'),
-    iotAgentLib = require('iotagent-node-lib'),
-    async = require('async'),
-    request = require('request'),
-    utils = require('../utils'),
-    contextBrokerMock,
-    oldConfigurationFlag,
-    mqttClient;
+const iotagentMqtt = require('../../');
+const mqtt = require('mqtt');
+const config = require('../config-test.js');
+const nock = require('nock');
+const should = require('should');
+const iotAgentLib = require('iotagent-node-lib');
+const async = require('async');
+const request = require('request');
+const utils = require('../utils');
+let contextBrokerMock;
+let oldConfigurationFlag;
+let mqttClient;
 
 describe('MQTT Transport binding: configurations', function() {
     beforeEach(function(done) {
-        var provisionOptions = {
+        const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/configurationRetrieval/provisionDeviceWithConfiguration.json'),
@@ -85,78 +85,75 @@ describe('MQTT Transport binding: configurations', function() {
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe(
-        'When a configuration request is received in the topic ' + '"/{{apikey}}/{{deviceid}}/configuration/commands"',
-        function() {
-            var values = 'configuration|pollingInterval|publishInterval',
-                configurationReceived;
+    describe('When a configuration request is received in the topic "/{{apikey}}/{{deviceid}}/configuration/commands"', function() {
+        const values = 'configuration|pollingInterval|publishInterval';
+        let configurationReceived;
 
-            beforeEach(function() {
-                contextBrokerMock
-                    .matchHeader('fiware-service', 'smartGondor')
-                    .matchHeader('fiware-servicepath', '/gardens')
-                    .post('/v1/queryContext', utils.readExampleFile('./test/contextRequests/getConfiguration.json'))
-                    .reply(200, utils.readExampleFile('./test/contextResponses/getConfigurationSuccess.json'));
+        beforeEach(function() {
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/queryContext', utils.readExampleFile('./test/contextRequests/getConfiguration.json'))
+                .reply(200, utils.readExampleFile('./test/contextResponses/getConfigurationSuccess.json'));
 
-                mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
+            mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
 
-                configurationReceived = false;
+            configurationReceived = false;
+        });
+
+        afterEach(function(done) {
+            mqttClient.unsubscribe('/1234/MQTT_device_1/configuration/values', null);
+
+            done();
+        });
+
+        it('should ask the Context Broker for the request attributes', function(done) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+
+        it('should return the requested attributes to the client in /1234/MQTT_device_1/configuration/values', function(done) {
+            mqttClient.on('message', function(topic, data) {
+                const result = utils.parseConfigurationResponse(data.toString());
+
+                configurationReceived =
+                    result.pollingInterval &&
+                    result.pollingInterval === '200' &&
+                    result.publishInterval &&
+                    result.publishInterval === '80';
             });
 
-            afterEach(function(done) {
-                mqttClient.unsubscribe('/1234/MQTT_device_1/configuration/values', null);
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                setTimeout(function() {
+                    configurationReceived.should.equal(true);
+                    done();
+                }, 100);
+            });
+        });
 
-                done();
+        it('should add the system timestamp in compressed format to the request', function(done) {
+            mqttClient.on('message', function(topic, data) {
+                const result = utils.parseConfigurationResponse(data.toString());
+
+                configurationReceived = result.dt && result.dt.should.match(/^\d{8}T\d{6}Z$/);
             });
 
-            it('should ask the Context Broker for the request attributes', function(done) {
-                mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                    setTimeout(function() {
-                        contextBrokerMock.done();
-                        done();
-                    }, 100);
-                });
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
+                setTimeout(function() {
+                    should.exist(configurationReceived);
+                    done();
+                }, 100);
             });
-
-            it('should return the requested attributes to the client in /1234/MQTT_device_1/configuration/values', function(done) {
-                mqttClient.on('message', function(topic, data) {
-                    var result = utils.parseConfigurationResponse(data.toString());
-
-                    configurationReceived =
-                        result.pollingInterval &&
-                        result.pollingInterval === '200' &&
-                        result.publishInterval &&
-                        result.publishInterval === '80';
-                });
-
-                mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                    setTimeout(function() {
-                        configurationReceived.should.equal(true);
-                        done();
-                    }, 100);
-                });
-            });
-
-            it('should add the system timestamp in compressed format to the request', function(done) {
-                mqttClient.on('message', function(topic, data) {
-                    var result = utils.parseConfigurationResponse(data.toString());
-
-                    configurationReceived = result.dt && result.dt.should.match(/^\d{8}T\d{6}Z$/);
-                });
-
-                mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                    setTimeout(function() {
-                        should.exist(configurationReceived);
-                        done();
-                    }, 100);
-                });
-            });
-        }
-    );
+        });
+    });
 
     describe('When a subscription request is received in the IoT Agent', function() {
-        var values = 'subscription|pollingInterval|publishInterval',
-            configurationReceived;
+        const values = 'subscription|pollingInterval|publishInterval';
+        let configurationReceived;
 
         beforeEach(function() {
             contextBrokerMock
@@ -189,7 +186,7 @@ describe('MQTT Transport binding: configurations', function() {
         });
 
         it('should update the values in the MQTT topic when a notification is received', function(done) {
-            var optionsNotify = {
+            const optionsNotify = {
                 url: 'http://localhost:' + config.iota.server.port + '/notify',
                 method: 'POST',
                 json: utils.readExampleFile('./test/configurationRetrieval/notification.json'),
@@ -200,7 +197,7 @@ describe('MQTT Transport binding: configurations', function() {
             };
 
             mqttClient.on('message', function(topic, data) {
-                var result = utils.parseConfigurationResponse(data.toString());
+                const result = utils.parseConfigurationResponse(data.toString());
 
                 configurationReceived = result.pollingInterval === '60' && result.publishInterval === '600';
             });
@@ -219,7 +216,7 @@ describe('MQTT Transport binding: configurations', function() {
     });
 
     describe('When a configuration request type is other than "configuration" or "subscription"', function() {
-        var values = 'notallowedtype|pollingInterval|publishInterval';
+        const values = 'notallowedtype|pollingInterval|publishInterval';
 
         it('should silently ignore the error (without crashing)', function(done) {
             mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {

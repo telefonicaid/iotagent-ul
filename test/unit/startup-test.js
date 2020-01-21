@@ -20,10 +20,12 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-'use strict';
-var iotagentUl = require('../../'),
-    config = require('../../lib/configService'),
-    iotAgentConfig = require('../config-test.js');
+
+/* eslint-disable no-unused-vars */
+
+const iotagentUl = require('../../');
+const config = require('../../lib/configService');
+const iotAgentConfig = require('../config-test.js');
 
 describe('Startup tests', function() {
     describe('When the IoT Agent is started with environment variables', function() {

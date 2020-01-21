@@ -21,23 +21,23 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
 
-var iotagentMqtt = require('../../'),
-    mqtt = require('mqtt'),
-    config = require('../config-test.js'),
-    nock = require('nock'),
-    should = require('should'),
-    iotAgentLib = require('iotagent-node-lib'),
-    async = require('async'),
-    request = require('request'),
-    utils = require('../utils'),
-    contextBrokerMock,
-    mqttClient;
+const iotagentMqtt = require('../../');
+const mqtt = require('mqtt');
+const config = require('../config-test.js');
+const nock = require('nock');
+const should = require('should');
+const iotAgentLib = require('iotagent-node-lib');
+const async = require('async');
+const request = require('request');
+const utils = require('../utils');
+let contextBrokerMock;
+let mqttClient;
 
 describe('MQTT Transport binding: commands', function() {
     beforeEach(function(done) {
-        var provisionOptions = {
+        const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand1.json'),
@@ -89,7 +89,7 @@ describe('MQTT Transport binding: commands', function() {
     });
 
     describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
-        var commandOptions = {
+        const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
             json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
@@ -130,8 +130,8 @@ describe('MQTT Transport binding: commands', function() {
         });
 
         it('should publish the command information in the MQTT topic', function(done) {
-            var commandMsg = 'MQTT_2@PING|data=22',
-                payload;
+            const commandMsg = 'MQTT_2@PING|data=22';
+            let payload;
 
             mqttClient.on('message', function(topic, data) {
                 payload = data.toString();
@@ -167,33 +167,33 @@ describe('MQTT Transport binding: commands', function() {
     });
 
     describe('When a command update arrives with a single text value', function() {
-        var provisionOptionsAlt = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand3.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            configurationOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/services',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            commandOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
-                method: 'POST',
-                json: utils.readExampleFile('./test/contextRequests/updateCommand3.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+        const provisionOptionsAlt = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand3.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const configurationOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommand3.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             nock.cleanAll();
@@ -231,8 +231,8 @@ describe('MQTT Transport binding: commands', function() {
         });
 
         it('should publish the command information in the MQTT topic', function(done) {
-            var commandMsg = 'MQTT_4@PING|22',
-                payload;
+            const commandMsg = 'MQTT_4@PING|22';
+            let payload;
 
             mqttClient.on('message', function(topic, data) {
                 payload = data.toString();

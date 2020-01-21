@@ -23,21 +23,21 @@
  * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
 
-var iotagentUl = require('../../../'),
-    config = require('./config-test.js'),
-    nock = require('nock'),
-    async = require('async'),
-    request = require('request'),
-    utils = require('../../utils'),
-    iotAgentLib = require('iotagent-node-lib'),
-    amqp = require('amqplib/callback_api'),
-    apply = async.apply,
-    contextBrokerMock,
-    contextBrokerUnprovMock,
-    amqpConn,
-    channel;
+const iotagentUl = require('../../../');
+const config = require('./config-test.js');
+const nock = require('nock');
+const async = require('async');
+const request = require('request');
+const utils = require('../../utils');
+const iotAgentLib = require('iotagent-node-lib');
+const amqp = require('amqplib/callback_api');
+const apply = async.apply;
+let contextBrokerMock;
+let contextBrokerUnprovMock;
+let amqpConn;
+let channel;
 
 function startConnection(exchange, callback) {
     amqp.connect(
@@ -57,7 +57,7 @@ function startConnection(exchange, callback) {
 
 describe('AMQP Transport binding: measures', function() {
     beforeEach(function(done) {
-        var provisionOptions = {
+        const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceAMQP1.json'),
@@ -120,7 +120,7 @@ describe('AMQP Transport binding: measures', function() {
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
-        var groupCreation = {
+        const groupCreation = {
             url: 'http://localhost:4061/iot/services',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroupAMQP.json'),
@@ -298,7 +298,7 @@ describe('AMQP Transport binding: measures', function() {
     });
 
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
-        var provisionProduction = {
+        const provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),

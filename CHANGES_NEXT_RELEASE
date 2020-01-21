@@ -1,2 +1,7 @@
+- Update codebase to use ES6
+    -  Remove JSHint and jshint overrides
+    -  Add esLint using standard tamia presets
+    -  Replace var with let/const
+    -  Fix or disable eslint errors
 - Add: check response obj before use it handling http commands
 - Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life 
