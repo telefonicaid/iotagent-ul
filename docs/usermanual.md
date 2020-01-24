@@ -548,7 +548,7 @@ npm run prettier:text
 
 ### Swagger
 
-In order to run Swagger, you need to execute the IOT Agent (as explained [here](installationguide.md#usage) and then you
+In order to run Swagger, you need to execute the IoT Agent (as explained [here](installationguide.md#usage) and then you
 can access to:
 
 ```
