@@ -193,17 +193,18 @@ Some additional remarks regarding polling commands:
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
 is based on publish-subscribe mechanisms over a hierarchical set of topics defined by the user.
 
-This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All 
-the topics subscribed by the agent (to send measures, to configuration command retrieval or to get result 
-of a command) are prefixed with the agent procotol:
+This section specifies the topics and messages allowed when using MQTT as the transport protocol for Ultralight 2.0. All
+the topics subscribed by the agent (to send measures, to configuration command retrieval or to get result of a command)
+are prefixed with the agent procotol:
 
 ```text
 /ul/<apiKey>/<deviceId>
 ```
+
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
 
-All topis published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
-by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and 
+All topics published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
+by the protocol, in this case `/ul`, just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and
 `/FF957A98/MyDeviceId/configuration/values` ).
 
 This transport protocol binding is still under development.
@@ -544,3 +545,15 @@ To ensure consistent Markdown formatting run the following:
 # Use git-bash on Windows
 npm run prettier:text
 ```
+
+### Swagger
+
+In order to run Swagger, you need to execute the IoT Agent (as explained [here](installationguide.md#usage) and then you
+can access to:
+
+```
+<server_host>:7896/api-docs
+```
+
+The swagger documentation provided at /api-docs covers the HTTP southbound interface of the agent. The northbound HTTP
+interface is not covered.

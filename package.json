@@ -62,6 +62,8 @@
     "textlint-rule-terminology": "~1.1.30",
     "textlint-rule-write-good": "~1.6.2",
     "should": "13.2.3",
+    "swagger-jsdoc": "~3.4.0",
+    "swagger-ui-express": "~4.1.2",
     "timekeeper": "2.1.2",
     "watch": "~1.0.2"
   },
