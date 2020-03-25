@@ -1,3 +1,4 @@
 - Fix: move to warn error log about device not found
 - Add: check response obj before use it handling http commands
 - Upgrade NodeJS version from 8.16.1 to 10.17.0 in Dockerfile due to Node 8 End-of-Life 
+- Hardening: software quality improvement based on ISO25010 recommendations
