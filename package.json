@@ -42,6 +42,7 @@
     "logops": "2.1.0",
     "mqtt": "3.0.0",
     "request": "2.88.0",
+    "sinon": "^9.0.1",
     "underscore": "1.9.1"
   },
   "devDependencies": {
