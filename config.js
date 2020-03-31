@@ -47,6 +47,12 @@ config.mqtt = {
     //password: ''
 
     /**
+     * Set to `false` if using a self-signed certificate.
+     * Beware that you are exposing yourself to man in the middle attacks
+     */
+    //rejectUnauthorized: true
+
+    /**
      * QoS Level: at most once (0), at least once (1), exactly once (2). (default is 2).
      */
     qos: 0,
@@ -94,6 +100,14 @@ config.http = {
      * HTTP Timeout for the http command endpoint (in milliseconds).
      */
     //timeout: 1000
+    /**
+     * Path to your private key for HTTPS binding
+     */
+    // privateKey: <path_to_private_key>
+    /**
+     * Path to your certificate for HTTPS binding
+     */
+    // certificate: <path_to_cert>
 };
 
 config.iota = {

@@ -174,7 +174,8 @@ IoT Agent. The following attributes are accepted:
 -   **retries**: Number of MQTT connection error retries (default is 5).
 -   **retryTime**: Time between MQTT connection retries (default is 5 seconds).
 -   **keepalive**: Time to keep connection open between client and MQTT broker (default is 0 seconds). If you experience
-    disconnnection problems using 0 (as the one described in [this case](https://github.com/telefonicaid/iotagent-json/issues/455)) a value greater than 0 is recommended. 
+    disconnnection problems using 0 (as the one described in
+    [this case](https://github.com/telefonicaid/iotagent-json/issues/455)) a value greater than 0 is recommended.
 
 #### AMQP Binding configuration
 
@@ -190,6 +191,9 @@ IoT Agent. The following attributes are accepted:
 -   **durable**: durable queue flag (default is `false`).
 -   **retries**: Number of AMQP connection error retries (default is 5).
 -   **retryTime**: Time between AMQP connection retries (default is 5 seconds).
+-   **rejectUnauthorized** set to `false` if using a self-signed certificate. (default is `true`). Beware that you are
+    exposing yourself to man in the middle attacks, so it is a configuration that is not recommended for production
+    environments.
 
 #### HTTP Binding configuration
 
@@ -197,7 +201,9 @@ The `config.http` section of the config file contains all the information needed
 transport protocol binding. The following options are accepted:
 
 -   **port**: South Port where the HTTP listener will be listening for information from the devices.
--   **timeout**: HTTP Timeout for the HTTP endpoint (in miliseconds).
+-   **timeout**: HTTP Timeout for the HTTP endpoint (in milliseconds).
+-   **privateKey**: Path to your private key for HTTPS binding
+-   **certificate**: Path to your certificate for HTTPS binding
 
 #### Configuration with environment variables
 
@@ -207,29 +213,32 @@ in the `config.iota` set are described in the
 
 The ones relating specific Ultralight 2.0 bindings are described in the following table.
 
-| Environment variable | Configuration attribute |
-| :------------------- | :---------------------- |
-| IOTA_MQTT_HOST       | mqtt.host               |
-| IOTA_MQTT_PORT       | mqtt.port               |
-| IOTA_MQTT_USERNAME   | mqtt.username           |
-| IOTA_MQTT_PASSWORD   | mqtt.password           |
-| IOTA_MQTT_QOS        | mqtt.qos                |
-| IOTA_MQTT_RETAIN     | mqtt.retain             |
-| IOTA_MQTT_RETRIES    | mqtt.retries            |
-| IOTA_MQTT_RETRY_TIME | mqtt.retryTime          |
-| IOTA_MQTT_KEEPALIVE  | mqtt.keepalive          |
-| IOTA_AMQP_HOST       | amqp.host               |
-| IOTA_AMQP_PORT       | amqp.port               |
-| IOTA_AMQP_USERNAME   | amqp.username           |
-| IOTA_AMQP_PASSWORD   | amqp.password           |
-| IOTA_AMQP_EXCHANGE   | amqp.exchange           |
-| IOTA_AMQP_QUEUE      | amqp.queue              |
-| IOTA_AMQP_DURABLE    | amqp.durable            |
-| IOTA_AMQP_RETRIES    | amqp.retries            |
-| IOTA_AMQP_RETRY_TIME | amqp.retryTime          |
-| IOTA_HTTP_HOST       | http.host               |
-| IOTA_HTTP_PORT       | http.port               |
-| IOTA_HTTP_TIMEOUT    | http.timeout            |
+| Environment variable          | Configuration attribute |
+| :---------------------------- | :---------------------- |
+| IOTA_MQTT_HOST                | mqtt.host               |
+| IOTA_MQTT_PORT                | mqtt.port               |
+| IOTA_MQTT_USERNAME            | mqtt.username           |
+| IOTA_MQTT_PASSWORD            | mqtt.password           |
+| IOTA_MQTT_QOS                 | mqtt.qos                |
+| IOTA_MQTT_RETAIN              | mqtt.retain             |
+| IOTA_MQTT_RETRIES             | mqtt.retries            |
+| IOTA_MQTT_RETRY_TIME          | mqtt.retryTime          |
+| IOTA_MQTT_KEEPALIVE           | mqtt.keepalive          |
+| IOTA_MQTT_REJECT_UNAUTHORIZED | mqtt.rejectUnauthorized |
+| IOTA_AMQP_HOST                | amqp.host               |
+| IOTA_AMQP_PORT                | amqp.port               |
+| IOTA_AMQP_USERNAME            | amqp.username           |
+| IOTA_AMQP_PASSWORD            | amqp.password           |
+| IOTA_AMQP_EXCHANGE            | amqp.exchange           |
+| IOTA_AMQP_QUEUE               | amqp.queue              |
+| IOTA_AMQP_DURABLE             | amqp.durable            |
+| IOTA_AMQP_RETRIES             | amqp.retries            |
+| IOTA_AMQP_RETRY_TIME          | amqp.retryTime          |
+| IOTA_HTTP_HOST                | http.host               |
+| IOTA_HTTP_PORT                | http.port               |
+| IOTA_HTTP_TIMEOUT             | http.timeout            |
+| IOTA_HTTP_PRIVATE_KEY         | http.privateKey         |
+| IOTA_HTTP_CERTIFICATE         | http.certificate        |
 
 #### High performance configuration
 
