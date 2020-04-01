@@ -177,7 +177,6 @@ IoT Agent. The following attributes are accepted:
 -   **key**: optional private keys in PEM format to use on the client-side for connecting with the MQTT broker
     (optional). Only used when using `mqtts`, `tls` or `wss` as connection protocol. The included CA list will be used
     to determine if server is authorized.
--   **protocol**: MQTT protocol to use (default `mqtt`)
 -   **qos**: QoS level: at most once (`0`), at least once (`1`), exactly once (`2`). (default is `0`).
 -   **retain**: retain flag (default is `false`).
 -   **retries**: Number of MQTT connection error retries (default is 5).
