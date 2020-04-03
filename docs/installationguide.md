@@ -166,6 +166,7 @@ The `config.mqtt` section of the config file contains all the information needed
 IoT Agent. The following attributes are accepted:
 
 -   **protocol**: protocol to use for connecting with the MQTT broker (`mqtt`, `mqtts`, `tcp`, `tls`, `ws`, `wss`).
+    The default is `mqtt`
 -   **host**: Host where the MQTT Broker is located.
 -   **port**: Port where the MQTT Broker is listening
 -   **username**: Username for the IoT Agent in the MQTT broker, if authentication is activated.
