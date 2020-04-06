@@ -36,10 +36,6 @@ ENV DOWNLOAD=${DOWNLOAD}
 
 MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 
-RUN apt-get update \
-	&& apt-get install -y --no-install-recommends ca-certificates curl wget \
-	&& rm -rf /var/lib/apt/lists/*
-
 # IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
 # variables defined below, by adding _FILE to the name of the relevant variable.
 #
@@ -61,7 +57,10 @@ RUN apt-get update \
 #
 # COPY . /opt/iotaul/
 #
-RUN if [ "${DOWNLOAD}" = "latest" ] ; \
+RUN apt-get update && \
+	# Ensure that unzip, wget and curl are installed
+	apt-get install -y --no-install-recommends unzip ca-certificates curl wget && \
+	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
 		echo "INFO: Building Latest Development from ${SOURCE_BRANCH} branch."; \
@@ -74,9 +73,6 @@ RUN if [ "${DOWNLOAD}" = "latest" ] ; \
 	 	echo "INFO: Building Release: ${RELEASE}"; \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
-	# Ensure that unzip is installed, and download the sources
-	apt-get update && \
-	apt-get install -y  --no-install-recommends unzip && \
 	wget --no-check-certificate -O source.zip https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip && \
 	unzip source.zip && \
 	rm source.zip && \
@@ -84,7 +80,8 @@ RUN if [ "${DOWNLOAD}" = "latest" ] ; \
 	# Remove unzip and clean apt cache
 	apt-get clean && \
 	apt-get remove -y unzip && \
-	apt-get -y autoremove
+	apt-get -y autoremove && \
+	rm -rf /var/lib/apt/lists/* 
 
 WORKDIR /opt/iotaul
 
