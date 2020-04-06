@@ -36,6 +36,10 @@ ENV DOWNLOAD=${DOWNLOAD}
 
 MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends ca-certificates curl wget \
+	&& rm -rf /var/lib/apt/lists/*
+
 # IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
 # variables defined below, by adding _FILE to the name of the relevant variable.
 #
