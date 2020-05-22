@@ -1,1 +1,3 @@
 Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
+
+Fix: log always writing the same correlator id and transaction id (issue #326)
