@@ -99,7 +99,7 @@ config.mqtt = {
     /**
      * Whether to use slashes at the beginning of topic when sending or not
      */
-    avoidLeadingSlashes: false
+    avoidLeadingSlash: false
 };
 
 config.amqp = {
