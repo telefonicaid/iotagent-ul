@@ -341,7 +341,9 @@ config.iota = {
     /**
      * Default type, for IoT Agent installations that won't require preregistration.
      */
-    defaultType: 'Thing'
+    defaultType: 'Thing',
+
+    explicitAttrs: false
 };
 
 /**
