@@ -821,7 +821,7 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(204)
                 .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')                )
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')                )
                 .query({ type: 'clock' })
                 .reply(204);
 
@@ -887,7 +887,7 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(204)
                 .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')                )
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')                )
                 .query({ type: 'clock' })
                 .reply(204);
 
@@ -953,7 +953,7 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(204)
                 .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')                )
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')                )
                 .query({ type: 'clock' })
                 .reply(204);
 
@@ -1019,7 +1019,7 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(204)
                 .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')                )
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')                )
                 .query({ type: 'clock' })
                 .reply(204);
 
