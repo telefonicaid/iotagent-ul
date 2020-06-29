@@ -346,7 +346,12 @@ config.iota = {
     /**
      * Default type, for IoT Agent installations that won't require preregistration.
      */
-    defaultType: 'Thing'
+    defaultType: 'Thing',
+
+    /**
+    * flag indicating whether the incoming measures to the IoTAgent should be processed as per the "attributes" field.
+    */
+    explicitAttrs: false
 };
 
 /**

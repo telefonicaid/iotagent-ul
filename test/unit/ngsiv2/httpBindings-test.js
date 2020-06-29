@@ -786,4 +786,270 @@ describe('HTTP Transport binding: measures', function() {
             });
         });
     });
+
+    describe('When a POST measure arrives with a TimeInstant attribute in the body for a device with explicitAttrs:false', function() {
+        var timeInstantRequest = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'POST',
+                qs: {
+                    i: 'timestampedDevice',
+                    k: '1234'
+                },
+                headers: {
+                    'Content-type': 'text/plain'
+                },
+                body: 'tmp|24.4|humidity|32|tt|2020-06-14T12:19:26.476659Z'
+            },
+            provisionProduction = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceTimeinstant.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204)
+                .post(
+                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')                )
+                .query({ type: 'clock' })
+                .reply(204);
+
+            config.iota.timestamp = true;
+
+            nock('http://localhost:8082')
+                .post('/protocols')
+                .reply(200, {});
+
+            iotagentUl.stop(function() {
+                iotagentUl.start(config, function(error) {
+                    request(provisionProduction, function(error, response, body) {
+                        done();
+                    });
+                });
+            });
+        });
+
+        afterEach(function() {
+            config.iota.timestamp = false;
+        });
+
+        it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
+            request(timeInstantRequest, function(error, response, body) {
+                should.not.exist(error);
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+    describe('When a POST measure arrives with a TimeInstant attribute in the body for a device with explicitAttrs:true', function() {
+        var timeInstantRequest = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'POST',
+                qs: {
+                    i: 'timestampedDevice',
+                    k: '1234'
+                },
+                headers: {
+                    'Content-type': 'text/plain'
+                },
+                body: 'tmp|24.4|humidity|32|tt|2020-06-14T12:19:26.476659Z'
+            },
+            provisionProduction = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceTimeinstant2.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204)
+                .post(
+                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')                )
+                .query({ type: 'clock' })
+                .reply(204);
+
+            config.iota.timestamp = true;
+
+            nock('http://localhost:8082')
+                .post('/protocols')
+                .reply(200, {});
+
+            iotagentUl.stop(function() {
+                iotagentUl.start(config, function(error) {
+                    request(provisionProduction, function(error, response, body) {
+                        done();
+                    });
+                });
+            });
+        });
+
+        afterEach(function() {
+            config.iota.timestamp = false;
+        });
+
+        it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
+            request(timeInstantRequest, function(error, response, body) {
+                should.not.exist(error);
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+    describe('When a POST measure arrives with a TimeInstant query parameter in the body for a device with explicitAttrs:false', function() {
+        var timeInstantRequest = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'POST',
+                qs: {
+                    i: 'timestampedDevice',
+                    k: '1234',
+                    d: 'tmp|24.4|humidity|32|tt|2020-06-14T12:19:26.476659Z'
+                },
+                headers: {
+                    'Content-type': 'text/plain'
+                }
+            },
+            provisionProduction = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceTimeinstant.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204)
+                .post(
+                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')                )
+                .query({ type: 'clock' })
+                .reply(204);
+
+            config.iota.timestamp = true;
+
+            nock('http://localhost:8082')
+                .post('/protocols')
+                .reply(200, {});
+
+            iotagentUl.stop(function() {
+                iotagentUl.start(config, function(error) {
+                    request(provisionProduction, function(error, response, body) {
+                        done();
+                    });
+                });
+            });
+        });
+
+        afterEach(function() {
+            config.iota.timestamp = false;
+        });
+
+        it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
+            request(timeInstantRequest, function(error, response, body) {
+                should.not.exist(error);
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+    describe('When a POST measure arrives with a TimeInstant query parameter in the body for a device with explicitAttrs:true', function() {
+        var timeInstantRequest = {
+                url: 'http://localhost:' + config.http.port + '/iot/d',
+                method: 'POST',
+                qs: {
+                    i: 'timestampedDevice',
+                    k: '1234',
+                    d: 'tmp|24.4|humidity|32|tt|2020-06-14T12:19:26.476659Z'
+                },
+                headers: {
+                    'Content-type': 'text/plain'
+                }
+            },
+            provisionProduction = {
+                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+                method: 'POST',
+                json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceTimeinstant2.json'),
+                headers: {
+                    'fiware-service': 'smartGondor',
+                    'fiware-servicepath': '/gardens'
+                }
+            };
+
+        beforeEach(function(done) {
+            // This mock does not check the payload since the aim of the test is not to verify
+            // device provisioning functionality. Appropriate verification is done in tests under
+            // provisioning folder of iotagent-node-lib
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204)
+                .post(
+                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')                )
+                .query({ type: 'clock' })
+                .reply(204);
+
+            config.iota.timestamp = true;
+
+            nock('http://localhost:8082')
+                .post('/protocols')
+                .reply(200, {});
+
+            iotagentUl.stop(function() {
+                iotagentUl.start(config, function(error) {
+                    request(provisionProduction, function(error, response, body) {
+                        done();
+                    });
+                });
+            });
+        });
+
+        afterEach(function() {
+            config.iota.timestamp = false;
+        });
+
+        it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
+            request(timeInstantRequest, function(error, response, body) {
+                should.not.exist(error);
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+    
 });
