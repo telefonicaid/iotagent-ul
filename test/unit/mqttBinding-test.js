@@ -94,6 +94,15 @@ describe('MQTT Transport binding: measures', function() {
                 }, 100);
             });
         });
+
+        it('should send a new update context request to the Context Broker with just that attribute (without leading slash)', function(done) {
+            mqttClient.publish('ul/1234/MQTT_2/attrs/a', '23', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
@@ -133,6 +142,15 @@ describe('MQTT Transport binding: measures', function() {
                 }, 100);
             });
         });
+
+        it('should send a new update context request to the Context Broker with just that attribute (without leading slash)', function(done) {
+            mqttClient.publish('ul/80K09H324HV8732/MQTT_UNPROVISIONED/attrs/a', '23', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerUnprovMock.done();
+                    done();
+                }, 100);
+            });
+        });
     });
 
     describe('When a new multiple measure arrives to a Device topic with one measure', function() {
@@ -146,6 +164,14 @@ describe('MQTT Transport binding: measures', function() {
 
         it('should send a single update context request with all the attributes', function(done) {
             mqttClient.publish('/ul/1234/MQTT_2/attrs', 'a|23', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+        it('should send a single update context request with all the attributes (without leadin slash)', function(done) {
+            mqttClient.publish('ul/1234/MQTT_2/attrs', 'a|23', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -170,6 +196,13 @@ describe('MQTT Transport binding: measures', function() {
                 }, 100);
             });
         });
+        it('should silently ignore the error (without crashing) (without leadin slash)', function(done) {
+            mqttClient.publish('ul/1234/MQTT_2/attrs', 'notAULPayload ', null, function(error) {
+                setTimeout(function() {
+                    done();
+                }, 100);
+            });
+        });
     });
 
     describe('When single message with multiple measures arrive to a Device topic', function() {
@@ -183,6 +216,14 @@ describe('MQTT Transport binding: measures', function() {
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
             mqttClient.publish('/ul/1234/MQTT_2/attrs', 'a|23|b|98', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+        it('should send one update context per measure group to the Contet Broker (without leadin slash)', function(done) {
+            mqttClient.publish('ul/1234/MQTT_2/attrs', 'a|23|b|98', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -214,6 +255,14 @@ describe('MQTT Transport binding: measures', function() {
                 }, 100);
             });
         });
+        it('should send a two update context requests to the Context Broker one with each attribute (without leading slash)', function(done) {
+            mqttClient.publish('ul/1234/MQTT_2/attrs', 'a|23#b|98', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
     });
     describe('When multiple groups of measures arrive, with multiple attributes, to a Device topic', function() {
         beforeEach(function() {
@@ -232,6 +281,14 @@ describe('MQTT Transport binding: measures', function() {
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
             mqttClient.publish('/ul/1234/MQTT_2/attrs', 'a|23|b|98#a|16|b|34', null, function(error) {
+                setTimeout(function() {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+        it('should send a two update context requests to the Context Broker one with each attribute (without leading slash)', function(done) {
+            mqttClient.publish('ul/1234/MQTT_2/attrs', 'a|23|b|98#a|16|b|34', null, function(error) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -282,6 +339,19 @@ describe('MQTT Transport binding: measures', function() {
         it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
             mqttClient.publish(
                 '/ul/1234/timestampedDevice/attrs',
+                'tmp|24.4|tt|2016-09-26T12:19:26.476659Z',
+                null,
+                function(error) {
+                    setTimeout(function() {
+                        contextBrokerMock.done();
+                        done();
+                    }, 100);
+                }
+            );
+        });
+        it('should use the provided TimeInstant as the general timestamp for the measures (without leading slash)', function(done) {
+            mqttClient.publish(
+                'ul/1234/timestampedDevice/attrs',
                 'tmp|24.4|tt|2016-09-26T12:19:26.476659Z',
                 null,
                 function(error) {

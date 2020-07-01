@@ -165,8 +165,8 @@ JavaScript file, that contains the following sections:
 The `config.mqtt` section of the config file contains all the information needed to connect to the MQTT Broker from the
 IoT Agent. The following attributes are accepted:
 
--   **protocol**: protocol to use for connecting with the MQTT broker (`mqtt`, `mqtts`, `tcp`, `tls`, `ws`, `wss`).
-    The default is `mqtt`
+-   **protocol**: protocol to use for connecting with the MQTT broker (`mqtt`, `mqtts`, `tcp`, `tls`, `ws`, `wss`). The
+    default is `mqtt`
 -   **host**: Host where the MQTT Broker is located.
 -   **port**: Port where the MQTT Broker is listening
 -   **username**: Username for the IoT Agent in the MQTT broker, if authentication is activated.
@@ -189,6 +189,9 @@ IoT Agent. The following attributes are accepted:
     option only has an effect when using `mqtts`, `tls` or `wss` protocols (default is `true`). Set to `false` if using
     a self-signed certificate but beware that you are exposing yourself to man in the middle attacks, so it is a
     configuration that is not recommended for production environments.
+-   **avoidLeadingSlash** this flag sets whether the agent publishes commands to topics starting with slash (default in
+    order versions) or without the slash. See
+    [discussion](https://github.com/telefonicaid/iotagent-node-lib/issues/866).
 
 #### AMQP Binding configuration
 
@@ -239,6 +242,7 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_RETRIES             | mqtt.retries            |
 | IOTA_MQTT_RETRY_TIME          | mqtt.retryTime          |
 | IOTA_MQTT_KEEPALIVE           | mqtt.keepalive          |
+| IOTA_MQTT_AVOID_LEADING_SLASH | mqtt.avoidLeadingSlash  |
 | IOTA_AMQP_HOST                | amqp.host               |
 | IOTA_AMQP_PORT                | amqp.port               |
 | IOTA_AMQP_USERNAME            | amqp.username           |
