@@ -51,7 +51,6 @@
     "eslint-plugin-prettier": "~3.1.2",
     "husky": "~1.1.0",
     "istanbul": "~0.4.5",
-    "jshint": "~2.9.6",
     "lint-staged": "~7.3.0",
     "mocha": "5.2.0",
     "moment": "~2.22.2",
