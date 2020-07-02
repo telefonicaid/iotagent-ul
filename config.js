@@ -94,7 +94,12 @@ config.mqtt = {
     /**
      * Time to keep connection open between client and MQTT broker (default is 0 seconds)
      */
-    keepalive: 0
+    keepalive: 0,
+
+    /**
+     * Whether to use slashes at the beginning of topic when sending or not
+     */
+    avoidLeadingSlash: false
 };
 
 config.amqp = {
@@ -341,7 +346,12 @@ config.iota = {
     /**
      * Default type, for IoT Agent installations that won't require preregistration.
      */
-    defaultType: 'Thing'
+    defaultType: 'Thing',
+
+    /**
+     * flag indicating whether the incoming measures to the IoTAgent should be processed as per the "attributes" field.
+     */
+    explicitAttrs: false
 };
 
 /**
