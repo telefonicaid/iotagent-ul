@@ -23,23 +23,23 @@
  * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
 
-var iotagentUL = require('../../../'),
-    mqtt = require('mqtt'),
-    config = require('./config-test.js'),
-    nock = require('nock'),
-    iotAgentLib = require('iotagent-node-lib'),
-    async = require('async'),
-    request = require('request'),
-    utils = require('../../utils'),
-    contextBrokerMock,
-    contextBrokerUnprovMock,
-    mqttClient;
+const iotagentUL = require('../../../');
+const mqtt = require('mqtt');
+const config = require('./config-test.js');
+const nock = require('nock');
+const iotAgentLib = require('iotagent-node-lib');
+const async = require('async');
+const request = require('request');
+const utils = require('../../utils');
+let contextBrokerMock;
+let contextBrokerUnprovMock;
+let mqttClient;
 
 describe('MQTT Transport binding: measures', function() {
     beforeEach(function(done) {
-        var provisionOptions = {
+        const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionDeviceMQTT.json'),
@@ -137,7 +137,7 @@ describe('MQTT Transport binding: measures', function() {
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
-        var groupCreation = {
+        const groupCreation = {
             url: 'http://localhost:4061/iot/services',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/groupProvisioning/provisionFullGroup.json'),
@@ -297,7 +297,7 @@ describe('MQTT Transport binding: measures', function() {
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
             mqttClient.publish(
                 '/ul/1234/MQTT_2/attrs',
-                'temperature|23|humidity|' + '98#temperature|16|' + 'humidity|34',
+                'temperature|23|humidity|98#temperature|16|humidity|34',
                 null,
                 function(error) {
                     setTimeout(function() {
@@ -310,7 +310,7 @@ describe('MQTT Transport binding: measures', function() {
     });
 
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
-        var provisionProduction = {
+        const provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/unit/ngsiv2/deviceProvisioning/provisionTimeInstant.json'),

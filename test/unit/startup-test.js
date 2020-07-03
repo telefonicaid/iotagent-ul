@@ -20,12 +20,11 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-'use strict';
 
-var config = require('../../lib/configService'),
-    iotAgentConfig = require('../config-test.js'),
-    fs = require('fs'),
-    sinon = require('sinon');
+const config = require('../../lib/configService');
+const iotAgentConfig = require('../config-test.js');
+const fs = require('fs');
+const sinon = require('sinon');
 
 describe('Startup tests', function() {
     describe('When the MQTT transport is started with environment variables', function() {

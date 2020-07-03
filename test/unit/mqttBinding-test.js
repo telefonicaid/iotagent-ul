@@ -21,23 +21,23 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
 
-var iotagentMqtt = require('../../'),
-    mqtt = require('mqtt'),
-    config = require('../config-test.js'),
-    nock = require('nock'),
-    iotAgentLib = require('iotagent-node-lib'),
-    async = require('async'),
-    request = require('request'),
-    utils = require('../utils'),
-    contextBrokerMock,
-    contextBrokerUnprovMock,
-    mqttClient;
+const iotagentMqtt = require('../../');
+const mqtt = require('mqtt');
+const config = require('../config-test.js');
+const nock = require('nock');
+const iotAgentLib = require('iotagent-node-lib');
+const async = require('async');
+const request = require('request');
+const utils = require('../utils');
+let contextBrokerMock;
+let contextBrokerUnprovMock;
+let mqttClient;
 
 describe('MQTT Transport binding: measures', function() {
     beforeEach(function(done) {
-        var provisionOptions = {
+        const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionDevice1.json'),
@@ -106,7 +106,7 @@ describe('MQTT Transport binding: measures', function() {
     });
 
     describe('When a new measure arrives for an unprovisioned Device', function() {
-        var groupCreation = {
+        const groupCreation = {
             url: 'http://localhost:4061/iot/services',
             method: 'POST',
             json: utils.readExampleFile('./test/groupProvisioning/provisionFullGroup.json'),
@@ -298,7 +298,7 @@ describe('MQTT Transport binding: measures', function() {
     });
 
     describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
-        var provisionProduction = {
+        const provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionTimeInstant.json'),

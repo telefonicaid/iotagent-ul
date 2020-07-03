@@ -21,21 +21,21 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
 
-var iotagentUl = require('../../'),
-    config = require('../config-test.js'),
-    nock = require('nock'),
-    iotAgentLib = require('iotagent-node-lib'),
-    should = require('should'),
-    request = require('request'),
-    utils = require('../utils'),
-    mockedClientServer,
-    contextBrokerMock;
+const iotagentUl = require('../../');
+const config = require('../config-test.js');
+const nock = require('nock');
+const iotAgentLib = require('iotagent-node-lib');
+const should = require('should');
+const request = require('request');
+const utils = require('../utils');
+let mockedClientServer;
+let contextBrokerMock;
 
 describe('HTTP Transport binding: commands', function() {
     beforeEach(function(done) {
-        var provisionOptions = {
+        const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand2.json'),
@@ -85,7 +85,7 @@ describe('HTTP Transport binding: commands', function() {
     });
 
     describe('When a command arrive to the Agent for a device with the HTTP_UL protocol', function() {
-        var commandOptions = {
+        const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
             json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
@@ -126,7 +126,7 @@ describe('HTTP Transport binding: commands', function() {
     });
 
     describe('When a command arrive to the Agent and the device answers with an error', function() {
-        var commandOptions = {
+        const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
             json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
@@ -167,24 +167,24 @@ describe('HTTP Transport binding: commands', function() {
     });
 
     describe('When a command arrive with a wrong endpoint', function() {
-        var commandOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
-                method: 'POST',
-                json: utils.readExampleFile('./test/contextRequests/updateCommandWrongEndpoint.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            },
-            provisionWrongEndpoint = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-                method: 'POST',
-                json: utils.readExampleFile('./test/deviceProvisioning/provisionCommandWrongEndpoint.json'),
-                headers: {
-                    'fiware-service': 'smartGondor',
-                    'fiware-servicepath': '/gardens'
-                }
-            };
+        const commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommandWrongEndpoint.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const provisionWrongEndpoint = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommandWrongEndpoint.json'),
+            headers: {
+                'fiware-service': 'smartGondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
 
         beforeEach(function(done) {
             nock.cleanAll();

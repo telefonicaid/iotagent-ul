@@ -22,7 +22,7 @@
  *
  * Modified by: Fernando Méndez, Daniel Calvo - ATOS Research & Innovation
  */
-var config = {};
+const config = {};
 
 config.mqtt = {
     host: 'localhost',

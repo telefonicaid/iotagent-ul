@@ -23,41 +23,42 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 
-var fs = require('fs'),
-    defaultConfig = require('../client-config.js'),
-    commandLine = require('iotagent-node-lib').commandLine,
-    clUtils = commandLine.clUtils,
-    mqtt = require('mqtt'),
-    request = require('request'),
-    async = require('async'),
-    _ = require('underscore'),
-    mqttClient,
-    configCb = {
-        host: 'localhost',
-        port: 1026,
-        service: 'tester',
-        subservice: '/test'
-    },
-    configIot = {
-        host: 'localhost',
-        port: 4061,
-        name: 'default',
-        service: 'tester',
-        subservice: '/test'
-    },
-    config = {
-        binding: defaultConfig.defaultBinding,
-        host: defaultConfig.mqtt.host,
-        port: defaultConfig.mqtt.port,
-        httpPort: defaultConfig.http.port,
-        apikey: defaultConfig.device.apikey,
-        deviceId: defaultConfig.device.id,
-        httpPath: defaultConfig.http.path
-    },
-    separator = '\n\n\t',
-    token;
+const fs = require('fs');
+const defaultConfig = require('../client-config.js');
+const commandLine = require('iotagent-node-lib').commandLine;
+const clUtils = commandLine.clUtils;
+const mqtt = require('mqtt');
+const request = require('request');
+const async = require('async');
+const _ = require('underscore');
+let mqttClient;
+const configCb = {
+    host: 'localhost',
+    port: 1026,
+    service: 'tester',
+    subservice: '/test'
+};
+const configIot = {
+    host: 'localhost',
+    port: 4061,
+    name: 'default',
+    service: 'tester',
+    subservice: '/test'
+};
+const config = {
+    binding: defaultConfig.defaultBinding,
+    host: defaultConfig.mqtt.host,
+    port: defaultConfig.mqtt.port,
+    httpPort: defaultConfig.http.port,
+    apikey: defaultConfig.device.apikey,
+    deviceId: defaultConfig.device.id,
+    httpPath: defaultConfig.http.path
+};
+const separator = '\n\n\t';
+let token;
 
 function setConfig(commands) {
     config.host = commands[0];
@@ -109,11 +110,11 @@ function checkConnection(fn) {
 
 function singleMeasure(commands) {
     if (config.binding === 'MQTT') {
-        var topic = '/' + config.apikey + '/' + config.deviceId + '/attrs/' + commands[0];
+        const topic = '/' + config.apikey + '/' + config.deviceId + '/attrs/' + commands[0];
 
         mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
     } else {
-        var httpRequest = {
+        const httpRequest = {
             url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
             method: 'GET',
             qs: {
@@ -128,14 +129,16 @@ function singleMeasure(commands) {
 }
 
 function sendCommandResult(commands) {
-    var topic = '/' + config.apikey + '/' + config.deviceId + '/cmdexe',
-        payload = config.deviceId + '@' + commands[0] + '|' + commands[1];
+    const topic = '/' + config.apikey + '/' + config.deviceId + '/cmdexe';
+    const payload = config.deviceId + '@' + commands[0] + '|' + commands[1];
 
     mqttClient.publish(topic, payload, null, mqttPublishHandler);
 }
 
 function parseMultipleAttributes(attributeString) {
-    var result, attributes, attribute;
+    let result;
+    let attributes;
+    let attribute;
 
     if (!attributeString) {
         result = null;
@@ -143,7 +146,7 @@ function parseMultipleAttributes(attributeString) {
         attributes = attributeString.split(';');
         result = '';
 
-        for (var i = 0; i < attributes.length; i++) {
+        for (let i = 0; i < attributes.length; i++) {
             attribute = attributes[i].split('=');
             result += attribute[0] + '|' + attribute[1];
 
@@ -157,13 +160,13 @@ function parseMultipleAttributes(attributeString) {
 }
 
 function multipleMeasure(commands) {
-    var values = parseMultipleAttributes(commands[0]),
-        topic = '/' + config.apikey + '/' + config.deviceId + '/attrs';
+    const values = parseMultipleAttributes(commands[0]);
+    const topic = '/' + config.apikey + '/' + config.deviceId + '/attrs';
 
     if (config.binding === 'MQTT') {
         mqttClient.publish(topic, values, null, mqttPublishHandler);
     } else {
-        var httpRequest = {
+        const httpRequest = {
             url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
             method: 'GET',
             qs: {
@@ -186,7 +189,7 @@ function connect(commands) {
 }
 
 function selectProtocol(commands) {
-    var allowedProtocols = ['HTTP', 'MQTT'];
+    const allowedProtocols = ['HTTP', 'MQTT'];
 
     if (allowedProtocols.indexOf(commands[0]) >= 0) {
         config.binding = commands[0];
@@ -199,7 +202,7 @@ function exitClient() {
     process.exit(0);
 }
 
-var commands = {
+let commands = {
     config: {
         parameters: ['host', 'port', 'apiKey', 'deviceId', 'httpPath', 'httpPort'],
         description: '\tConfigure the client to emulate the selected device, connecting to the given host.',

@@ -21,15 +21,13 @@
  * please contact with::[iot_support@tid.es]
  */
 
-'use strict';
-
-var ulParser = require('../../lib/ulParser'),
-    should = require('should');
+const ulParser = require('../../lib/ulParser');
+const should = require('should');
 
 describe('Ultralight 2.0 Parser: commands', function() {
     describe('When a command execution with multiple parameters is parsed', function() {
         it('should extract the deviceId, the command name, and the parameters', function() {
-            var result = ulParser.command('weatherStation167@ping|param1=1|param2=2');
+            const result = ulParser.command('weatherStation167@ping|param1=1|param2=2');
 
             should.exist(result);
             (typeof result).should.equal('object');
@@ -44,7 +42,7 @@ describe('Ultralight 2.0 Parser: commands', function() {
     });
     describe('When a command execution with no params and a value is parsed', function() {
         it('should extract the deviceId, the command name, and the plain text of the value', function() {
-            var result = ulParser.command('weatherStation167@ping|theValue');
+            const result = ulParser.command('weatherStation167@ping|theValue');
 
             should.exist(result);
             (typeof result).should.equal('object');
@@ -59,7 +57,7 @@ describe('Ultralight 2.0 Parser: commands', function() {
     describe('When a command result is parsed', function() {
         describe('should extract the deviceId, the command name, and the result', function() {
             it('should extract the deviceId, the command name, and the parameters', function() {
-                var result = ulParser.result('weatherStation167@ping|Ping ok');
+                const result = ulParser.result('weatherStation167@ping|Ping ok');
 
                 should.exist(result);
                 (typeof result).should.equal('object');
