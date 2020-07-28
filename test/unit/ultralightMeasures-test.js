@@ -24,9 +24,9 @@
 const ulParser = require('../../lib/ulParser');
 const should = require('should');
 
-describe('Ultralight 2.0 Parser: measures', function() {
-    describe('When a payload with a single measure is parsed', function() {
-        it('should return an array with a single object with just one attribute', function() {
+describe('Ultralight 2.0 Parser: measures', function () {
+    describe('When a payload with a single measure is parsed', function () {
+        it('should return an array with a single object with just one attribute', function () {
             const result = ulParser.parse('a|1');
 
             should.exist(result);
@@ -37,8 +37,8 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[0].a.should.equal('1');
         });
     });
-    describe('When a payload with a multiple measures is parsed', function() {
-        it('should return an array with a single object with multiple attributes', function() {
+    describe('When a payload with a multiple measures is parsed', function () {
+        it('should return an array with a single object with multiple attributes', function () {
             const result = ulParser.parse('c|7|b|18');
 
             should.exist(result);
@@ -51,10 +51,10 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[0].b.should.equal('18');
         });
     });
-    describe('When a payload with timestamp information is parsed', function() {
+    describe('When a payload with timestamp information is parsed', function () {
         /* jshint sub:true */
 
-        it('should add a TimeInstant attribute to the array with the value', function() {
+        it('should add a TimeInstant attribute to the array with the value', function () {
             const result = ulParser.parse('2016-06-13T00:35:30Z|lle|100');
 
             should.exist(result);
@@ -67,8 +67,8 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[0].lle.should.equal('100');
         });
     });
-    describe('When a payload with an initial bar and multiple measures is parsed', function() {
-        it('should return an array with a single object with multiple attributes', function() {
+    describe('When a payload with an initial bar and multiple measures is parsed', function () {
+        it('should return an array with a single object with multiple attributes', function () {
             const result = ulParser.parse('|c|7|b|18');
 
             should.exist(result);
@@ -82,8 +82,8 @@ describe('Ultralight 2.0 Parser: measures', function() {
         });
     });
 
-    describe('When a payload with two groups of measures and one measure in each group is parsed', function() {
-        it('should return an array with two objects with just one attribute', function() {
+    describe('When a payload with two groups of measures and one measure in each group is parsed', function () {
+        it('should return an array with two objects with just one attribute', function () {
             const result = ulParser.parse('c|7#b|18');
 
             should.exist(result);
@@ -97,15 +97,15 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[1].b.should.equal('18');
         });
     });
-    describe('When a payload with multiple groups and measures is parsed', function() {
-        it('should return an array with the parsed groups and objects', function() {
+    describe('When a payload with multiple groups and measures is parsed', function () {
+        it('should return an array with the parsed groups and objects', function () {
             const result = ulParser.parse('bat|75.0#tmp|16.25#ill|0.0#pos|43.46321/-3.80446');
 
             should.exist(result);
         });
     });
-    describe('When a payload with command results is parsed', function() {
-        it('should return an array with the parsed groups and the command', function() {
+    describe('When a payload with command results is parsed', function () {
+        it('should return an array with the parsed groups and the command', function () {
             const result = ulParser.parse('MQTT_2@ping|MADE_OK');
 
             should.exist(result);
@@ -115,8 +115,8 @@ describe('Ultralight 2.0 Parser: measures', function() {
             result[0].value.should.equal('MADE_OK');
         });
     });
-    describe('When a payload with an empty measure is found: "a|10||"', function() {
-        it('should throw a PARSE_ERROR error', function() {
+    describe('When a payload with an empty measure is found: "a|10||"', function () {
+        it('should throw a PARSE_ERROR error', function () {
             let result;
             let error;
 
@@ -131,8 +131,8 @@ describe('Ultralight 2.0 Parser: measures', function() {
             error.name.should.equal('PARSE_ERROR');
         });
     });
-    describe('When a payload with an empty measure group is found: "a|10|b|11##t|3"', function() {
-        it('should throw a PARSE_ERROR error', function() {
+    describe('When a payload with an empty measure group is found: "a|10|b|11##t|3"', function () {
+        it('should throw a PARSE_ERROR error', function () {
             let result;
             let error;
 
@@ -147,8 +147,8 @@ describe('Ultralight 2.0 Parser: measures', function() {
             error.name.should.equal('PARSE_ERROR');
         });
     });
-    describe('When an empty payload is parsed', function() {
-        it('should throw a PARSE_ERROR error', function() {
+    describe('When an empty payload is parsed', function () {
+        it('should throw a PARSE_ERROR error', function () {
             let result;
             let error;
 

@@ -40,23 +40,20 @@ let amqpConn;
 let channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect(
-        'amqp://localhost',
-        function(err, conn) {
-            amqpConn = conn;
+    amqp.connect('amqp://localhost', function (err, conn) {
+        amqpConn = conn;
 
-            conn.createChannel(function(err, ch) {
-                ch.assertExchange(exchange, 'topic', {});
+        conn.createChannel(function (err, ch) {
+            ch.assertExchange(exchange, 'topic', {});
 
-                channel = ch;
-                callback(err);
-            });
-        }
-    );
+            channel = ch;
+            callback(err);
+        });
+    });
 }
 
-describe('AMQP Transport binding: commands', function() {
-    beforeEach(function(done) {
+describe('AMQP Transport binding: commands', function () {
+    beforeEach(function (done) {
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -96,7 +93,7 @@ describe('AMQP Transport binding: commands', function() {
         );
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         nock.cleanAll();
 
         amqpConn.close();
@@ -106,7 +103,7 @@ describe('AMQP Transport binding: commands', function() {
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe('When a command arrive to the Agent for a device with the AMQP protocol', function() {
+    describe('When a command arrive to the Agent for a device with the AMQP protocol', function () {
         const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
@@ -117,7 +114,7 @@ describe('AMQP Transport binding: commands', function() {
             }
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -125,44 +122,44 @@ describe('AMQP Transport binding: commands', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
         });
 
-        it('should return a 200 OK without errors', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should return a 200 OK without errors', function (done) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should reply with the appropriate command information', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should reply with the appropriate command information', function (done) {
+            request(commandOptions, function (error, response, body) {
                 should.exist(body);
                 done();
             });
         });
-        it('should update the status in the Context Broker', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should update the status in the Context Broker', function (done) {
+            request(commandOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
-        it('should publish the command information in the AMQP topic', function(done) {
+        it('should publish the command information in the AMQP topic', function (done) {
             const commandMsg = 'MQTT_2@PING|data=22';
             let payload;
 
             channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
 
-            channel.assertQueue('client-queue', { exclusive: false }, function(err, q) {
+            channel.assertQueue('client-queue', { exclusive: false }, function (err, q) {
                 channel.bindQueue(q.queue, config.amqp.exchange, '.' + config.defaultKey + '.MQTT_2.cmd');
 
                 channel.consume(
                     q.queue,
-                    function(msg) {
+                    function (msg) {
                         payload = msg.content.toString();
                     },
                     { noAck: true }
                 );
 
-                request(commandOptions, function(error, response, body) {
-                    setTimeout(function() {
+                request(commandOptions, function (error, response, body) {
+                    setTimeout(function () {
                         should.exist(payload);
                         payload.should.equal(commandMsg);
                         done();
@@ -172,8 +169,8 @@ describe('AMQP Transport binding: commands', function() {
         });
     });
 
-    describe('When a command update arrives to the AMQP command topic', function() {
-        beforeEach(function() {
+    describe('When a command update arrives to the AMQP command topic', function () {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -181,18 +178,18 @@ describe('AMQP Transport binding: commands', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
         });
 
-        it('should send an update request to the Context Broker', function(done) {
+        it('should send an update request to the Context Broker', function (done) {
             channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
             channel.publish(config.amqp.exchange, '.1234.MQTT_2.cmdexe', new Buffer('MQTT_2@PING|1234567890'));
 
-            setTimeout(function() {
+            setTimeout(function () {
                 contextBrokerMock.done();
                 done();
             }, 200);
         });
     });
 
-    describe('When a command update arrives with a single text value', function() {
+    describe('When a command update arrives with a single text value', function () {
         const provisionOptionsAlt = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -221,7 +218,7 @@ describe('AMQP Transport binding: commands', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             nock.cleanAll();
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
@@ -242,32 +239,32 @@ describe('AMQP Transport binding: commands', function() {
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus3.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
 
-            request(configurationOptions, function(error, response, body) {
-                request(provisionOptionsAlt, function(error, response, body) {
+            request(configurationOptions, function (error, response, body) {
+                request(provisionOptionsAlt, function (error, response, body) {
                     done();
                 });
             });
         });
 
-        it('should publish the command information in the AMQP topic', function(done) {
+        it('should publish the command information in the AMQP topic', function (done) {
             const commandMsg = 'MQTT_4@PING|22';
             let payload;
 
             channel.assertExchange(config.amqp.exchange, 'topic', config.amqp.options);
 
-            channel.assertQueue('client-queue', { exclusive: false }, function(err, q) {
+            channel.assertQueue('client-queue', { exclusive: false }, function (err, q) {
                 channel.bindQueue(q.queue, config.amqp.exchange, '.ALTERNATIVE.MQTT_4.cmd');
 
                 channel.consume(
                     q.queue,
-                    function(msg) {
+                    function (msg) {
                         payload = msg.content.toString();
                     },
                     { noAck: true }
                 );
 
-                request(commandOptions, function(error, response, body) {
-                    setTimeout(function() {
+                request(commandOptions, function (error, response, body) {
+                    setTimeout(function () {
                         should.exist(payload);
                         payload.should.equal(commandMsg);
                         done();

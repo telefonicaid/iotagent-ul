@@ -36,8 +36,8 @@ let contextBrokerMock;
 let oldConfigurationFlag;
 let mqttClient;
 
-describe('MQTT Transport binding: configurations', function() {
-    beforeEach(function(done) {
+describe('MQTT Transport binding: configurations', function () {
+    beforeEach(function (done) {
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -52,13 +52,10 @@ describe('MQTT Transport binding: configurations', function() {
 
         nock.cleanAll();
 
-        mqttClient = mqtt.connect(
-            'mqtt://' + config.mqtt.host,
-            {
-                keepalive: 0,
-                connectTimeout: 60 * 60 * 1000
-            }
-        );
+        mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
+            keepalive: 0,
+            connectTimeout: 60 * 60 * 1000
+        });
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
@@ -69,14 +66,14 @@ describe('MQTT Transport binding: configurations', function() {
         oldConfigurationFlag = config.configRetrieval;
         config.configRetrieval = true;
 
-        iotagentMqtt.start(config, function() {
-            request(provisionOptions, function(error, response, body) {
+        iotagentMqtt.start(config, function () {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         config.configRetrieval = oldConfigurationFlag;
 
         nock.cleanAll();
@@ -85,11 +82,11 @@ describe('MQTT Transport binding: configurations', function() {
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe('When a configuration request is received in the topic "/{{apikey}}/{{deviceid}}/configuration/commands"', function() {
+    describe('When a configuration request is received in the topic "/{{apikey}}/{{deviceid}}/configuration/commands"', function () {
         const values = 'configuration|pollingInterval|publishInterval';
         let configurationReceived;
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -101,23 +98,23 @@ describe('MQTT Transport binding: configurations', function() {
             configurationReceived = false;
         });
 
-        afterEach(function(done) {
+        afterEach(function (done) {
             mqttClient.unsubscribe('/1234/MQTT_device_1/configuration/values', null);
 
             done();
         });
 
-        it('should ask the Context Broker for the request attributes', function(done) {
-            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                setTimeout(function() {
+        it('should ask the Context Broker for the request attributes', function (done) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
+                setTimeout(function () {
                     contextBrokerMock.done();
                     done();
                 }, 100);
             });
         });
 
-        it('should return the requested attributes to the client in /1234/MQTT_device_1/configuration/values', function(done) {
-            mqttClient.on('message', function(topic, data) {
+        it('should return the requested attributes to the client in /1234/MQTT_device_1/configuration/values', function (done) {
+            mqttClient.on('message', function (topic, data) {
                 const result = utils.parseConfigurationResponse(data.toString());
 
                 configurationReceived =
@@ -127,23 +124,23 @@ describe('MQTT Transport binding: configurations', function() {
                     result.publishInterval === '80';
             });
 
-            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                setTimeout(function() {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
+                setTimeout(function () {
                     configurationReceived.should.equal(true);
                     done();
                 }, 100);
             });
         });
 
-        it('should add the system timestamp in compressed format to the request', function(done) {
-            mqttClient.on('message', function(topic, data) {
+        it('should add the system timestamp in compressed format to the request', function (done) {
+            mqttClient.on('message', function (topic, data) {
                 const result = utils.parseConfigurationResponse(data.toString());
 
                 configurationReceived = result.dt && result.dt.should.match(/^\d{8}T\d{6}Z$/);
             });
 
-            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                setTimeout(function() {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
+                setTimeout(function () {
                     should.exist(configurationReceived);
                     done();
                 }, 100);
@@ -151,11 +148,11 @@ describe('MQTT Transport binding: configurations', function() {
         });
     });
 
-    describe('When a subscription request is received in the IoT Agent', function() {
+    describe('When a subscription request is received in the IoT Agent', function () {
         const values = 'subscription|pollingInterval|publishInterval';
         let configurationReceived;
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -170,22 +167,22 @@ describe('MQTT Transport binding: configurations', function() {
             configurationReceived = false;
         });
 
-        afterEach(function(done) {
+        afterEach(function (done) {
             mqttClient.unsubscribe('/1234/MQTT_device_1/configuration/values', null);
 
             done();
         });
 
-        it('should create a subscription in the ContextBroker', function(done) {
-            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                setTimeout(function() {
+        it('should create a subscription in the ContextBroker', function (done) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
+                setTimeout(function () {
                     contextBrokerMock.done();
                     done();
                 }, 100);
             });
         });
 
-        it('should update the values in the MQTT topic when a notification is received', function(done) {
+        it('should update the values in the MQTT topic when a notification is received', function (done) {
             const optionsNotify = {
                 url: 'http://localhost:' + config.iota.server.port + '/notify',
                 method: 'POST',
@@ -196,16 +193,16 @@ describe('MQTT Transport binding: configurations', function() {
                 }
             };
 
-            mqttClient.on('message', function(topic, data) {
+            mqttClient.on('message', function (topic, data) {
                 const result = utils.parseConfigurationResponse(data.toString());
 
                 configurationReceived = result.pollingInterval === '60' && result.publishInterval === '600';
             });
 
-            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                setTimeout(function() {
-                    request(optionsNotify, function(error, response, body) {
-                        setTimeout(function() {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
+                setTimeout(function () {
+                    request(optionsNotify, function (error, response, body) {
+                        setTimeout(function () {
                             configurationReceived.should.equal(true);
                             done();
                         }, 100);
@@ -215,12 +212,12 @@ describe('MQTT Transport binding: configurations', function() {
         });
     });
 
-    describe('When a configuration request type is other than "configuration" or "subscription"', function() {
+    describe('When a configuration request type is other than "configuration" or "subscription"', function () {
         const values = 'notallowedtype|pollingInterval|publishInterval';
 
-        it('should silently ignore the error (without crashing)', function(done) {
-            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function(error) {
-                setTimeout(function() {
+        it('should silently ignore the error (without crashing)', function (done) {
+            mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
+                setTimeout(function () {
                     done();
                 }, 100);
             });

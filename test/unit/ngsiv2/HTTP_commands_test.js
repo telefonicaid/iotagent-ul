@@ -37,8 +37,8 @@ const utils = require('../../utils');
 let mockedClientServer;
 let contextBrokerMock;
 
-describe('HTTP: Commands', function() {
-    beforeEach(function(done) {
+describe('HTTP: Commands', function () {
+    beforeEach(function (done) {
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -65,19 +65,19 @@ describe('HTTP: Commands', function() {
             .post('/v2/entities?options=upsert')
             .reply(204);
 
-        iotagentMqtt.start(config, function() {
-            request(provisionOptions, function(error, response, body) {
+        iotagentMqtt.start(config, function () {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         nock.cleanAll();
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe('When a command arrive to the Agent for a device with the HTTP protocol', function() {
+    describe('When a command arrive to the Agent for a device with the HTTP protocol', function () {
         const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
             method: 'POST',
@@ -88,7 +88,7 @@ describe('HTTP: Commands', function() {
             }
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -108,30 +108,30 @@ describe('HTTP: Commands', function() {
                 .reply(204);
 
             mockedClientServer = nock('http://localhost:9876')
-                .post('/command', function(body) {
+                .post('/command', function (body) {
                     return body === 'MQTT_2@PING|data=22';
                 })
                 .reply(200, 'MQTT_2@PING|data=22');
         });
 
-        it('should return a 204 OK without errors', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should return a 204 OK without errors', function (done) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
             });
         });
-        it('should update the status in the Context Broker', function(done) {
-            request(commandOptions, function(error, response, body) {
-                setTimeout(function() {
+        it('should update the status in the Context Broker', function (done) {
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
                     contextBrokerMock.done();
                     done();
                 }, 100);
             });
         });
-        it('should publish the command information in the MQTT topic', function(done) {
-            request(commandOptions, function(error, response, body) {
-                setTimeout(function() {
+        it('should publish the command information in the MQTT topic', function (done) {
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
                     mockedClientServer.done();
                     done();
                 }, 100);

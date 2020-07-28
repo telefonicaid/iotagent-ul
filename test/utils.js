@@ -37,7 +37,7 @@ function readExampleFile(name, raw) {
 }
 
 function delay(ms) {
-    return function(callback) {
+    return function (callback) {
         setTimeout(callback, ms);
     };
 }
@@ -51,7 +51,7 @@ function parseConfigurationResponse(payload) {
     _result.device = _device[0];
     _result.type = _fields[0];
 
-    _attributes.forEach(function(item, index) {
+    _attributes.forEach(function (item, index) {
         const _attribute = item.split('=');
         _result[_attribute[0]] = _attribute[1];
     });

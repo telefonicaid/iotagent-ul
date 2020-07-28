@@ -36,8 +36,8 @@ let contextBrokerMock;
 let contextBrokerUnprovMock;
 let iotamMock;
 
-describe('HTTP Transport binding: measures', function() {
-    beforeEach(function(done) {
+describe('HTTP Transport binding: measures', function () {
+    beforeEach(function (done) {
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -50,9 +50,7 @@ describe('HTTP Transport binding: measures', function() {
 
         nock.cleanAll();
 
-        iotamMock = nock('http://localhost:8082')
-            .post('/protocols')
-            .reply(200, {});
+        iotamMock = nock('http://localhost:8082').post('/protocols').reply(200, {});
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartGondor')
@@ -68,14 +66,14 @@ describe('HTTP Transport binding: measures', function() {
             description: 'MQTT Ultralight 2.0 IoT Agent (Node.js version)'
         };
 
-        iotagentUl.start(config, function() {
-            request(provisionOptions, function(error, response, body) {
+        iotagentUl.start(config, function () {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         nock.cleanAll();
 
         delete config.iota.iotManager;
@@ -83,7 +81,7 @@ describe('HTTP Transport binding: measures', function() {
         async.series([iotAgentLib.clearAll, iotagentUl.stop], done);
     });
 
-    describe('When a new single measure arrives for a Device, via HTTP GET', function() {
+    describe('When a new single measure arrives for a Device, via HTTP GET', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -94,7 +92,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -102,22 +100,22 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a new update context request to the Context Broker with just that attribute', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
 
-    describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function() {
+    describe('When a new measure arrives for an unprovisioned Device, via HTTP GET', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -137,7 +135,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             contextBrokerUnprovMock = nock('http://unexistentHost:1026')
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
@@ -150,25 +148,25 @@ describe('HTTP Transport binding: measures', function() {
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/unprovisionedMeasure.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedSuccess.json'));
 
-            request(groupCreation, function(error, response, body) {
+            request(groupCreation, function (error, response, body) {
                 done();
             });
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a new update context request to the Context Broker with just that attribute', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerUnprovMock.done();
                 done();
             });
         });
-        it('should add a protocol to the registered devices', function(done) {
+        it('should add a protocol to the registered devices', function (done) {
             const getDeviceOptions = {
                 url: 'http://localhost:4061/iot/devices/MQTT_UNPROVISIONED',
                 method: 'GET',
@@ -178,8 +176,8 @@ describe('HTTP Transport binding: measures', function() {
                 }
             };
 
-            request(getOptions, function(error, response, body) {
-                request(getDeviceOptions, function(error, response, body) {
+            request(getOptions, function (error, response, body) {
+                request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
 
                     const parsedBody = JSON.parse(body);
@@ -191,7 +189,7 @@ describe('HTTP Transport binding: measures', function() {
                 });
             });
         });
-        it('should add a transport to the registered devices', function(done) {
+        it('should add a transport to the registered devices', function (done) {
             const getDeviceOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices/MQTT_UNPROVISIONED',
                 method: 'GET',
@@ -201,8 +199,8 @@ describe('HTTP Transport binding: measures', function() {
                 }
             };
 
-            request(getOptions, function(error, response, body) {
-                request(getDeviceOptions, function(error, response, body) {
+            request(getOptions, function (error, response, body) {
+                request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
 
                     const parsedBody = JSON.parse(body);
@@ -216,7 +214,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When a measure with timestamp arrives for a Device, via HTTP GET', function() {
+    describe('When a measure with timestamp arrives for a Device, via HTTP GET', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -228,7 +226,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -236,22 +234,22 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a new update context request to the Context Broker with just that attribute', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
 
-    describe('When multiple mesasures arrive for a device via HTTP GET', function() {
+    describe('When multiple mesasures arrive for a device via HTTP GET', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -262,7 +260,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -270,21 +268,21 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a new update context request to the Context Broker with those attributes', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a new update context request to the Context Broker with those attributes', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
-    describe('When a new single measure arrives for a Device, via HTTP POST', function() {
+    describe('When a new single measure arrives for a Device, via HTTP POST', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -298,7 +296,7 @@ describe('HTTP Transport binding: measures', function() {
             body: 'a|23'
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -306,21 +304,21 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/singleMeasureSuccess.json'));
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a new update context request to the Context Broker with just that attribute', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
-    describe('When multiple groups of measures arrive, via HTTP POST', function() {
+    describe('When multiple groups of measures arrive, via HTTP POST', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -334,7 +332,7 @@ describe('HTTP Transport binding: measures', function() {
             body: 'a|23#b|98'
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -348,21 +346,21 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/secondSingleMeasureSuccess.json'));
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
-    describe('When multiple groups of measures arrive, with multiple attributes, via HTTP POST', function() {
+    describe('When multiple groups of measures arrive, with multiple attributes, via HTTP POST', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -376,7 +374,7 @@ describe('HTTP Transport binding: measures', function() {
             body: 'a|23|b|98#a|16|b|34'
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -390,22 +388,22 @@ describe('HTTP Transport binding: measures', function() {
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
-        it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
 
-    describe('When a request arrives to the IoT Agent without Content-type header', function() {
+    describe('When a request arrives to the IoT Agent without Content-type header', function () {
         const postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -426,7 +424,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             nock.cleanAll();
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
@@ -437,13 +435,13 @@ describe('HTTP Transport binding: measures', function() {
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'));
 
-            request(provisionOptions, function(error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
 
-        it('should end up with a 200OK status code', function(done) {
-            request(postOptions, function(error, response, body) {
+        it('should end up with a 200OK status code', function (done) {
+            request(postOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
 
@@ -452,7 +450,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When a measure arrives to the IoTA for a device belonging to a configuration', function() {
+    describe('When a measure arrives to the IoTA for a device belonging to a configuration', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -472,7 +470,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -482,20 +480,20 @@ describe('HTTP Transport binding: measures', function() {
                 )
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
-            request(groupCreation, function(error, response, body) {
+            request(groupCreation, function (error, response, body) {
                 done();
             });
         });
 
-        it('should use the configuration values for the attributes alias not included in the device', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should use the configuration values for the attributes alias not included in the device', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
 
-    describe('When there is a conflict between configuration and devices', function() {
+    describe('When there is a conflict between configuration and devices', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
@@ -524,7 +522,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -540,22 +538,22 @@ describe('HTTP Transport binding: measures', function() {
                 )
                 .reply(200, utils.readExampleFile('./test/contextResponses/unprovisionedAliasSuccess.json'));
 
-            request(groupCreation, function(error, response, body) {
-                request(deviceCreation, function(error, response, body) {
+            request(groupCreation, function (error, response, body) {
+                request(deviceCreation, function (error, response, body) {
                     done();
                 });
             });
         });
 
-        it('should use the device preference', function(done) {
-            request(getOptions, function(error, response, body) {
+        it('should use the device preference', function (done) {
+            request(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
 
-    describe('When a real production request arrives to the IoTA', function() {
+    describe('When a real production request arrives to the IoTA', function () {
         const postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -581,7 +579,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -590,7 +588,7 @@ describe('HTTP Transport binding: measures', function() {
                 .post('/v1/updateContext')
                 .times(12)
                 .reply(200, utils.readExampleFile('./test/contextResponses/multipleMeasuresSuccess.json'))
-                .post('/v1/updateContext', function(body) {
+                .post('/v1/updateContext', function (body) {
                     let metadatas = 0;
 
                     for (let i = 0; i < body.contextElements[0].attributes.length; i++) {
@@ -604,33 +602,31 @@ describe('HTTP Transport binding: measures', function() {
 
             config.iota.timestamp = true;
 
-            nock('http://localhost:8082')
-                .post('/protocols')
-                .reply(200, {});
+            nock('http://localhost:8082').post('/protocols').reply(200, {});
 
-            iotagentUl.stop(function() {
-                iotagentUl.start(config, function(error) {
-                    request(provisionProduction, function(error, response, body) {
+            iotagentUl.stop(function () {
+                iotagentUl.start(config, function (error) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             config.iota.timestamp = false;
         });
 
-        it('should end up with a 200 OK status code', function(done) {
-            request(postOptions, function(error, response, body) {
+        it('should end up with a 200 OK status code', function (done) {
+            request(postOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
 
-        it('should send all the requests to the CB', function(done) {
-            request(postOptions, function(error, response, body) {
+        it('should send all the requests to the CB', function (done) {
+            request(postOptions, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();
@@ -638,7 +634,7 @@ describe('HTTP Transport binding: measures', function() {
         });
     });
 
-    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function() {
+    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function () {
         const timeInstantRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -661,7 +657,7 @@ describe('HTTP Transport binding: measures', function() {
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -672,25 +668,23 @@ describe('HTTP Transport binding: measures', function() {
 
             config.iota.timestamp = true;
 
-            nock('http://localhost:8082')
-                .post('/protocols')
-                .reply(200, {});
+            nock('http://localhost:8082').post('/protocols').reply(200, {});
 
-            iotagentUl.stop(function() {
-                iotagentUl.start(config, function(error) {
-                    request(provisionProduction, function(error, response, body) {
+            iotagentUl.stop(function () {
+                iotagentUl.start(config, function (error) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
             });
         });
 
-        afterEach(function() {
+        afterEach(function () {
             config.iota.timestamp = false;
         });
 
-        it('should use the provided TimeInstant as the general timestamp for the measures', function(done) {
-            request(timeInstantRequest, function(error, response, body) {
+        it('should use the provided TimeInstant as the general timestamp for the measures', function (done) {
+            request(timeInstantRequest, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();
