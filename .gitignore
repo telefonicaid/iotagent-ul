@@ -7,7 +7,6 @@
 /report/
 /.c9revisions/
 /.settings/
-/.nyc_output/
 
 .settings
 .classpath
