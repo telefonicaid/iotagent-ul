@@ -24,9 +24,9 @@
 const ulParser = require('../../lib/ulParser');
 const should = require('should');
 
-describe('Ultralight 2.0 Parser: commands', function () {
-    describe('When a command execution with multiple parameters is parsed', function () {
-        it('should extract the deviceId, the command name, and the parameters', function () {
+describe('Ultralight 2.0 Parser: commands', function() {
+    describe('When a command execution with multiple parameters is parsed', function() {
+        it('should extract the deviceId, the command name, and the parameters', function() {
             const result = ulParser.command('weatherStation167@ping|param1=1|param2=2');
 
             should.exist(result);
@@ -40,8 +40,8 @@ describe('Ultralight 2.0 Parser: commands', function () {
             result.params.param2.should.equal('2');
         });
     });
-    describe('When a command execution with no params and a value is parsed', function () {
-        it('should extract the deviceId, the command name, and the plain text of the value', function () {
+    describe('When a command execution with no params and a value is parsed', function() {
+        it('should extract the deviceId, the command name, and the plain text of the value', function() {
             const result = ulParser.command('weatherStation167@ping|theValue');
 
             should.exist(result);
@@ -54,9 +54,9 @@ describe('Ultralight 2.0 Parser: commands', function () {
             result.value.should.equal('theValue');
         });
     });
-    describe('When a command result is parsed', function () {
-        describe('should extract the deviceId, the command name, and the result', function () {
-            it('should extract the deviceId, the command name, and the parameters', function () {
+    describe('When a command result is parsed', function() {
+        describe('should extract the deviceId, the command name, and the result', function() {
+            it('should extract the deviceId, the command name, and the parameters', function() {
                 const result = ulParser.result('weatherStation167@ping|Ping ok');
 
                 should.exist(result);

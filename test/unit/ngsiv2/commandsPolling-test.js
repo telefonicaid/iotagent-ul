@@ -36,7 +36,7 @@ const utils = require('../../utils');
 let mockedClientServer;
 let contextBrokerMock;
 
-describe('HTTP Transport binding: polling commands', function () {
+describe('HTTP Transport binding: polling commands', function() {
     const commandOptions = {
         url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
         method: 'POST',
@@ -47,7 +47,7 @@ describe('HTTP Transport binding: polling commands', function () {
         }
     };
 
-    beforeEach(function (done) {
+    beforeEach(function(done) {
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -82,33 +82,33 @@ describe('HTTP Transport binding: polling commands', function () {
             .post('/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice')
             .reply(204);
 
-        iotagentUl.start(config, function (error) {
-            request(provisionOptions, function (error, response, body) {
+        iotagentUl.start(config, function(error) {
+            request(provisionOptions, function(error, response, body) {
                 done();
             });
         });
     });
 
-    afterEach(function (done) {
+    afterEach(function(done) {
         nock.cleanAll();
 
-        iotAgentLib.clearAll(function () {
+        iotAgentLib.clearAll(function() {
             iotagentUl.stop(done);
         });
     });
 
-    describe('When a command arrives to the IoTA with HTTP transport and no endpoint', function () {
-        it('should return a 204 OK without errors', function (done) {
-            request(commandOptions, function (error, response, body) {
+    describe('When a command arrives to the IoTA with HTTP transport and no endpoint', function() {
+        it('should return a 204 OK without errors', function(done) {
+            request(commandOptions, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
             });
         });
 
-        it('should be stored in the commands collection', function (done) {
-            request(commandOptions, function (error, response, body) {
-                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function (error, list) {
+        it('should be stored in the commands collection', function(done) {
+            request(commandOptions, function(error, response, body) {
+                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function(error, list) {
                     should.not.exist(error);
                     list.count.should.equal(1);
                     list.commands[0].name.should.equal('PING');
@@ -118,7 +118,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
     });
 
-    describe('When a device asks for the pending commands', function () {
+    describe('When a device asks for the pending commands', function() {
         const deviceRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -130,7 +130,7 @@ describe('HTTP Transport binding: polling commands', function () {
             }
         };
 
-        beforeEach(function (done) {
+        beforeEach(function(done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -152,8 +152,8 @@ describe('HTTP Transport binding: polling commands', function () {
             request(commandOptions, done);
         });
 
-        it('should return a list of the pending commands', function (done) {
-            request(deviceRequest, function (error, response, body) {
+        it('should return a list of the pending commands', function(done) {
+            request(deviceRequest, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 should.exist(body);
@@ -162,18 +162,18 @@ describe('HTTP Transport binding: polling commands', function () {
             });
         });
 
-        it('should be marked as delivered in the Context Broker', function (done) {
-            request(deviceRequest, function (error, response, body) {
-                setTimeout(function () {
+        it('should be marked as delivered in the Context Broker', function(done) {
+            request(deviceRequest, function(error, response, body) {
+                setTimeout(function() {
                     contextBrokerMock.done();
                     done();
                 }, 50);
             });
         });
 
-        it('should remove them from the IoTAgent', function (done) {
-            request(deviceRequest, function (error, response, body) {
-                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function (error, list) {
+        it('should remove them from the IoTAgent', function(done) {
+            request(deviceRequest, function(error, response, body) {
+                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function(error, list) {
                     should.not.exist(error);
                     list.count.should.equal(0);
                     done();
@@ -182,7 +182,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
     });
 
-    describe('When a device asks for the pending commands without body', function () {
+    describe('When a device asks for the pending commands without body', function() {
         const deviceRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -205,7 +205,7 @@ describe('HTTP Transport binding: polling commands', function () {
             }
         };
 
-        beforeEach(function (done) {
+        beforeEach(function(done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -227,8 +227,8 @@ describe('HTTP Transport binding: polling commands', function () {
             request(commandOptions, done);
         });
 
-        it('should return a list of the pending commands', function (done) {
-            request(deviceRequestWithoutPayload, function (error, response, body) {
+        it('should return a list of the pending commands', function(done) {
+            request(deviceRequestWithoutPayload, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 body.should.equal('MQTT_2@PING|data=22');
@@ -236,18 +236,18 @@ describe('HTTP Transport binding: polling commands', function () {
             });
         });
 
-        it('should be marked as delivered in the Context Broker', function (done) {
-            request(deviceRequest, function (error, response, body) {
-                setTimeout(function () {
+        it('should be marked as delivered in the Context Broker', function(done) {
+            request(deviceRequest, function(error, response, body) {
+                setTimeout(function() {
                     contextBrokerMock.done();
                     done();
                 }, 50);
             });
         });
 
-        it('should remove them from the IoTAgent', function (done) {
-            request(deviceRequest, function (error, response, body) {
-                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function (error, list) {
+        it('should remove them from the IoTAgent', function(done) {
+            request(deviceRequest, function(error, response, body) {
+                iotAgentLib.commandQueue('smartGondor', '/gardens', 'MQTT_2', function(error, list) {
                     should.not.exist(error);
                     list.count.should.equal(0);
                     done();
@@ -256,11 +256,11 @@ describe('HTTP Transport binding: polling commands', function () {
         });
     });
 
-    describe('When a device asks for the list of commands and there is more than one command', function () {
+    describe('When a device asks for the list of commands and there is more than one command', function() {
         it('should retrieve the list sepparated by the "#" character');
     });
 
-    describe('When a device sends the result for a pending command', function () {
+    describe('When a device sends the result for a pending command', function() {
         const commandResponse = {
             uri: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
@@ -271,7 +271,7 @@ describe('HTTP Transport binding: polling commands', function () {
             }
         };
 
-        beforeEach(function (done) {
+        beforeEach(function(done) {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
                 .matchHeader('fiware-servicepath', '/gardens')
@@ -284,19 +284,19 @@ describe('HTTP Transport binding: polling commands', function () {
             request(commandOptions, done);
         });
 
-        it('should update the entity in the Context Broker with the OK status and the result', function (done) {
-            request(commandResponse, function (error, response, body) {
+        it('should update the entity in the Context Broker with the OK status and the result', function(done) {
+            request(commandResponse, function(error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
     });
 
-    describe('When the device sends the result for multiple pending commands', function () {
+    describe('When the device sends the result for multiple pending commands', function() {
         it('should make all the updates in the Context Broker');
     });
 
-    describe('When a device sends measures and command responses mixed in a message', function () {
+    describe('When a device sends measures and command responses mixed in a message', function() {
         it('should send both the command updates and the measures to the Context Broker');
     });
 });

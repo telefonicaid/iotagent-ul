@@ -99,7 +99,7 @@ function httpPublishHandler(error, response, body) {
 }
 
 function checkConnection(fn) {
-    return function (commands) {
+    return function(commands) {
         if (mqttClient || config.binding === 'HTTP') {
             fn(commands);
         } else {
