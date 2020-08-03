@@ -28,6 +28,8 @@ ARG GITHUB_REPOSITORY=iotagent-ul
 ARG DOWNLOAD=latest
 ARG SOURCE_BRANCH=master
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
 # variables defined below, by adding _FILE to the name of the relevant variable.
 #
@@ -79,10 +81,11 @@ RUN apt-get update && \
 
 WORKDIR /opt/iotaul
 
+# hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
 	apt-get update && \
-	apt-get install -y git && \
+	apt-get install -y --no-install-recommends git && \
 	npm install pm2@3.2.2 -g && \
 	echo "INFO: npm install --production..." && \
 	npm install --production && \
