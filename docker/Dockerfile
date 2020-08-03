@@ -19,22 +19,14 @@
 # For those usages not covered by the GNU Affero General Public License
 # please contact with: [daniel.moranjimenez@telefonica.com]
 
-ARG NODE_VERSION=10.19.0-slim
-FROM node:${NODE_VERSION}
+ARG  NODE_VERSION=10
+
+FROM node:${NODE_VERSION} AS build-env
+
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=iotagent-ul
 ARG DOWNLOAD=latest
 ARG SOURCE_BRANCH=master
-
-# Copying Build time arguments to environment variables so they are persisted at run time and can be 
-# inspected within a running container.
-# see: https://vsupalov.com/docker-build-time-env-values/  for a deeper explanation.
-
-ENV GITHUB_ACCOUNT=${GITHUB_ACCOUNT}
-ENV GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
-ENV DOWNLOAD=${DOWNLOAD}
-
-MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 
 # IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
 # variables defined below, by adding _FILE to the name of the relevant variable.
@@ -57,6 +49,8 @@ MAINTAINER FIWARE IoTAgent Team. Telefónica I+D
 #
 # COPY . /opt/iotaul/
 #
+
+# hadolint ignore=DL3008
 RUN apt-get update && \
 	# Ensure that unzip, wget and curl are installed
 	apt-get install -y --no-install-recommends unzip ca-certificates curl wget && \
@@ -73,7 +67,7 @@ RUN apt-get update && \
 	 	echo "INFO: Building Release: ${RELEASE}"; \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
-	wget --no-check-certificate -O source.zip https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip && \
+	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
 	unzip source.zip && \
 	rm source.zip && \
 	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul && \
@@ -98,11 +92,52 @@ RUN \
 	apt-get -y autoremove && \
 	chmod +x docker/entrypoint.sh
 
+# Create an anonymous user
+RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
+    && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 USER node
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
 
 ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["-- ", "config.js"]
+
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
+   CMD npm run healthcheck
+
+#
+# The following creates a distroless build for production.
+#
+
+FROM gcr.io/distroless/nodejs:${NODE_VERSION}
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG NODE_VERSION
+
+LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="IoT Agent for the Ultralight 2.0 protocol"
+LABEL "org.opencontainers.image.description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "org.opencontainers.image.source"=https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}
+LABEL "org.nodejs.version"=${NODE_VERSION}
+
+COPY --from=build-env /opt/iotaul /opt/iotaul
+USER nobody
+ENV NODE_ENV=production
+
+WORKDIR /opt/iotaul
+
+# Ports used by application
+EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
+# Start the application
+CMD ["./bin/iotagent-ul", "-- ", "config.js"]
+
+HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
+  CMD ["/nodejs/bin/node", "./bin/healthcheck"]
+
