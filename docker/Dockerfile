@@ -54,8 +54,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
 RUN apt-get update && \
-	# Ensure that unzip, wget and curl are installed
-	apt-get install -y --no-install-recommends unzip ca-certificates curl wget && \
+	# Ensure that unzip and curl are installed
+	apt-get install -y --no-install-recommends unzip ca-certificates curl && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
@@ -70,7 +70,7 @@ RUN apt-get update && \
 	fi && \
 	RELEASE_CONCAT=$(echo "${RELEASE}" | tr / -); \
 	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
-	unzip source.zip && \
+	unzip source.zip -x "*/test/**" "*/rpm/**" "*/ghpages/**" "*/docs/**" "*/.*" && \
 	rm source.zip && \
 	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul && \
 	# Remove unzip and clean apt cache
@@ -86,9 +86,9 @@ RUN \
 	# Ensure that Git is installed prior to running npm install
 	apt-get update && \
 	apt-get install -y --no-install-recommends git && \
-	npm install pm2@3.2.2 -g && \
+	npm install pm2@4.4.0 -g --no-package-lock --no-optional -- && \
 	echo "INFO: npm install --production..." && \
-	npm install --production && \
+	npm install --only=prod --no-package-lock --no-optional && \
 	# Remove Git and clean apt cache
 	apt-get clean && \
 	apt-get remove -y git && \
