@@ -81,35 +81,46 @@ RUN apt-get update && \
 
 WORKDIR /opt/iotaul
 
-# hadolint ignore=DL3008
+# hadolint ignore=DL3008,DL3016
 RUN \
 	# Ensure that Git is installed prior to running npm install
 	apt-get update && \
 	apt-get install -y --no-install-recommends git && \
-	npm install pm2@4.4.0 -g --no-package-lock --no-optional -- && \
 	echo "INFO: npm install --production..." && \
 	npm install --only=prod --no-package-lock --no-optional && \
 	# Remove Git and clean apt cache
 	apt-get clean && \
 	apt-get remove -y git && \
-	apt-get -y autoremove && \
-	chmod +x docker/entrypoint.sh
+	apt-get -y autoremove
 
-# Create an anonymous user
-RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
-    && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 USER node
 ENV NODE_ENV=development
 
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-
-ENTRYPOINT ["docker/entrypoint.sh"]
-CMD ["-- ", "config.js"]
-
-
+CMD ["node", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
    CMD npm run healthcheck
+
+
+# Install PM2
+FROM node:${NODE_VERSION} AS pm2-install
+COPY --from=build-env /opt/iotaul /opt/iotaul
+# hadolint ignore=DL3008,DL3016
+RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
+
+USER node
+ENV NODE_ENV=development
+# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
+CMD ["pm2-runtime", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
+
+
+
+# Create an anonymous user
+FROM node:${NODE_VERSION} AS anon-user
+RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
+    && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
 #
 # The following creates a distroless build for production.
