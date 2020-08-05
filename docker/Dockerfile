@@ -19,43 +19,50 @@
 # For those usages not covered by the GNU Affero General Public License
 # please contact with: [daniel.moranjimenez@telefonica.com]
 
-ARG  NODE_VERSION=10
-
-FROM node:${NODE_VERSION} AS build-env
-
+ARG NODE_VERSION=10
+ARG TARGET=/opt/iotaul
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=iotagent-ul
 ARG DOWNLOAD=latest
 ARG SOURCE_BRANCH=master
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
-# IMPORTANT: For production environments use Docker Secrets to protect values of the sensitive ENV 
-# variables defined below, by adding _FILE to the name of the relevant variable.
+########################################################################################
 #
-# - IOTA_AUTH_USER, IOTA_AUTH_PASSWORD - when using Keystone Security 
-# - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
-
+# This build stage retrieves the source code from GitHub. The default download is the 
+# latest tip of the master of the named repository on GitHub.
 #
-# The following RUN command retrieves the source code from GitHub.
-# 
-# To obtain the latest stable release run this Docker file with the parameters
+# To obtain the latest stable release run this Docker file with the parameters:
 # --no-cache --build-arg DOWNLOAD=stable
-# To obtain any speciifc version of a release run this Docker file with the parameters
+#
+# To obtain any specific version of a release run this Docker file with the parameters:
 # --no-cache --build-arg DOWNLOAD=1.7.0
 #
-# The default download is the latest tip of the master of the named repository on GitHub
+# For development purposes, to create a development image including a running Distro, 
+# run this Docker file with the parameter:
 #
-# Alternatively for local development, just copy this Dockerfile into file the root of the repository and 
-# replace the whole RUN statement by the following COPY statement in your local source using :
+# --target=builder
 #
-# COPY . /opt/iotaul/
+######################################################################################## 
+FROM node:${NODE_VERSION} AS builder
+ARG TARGET
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG DOWNLOAD
+ARG SOURCE_BRANCH
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# As an Alternative for local development, just copy this Dockerfile into file the root of 
+# the repository and replace the whole RUN statement below by the following COPY statement 
+# in your local source using :
+#
+# COPY . ${TARGET}/
 #
 
 # hadolint ignore=DL3008
-RUN apt-get update && \
-	# Ensure that unzip and curl are installed
-	apt-get install -y --no-install-recommends unzip ca-certificates curl && \
+RUN \
+	# Ensure that unzip is installed prior to downloading
+	apt-get install -y --no-install-recommends unzip && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
@@ -72,19 +79,18 @@ RUN apt-get update && \
 	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
 	unzip source.zip -x "*/test/**" "*/rpm/**" "*/ghpages/**" "*/docs/**" "*/.*" && \
 	rm source.zip && \
-	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul && \
+	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" "${TARGET}" && \
 	# Remove unzip and clean apt cache
 	apt-get clean && \
 	apt-get remove -y unzip && \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* 
 
-WORKDIR /opt/iotaul
+WORKDIR "${TARGET}"
 
-# hadolint ignore=DL3008,DL3016
+# hadolint ignore=DL3008
 RUN \
 	# Ensure that Git is installed prior to running npm install
-	apt-get update && \
 	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
 	npm install --only=prod --no-package-lock --no-optional && \
@@ -95,38 +101,57 @@ RUN \
 
 USER node
 ENV NODE_ENV=development
-
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-CMD ["node", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
+CMD ["node", "${TARGET}/bin/iotagent-ul", "-- ", "config.js"]
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
    CMD npm run healthcheck
 
-
-# Install PM2
+########################################################################################
+#
+# This build stage installs PM2 if required.
+# 
+# To create an image using PM2 run this Docker file with the parameter:
+#
+# --target=pm2-install
+#
+########################################################################################
 FROM node:${NODE_VERSION} AS pm2-install
-COPY --from=build-env /opt/iotaul /opt/iotaul
-# hadolint ignore=DL3008,DL3016
+ARG TARGET
+
+COPY --from=builder "${TARGET}" "${TARGET}"
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
 USER node
 ENV NODE_ENV=development
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-CMD ["pm2-runtime", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
+CMD ["pm2-runtime", "${TARGET}/bin/iotagent-ul", "-- ", "config.js"]
 
-
-
-# Create an anonymous user
+########################################################################################
+#
+# This build stage creates an anonymous user to be used with the distroless build
+# as defined below.
+#
+########################################################################################
 FROM node:${NODE_VERSION} AS anon-user
 RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
     && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
+########################################################################################
 #
-# The following creates a distroless build for production.
+# This build stage creates a distroless image for production.
 #
-
+# IMPORTANT: For production environments use Docker Secrets to protect values of the 
+# sensitive ENV variables defined below, by adding _FILE to the name of the relevant 
+# variable.
+#
+# - IOTA_AUTH_USER, IOTA_AUTH_PASSWORD - when using Keystone Security 
+# - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
+#
+########################################################################################
 FROM gcr.io/distroless/nodejs:${NODE_VERSION}
+ARG TARGET
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
@@ -138,20 +163,17 @@ LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo
 LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
 LABEL "org.opencontainers.image.title"="IoT Agent for the Ultralight 2.0 protocol"
 LABEL "org.opencontainers.image.description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
-LABEL "org.opencontainers.image.source"=https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}
-LABEL "org.nodejs.version"=${NODE_VERSION}
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
 
-COPY --from=build-env /opt/iotaul /opt/iotaul
+COPY --from=builder "${TARGET}" "${TARGET}"
+WORKDIR "${TARGET}"
+
 USER nobody
 ENV NODE_ENV=production
-
-WORKDIR /opt/iotaul
-
-# Ports used by application
+# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-# Start the application
 CMD ["./bin/iotagent-ul", "-- ", "config.js"]
-
 HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
   CMD ["/nodejs/bin/node", "./bin/healthcheck"]
 
