@@ -86,6 +86,7 @@ RUN \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* 
 
+# hadolint ignore=DL3000
 WORKDIR "${TARGET}"
 
 # hadolint ignore=DL3008
@@ -167,6 +168,7 @@ LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${
 LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder "${TARGET}" "${TARGET}"
+# hadolint ignore=DL3000
 WORKDIR "${TARGET}"
 
 USER nobody
