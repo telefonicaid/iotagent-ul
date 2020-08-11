@@ -168,6 +168,7 @@ LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${
 LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder "${TARGET}" "${TARGET}"
+COPY --from=anon-user /etc/passwd /etc/shadow /etc/group /etc/
 # hadolint ignore=DL3000
 WORKDIR "${TARGET}"
 
