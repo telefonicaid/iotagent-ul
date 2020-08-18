@@ -20,7 +20,6 @@
 # please contact with: [daniel.moranjimenez@telefonica.com]
 
 ARG NODE_VERSION=10
-ARG TARGET=/opt/iotaul
 ARG GITHUB_ACCOUNT=telefonicaid
 ARG GITHUB_REPOSITORY=iotagent-ul
 ARG DOWNLOAD=latest
@@ -44,7 +43,6 @@ ARG SOURCE_BRANCH=master
 #
 ######################################################################################## 
 FROM node:${NODE_VERSION} AS builder
-ARG TARGET
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG DOWNLOAD
@@ -56,7 +54,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # the repository and replace the whole RUN statement below by the following COPY statement 
 # in your local source using :
 #
-# COPY . ${TARGET}/
+# COPY . /opt/iotaul/
 #
 
 # hadolint ignore=DL3008
@@ -79,15 +77,14 @@ RUN \
 	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
 	unzip source.zip -x "*/test/**" "*/rpm/**" "*/ghpages/**" "*/docs/**" "*/.*" && \
 	rm source.zip && \
-	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" "${TARGET}" && \
+	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul && \
 	# Remove unzip and clean apt cache
 	apt-get clean && \
 	apt-get remove -y unzip && \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* 
 
-# hadolint ignore=DL3000
-WORKDIR "${TARGET}"
+WORKDIR /opt/iotaul
 
 # hadolint ignore=DL3008
 RUN \
@@ -104,7 +101,7 @@ USER node
 ENV NODE_ENV=development
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-CMD ["node", "${TARGET}/bin/iotagent-ul", "-- ", "config.js"]
+CMD ["node", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
    CMD npm run healthcheck
 
@@ -117,17 +114,16 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
 # --target=pm2-install
 #
 ########################################################################################
-FROM node:${NODE_VERSION} AS pm2-install
-ARG TARGET
+FROM node:${NODE_VERSION}-slim AS pm2-install
 
-COPY --from=builder "${TARGET}" "${TARGET}"
+COPY --from=builder /opt/iotaul /opt/iotaul
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
 USER node
 ENV NODE_ENV=development
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-CMD ["pm2-runtime", "${TARGET}/bin/iotagent-ul", "-- ", "config.js"]
+CMD ["pm2-runtime", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
 
 ########################################################################################
 #
@@ -135,7 +131,7 @@ CMD ["pm2-runtime", "${TARGET}/bin/iotagent-ul", "-- ", "config.js"]
 # as defined below.
 #
 ########################################################################################
-FROM node:${NODE_VERSION} AS anon-user
+FROM node:${NODE_VERSION}-slim AS anon-user
 RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
     && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
@@ -152,7 +148,6 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 #
 ########################################################################################
 FROM gcr.io/distroless/nodejs:${NODE_VERSION}
-ARG TARGET
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
@@ -167,10 +162,9 @@ LABEL "org.opencontainers.image.description"="An Internet of Things Agent for th
 LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
 LABEL "org.nodejs.version"="${NODE_VERSION}"
 
-COPY --from=builder "${TARGET}" "${TARGET}"
+COPY --from=builder /opt/iotaul /opt/iotaul
 COPY --from=anon-user /etc/passwd /etc/shadow /etc/group /etc/
-# hadolint ignore=DL3000
-WORKDIR "${TARGET}"
+WORKDIR /opt/iotaul
 
 USER nobody
 ENV NODE_ENV=production
