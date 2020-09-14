@@ -170,6 +170,22 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Sep 14 2020 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.14.0
+- Fix: Force finish transaction after process a device measure
+- Fix: Do not intercept error about DEVICE_NOT_FOUND in findOrCreate device (iotagent-node-lib#889)
+- Fix srv, subsrv, transaction and correlator id in logs of http binding
+- Fix some log levels and details at bindings
+- Overall update of dev package dependencies
+- Update codebase to use ES6
+  -  Remove JSHint and jshint overrides
+  -  Add esLint using standard tamia presets
+  -  Replace var with let/const
+  -  Fix or disable eslint errors
+- Set Nodejs 10 as minimum version in packages.json (effectively removing Nodev8 from supported versions)
+- Fix: log always writing the same correlator id and transaction id (issue #326)
+- Add: config.mqtt.avoidLeadingSlash flag (IOTA_MQTT_AVOID_LEADING_SLASH) to avoid leading slash in MQTT
+- Add: explicitAttrs flag (in configuration and also group/device provisioning) to progress only the measures corresponding to attributes declared in attributes array (#372)
+    
 * Tue Apr 07 2020 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.13.0
 - Add: check response obj before use it handling http commands
 - Add: standardized MQTT-SSL support (#354)
