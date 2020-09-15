@@ -97,14 +97,6 @@ RUN \
 	apt-get remove -y git && \
 	apt-get -y autoremove
 
-USER node
-ENV NODE_ENV=development
-# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
-EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
-CMD ["node", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
-   CMD npm run healthcheck
-
 ########################################################################################
 #
 # This build stage installs PM2 if required.
@@ -114,13 +106,26 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
 # --target=pm2-install
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS pm2-install
+FROM node:${NODE_VERSION}-slim AS pm2
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG NODE_VERSION
+
+LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="IoT Agent for the Ultralight 2.0 protocol with pm2"
+LABEL "org.opencontainers.image.description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder /opt/iotaul /opt/iotaul
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
 USER node
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
 CMD ["pm2-runtime", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
@@ -147,7 +152,7 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 # - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
 #
 ########################################################################################
-FROM gcr.io/distroless/nodejs:${NODE_VERSION}
+FROM gcr.io/distroless/nodejs:${NODE_VERSION} AS distroless
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
@@ -157,7 +162,7 @@ LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
 LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
 LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
 LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
-LABEL "org.opencontainers.image.title"="IoT Agent for the Ultralight 2.0 protocol"
+LABEL "org.opencontainers.image.title"="IoT Agent for the Ultralight 2.0 protocol (Distroless)"
 LABEL "org.opencontainers.image.description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
 LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
 LABEL "org.nodejs.version"="${NODE_VERSION}"
@@ -174,3 +179,40 @@ CMD ["./bin/iotagent-ul", "-- ", "config.js"]
 HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
   CMD ["/nodejs/bin/node", "./bin/healthcheck"]
 
+########################################################################################
+#
+# This build stage creates a node-slim image for production.
+#
+# IMPORTANT: For production environments use Docker Secrets to protect values of the 
+# sensitive ENV variables defined below, by adding _FILE to the name of the relevant 
+# variable.
+#
+# - IOTA_AUTH_USER, IOTA_AUTH_PASSWORD - when using Keystone Security 
+# - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
+#
+########################################################################################
+FROM node:${NODE_VERSION}-slim AS slim
+ARG GITHUB_ACCOUNT
+ARG GITHUB_REPOSITORY
+ARG NODE_VERSION
+
+LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
+LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
+LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
+LABEL "org.opencontainers.image.licenses"="AGPL-3.0-only"
+LABEL "org.opencontainers.image.title"="IoT Agent for the Ultralight 2.0 protocol"
+LABEL "org.opencontainers.image.description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${GITHUB_REPOSITORY}"
+LABEL "org.nodejs.version"="${NODE_VERSION}"
+
+COPY --from=builder /opt/iotaul /opt/iotaul
+WORKDIR /opt/iotaul
+
+USER node
+ENV NODE_ENV=production
+# Expose 4061 for NORTH PORT, 7896 for HTTP PORT
+EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
+CMD ["node", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s \
+   CMD ["npm", "run", "healthcheck"]
