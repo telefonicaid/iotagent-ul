@@ -193,20 +193,18 @@ Some additional remarks regarding polling commands:
 
 ```json
 {
- ...
-  "commands": [
-    {
-      "type": "command",
-      "name": "a_command_name_A",
-      "mqtt": { "qos": 2, "retain": true }
-    },
-    {
-      "type": "command",
-      "name": "a_command_name_B",
-      "mqtt": { "qos": 1, "retain": false }
-    }
-  ]
-...
+    "commands": [
+        {
+            "type": "command",
+            "name": "a_command_name_A",
+            "mqtt": { "qos": 2, "retain": true }
+        },
+        {
+            "type": "command",
+            "name": "a_command_name_B",
+            "mqtt": { "qos": 1, "retain": false }
+        }
+    ]
 }
 ```
 
