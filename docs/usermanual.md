@@ -187,8 +187,8 @@ Some additional remarks regarding polling commands:
 
 -   Commands can be also retrieved without needed of sending a mesaure. In other words, the device is not forced to send
     a measure in order to get the accumulated commands.
--   MQTT devices can configured (at provisioning and updating time) each command with different values of MQTT QoS and
-    MQTT retain values, whih will be used only by a command. More over, in the same MQTT device different commands can
+-   MQTT devices can configure (at provisioning and updating time) each command with different values of MQTT QoS and
+    MQTT retain values, which will be used only by a command. Moreover, in the same MQTT device different commands can
     be configured to use different MQTT options related with QoS level and Retain message policy. I.E:
 
 ```json
