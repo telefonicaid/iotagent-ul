@@ -77,7 +77,7 @@ config.mqtt = {
     qos: 0,
 
     /**
-     * Retain flag. (default is true).
+     * Retain flag. (default is false).
      */
     retain: false,
 
