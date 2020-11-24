@@ -64,7 +64,6 @@ jobs:
         ports:
         - 1883:1883
       rabbitmq:
-        mosquitto:
         image: rabbitmq:3.8.9
         ports:
         - 5672:5672
@@ -99,7 +98,6 @@ jobs:
         ports:
         - 1883:1883
       rabbitmq:
-        mosquitto:
         image: rabbitmq:3.8.9
         ports:
         - 5672:5672 
