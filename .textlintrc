@@ -185,13 +185,6 @@
       "weasel": false,
       "so": false,
       "thereIs" :false
-    },
-    "no-dead-link": {
-       "ignoreRedirects": true,
-       "ignore": [
-          "mailto:*",
-          "https://coveralls.io/**"
-      ]
     }
   }
 }
