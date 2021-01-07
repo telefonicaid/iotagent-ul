@@ -16,7 +16,7 @@ A list of deprecated features and the version in which they were deprecated foll
 -   Support to Node.js v4 in iotagent-ul 1.8.0.
 -   Support to Node.js v6 in iotagent-ul 1.9.0.
 -   Support to Node.js v8 in iotagent-ul 1.13.0.
--   Support to Node.js v10 in iotagent-ul 1.17.0.
+-   Support to Node.js v10 in iotagent-ul 1.16.0.
 
 The use of Node.js v12 is highly recommended.
 
