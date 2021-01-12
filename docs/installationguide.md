@@ -182,8 +182,8 @@ IoT Agent. The following attributes are accepted:
 -   **retain**: retain flag (default is `false`).
 -   **retries**: Number of MQTT connection error retries (default is 5).
 -   **retryTime**: Time between MQTT connection retries (default is 5 seconds).
--   **keepalive**: Time to keep connection open between client and MQTT broker (default is 0 seconds). If you experience
-    disconnnection problems using 0 (as the one described in
+-   **keepalive**: Time to keep connection open between client and MQTT broker (default is 60 seconds). If you
+    experience disconnnection problems using 0 (as the one described in
     [this case](https://github.com/telefonicaid/iotagent-json/issues/455)) a value greater than 0 is recommended.
 -   **rejectUnauthorized** whether to reject any connection which is not authorized with the list of supplied CAs. This
     option only has an effect when using `mqtts`, `tls` or `wss` protocols (default is `true`). Set to `false` if using
