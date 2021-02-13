@@ -105,6 +105,7 @@ config.mqtt = {
 config.amqp = {
     host: 'localhost',
     port: 5672,
+    // vhost: "custom-virtual-host",
     // username: 'guest',
     // password: 'guest',
     exchange: 'iota-exchange',

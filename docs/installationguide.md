@@ -169,6 +169,7 @@ IoT Agent. The following attributes are accepted:
     default is `mqtt`
 -   **host**: Host where the MQTT Broker is located.
 -   **port**: Port where the MQTT Broker is listening
+-   **vhost**: virtual host in the AMQP Broker to which IoT Agent will connect (optional).
 -   **username**: Username for the IoT Agent in the MQTT broker, if authentication is activated.
 -   **password**: Password for the IoT Agent in the MQTT broker, if authentication is activated.
 -   **ca**: ca certificates to use for validating server certificates (optional). Default is to trust the well-known CAs
@@ -239,6 +240,7 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_PROTOCOL            | mqtt.protocol           |
 | IOTA_MQTT_HOST                | mqtt.host               |
 | IOTA_MQTT_PORT                | mqtt.port               |
+| IOTA_MQTT_VHOST               | mqtt.vhost              |
 | IOTA_MQTT_CA                  | mqtt.ca                 |
 | IOTA_MQTT_CERT                | mqtt.cert               |
 | IOTA_MQTT_KEY                 | mqtt.key                |
@@ -253,6 +255,7 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_AVOID_LEADING_SLASH | mqtt.avoidLeadingSlash  |
 | IOTA_AMQP_HOST                | amqp.host               |
 | IOTA_AMQP_PORT                | amqp.port               |
+| IOTA_AMQP_VHOST               | amqp.vhost              |
 | IOTA_AMQP_USERNAME            | amqp.username           |
 | IOTA_AMQP_PASSWORD            | amqp.password           |
 | IOTA_AMQP_EXCHANGE            | amqp.exchange           |

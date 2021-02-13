@@ -87,6 +87,7 @@ describe('Startup tests', function() {
         beforeEach(function() {
             process.env.IOTA_AMQP_HOST = 'localhost';
             process.env.IOTA_AMQP_PORT = '9090';
+            process.env.IOTA_AMQP_VHOST = 'custom_vhost';
             process.env.IOTA_AMQP_USERNAME = 'useramqp';
             process.env.IOTA_AMQP_PASSWORD = 'passamqp';
             process.env.IOTA_AMQP_EXCHANGE = 'xxx';
@@ -99,6 +100,7 @@ describe('Startup tests', function() {
         afterEach(function() {
             delete process.env.IOTA_AMQP_HOST;
             delete process.env.IOTA_AMQP_PORT;
+            delete process.env.IOTA_AMQP_VHOST;
             delete process.env.IOTA_AMQP_USERNAME;
             delete process.env.IOTA_AMQP_PASSWORD;
             delete process.env.IOTA_AMQP_EXCHANGE;
@@ -112,6 +114,7 @@ describe('Startup tests', function() {
             config.setConfig(iotAgentConfig);
             config.getConfig().amqp.host.should.equal('localhost');
             config.getConfig().amqp.port.should.equal('9090');
+            config.getConfig().amqp.vhost.should.equal('custom_vhost');
             config.getConfig().amqp.username.should.equal('useramqp');
             config.getConfig().amqp.password.should.equal('passamqp');
             config.getConfig().amqp.exchange.should.equal('xxx');
