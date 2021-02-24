@@ -16,7 +16,7 @@ A list of deprecated features and the version in which they were deprecated foll
 -   Support to Node.js v4 in iotagent-ul 1.8.0 (finally removed in 1.9.0)
 -   Support to Node.js v6 in iotagent-ul 1.9.0 (finally removed in 1.10.0)
 -   Support to Node.js v8 in iotagent-ul 1.13.0 (finally removed in 1.14.0)
--   Support to Node.js v10 in iotagent-ul 1.16.0
+-   Support to Node.js v10 in iotagent-ul 1.16.0 (finally removed in 1.17.0)
 
 The use of Node.js v12 is highly recommended.
 
@@ -41,7 +41,7 @@ The following table provides information about the last iotagent-ul version supp
 | **Removed feature**    | **Last iotagent-ul version supporting feature**   | **That version release date** |
 | ---------------------- | ------------------------------------------------- | ----------------------------- |
 | NGSIv1 API             | Not yet defined                                   | Not yet defined               |
-| Support to Node.js v4  | 1.8.0                                             | December 19th, 2018                 |
-| Support to Node.js v6  | 1.9.0                                             | May 22nd, 2019                      |
-| Support to Node.js v8  | 1.13.0                                            | April 7th, 2020                    |
-| Support to Node.js v10 | Not defined but it will completed before May 2021 | Not yet defined               |
+| Support to Node.js v4  | 1.8.0                                             | December 19th, 2018           |
+| Support to Node.js v6  | 1.9.0                                             | May 22nd, 2019                |
+| Support to Node.js v8  | 1.13.0                                            | April 7th, 2020               |
+| Support to Node.js v10 | 1.16.0                                            | February 18th, 2021               |
