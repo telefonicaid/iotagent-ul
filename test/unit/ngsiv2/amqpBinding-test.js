@@ -110,7 +110,7 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs.temperature', new Buffer('23'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs.temperature', Buffer.from('23'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -159,7 +159,7 @@ describe('AMQP Transport binding: measures', function() {
             channel.publish(
                 config.amqp.exchange,
                 '.80K09H324HV8732.UL_UNPROVISIONED.attrs.temperature',
-                new Buffer('23')
+                Buffer.from('23')
             );
 
             setTimeout(function() {
@@ -183,7 +183,7 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should send a single update context request with all the attributes', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('temperature|23'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -194,7 +194,7 @@ describe('AMQP Transport binding: measures', function() {
 
     describe('When a new multiple measure arrives to a Device routing key with a faulty payload', function() {
         it('should silently ignore the error (without crashing)', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('notAULPayload '));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('notAULPayload '));
 
             setTimeout(function() {
                 // FIXME: nothing to check in this case except expectations in log file.
@@ -219,7 +219,7 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should send one update context per measure group to the Contet Broker', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23|humidity|98'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('temperature|23|humidity|98'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -252,7 +252,7 @@ describe('AMQP Transport binding: measures', function() {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function(done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('temperature|23#humidity|98'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('temperature|23#humidity|98'));
 
             setTimeout(function() {
                 contextBrokerMock.done();
@@ -287,7 +287,7 @@ describe('AMQP Transport binding: measures', function() {
             channel.publish(
                 config.amqp.exchange,
                 '.1234.MQTT_2.attrs',
-                new Buffer('temperature|23|humidity|98#temperature|16|humidity|34')
+                Buffer.from('temperature|23|humidity|98#temperature|16|humidity|34')
             );
 
             setTimeout(function() {
@@ -347,7 +347,7 @@ describe('AMQP Transport binding: measures', function() {
             channel.publish(
                 config.amqp.exchange,
                 '.1234.timestampedDevice.attrs',
-                new Buffer('tmp|24.4|tt|2016-09-26T12:19:26.476659Z')
+                Buffer.from('tmp|24.4|tt|2016-09-26T12:19:26.476659Z')
             );
 
             setTimeout(function() {
