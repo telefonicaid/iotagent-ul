@@ -48,9 +48,9 @@ contributions are done using a pull request (PR). The detailed "protocol" used i
 
 Some additional remarks to take into account when contributing with new PRs:
 
-* PR must include not only code contributions, but their corresponding pieces of documentation (new or modifications to existing one) and tests
-* PR modifications must pass full regression based on existing test (unit, functional, memory, e2e) in addition to whichever new test added due to the new functionality
-* PR should be of an appropriated size that makes review achievable. Too large PRs could be closed with a "please, redo the work in smaller pieces" without any further discussing
+*   PR must include not only code contributions, but their corresponding pieces of documentation (new or modifications to existing one) and tests
+*   PR modifications must pass full regression based on existing test (unit, functional, memory, e2e) in addition to whichever new test added due to the new functionality
+*   PR should be of an appropriated size that makes review achievable. Too large PRs could be closed with a "please, redo the work in smaller pieces" without any further discussing
 
 ## Community
 
