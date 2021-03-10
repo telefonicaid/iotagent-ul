@@ -9,6 +9,7 @@
 [![CI](https://github.com/telefonicaid/iotagent-ul/workflows/CI/badge.svg)](https://github.com/telefonicaid/iotagent-ul/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/iotagent-ul/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/iotagent-ul?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/iot-ultralight.svg)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4699/badge)](https://bestpractices.coreinfrastructure.org/projects/4699)
 
 An Internet of Things Agent for the Ultralight 2.0 protocol (with [AMQP](https://www.amqp.org/),
 [HTTP](https://www.w3.org/Protocols/) and [MQTT](https://mqtt.org/) transports). This IoT Agent is designed to be a
