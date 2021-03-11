@@ -16,8 +16,8 @@ Before we get started, here are a few things we expect from you (and that you sh
 
 ## How to contribute
 
-If you'd like to contribute, start by searching through the [issues](https://github.com/telefonicaid/sigfox-iotagent/issues) and
-[pull requests](https://github.com/telefonicaid/sigfox-iotagent/pulls) to see whether someone else has raised a similar idea or
+If you'd like to contribute, start by searching through the [issues](https://github.com/telefonicaid/iotagent-ul/issues) and
+[pull requests](https://github.com/telefonicaid/iotagent-ul/pulls) to see whether someone else has raised a similar idea or
 question. In adition, you can also check in the IoTAgent Node Lib framework repository for [issues](https://github.com/telefonicaid/iotagent-node-lib/issues) and [pull requests](https://github.com/telefonicaid/iotagent-node-lib/pulls) across all the IoT-Agents
 
 If you don't see your idea listed, and you think it fits into the goals of this guide, do one of the following:
@@ -75,18 +75,18 @@ In order to start contributing:
 2.  Clone your just forked repository:
 
 ```bash
-git clone https://github.com/your-github-username/iotagent-json.git
+git clone https://github.com/your-github-username/iotagent-ul.git
 ```
 
-3.  Add the main iotagent-json repository as a remote to your forked repository (use any name for your remote
-    repository, it does not have to be iotagent-json, although we will use it in the next steps):
+3.  Add the main iotagent-ul repository as a remote to your forked repository (use any name for your remote
+    repository, it does not have to be iotagent-ul, although we will use it in the next steps):
 
 ```bash
-git remote add iotagent-json https://github.com/telefonicaid/iotagent-json.git
+git remote add iotagent-ul https://github.com/telefonicaid/iotagent-ul.git
 ```
 
 Before starting contributing, remember to synchronize the `master` branch in your forked repository with the `master`
-branch in the main iotagent-json repository, by following this steps
+branch in the main iotagent-ul repository, by following this steps
 
 1.  Change to your local `master` branch (in case you are not in it already):
 
@@ -97,13 +97,13 @@ git checkout master
 2.  Fetch the remote changes:
 
 ```bash
-git fetch iotagent-json
+git fetch iotagent-ul
 ```
 
 3.  Merge them:
 
 ```bash
-git rebase iotagent-json/master
+git rebase iotagent-ul/master
 ```
 
 Contributions following this guidelines will be added to the `master` branch, and released in the next version. The
