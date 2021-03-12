@@ -34,6 +34,7 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information 
 -   [Install](#install)
 -   [Usage](#usage)
 -   [API](#api)
+-   [Contributing](#contributing)
 -   [Testing](#testing)
 -   [License](#license)
 
@@ -74,6 +75,13 @@ and their APIs can be found in the IoT Agent Library [documentation](https://iot
 
 The latest IoT Agent for Ultralight documentation is also available on
 [ReadtheDocs](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
+
+## Contributing
+
+If you'd like to contribute, start by searching through the issues and pull requests to see whether someone else has 
+raised a similar idea or question.
+
+Before contributing, please check out [contribution guidelines](docs/contribution.md)
 
 ## Testing
 
