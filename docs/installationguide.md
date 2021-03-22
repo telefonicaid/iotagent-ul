@@ -240,7 +240,6 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_PROTOCOL            | mqtt.protocol           |
 | IOTA_MQTT_HOST                | mqtt.host               |
 | IOTA_MQTT_PORT                | mqtt.port               |
-| IOTA_MQTT_VHOST               | mqtt.vhost              |
 | IOTA_MQTT_CA                  | mqtt.ca                 |
 | IOTA_MQTT_CERT                | mqtt.cert               |
 | IOTA_MQTT_KEY                 | mqtt.key                |
