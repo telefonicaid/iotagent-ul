@@ -170,6 +170,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue Apr 6 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.1
+- Upgrade iotagent-node-lib dependency from 2.15.0 to 2.15.1
+
 * Thu Feb 18 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.0
 - Fix: Set 60 seconds for default mqtt keepalive option (#370)
 - Upgrade iotagent-node-lib dependency from 2.14.0 to 2.15.0
