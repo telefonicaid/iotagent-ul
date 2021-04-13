@@ -171,7 +171,7 @@ fi
 
 %changelog
 * Tue Apr 13 2021 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.16.2
-- Fix: missing content-type: application/json header in the request sent to device command endpoint (HTTP transport)
+- Fix: missing content-type: text/plain header in the request sent to device command endpoint (HTTP transport)
 
 * Tue Apr 6 2021 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.16.1
 - Upgrade iotagent-node-lib dependency from 2.15.0 to 2.15.1
