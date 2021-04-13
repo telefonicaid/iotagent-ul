@@ -2,7 +2,7 @@
   "name": "iotagent-ul",
   "license": "AGPL-3.0-only",
   "description": "IoT Agent for the Ultrlight 2.0 protocol",
-  "version": "1.16.1",
+  "version": "1.16.2",
   "homepage": "https://github.com/telefonicaid/iotagent-ul",
   "author": {
     "name": "Daniel Moran",
