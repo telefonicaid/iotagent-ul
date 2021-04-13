@@ -1,1 +1,1 @@
-Fix: missing content-type: text/plain header in the request sent to device command endpoint (HTTP transport)
+
