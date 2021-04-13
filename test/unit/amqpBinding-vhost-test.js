@@ -23,7 +23,7 @@
 
 /* eslint-disable no-unused-vars */
 
-const iotagentMqtt = require('../../');
+const iotagentMqtt = require('../../lib/iotagent-ul');
 const config = require('../config-test.js');
 const nock = require('nock');
 const async = require('async');
@@ -38,7 +38,7 @@ let amqpConn;
 let channel;
 
 function startConnection(exchange, callback) {
-    amqp.connect('amqp://localhost', function (err, conn) {
+    amqp.connect(`amqp://localhost:${config.amqp.port}/${config.amqp.vhost}`, function (err, conn) {
         amqpConn = conn;
 
         conn.createChannel(function (err, ch) {
@@ -50,8 +50,11 @@ function startConnection(exchange, callback) {
     });
 }
 
-describe('AMQP Transport binding: measures', function () {
+describe('AMQP Transport binding vHost: measures', function () {
     beforeEach(function (done) {
+        config.temp = config.amqp;
+        config.amqp = config.amqpVhost;
+
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -81,6 +84,8 @@ describe('AMQP Transport binding: measures', function () {
     });
 
     afterEach(function (done) {
+        config.amqp = config.temp;
+
         nock.cleanAll();
 
         amqpConn.close();
@@ -88,7 +93,7 @@ describe('AMQP Transport binding: measures', function () {
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe('When a new single measure arrives to a Device routing key', function () {
+    describe('vHost: When a new single measure arrives to a Device routing key', function () {
         beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -98,7 +103,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs.a', Buffer.from('23'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs.a', new Buffer('23'));
 
             setTimeout(function () {
                 contextBrokerMock.done();
@@ -107,7 +112,7 @@ describe('AMQP Transport binding: measures', function () {
         });
     });
 
-    describe('When a new measure arrives for an unprovisioned Device', function () {
+    describe('vHost: When a new measure arrives for an unprovisioned Device', function () {
         const groupCreation = {
             url: 'http://localhost:4061/iot/services',
             method: 'POST',
@@ -137,7 +142,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            channel.publish(config.amqp.exchange, '.80K09H324HV8732.MQTT_UNPROVISIONED.attrs.a', Buffer.from('23'));
+            channel.publish(config.amqp.exchange, '.80K09H324HV8732.MQTT_UNPROVISIONED.attrs.a', new Buffer('23'));
 
             setTimeout(function () {
                 contextBrokerUnprovMock.done();
@@ -146,7 +151,7 @@ describe('AMQP Transport binding: measures', function () {
         });
     });
 
-    describe('When a new multiple measure arrives to a Device routing key with one measure', function () {
+    describe('vHost: When a new multiple measure arrives to a Device routing key with one measure', function () {
         beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -156,7 +161,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should send a single update context request with all the attributes', function (done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('a|23'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23'));
 
             setTimeout(function () {
                 contextBrokerMock.done();
@@ -165,7 +170,7 @@ describe('AMQP Transport binding: measures', function () {
         });
     });
 
-    describe('When a new multiple measure arrives to a Device routing key with a faulty payload', function () {
+    describe('vHost: When a new multiple measure arrives to a Device routing key with a faulty payload', function () {
         beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -175,7 +180,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should silently ignore the error (without crashing)', function (done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('notAULPayload '));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('notAULPayload '));
 
             setTimeout(function () {
                 done();
@@ -183,7 +188,7 @@ describe('AMQP Transport binding: measures', function () {
         });
     });
 
-    describe('When single message with multiple measures arrive to a Device routing key', function () {
+    describe('vHost: When single message with multiple measures arrive to a Device routing key', function () {
         beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -193,7 +198,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should send one update context per measure group to the Contet Broker', function (done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('a|23|b|98'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23|b|98'));
 
             setTimeout(function () {
                 contextBrokerMock.done();
@@ -202,7 +207,7 @@ describe('AMQP Transport binding: measures', function () {
         });
     });
 
-    describe('When a message with multiple measure groups arrives to a Device routing key', function () {
+    describe('vHost: When a message with multiple measure groups arrives to a Device routing key', function () {
         beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -218,7 +223,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('a|23#b|98'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23#b|98'));
 
             setTimeout(function () {
                 contextBrokerMock.done();
@@ -226,7 +231,7 @@ describe('AMQP Transport binding: measures', function () {
             }, 100);
         });
     });
-    describe('When multiple groups of measures arrive, with multiple attributes, to a Device routing key', function () {
+    describe('vHost: When multiple groups of measures arrive, with multiple attributes, to a Device routing key', function () {
         beforeEach(function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartGondor')
@@ -242,7 +247,7 @@ describe('AMQP Transport binding: measures', function () {
         });
 
         it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
-            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', Buffer.from('a|23|b|98#a|16|b|34'));
+            channel.publish(config.amqp.exchange, '.1234.MQTT_2.attrs', new Buffer('a|23|b|98#a|16|b|34'));
 
             setTimeout(function () {
                 contextBrokerMock.done();
@@ -251,7 +256,7 @@ describe('AMQP Transport binding: measures', function () {
         });
     });
 
-    describe('When a measure with a timestamp arrives with an alias to TimeInstant', function () {
+    describe('vHost: When a measure with a timestamp arrives with an alias to TimeInstant', function () {
         const provisionProduction = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -292,7 +297,7 @@ describe('AMQP Transport binding: measures', function () {
             channel.publish(
                 config.amqp.exchange,
                 '.1234.timestampedDevice.attrs',
-                Buffer.from('tmp|24.4|tt|2016-09-26T12:19:26.476659Z')
+                new Buffer('tmp|24.4|tt|2016-09-26T12:19:26.476659Z')
             );
 
             setTimeout(function () {
