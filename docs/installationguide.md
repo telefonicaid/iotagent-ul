@@ -192,6 +192,8 @@ IoT Agent. The following attributes are accepted:
 -   **avoidLeadingSlash** this flag sets whether the agent publishes commands to topics starting with slash (default in
     order versions) or without the slash. See
     [discussion](https://github.com/telefonicaid/iotagent-node-lib/issues/866).
+-   **clean**: this flag is by default true, set to false to receive QoS 1 and 2 messages while offline.
+-   **clientId**: string ID which identifies client in mqtt broker.
 
 #### AMQP Binding configuration
 
@@ -251,6 +253,8 @@ The ones relating specific Ultralight 2.0 bindings are described in the followin
 | IOTA_MQTT_RETRY_TIME          | mqtt.retryTime          |
 | IOTA_MQTT_KEEPALIVE           | mqtt.keepalive          |
 | IOTA_MQTT_AVOID_LEADING_SLASH | mqtt.avoidLeadingSlash  |
+| IOTA_MQTT_CLEAN               | mqtt.clean              |
+| IOTA_MQTT_CLIENT_ID           | mqtt.clientId           |
 | IOTA_AMQP_HOST                | amqp.host               |
 | IOTA_AMQP_PORT                | amqp.port               |
 | IOTA_AMQP_USERNAME            | amqp.username           |
