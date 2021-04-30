@@ -1,3 +1,4 @@
+- (Only tests) Fix: ensure service of groups, device and commands is stored in mongo in lowercase (iota-node-lib#1023)
 - Add: MQTT options `clean` and `clientId` (env vars IOTA_MQTT_CLEA and IOTA_MQTT_CLIENT_ID) (#371)
 - Fix: missing content-type: text/plain header in the request sent to device command endpoint (HTTP transport)
 - Fix: avoid raise mongo alarm when a measure is not maching a group configuration
