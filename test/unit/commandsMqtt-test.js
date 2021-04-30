@@ -35,14 +35,14 @@ const utils = require('../utils');
 let contextBrokerMock;
 let mqttClient;
 
-describe('MQTT Transport binding: commands', function() {
-    beforeEach(function(done) {
+describe('MQTT Transport binding: commands', function () {
+    beforeEach(function (done) {
         const provisionOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand1.json'),
             headers: {
-                'fiware-service': 'smartGondor',
+                'fiware-service': 'smartgondor',
                 'fiware-servicepath': '/gardens'
             }
         };
@@ -51,36 +51,33 @@ describe('MQTT Transport binding: commands', function() {
 
         nock.cleanAll();
 
-        mqttClient = mqtt.connect(
-            'mqtt://' + config.mqtt.host,
-            {
-                keepalive: 0,
-                connectTimeout: 60 * 60 * 1000
-            }
-        );
+        mqttClient = mqtt.connect('mqtt://' + config.mqtt.host, {
+            keepalive: 0,
+            connectTimeout: 60 * 60 * 1000
+        });
 
         mqttClient.subscribe('/1234/MQTT_2/cmd', null);
 
         contextBrokerMock = nock('http://192.168.1.1:1026')
-            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-service', 'smartgondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/NGSI9/registerContext')
             .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
         contextBrokerMock
-            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-service', 'smartgondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .post('/v1/updateContext')
             .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
 
-        iotagentMqtt.start(config, function() {
-            request(provisionOptions, function(error, response, body) {
+        iotagentMqtt.start(config, function () {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
     });
 
-    afterEach(function(done) {
+    afterEach(function (done) {
         nock.cleanAll();
         mqttClient.unsubscribe('/1234/MQTT_2/cmd', null);
         mqttClient.end();
@@ -88,57 +85,57 @@ describe('MQTT Transport binding: commands', function() {
         async.series([iotAgentLib.clearAll, iotagentMqtt.stop], done);
     });
 
-    describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function() {
+    describe('When a command arrive to the Agent for a device with the MQTT_UL protocol', function () {
         const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
             method: 'POST',
             json: utils.readExampleFile('./test/contextRequests/updateCommand1.json'),
             headers: {
-                'fiware-service': 'smartGondor',
+                'fiware-service': 'smartgondor',
                 'fiware-servicepath': '/gardens'
             }
         };
 
-        beforeEach(function() {
+        beforeEach(function () {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus1.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
         });
 
-        it('should return a 200 OK without errors', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should return a 200 OK without errors', function (done) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
 
-        it('should reply with the appropriate command information', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should reply with the appropriate command information', function (done) {
+            request(commandOptions, function (error, response, body) {
                 should.exist(body);
                 done();
             });
         });
 
-        it('should update the status in the Context Broker', function(done) {
-            request(commandOptions, function(error, response, body) {
+        it('should update the status in the Context Broker', function (done) {
+            request(commandOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
 
-        it('should publish the command information in the MQTT topic', function(done) {
+        it('should publish the command information in the MQTT topic', function (done) {
             const commandMsg = 'MQTT_2@PING|data=22';
             let payload;
 
-            mqttClient.on('message', function(topic, data) {
+            mqttClient.on('message', function (topic, data) {
                 payload = data.toString();
             });
 
-            request(commandOptions, function(error, response, body) {
-                setTimeout(function() {
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
                     should.exist(payload);
                     payload.should.equal(commandMsg);
                     done();
@@ -147,18 +144,18 @@ describe('MQTT Transport binding: commands', function() {
         });
     });
 
-    describe('When a command update arrives to the MQTT command topic', function() {
-        beforeEach(function() {
+    describe('When a command update arrives to the MQTT command topic', function () {
+        beforeEach(function () {
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus2.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
         });
 
-        it('should send an update request to the Context Broker', function(done) {
-            mqttClient.publish('/1234/MQTT_2/cmdexe', 'MQTT_2@PING|1234567890', null, function(error) {
-                setTimeout(function() {
+        it('should send an update request to the Context Broker', function (done) {
+            mqttClient.publish('/1234/MQTT_2/cmdexe', 'MQTT_2@PING|1234567890', null, function (error) {
+                setTimeout(function () {
                     contextBrokerMock.done();
                     done();
                 }, 200);
@@ -166,13 +163,13 @@ describe('MQTT Transport binding: commands', function() {
         });
     });
 
-    describe('When a command update arrives with a single text value', function() {
+    describe('When a command update arrives with a single text value', function () {
         const provisionOptionsAlt = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand3.json'),
             headers: {
-                'fiware-service': 'smartGondor',
+                'fiware-service': 'smartgondor',
                 'fiware-servicepath': '/gardens'
             }
         };
@@ -181,7 +178,7 @@ describe('MQTT Transport binding: commands', function() {
             method: 'POST',
             json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
             headers: {
-                'fiware-service': 'smartGondor',
+                'fiware-service': 'smartgondor',
                 'fiware-servicepath': '/gardens'
             }
         };
@@ -190,34 +187,34 @@ describe('MQTT Transport binding: commands', function() {
             method: 'POST',
             json: utils.readExampleFile('./test/contextRequests/updateCommand3.json'),
             headers: {
-                'fiware-service': 'smartGondor',
+                'fiware-service': 'smartgondor',
                 'fiware-servicepath': '/gardens'
             }
         };
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             nock.cleanAll();
 
             contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/NGSI9/registerContext')
                 .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
 
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext')
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
 
             contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v1/updateContext', utils.readExampleFile('./test/contextRequests/updateStatus3.json'))
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
 
-            request(configurationOptions, function(error, response, body) {
-                request(provisionOptionsAlt, function(error, response, body) {
+            request(configurationOptions, function (error, response, body) {
+                request(provisionOptionsAlt, function (error, response, body) {
                     mqttClient.subscribe('/ALTERNATIVE/MQTT_4/cmd', null);
 
                     done();
@@ -225,21 +222,21 @@ describe('MQTT Transport binding: commands', function() {
             });
         });
 
-        afterEach(function(done) {
+        afterEach(function (done) {
             mqttClient.unsubscribe('/ALTERNATIVE/MQTT_4/cmd', null);
             done();
         });
 
-        it('should publish the command information in the MQTT topic', function(done) {
+        it('should publish the command information in the MQTT topic', function (done) {
             const commandMsg = 'MQTT_4@PING|22';
             let payload;
 
-            mqttClient.on('message', function(topic, data) {
+            mqttClient.on('message', function (topic, data) {
                 payload = data.toString();
             });
 
-            request(commandOptions, function(error, response, body) {
-                setTimeout(function() {
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
                     should.exist(payload);
                     payload.should.equal(commandMsg);
                     done();
