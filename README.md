@@ -100,11 +100,11 @@ In order to successfuly run the tests, on the local machine three services must 
 They can be run using Docker:
 
 ```shell
-docker pull ansi/mosquitto
+docker pull eclipse-mosquitto
 docker pull mongo
 docker pull rabbitmq
 
-docker run -d -p 1883:1883   -l mosquitto ansi/mosquitto
+docker run -d -p 1883:1883   -l mosquitto eclipse-mosquitto
 docker run -d -p 27017:27017 -l mongodb mongo
 docker run -d -p 5672:5672   -l rabbitmq rabbitmq
 ```
