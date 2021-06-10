@@ -63,6 +63,20 @@ describe('Ultralight 2.0 Parser: measures', function () {
             should.not.exist(result[0].b); // equivalent is null
         });
     });
+    describe('When a payload with a multple measures with null is parsed', function () {
+        it('should return an array with a TimeInstant and a single object with several null attributes', function () {
+            const result = ulParser.parse('2016-06-13T00:35:30Z|c||b|');
+
+            should.exist(result);
+            (typeof result).should.equal('object');
+            result.length.should.equal(1);
+            should.exist(result[0]);
+            should.exist(result[0].TimeInstant);
+            result[0].TimeInstant.should.equal('2016-06-13T00:35:30Z');
+            should.not.exist(result[0].c); // equivalent is null
+            should.not.exist(result[0].b); // equivalent is null
+        });
+    });
     describe('When a payload with timestamp information is parsed', function () {
         /* jshint sub:true */
 
