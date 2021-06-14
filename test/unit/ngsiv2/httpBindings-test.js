@@ -542,7 +542,7 @@ describe('HTTP Transport binding: measures', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock
+            contextBrokerMock = nock('http://unexistentHost:1026')
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
