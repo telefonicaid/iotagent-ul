@@ -155,7 +155,7 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
@@ -164,8 +164,8 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
+                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatusError2.json')
                 )
                 .reply(204);
 
