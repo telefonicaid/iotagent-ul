@@ -165,7 +165,7 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
                     '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatusError2.json')
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
                 )
                 .reply(204);
 
@@ -173,9 +173,8 @@ describe('HTTP: Commands', function () {
                 .post('/command', function (body) {
                     return body === 'MQTT_2@PING|data=22';
                 })
-                .reply(500, 'MQTT_2@ping|ping ERROR, Command error');
+                .reply(200, 'MQTT_2@PING|data=22');
         });
-
 
         it('should update the status in the Context Broker', function (done) {
             request(commandOptions, function (error, response, body) {
