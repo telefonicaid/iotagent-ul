@@ -21,8 +21,8 @@
  * please contact with::[contacto@tid.es]
  */
 
-const config = require('../../lib/configService');
-const iotAgentConfig = require('../config-test.js');
+const config = require('../../../lib/configService');
+const iotAgentConfig = require('../../config-test.js');
 const fs = require('fs');
 const sinon = require('sinon');
 

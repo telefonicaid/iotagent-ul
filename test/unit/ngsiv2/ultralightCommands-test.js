@@ -21,7 +21,7 @@
  * please contact with::[iot_support@tid.es]
  */
 
-const ulParser = require('../../lib/ulParser');
+const ulParser = require('../../../lib/ulParser');
 const should = require('should');
 
 describe('Ultralight 2.0 Parser: commands', function() {
