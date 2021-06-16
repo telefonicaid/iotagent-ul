@@ -234,17 +234,25 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
+                .patch(
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice'
+                )
+                .reply(204);
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .patch(
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice'
+                )
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    function (body) {
-                        return body.contextElements['0'].attributes['0'].value === 'ERROR';
-                    })
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice'
+                )
                 .reply(204);
 
             request(provisionWrongEndpoint, function (error, response, body) {
