@@ -166,13 +166,19 @@ describe('HTTP: Commands', function () {
                 )
                 .reply(204);
 
-            contextBrokerMock
+            /*contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
                     '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatusError2.json')
                 )
+                .reply(204);*/
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
                 .reply(204);
 
         });
