@@ -138,4 +138,127 @@ describe('HTTP: Commands', function () {
             });
         });
     });
+
+    describe('When a command arrive to the Agent and the device answers with an error', function () {
+        const commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
+            method: 'POST',
+            json: utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateCommand1.json'),
+            headers: {
+                'fiware-service': 'smartgondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function () {
+            nock.cleanAll();
+
+            mockedClientServer = nock('http://localhost:9876')
+                .post('/command', 'MQTT_2@PING|data=22')
+                .reply(500, 'MQTT_2@ping|ping ERROR, Command error');
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204);
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204);
+        });
+
+        it('should update the status in the Context Broker', function (done) {
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
+
+    describe('When a command arrive with a wrong endpoint', function () {
+        const commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            method: 'POST',
+            json: utils.readExampleFile('./test/contextRequests/updateCommandWrongEndpoint.json'),
+            headers: {
+                'fiware-service': 'smartgondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const provisionWrongEndpoint = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommandWrongEndpoint.json'),
+            headers: {
+                'fiware-service': 'smartgondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function (done) {
+            nock.cleanAll();
+
+            contextBrokerMock = nock('http://192.168.1.1:1026')
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/registrations')
+                .reply(201, null, { Location: '/v2/registrations/6319a7f5254b05844116584d' });
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .patch(
+                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
+                )
+                .reply(204);
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .patch(
+                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
+                )
+                .reply(204);
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .patch(
+                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    function (body) {
+                        return body.contextElements['0'].attributes['0'].value === 'ERROR';
+                    })
+                .reply(204);
+
+            request(provisionWrongEndpoint, function (error, response, body) {
+                setTimeout(function () {
+                    done();
+                }, 50);
+            });
+        });
+
+        it('should return a 204 OK without errors', function (done) {
+            request(commandOptions, function (error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(204);
+                done();
+            });
+        });
+
+        it('should update the status in the Context Broker', function (done) {
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
+                    contextBrokerMock.done();
+                    done();
+                }, 100);
+            });
+        });
+    });
 });
