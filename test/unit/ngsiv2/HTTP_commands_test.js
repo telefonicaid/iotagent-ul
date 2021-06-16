@@ -151,37 +151,31 @@ describe('HTTP: Commands', function () {
         };
 
         beforeEach(function () {
-            nock.cleanAll();
-
-            mockedClientServer = nock('http://localhost:9876')
-                .post('/command', 'MQTT_2@PING|data=22')
-                .reply(500, 'MQTT_2@ping|ping ERROR, Command error');
-
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
 
-            /*contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatusError2.json')
-                )
-                .reply(204);*/
-
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
+                .patch(
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
+                )
                 .reply(204);
 
+            mockedClientServer = nock('http://localhost:9876')
+                .post('/command', function (body) {
+                    return body === 'MQTT_2@PING|data=22';
+                })
+                .reply(500, 'MQTT_2@ping|ping ERROR, Command error');
         });
+
 
         it('should update the status in the Context Broker', function (done) {
             request(commandOptions, function (error, response, body) {
