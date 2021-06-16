@@ -242,10 +242,7 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
-                )
+                .post('/v2/entities?options=upsert')
                 .reply(204);
 
             contextBrokerMock
@@ -268,7 +265,7 @@ describe('HTTP: Commands', function () {
         it('should return a 204 OK without errors', function (done) {
             request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
-                response.statusCode.should.equal(404);
+                response.statusCode.should.equal(204);
                 done();
             });
         });
