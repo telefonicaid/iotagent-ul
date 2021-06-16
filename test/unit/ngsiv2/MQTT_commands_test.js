@@ -159,4 +159,89 @@ describe('MQTT: Commands', function () {
             });
         });
     });
+
+    describe('When a command update arrives with a single text value', function () {
+        const provisionOptionsAlt = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionCommand3.json'),
+            headers: {
+                'fiware-service': 'smartgondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const configurationOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/iot/services',
+            method: 'POST',
+            json: utils.readExampleFile('./test/deviceProvisioning/provisionGroup1.json'),
+            headers: {
+                'fiware-service': 'smartgondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+        const commandOptions = {
+            url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
+            method: 'POST',
+            json: utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateCommand3.json'),
+            headers: {
+                'fiware-service': 'smartgondor',
+                'fiware-servicepath': '/gardens'
+            }
+        };
+
+        beforeEach(function (done) {
+            nock.cleanAll();
+
+            contextBrokerMock = nock('http://192.168.1.1:1026')
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/NGSI9/registerContext')
+                .reply(200, utils.readExampleFile('./test/contextAvailabilityResponses/registerIoTAgent1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v1/updateContext')
+                .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus1Success.json'));
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .patch(
+                    '/v2/entities/Fourth%20MQTT%20Device/attrs?type=MQTTCommandDevice',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus3.json')
+                )
+                .reply(204);
+
+            request(configurationOptions, function (error, response, body) {
+                request(provisionOptionsAlt, function (error, response, body) {
+                    mqttClient.subscribe('/ALTERNATIVE/MQTT_4/cmd', null);
+
+                    done();
+                });
+            });
+        });
+
+        afterEach(function (done) {
+            mqttClient.unsubscribe('/ALTERNATIVE/MQTT_4/cmd', null);
+            done();
+        });
+
+        it('should publish the command information in the MQTT topic', function (done) {
+            const commandMsg = 'MQTT_4@PING|22';
+            let payload;
+
+            mqttClient.on('message', function (topic, data) {
+                payload = data.toString();
+            });
+
+            request(commandOptions, function (error, response, body) {
+                setTimeout(function () {
+                    should.exist(payload);
+                    payload.should.equal(commandMsg);
+                    done();
+                }, 100);
+            });
+        });
+    });
 });
