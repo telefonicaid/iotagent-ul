@@ -194,15 +194,17 @@ describe('HTTP: Commands', function () {
     });
 
     describe('When a command arrive with a wrong endpoint', function () {
+
         const commandOptions = {
-            url: 'http://localhost:' + config.iota.server.port + '/v1/updateContext',
+            url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
             method: 'POST',
-            json: utils.readExampleFile('./test/contextRequests/updateCommandWrongEndpoint.json'),
+            json: utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateCommandWrongEndpoint.json'),
             headers: {
                 'fiware-service': 'smartgondor',
                 'fiware-servicepath': '/gardens'
             }
         };
+
         const provisionWrongEndpoint = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -222,11 +224,26 @@ describe('HTTP: Commands', function () {
                 .post('/v2/registrations')
                 .reply(201, null, { Location: '/v2/registrations/6319a7f5254b05844116584d' });
 
-            contextBrokerMock
+            /*contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
+                )
+                .reply(204);*/
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post('/v2/entities?options=upsert')
+                .reply(204);
+
+            contextBrokerMock
+                .matchHeader('fiware-service', 'smartgondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .post(
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
@@ -234,17 +251,8 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
-                )
-                .reply(204);
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                .post(
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice',
                     function (body) {
                         return body.contextElements['0'].attributes['0'].value === 'ERROR';
                     })
@@ -260,7 +268,7 @@ describe('HTTP: Commands', function () {
         it('should return a 204 OK without errors', function (done) {
             request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
-                response.statusCode.should.equal(204);
+                response.statusCode.should.equal(404);
                 done();
             });
         });
