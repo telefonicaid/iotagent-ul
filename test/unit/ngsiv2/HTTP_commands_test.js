@@ -243,8 +243,9 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice'
-                )
+                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice', function (body) {
+                        return body.PING_status.value === 'ERROR';
+                })
                 .reply(204);
 
             request(provisionWrongEndpoint, function (error, response, body) {
