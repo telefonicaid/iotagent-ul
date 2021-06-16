@@ -163,7 +163,7 @@ describe('HTTP: Commands', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204);
 
-                contextBrokerMock
+            contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
@@ -171,7 +171,7 @@ describe('HTTP: Commands', function () {
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatusError2.json')
                 )
                 .reply(204);
-                
+
         });
 
         it('should update the status in the Context Broker', function (done) {
