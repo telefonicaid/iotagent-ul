@@ -247,14 +247,6 @@ describe('HTTP: Commands', function () {
                 )
                 .reply(204);
 
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice'
-                )
-                .reply(204);
-
             request(provisionWrongEndpoint, function (error, response, body) {
                 setTimeout(function () {
                     done();
