@@ -31,7 +31,7 @@ const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
 const request = require('request');
-const utils = require('../../../utils');
+const utils = require('../../utils');
 let contextBrokerMock;
 let oldConfigurationFlag;
 let mqttClient;
