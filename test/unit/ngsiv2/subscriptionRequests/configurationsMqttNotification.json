@@ -1,28 +1,20 @@
 {
   "subscriptionId": "51c0ac9ed714fb3b37d7d5a8",
-  "originator": "localhost",
-  "contextResponses": [
+  "data": [
     {
-      "contextElement": {
-        "attributes": [
-          {
-            "name": "pollingInterval",
-            "type": "string",
-            "value": "60"
-          },
-          {
-            "name": "publishInterval",
-            "type": "string",
-            "value": "600"
-          }
-        ],
-        "type": "AnMQTTDevice",
-        "isPattern": "false",
-        "id": "MQTT Device 1"
+      "id": "MQTT Device 1",
+      "type": "AnMQTTDevice",
+      "pollingInterval": {
+        "type": "string",
+        "value": "60",
+        "metadata": {
+        }
       },
-      "statusCode": {
-        "code": "200",
-        "reasonPhrase": "OK"
+      "publishInterval": {
+        "type": "number",
+        "value": "600",
+        "metadata": {
+        }
       }
     }
   ]
