@@ -106,7 +106,7 @@ describe('MQTT Transport binding: configurations', function () {
                 .reply(
                     200,
                     utils.readExampleFile(
-                        './test/unit/ngsiv2/ontextResponses/getConfigurationSuccess.json'
+                        './test/unit/ngsiv2/contextResponses/getConfigurationSuccess.json'
                     )
                 )
 
