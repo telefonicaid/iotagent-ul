@@ -107,6 +107,7 @@ describe('MQTT Transport binding: configurations', function () {
                     200,
                     utils.readExampleFile(
                         './test/unit/ngsiv2/ontextResponses/getConfigurationSuccess.json'
+                    )
                 )
 
             mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
