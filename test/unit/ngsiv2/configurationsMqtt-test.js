@@ -23,7 +23,7 @@
 
 /* eslint-disable no-unused-vars */
 
-const iotagentMqtt = require('../../../../lib/iotagent-ul');
+const iotagentMqtt = require('../../../');
 const mqtt = require('mqtt');
 const config = require('./config-test.js');
 const nock = require('nock');
