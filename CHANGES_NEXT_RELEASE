@@ -1,2 +1,2 @@
-Fix: check access to active attribute of device before use it (twin of iota-json#556)
+Fix: check access to active attribute of device before use it (twin of iota-json#576)
 Fix: processing configurations subscriptions in NGSIv2 (twin of iota-json#563)
