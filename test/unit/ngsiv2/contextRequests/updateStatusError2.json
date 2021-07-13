@@ -1,0 +1,10 @@
+{
+  "PING_status": {
+    "type": "commandStatus",
+    "value": "ERROR"
+  },
+  "PING_info": {
+    "type": "commandResult",
+    "value": "TThere was an error in the response of a device to a command [500]:ping ERROR, Command error"
+  }
+}

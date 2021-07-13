@@ -1,0 +1,21 @@
+{
+  "subscriptionId": "51c0ac9ed714fb3b37d7d5a8",
+  "data": [
+    {
+      "id": "MQTT Device 1",
+      "type": "AnMQTTDevice",
+      "pollingInterval": {
+        "type": "string",
+        "value": "60",
+        "metadata": {
+        }
+      },
+      "publishInterval": {
+        "type": "number",
+        "value": "600",
+        "metadata": {
+        }
+      }
+    }
+  ]
+}

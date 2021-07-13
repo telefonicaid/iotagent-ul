@@ -1,0 +1,26 @@
+{
+  "subject":{
+    "entities": [
+      {
+        "id": "MQTT Device 1",
+        "type": "AnMQTTDevice"
+      }
+    ],
+    "condition":{
+      "attrs":[
+        "pollingInterval",
+        "publishInterval"
+      ]
+    }
+  },
+  "notification":{
+    "http":{
+      "url":"http://localhost:4061/notify"
+    },
+    "attrs":[
+      "pollingInterval",
+      "publishInterval"
+    ],
+    "attrsFormat": "normalized"
+  }
+}
