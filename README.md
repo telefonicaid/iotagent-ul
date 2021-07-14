@@ -9,6 +9,7 @@
 [![CI](https://github.com/telefonicaid/iotagent-ul/workflows/CI/badge.svg)](https://github.com/telefonicaid/iotagent-ul/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/iotagent-ul/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/iotagent-ul?branch=master)
 ![Status](https://nexus.lab.fiware.org/static/badges/statuses/iot-ultralight.svg)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4699/badge)](https://bestpractices.coreinfrastructure.org/projects/4699)
 
 An Internet of Things Agent for the Ultralight 2.0 protocol (with [AMQP](https://www.amqp.org/),
 [HTTP](https://www.w3.org/Protocols/) and [MQTT](https://mqtt.org/) transports). This IoT Agent is designed to be a
@@ -33,6 +34,7 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information 
 -   [Install](#install)
 -   [Usage](#usage)
 -   [API](#api)
+-   [Contributing](#contributing)
 -   [Testing](#testing)
 -   [License](#license)
 
@@ -74,6 +76,13 @@ and their APIs can be found in the IoT Agent Library [documentation](https://iot
 The latest IoT Agent for Ultralight documentation is also available on
 [ReadtheDocs](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
 
+## Contributing
+
+If you'd like to contribute, start by searching through the issues and pull requests to see whether someone else has 
+raised a similar idea or question.
+
+Before contributing, please check out [contribution guidelines](docs/contribution.md)
+
 ## Testing
 
 [Mocha](https://mochajs.org/) Test Runner + [Should.js](https://shouldjs.github.io/) Assertion Library.
@@ -91,11 +100,11 @@ In order to successfuly run the tests, on the local machine three services must 
 They can be run using Docker:
 
 ```shell
-docker pull ansi/mosquitto
+docker pull eclipse-mosquitto
 docker pull mongo
 docker pull rabbitmq
 
-docker run -d -p 1883:1883   -l mosquitto ansi/mosquitto
+docker run -d -p 1883:1883   -l mosquitto eclipse-mosquitto
 docker run -d -p 27017:27017 -l mongodb mongo
 docker run -d -p 5672:5672   -l rabbitmq rabbitmq
 ```
@@ -118,7 +127,7 @@ npm test
 
 The IoT Agent for Ultralight is licensed under [Affero General Public License (GPL) version 3](./LICENSE).
 
-© 2019 Telefonica Investigación y Desarrollo, S.A.U
+© 2021 Telefonica Investigación y Desarrollo, S.A.U
 
 ### Are there any legal issues with AGPL 3.0? Is it safe for me to use?
 

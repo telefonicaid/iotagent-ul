@@ -23,15 +23,15 @@
 
 /* eslint-disable no-unused-vars */
 
-const iotagentMqtt = require('../../');
+const iotagentMqtt = require('../../../');
 const mqtt = require('mqtt');
-const config = require('../config-test.js');
+const config = require('./config-test.js');
 const nock = require('nock');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
 const request = require('request');
-const utils = require('../utils');
+const utils = require('../../utils');
 let contextBrokerMock;
 let oldConfigurationFlag;
 let mqttClient;
@@ -60,8 +60,8 @@ describe('MQTT Transport binding: configurations', function () {
         contextBrokerMock = nock('http://192.168.1.1:1026')
             .matchHeader('fiware-service', 'smartgondor')
             .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v1/updateContext')
-            .reply(200, utils.readExampleFile('./test/contextResponses/provisionDeviceWithConfigurationSuccess.json'));
+            .post('/v2/entities?options=upsert')
+            .reply(204);
 
         oldConfigurationFlag = config.configRetrieval;
         config.configRetrieval = true;
@@ -90,8 +90,8 @@ describe('MQTT Transport binding: configurations', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/queryContext', utils.readExampleFile('./test/contextRequests/getConfiguration.json'))
-                .reply(200, utils.readExampleFile('./test/contextResponses/getConfigurationSuccess.json'));
+                .get('/v2/entities/MQTT%20Device%201/attrs?attrs=pollingInterval,publishInterval&type=AnMQTTDevice')
+                .reply(200, utils.readExampleFile('./test/unit/ngsiv2/contextResponses/getConfigurationSuccess.json'));
 
             mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
 
@@ -157,10 +157,10 @@ describe('MQTT Transport binding: configurations', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v1/subscribeContext',
-                    utils.readExampleFile('./test/configurationRetrieval/subscriptionRequest.json')
+                    '/v2/subscriptions',
+                    utils.readExampleFile('./test/unit/ngsiv2/subscriptionRequests/configurationsMqttRequest.json')
                 )
-                .reply(200, utils.readExampleFile('./test/configurationRetrieval/subscriptionResponse.json'));
+                .reply(201, null, { Location: '/v2/subscriptions/51c0ac9ed714fb3b37d7d5a8' });
 
             mqttClient.subscribe('/1234/MQTT_device_1/configuration/values', null);
 
@@ -186,7 +186,9 @@ describe('MQTT Transport binding: configurations', function () {
             const optionsNotify = {
                 url: 'http://localhost:' + config.iota.server.port + '/notify',
                 method: 'POST',
-                json: utils.readExampleFile('./test/configurationRetrieval/notification.json'),
+                json: utils.readExampleFile(
+                    './test/unit/ngsiv2/subscriptionRequests/configurationsMqttNotification.json'
+                ),
                 headers: {
                     'fiware-service': 'smartgondor',
                     'fiware-servicepath': '/gardens'

@@ -1,0 +1,13 @@
+{
+  "actionType": "update",
+  "entities": [
+    {
+      "id": "Wrong MQTT Device",
+      "type": "AnMQTTDevice",
+      "PING": {
+          "type": "command",
+          "value": 22
+      }
+    }
+  ]
+}

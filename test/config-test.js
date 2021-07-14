@@ -54,7 +54,7 @@ config.iota = {
         type: 'memory'
     },
     types: {},
-    service: 'howtoService',
+    service: 'howtoservice',
     subservice: '/howto',
     providerUrl: 'http://localhost:4061',
     deviceRegistrationDuration: 'P1M',
