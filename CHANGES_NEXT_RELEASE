@@ -1,3 +1,3 @@
 Fix: check access to active attribute of device before use it (twin of iota-json#576)
 Fix: processing configurations subscriptions in NGSIv2 (twin of iota-json#563)
-Remove: NGSI-v1 specific behaviours (twin of iota-ul#533)
+Remove: NGSI-v1 specific behaviours (twin of iota-json#533)
