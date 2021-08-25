@@ -355,6 +355,12 @@ config.iota = {
 };
 
 /**
+ * map {name: function} of extra transformations avaliable at JEXL plugin
+ */
+
+config.jexlTransformations = {};
+
+/**
  * flag indicating whether the incoming notifications to the IoTAgent should be processed using the bidirectionality
  * plugin from the latest versions of the library or the UL-specific configuration retrieval mechanism.
  */
