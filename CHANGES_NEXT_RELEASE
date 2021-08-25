@@ -1,3 +1,4 @@
 Fix: content-type response for get command to text/plain
 Fix: check access to active attribute of device before use it (twin of iota-json#576)
 Fix: processing configurations subscriptions in NGSIv2 (twin of iota-json#563)
+Feature: Add new JEXL transformations from config file.
