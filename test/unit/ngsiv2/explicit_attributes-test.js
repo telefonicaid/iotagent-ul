@@ -31,7 +31,6 @@ const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
 const async = require('async');
-const request = require('request');
 const utils = require('../../utils');
 const groupCreation = {
     url: 'http://localhost:' + config.iota.server.port + '/iot/services',
@@ -147,7 +146,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -173,13 +172,13 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsTrue, function (error, response, body) {
+            utils.request(groupExplicitAttrsTrue, function (error, response, body) {
                 done();
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -190,7 +189,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -244,15 +243,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsTrue, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupExplicitAttrsTrue, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store all attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -263,7 +262,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -316,15 +315,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsTrue, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupExplicitAttrsTrue, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -335,7 +334,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -387,15 +386,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsTrue, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupExplicitAttrsTrue, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -406,7 +405,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -433,13 +432,13 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsFalse, function (error, response, body) {
+            utils.request(groupExplicitAttrsFalse, function (error, response, body) {
                 done();
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -450,7 +449,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -504,15 +503,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsFalse, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupExplicitAttrsFalse, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store all attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -523,7 +522,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -576,15 +575,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsFalse, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupExplicitAttrsFalse, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -595,7 +594,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -648,15 +647,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupExplicitAttrsFalse, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupExplicitAttrsFalse, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -667,7 +666,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -694,13 +693,13 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupWithoutExplicitAttrs, function (error, response, body) {
+            utils.request(groupWithoutExplicitAttrs, function (error, response, body) {
                 done();
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -711,7 +710,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -765,15 +764,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupWithoutExplicitAttrs, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupWithoutExplicitAttrs, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store all attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -784,7 +783,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -837,15 +836,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupWithoutExplicitAttrs, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupWithoutExplicitAttrs, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -856,7 +855,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            qs: {
+            searchParams: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -909,15 +908,15 @@ describe('explicitAttrs tests ', function () {
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
 
-            request(groupWithoutExplicitAttrs, function (error, response, body) {
-                request(provisionDevice, function (error, response, body) {
+            utils.request(groupWithoutExplicitAttrs, function (error, response, body) {
+                utils.request(provisionDevice, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should store only explicit attributes', function (done) {
-            request(optionsMeasure, function (error, result, body) {
+            utils.request(optionsMeasure, function (error, result, body) {
                 contextBrokerMock.done();
                 done();
             });

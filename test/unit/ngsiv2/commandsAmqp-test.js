@@ -30,7 +30,6 @@ const iotagentMqtt = require('../../../');
 const config = require('./config-test.js');
 const nock = require('nock');
 const async = require('async');
-const request = require('request');
 const utils = require('../../utils');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
@@ -88,7 +87,7 @@ describe('AMQP Transport binding: commands', function () {
         async.series(
             [
                 apply(iotagentMqtt.start, config),
-                apply(request, provisionOptions),
+                apply(utils.request, provisionOptions),
                 apply(startConnection, config.amqp.exchange)
             ],
             done
@@ -128,14 +127,14 @@ describe('AMQP Transport binding: commands', function () {
         });
 
         it('should return a 204 OK without errors', function (done) {
-            request(commandOptions, function (error, response, body) {
+            utils.request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
             });
         });
         it('should update the status in the Context Broker', function (done) {
-            request(commandOptions, function (error, response, body) {
+            utils.request(commandOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -157,7 +156,7 @@ describe('AMQP Transport binding: commands', function () {
                     { noAck: true }
                 );
 
-                request(commandOptions, function (error, response, body) {
+                utils.request(commandOptions, function (error, response, body) {
                     setTimeout(function () {
                         should.exist(payload);
                         payload.should.equal(commandMsg);
@@ -235,14 +234,14 @@ describe('AMQP Transport binding: commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post(
+                .patch(
                     '/v2/entities/Fourth%20MQTT%20Device/attrs?type=MQTTCommandDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus3.json')
                 )
                 .reply(204);
 
-            request(configurationOptions, function (error, response, body) {
-                request(provisionOptionsAlt, function (error, response, body) {
+            utils.request(configurationOptions, function (error, response, body) {
+                utils.request(provisionOptionsAlt, function (error, response, body) {
                     done();
                 });
             });
@@ -265,7 +264,7 @@ describe('AMQP Transport binding: commands', function () {
                     { noAck: true }
                 );
 
-                request(commandOptions, function (error, response, body) {
+                utils.request(commandOptions, function (error, response, body) {
                     setTimeout(function () {
                         should.exist(payload);
                         payload.should.equal(commandMsg);

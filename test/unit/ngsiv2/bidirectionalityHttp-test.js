@@ -30,7 +30,6 @@ const config = require('./config-test.js');
 const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
-const request = require('request');
 const utils = require('../../utils');
 let mockedClientServer;
 let contextBrokerMock;
@@ -89,14 +88,14 @@ describe('Data Bidirectionality: HTTP', function () {
                 .reply(204);
 
             iotagentUl.start(config, function (error) {
-                request(provisionOptions, function (error, response, body) {
+                utils.request(provisionOptions, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should return a 200 OK', function (done) {
-            request(notificationOptions, function (error, response, body) {
+            utils.request(notificationOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
@@ -104,7 +103,7 @@ describe('Data Bidirectionality: HTTP', function () {
         });
 
         it('should leave the data in the polling queue', function (done) {
-            request(notificationOptions, function (error, response, body) {
+            utils.request(notificationOptions, function (error, response, body) {
                 iotAgentLib.commandQueue('smartgondor', '/gardens', 'MQTT_2', function (error, list) {
                     should.not.exist(error);
 
@@ -115,7 +114,7 @@ describe('Data Bidirectionality: HTTP', function () {
         });
 
         it('should send all the data from the notification in command syntax', function (done) {
-            request(notificationOptions, function (error, response, body) {
+            utils.request(notificationOptions, function (error, response, body) {
                 iotAgentLib.commandQueue('smartgondor', '/gardens', 'MQTT_2', function (error, list) {
                     let latitudeFound = false;
                     let longitudeFound = false;
@@ -206,14 +205,14 @@ describe('Data Bidirectionality: HTTP', function () {
                 .reply(200, '');
 
             iotagentUl.start(config, function (error) {
-                request(provisionOptions, function (error, response, body) {
+                utils.request(provisionOptions, function (error, response, body) {
                     done();
                 });
             });
         });
 
         it('should return a 200 OK', function (done) {
-            request(notificationOptions, function (error, response, body) {
+            utils.request(notificationOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
@@ -221,7 +220,7 @@ describe('Data Bidirectionality: HTTP', function () {
         });
 
         it('should send all the data from the notification in command syntax', function (done) {
-            request(notificationOptions, function (error, response, body) {
+            utils.request(notificationOptions, function (error, response, body) {
                 mockedClientServer.done();
                 done();
             });

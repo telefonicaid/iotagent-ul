@@ -24,6 +24,7 @@
 /* eslint-disable no-unused-vars */
 
 const fs = require('fs');
+const got = require('got');
 
 function readExampleFile(name, raw) {
     let text = null;
@@ -37,7 +38,7 @@ function readExampleFile(name, raw) {
 }
 
 function delay(ms) {
-    return function(callback) {
+    return function (callback) {
         setTimeout(callback, ms);
     };
 }
@@ -51,7 +52,7 @@ function parseConfigurationResponse(payload) {
     _result.device = _device[0];
     _result.type = _fields[0];
 
-    _attributes.forEach(function(item, index) {
+    _attributes.forEach(function (item, index) {
         const _attribute = item.split('=');
         _result[_attribute[0]] = _attribute[1];
     });
@@ -59,6 +60,30 @@ function parseConfigurationResponse(payload) {
     return _result;
 }
 
+function request(options, callback) {
+    const httpOptions = {
+        method: options.method,
+        searchParams: options.searchParams,
+        headers: options.headers,
+        throwHttpErrors: false,
+        retry: 0
+    };
+
+    if (options.method !== 'GET') {
+        httpOptions.json = options.json;
+        httpOptions.body = options.body;
+    }
+
+    got(options.url, httpOptions)
+        .then((response) => {
+            return callback(null, response, response.body);
+        })
+        .catch((error) => {
+            return callback(error);
+        });
+}
+
 exports.readExampleFile = readExampleFile;
 exports.parseConfigurationResponse = parseConfigurationResponse;
 exports.delay = delay;
+exports.request = request;

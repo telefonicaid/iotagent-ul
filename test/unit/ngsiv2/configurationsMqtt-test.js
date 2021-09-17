@@ -30,7 +30,6 @@ const nock = require('nock');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
-const request = require('request');
 const utils = require('../../utils');
 let contextBrokerMock;
 let oldConfigurationFlag;
@@ -48,7 +47,7 @@ describe('MQTT Transport binding: configurations', function () {
             }
         };
 
-        config.logLevel = 'INFO';
+        config.logLevel = 'FATAL';
 
         nock.cleanAll();
 
@@ -67,7 +66,7 @@ describe('MQTT Transport binding: configurations', function () {
         config.configRetrieval = true;
 
         iotagentMqtt.start(config, function () {
-            request(provisionOptions, function (error, response, body) {
+            utils.request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -203,7 +202,7 @@ describe('MQTT Transport binding: configurations', function () {
 
             mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
                 setTimeout(function () {
-                    request(optionsNotify, function (error, response, body) {
+                    utils.request(optionsNotify, function (error, response, body) {
                         setTimeout(function () {
                             configurationReceived.should.equal(true);
                             done();

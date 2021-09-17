@@ -31,7 +31,6 @@ const config = require('./config-test.js');
 const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
-const request = require('request');
 const utils = require('../../utils');
 let contextBrokerMock;
 let contextBrokerUnprovMock;
@@ -66,7 +65,7 @@ describe('MQTT Transport binding: measures', function () {
             .reply(204);
 
         iotagentUL.start(config, function () {
-            request(provisionOptions, function (error, response, body) {
+            utils.request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -190,7 +189,7 @@ describe('MQTT Transport binding: measures', function () {
                 .query({ type: 'SensorMachine' })
                 .reply(204);
 
-            request(groupCreation, function (error, response, body) {
+            utils.request(groupCreation, function (error, response, body) {
                 done();
             });
         });
@@ -423,7 +422,7 @@ describe('MQTT Transport binding: measures', function () {
 
             iotagentUL.stop(function () {
                 iotagentUL.start(config, function (error) {
-                    request(provisionProduction, function (error, response, body) {
+                    utils.request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
