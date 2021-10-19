@@ -31,6 +31,7 @@ const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
 const async = require('async');
+
 const utils = require('../../utils');
 const groupCreation = {
     url: 'http://localhost:' + config.iota.server.port + '/iot/services',
@@ -146,7 +147,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -189,7 +190,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -262,7 +263,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -334,7 +335,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -405,7 +406,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -449,7 +450,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -522,7 +523,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -594,7 +595,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -666,7 +667,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -710,7 +711,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -783,7 +784,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'
@@ -855,7 +856,7 @@ describe('explicitAttrs tests ', function () {
         const optionsMeasure = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'JSON_UNPROVISIONED',
                 k: 'KL223HHV8732SFL1',
                 d: 'h|33|t|89'

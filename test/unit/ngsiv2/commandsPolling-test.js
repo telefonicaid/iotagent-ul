@@ -31,6 +31,7 @@ const config = require('./config-test.js');
 const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
+
 const utils = require('../../utils');
 let mockedClientServer;
 let contextBrokerMock;
@@ -122,11 +123,12 @@ describe('HTTP Transport binding: polling commands', function () {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             body: 'a|23',
-            searchParams: {
+            qs: {
                 i: 'MQTT_2',
                 k: '1234',
                 getCmd: 1
-            }
+            },
+            responseType: 'text'
         };
 
         beforeEach(function (done) {
@@ -153,6 +155,7 @@ describe('HTTP Transport binding: polling commands', function () {
 
         it('should return a list of the pending commands', function (done) {
             utils.request(deviceRequest, function (error, response, body) {
+                should.not.exist(error);
                 response.statusCode.should.equal(200);
                 should.exist(body);
                 body.should.equal('MQTT_2@PING|data=22');
@@ -185,22 +188,23 @@ describe('HTTP Transport binding: polling commands', function () {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             body: 'a|23',
-            searchParams: {
+            qs: {
                 i: 'MQTT_2',
                 k: '1234',
                 getCmd: 1
-            }
+            },
+            responseType: 'text'
         };
 
         const deviceRequestWithoutPayload = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
-            json: true,
-            searchParams: {
+            qs: {
                 i: 'MQTT_2',
                 k: '1234',
                 getCmd: 1
-            }
+            },
+            responseType: 'text'
         };
 
         beforeEach(function (done) {
@@ -263,21 +267,22 @@ describe('HTTP Transport binding: polling commands', function () {
             uri: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
             body: 'MQTT_2@PING|MADE_OK',
-            searchParams: {
+            qs: {
                 i: 'MQTT_2',
                 k: '1234'
-            }
+            },
+            responseType: 'text'
         };
 
         beforeEach(function (done) {
-            /*contextBrokerMock
+            contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
                     '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus5.json')
                 )
-                .reply(204);*/
+                .reply(204);
 
             utils.request(commandOptions, done);
         });

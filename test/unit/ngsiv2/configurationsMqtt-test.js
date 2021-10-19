@@ -30,6 +30,7 @@ const nock = require('nock');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
+
 const utils = require('../../utils');
 let contextBrokerMock;
 let oldConfigurationFlag;
@@ -47,7 +48,7 @@ describe('MQTT Transport binding: configurations', function () {
             }
         };
 
-        config.logLevel = 'FATAL';
+        config.logLevel = 'INFO';
 
         nock.cleanAll();
 

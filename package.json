@@ -1,7 +1,7 @@
 {
   "name": "iotagent-ul",
   "license": "AGPL-3.0-only",
-  "description": "IoT Agent for the Ultrlight 2.0 protocol",
+  "description": "IoT Agent for the Ultralight 2.0 protocol",
   "version": "1.18.0-next",
   "homepage": "https://github.com/telefonicaid/iotagent-ul",
   "author": {
@@ -39,10 +39,9 @@
     "body-parser": "1.18.3",
     "dateformat": "3.0.3",
     "express": "~4.16.4",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
+    "iotagent-node-lib": "git://github.com/jason-fox/iotagent-node-lib.git#feature/request-shim",
     "logops": "2.1.0",
     "mqtt": "3.0.0",
-    "got": "^11.8.2",
     "underscore": "1.12.1"
   },
   "devDependencies": {
@@ -76,13 +75,16 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --config .prettierrc.json --write"
+      "prettier --config .prettierrc.json --write",
+      "git add"
     ],
     "*.md": [
-      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always"
+      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
+      "git add"
     ],
     "*.yml": [
-      "prettier --no-config --write"
+      "prettier --no-config --write",
+      "git add"
     ]
   },
   "remarkConfig": {

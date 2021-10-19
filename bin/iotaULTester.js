@@ -31,7 +31,7 @@ const defaultConfig = require('../client-config.js');
 const commandLine = require('iotagent-node-lib').commandLine;
 const clUtils = commandLine.clUtils;
 const mqtt = require('mqtt');
-const got = require('got');
+const request = require('iotagent-node-lib').request;
 const async = require('async');
 const _ = require('underscore');
 let mqttClient;
@@ -114,22 +114,18 @@ function singleMeasure(commands) {
 
         mqttClient.publish(topic, commands[1], null, mqttPublishHandler);
     } else {
-        got('http://' + config.host + ':' + config.httpPort + config.httpPath, {
+        const httpRequest = {
+            url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
             method: 'GET',
-            searchParams: {
+            qs: {
                 i: config.deviceId,
                 k: config.apikey,
                 d: commands[0] + '|' + commands[1]
             },
-            throwHttpErrors: false,
-            retry: 0
-        })
-            .then((response) => {
-                return httpPublishHandler(null, response, response.body);
-            })
-            .catch((error) => {
-                return httpPublishHandler(error);
-            });
+            responseType: 'text'
+        };
+
+        request(httpRequest, httpPublishHandler);
     }
 }
 
@@ -171,22 +167,18 @@ function multipleMeasure(commands) {
     if (config.binding === 'MQTT') {
         mqttClient.publish(topic, values, null, mqttPublishHandler);
     } else {
-        got('http://' + config.host + ':' + config.httpPort + config.httpPath, {
+        const httpRequest = {
+            url: 'http://' + config.host + ':' + config.httpPort + config.httpPath,
             method: 'GET',
-            searchParams: {
+            qs: {
                 i: config.deviceId,
                 k: config.apikey,
-                d: commands[0] + '|' + commands[1]
+                d: values
             },
-            throwHttpErrors: false,
-            retry: 0
-        })
-            .then((response) => {
-                return httpPublishHandler(null, response, response.body);
-            })
-            .catch((error) => {
-                return httpPublishHandler(error);
-            });
+            responseType: 'text'
+        };
+
+        request(httpRequest, httpPublishHandler);
     }
 }
 

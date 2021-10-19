@@ -32,6 +32,7 @@ const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
 const async = require('async');
+
 const utils = require('../../utils');
 let contextBrokerUnprovMock;
 let contextBrokerMock;
@@ -89,7 +90,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234',
                 d: 'temperature|23'
@@ -109,14 +110,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -127,7 +128,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234',
                 d:
@@ -151,14 +152,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -169,7 +170,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
-            searchParams: {
+            qs: {
                 i: 'UL_UNPROVISIONED',
                 k: '80K09H324HV8732',
                 d: 'temperature|23'
@@ -211,14 +212,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerUnprovMock.done();
                 done();
             });
@@ -234,15 +235,13 @@ describe('HTTP Transport binding: measures', function () {
                 }
             };
 
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 utils.request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
 
-                    const parsedBody = JSON.parse(body);
-
                     response.statusCode.should.equal(200);
-                    should.exist(parsedBody.protocol);
-                    parsedBody.protocol.should.equal('HTTP_UL');
+                    should.exist(body.protocol);
+                    body.protocol.should.equal('HTTP_UL');
                     done();
                 });
             });
@@ -257,15 +256,12 @@ describe('HTTP Transport binding: measures', function () {
                 }
             };
 
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 utils.request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
-
-                    const parsedBody = JSON.parse(body);
-
                     response.statusCode.should.equal(200);
-                    should.exist(parsedBody.transport);
-                    parsedBody.transport.should.equal('HTTP');
+                    should.exist(body.transport);
+                    body.transport.should.equal('HTTP');
                     done();
                 });
             });
@@ -276,7 +272,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234',
                 t: '20160530T162522304Z',
@@ -297,14 +293,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -315,7 +311,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234',
                 d: 'temperature|23|humidity|98'
@@ -335,14 +331,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with those attributes', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -353,7 +349,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234'
             },
@@ -376,14 +372,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -394,7 +390,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234'
             },
@@ -427,14 +423,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -445,7 +441,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '1234'
             },
@@ -478,14 +474,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -496,7 +492,7 @@ describe('HTTP Transport binding: measures', function () {
         const postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
                 k: '1234',
                 t: '2016-05-11T10:12:26.476659Z'
@@ -547,7 +543,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '80K09H324HV8732',
                 d: 'Correlation|23'
@@ -580,7 +576,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the configuration values for the attributes alias not included in the device', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -591,7 +587,7 @@ describe('HTTP Transport binding: measures', function () {
         const getOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'HTTP_2',
                 k: '80K09H324HV8732',
                 d: 'Correlation|23'
@@ -635,7 +631,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the device preference', function (done) {
-            utils.request(getOptions, function (error, response, body) {
+            utils.requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -646,7 +642,7 @@ describe('HTTP Transport binding: measures', function () {
         const postOptions = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
                 k: '1234',
                 t: '2016-05-11T10:12:26.476659Z'
@@ -741,7 +737,7 @@ describe('HTTP Transport binding: measures', function () {
         const timeInstantRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'timestampedDevice',
                 k: '1234'
             },
@@ -806,7 +802,7 @@ describe('HTTP Transport binding: measures', function () {
         const timeInstantRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'timestampedDevice',
                 k: '1234'
             },
@@ -871,7 +867,7 @@ describe('HTTP Transport binding: measures', function () {
         const timeInstantRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'timestampedDevice',
                 k: '1234'
             },
@@ -936,7 +932,7 @@ describe('HTTP Transport binding: measures', function () {
         const timeInstantRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'timestampedDevice',
                 k: '1234',
                 d: 'tmp|24.4|humidity|32|tt|2020-06-14T12:19:26.476659Z'
@@ -1001,7 +997,7 @@ describe('HTTP Transport binding: measures', function () {
         const timeInstantRequest = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'POST',
-            searchParams: {
+            qs: {
                 i: 'timestampedDevice',
                 k: '1234',
                 d: 'tmp|24.4|humidity|32|tt|2020-06-14T12:19:26.476659Z'

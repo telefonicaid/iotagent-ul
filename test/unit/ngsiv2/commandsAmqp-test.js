@@ -30,6 +30,7 @@ const iotagentMqtt = require('../../../');
 const config = require('./config-test.js');
 const nock = require('nock');
 const async = require('async');
+
 const utils = require('../../utils');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
@@ -234,7 +235,7 @@ describe('AMQP Transport binding: commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Fourth%20MQTT%20Device/attrs?type=MQTTCommandDevice',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus3.json')
                 )
