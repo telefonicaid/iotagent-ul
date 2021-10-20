@@ -35,6 +35,7 @@ const async = require('async');
 
 const utils = require('../../utils');
 const request = utils.request;
+const requestText = utils.requestText;
 let contextBrokerUnprovMock;
 let contextBrokerMock;
 let iotamMock;
@@ -111,14 +112,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -153,14 +154,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -213,14 +214,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerUnprovMock.done();
                 done();
             });
@@ -236,7 +237,7 @@ describe('HTTP Transport binding: measures', function () {
                 }
             };
 
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
 
@@ -257,7 +258,7 @@ describe('HTTP Transport binding: measures', function () {
                 }
             };
 
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
                     response.statusCode.should.equal(200);
@@ -294,14 +295,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -332,14 +333,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with those attributes', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -373,14 +374,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a new update context request to the Context Broker with just that attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -424,14 +425,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -475,14 +476,14 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
             });
         });
         it('should send a two update context requests to the Context Broker one with each attribute', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -577,7 +578,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the configuration values for the attributes alias not included in the device', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -632,7 +633,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the device preference', function (done) {
-            utils.requestText(getOptions, function (error, response, body) {
+            requestText(getOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
