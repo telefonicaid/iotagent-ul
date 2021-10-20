@@ -34,6 +34,7 @@ const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
 
 const utils = require('../../utils');
+const request = utils.request;
 let mockedClientServer;
 let contextBrokerMock;
 
@@ -66,7 +67,7 @@ describe('HTTP: Commands', function () {
             .reply(204);
 
         iotagentMqtt.start(config, function () {
-            utils.request(provisionOptions, function (error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -115,14 +116,14 @@ describe('HTTP: Commands', function () {
         });
 
         it('should return a 204 OK without errors', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
             });
         });
         it('should update the status in the Context Broker', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();
@@ -130,7 +131,7 @@ describe('HTTP: Commands', function () {
             });
         });
         it('should publish the command information in the MQTT topic', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 setTimeout(function () {
                     mockedClientServer.done();
                     done();
@@ -174,7 +175,7 @@ describe('HTTP: Commands', function () {
         });
 
         it('should update the status in the Context Broker', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();
@@ -233,7 +234,7 @@ describe('HTTP: Commands', function () {
                 })
                 .reply(204);
 
-            utils.request(provisionWrongEndpoint, function (error, response, body) {
+            request(provisionWrongEndpoint, function (error, response, body) {
                 setTimeout(function () {
                     done();
                 }, 50);
@@ -241,7 +242,7 @@ describe('HTTP: Commands', function () {
         });
 
         it('should return a 204 OK without errors', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
@@ -249,7 +250,7 @@ describe('HTTP: Commands', function () {
         });
 
         it('should update the status in the Context Broker', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();

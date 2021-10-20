@@ -32,6 +32,7 @@ const nock = require('nock');
 const async = require('async');
 
 const utils = require('../../utils');
+const request = utils.request;
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const amqp = require('amqplib/callback_api');
@@ -128,14 +129,14 @@ describe('AMQP Transport binding: commands', function () {
         });
 
         it('should return a 204 OK without errors', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
             });
         });
         it('should update the status in the Context Broker', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -157,7 +158,7 @@ describe('AMQP Transport binding: commands', function () {
                     { noAck: true }
                 );
 
-                utils.request(commandOptions, function (error, response, body) {
+                request(commandOptions, function (error, response, body) {
                     setTimeout(function () {
                         should.exist(payload);
                         payload.should.equal(commandMsg);
@@ -241,8 +242,8 @@ describe('AMQP Transport binding: commands', function () {
                 )
                 .reply(204);
 
-            utils.request(configurationOptions, function (error, response, body) {
-                utils.request(provisionOptionsAlt, function (error, response, body) {
+            request(configurationOptions, function (error, response, body) {
+                request(provisionOptionsAlt, function (error, response, body) {
                     done();
                 });
             });
@@ -265,7 +266,7 @@ describe('AMQP Transport binding: commands', function () {
                     { noAck: true }
                 );
 
-                utils.request(commandOptions, function (error, response, body) {
+                request(commandOptions, function (error, response, body) {
                     setTimeout(function () {
                         should.exist(payload);
                         payload.should.equal(commandMsg);

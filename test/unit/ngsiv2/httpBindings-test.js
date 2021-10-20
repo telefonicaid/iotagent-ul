@@ -34,6 +34,7 @@ const should = require('should');
 const async = require('async');
 
 const utils = require('../../utils');
+const request = utils.request;
 let contextBrokerUnprovMock;
 let contextBrokerMock;
 let iotamMock;
@@ -72,7 +73,7 @@ describe('HTTP Transport binding: measures', function () {
         };
 
         iotagentUl.start(config, function () {
-            utils.request(provisionOptions, function (error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -206,7 +207,7 @@ describe('HTTP Transport binding: measures', function () {
                 .query({ type: 'SensorMachine' })
                 .reply(204);
 
-            utils.request(groupCreation, function (error, response, body) {
+            request(groupCreation, function (error, response, body) {
                 done();
             });
         });
@@ -236,7 +237,7 @@ describe('HTTP Transport binding: measures', function () {
             };
 
             utils.requestText(getOptions, function (error, response, body) {
-                utils.request(getDeviceOptions, function (error, response, body) {
+                request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
 
                     response.statusCode.should.equal(200);
@@ -257,7 +258,7 @@ describe('HTTP Transport binding: measures', function () {
             };
 
             utils.requestText(getOptions, function (error, response, body) {
-                utils.request(getDeviceOptions, function (error, response, body) {
+                request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
                     response.statusCode.should.equal(200);
                     should.exist(body.transport);
@@ -524,13 +525,13 @@ describe('HTTP Transport binding: measures', function () {
                 .query({ type: 'repeater:illuminance' })
                 .reply(204);
 
-            utils.request(provisionOptions, function (error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
 
         it('should end up with a 200OK status code', function (done) {
-            utils.request(postOptions, function (error, response, body) {
+            request(postOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
 
@@ -570,7 +571,7 @@ describe('HTTP Transport binding: measures', function () {
                 .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
-            utils.request(groupCreation, function (error, response, body) {
+            request(groupCreation, function (error, response, body) {
                 done();
             });
         });
@@ -623,8 +624,8 @@ describe('HTTP Transport binding: measures', function () {
                 .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
-            utils.request(groupCreation, function (error, response, body) {
-                utils.request(deviceCreation, function (error, response, body) {
+            request(groupCreation, function (error, response, body) {
+                request(deviceCreation, function (error, response, body) {
                     done();
                 });
             });
@@ -703,7 +704,7 @@ describe('HTTP Transport binding: measures', function () {
 
             iotagentUl.stop(function () {
                 iotagentUl.start(config, function (error) {
-                    utils.request(provisionProduction, function (error, response, body) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
@@ -715,7 +716,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should end up with a 200 OK status code', function (done) {
-            utils.request(postOptions, function (error, response, body) {
+            request(postOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
 
@@ -724,7 +725,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should send all the requests to the CB', function (done) {
-            utils.request(postOptions, function (error, response, body) {
+            request(postOptions, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
 
@@ -778,7 +779,7 @@ describe('HTTP Transport binding: measures', function () {
 
             iotagentUl.stop(function () {
                 iotagentUl.start(config, function (error) {
-                    utils.request(provisionProduction, function (error, response, body) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
@@ -790,7 +791,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function (done) {
-            utils.request(timeInstantRequest, function (error, response, body) {
+            request(timeInstantRequest, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();
@@ -843,7 +844,7 @@ describe('HTTP Transport binding: measures', function () {
 
             iotagentUl.stop(function () {
                 iotagentUl.start(config, function (error) {
-                    utils.request(provisionProduction, function (error, response, body) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
@@ -855,7 +856,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function (done) {
-            utils.request(timeInstantRequest, function (error, response, body) {
+            request(timeInstantRequest, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();
@@ -908,7 +909,7 @@ describe('HTTP Transport binding: measures', function () {
 
             iotagentUl.stop(function () {
                 iotagentUl.start(config, function (error) {
-                    utils.request(provisionProduction, function (error, response, body) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
@@ -920,7 +921,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function (done) {
-            utils.request(timeInstantRequest, function (error, response, body) {
+            request(timeInstantRequest, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();
@@ -973,7 +974,7 @@ describe('HTTP Transport binding: measures', function () {
 
             iotagentUl.stop(function () {
                 iotagentUl.start(config, function (error) {
-                    utils.request(provisionProduction, function (error, response, body) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
@@ -985,7 +986,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function (done) {
-            utils.request(timeInstantRequest, function (error, response, body) {
+            request(timeInstantRequest, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();
@@ -1038,7 +1039,7 @@ describe('HTTP Transport binding: measures', function () {
 
             iotagentUl.stop(function () {
                 iotagentUl.start(config, function (error) {
-                    utils.request(provisionProduction, function (error, response, body) {
+                    request(provisionProduction, function (error, response, body) {
                         done();
                     });
                 });
@@ -1050,7 +1051,7 @@ describe('HTTP Transport binding: measures', function () {
         });
 
         it('should use the provided TimeInstant as the general timestamp for the measures', function (done) {
-            utils.request(timeInstantRequest, function (error, response, body) {
+            request(timeInstantRequest, function (error, response, body) {
                 should.not.exist(error);
                 contextBrokerMock.done();
                 done();

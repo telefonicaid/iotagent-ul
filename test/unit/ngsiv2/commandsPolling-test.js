@@ -33,6 +33,7 @@ const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
 
 const utils = require('../../utils');
+const request = utils.request;
 let mockedClientServer;
 let contextBrokerMock;
 
@@ -83,7 +84,7 @@ describe('HTTP Transport binding: polling commands', function () {
             .reply(204);
 
         iotagentUl.start(config, function (error) {
-            utils.request(provisionOptions, function (error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -99,7 +100,7 @@ describe('HTTP Transport binding: polling commands', function () {
 
     describe('When a command arrives to the IoTA with HTTP transport and no endpoint', function () {
         it('should return a 204 OK without errors', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
@@ -107,7 +108,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should be stored in the commands collection', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 iotAgentLib.commandQueue('smartgondor', '/gardens', 'MQTT_2', function (error, list) {
                     should.not.exist(error);
                     list.count.should.equal(1);
@@ -150,11 +151,11 @@ describe('HTTP Transport binding: polling commands', function () {
                 )
                 .reply(204);
 
-            utils.request(commandOptions, done);
+            request(commandOptions, done);
         });
 
         it('should return a list of the pending commands', function (done) {
-            utils.request(deviceRequest, function (error, response, body) {
+            request(deviceRequest, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 should.exist(body);
@@ -164,7 +165,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should be marked as delivered in the Context Broker', function (done) {
-            utils.request(deviceRequest, function (error, response, body) {
+            request(deviceRequest, function (error, response, body) {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();
@@ -173,7 +174,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should remove them from the IoTAgent', function (done) {
-            utils.request(deviceRequest, function (error, response, body) {
+            request(deviceRequest, function (error, response, body) {
                 iotAgentLib.commandQueue('smartgondor', '/gardens', 'MQTT_2', function (error, list) {
                     should.not.exist(error);
                     list.count.should.equal(0);
@@ -226,11 +227,11 @@ describe('HTTP Transport binding: polling commands', function () {
                 )
                 .reply(204);
 
-            utils.request(commandOptions, done);
+            request(commandOptions, done);
         });
 
         it('should return a list of the pending commands', function (done) {
-            utils.request(deviceRequestWithoutPayload, function (error, response, body) {
+            request(deviceRequestWithoutPayload, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 body.should.equal('MQTT_2@PING|data=22');
@@ -239,7 +240,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should be marked as delivered in the Context Broker', function (done) {
-            utils.request(deviceRequest, function (error, response, body) {
+            request(deviceRequest, function (error, response, body) {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();
@@ -248,7 +249,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should remove them from the IoTAgent', function (done) {
-            utils.request(deviceRequest, function (error, response, body) {
+            request(deviceRequest, function (error, response, body) {
                 iotAgentLib.commandQueue('smartgondor', '/gardens', 'MQTT_2', function (error, list) {
                     should.not.exist(error);
                     list.count.should.equal(0);
@@ -284,11 +285,11 @@ describe('HTTP Transport binding: polling commands', function () {
                 )
                 .reply(204);
 
-            utils.request(commandOptions, done);
+            request(commandOptions, done);
         });
 
         it('should update the entity in the Context Broker with the OK status and the result', function (done) {
-            utils.request(commandResponse, function (error, response, body) {
+            request(commandResponse, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });

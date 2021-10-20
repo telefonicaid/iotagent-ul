@@ -32,6 +32,7 @@ const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
 
 const utils = require('../../utils');
+const request = utils.request;
 let contextBrokerMock;
 let oldConfigurationFlag;
 let mqttClient;
@@ -67,7 +68,7 @@ describe('MQTT Transport binding: configurations', function () {
         config.configRetrieval = true;
 
         iotagentMqtt.start(config, function () {
-            utils.request(provisionOptions, function (error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -203,7 +204,7 @@ describe('MQTT Transport binding: configurations', function () {
 
             mqttClient.publish('/1234/MQTT_device_1/configuration/commands', values, null, function (error) {
                 setTimeout(function () {
-                    utils.request(optionsNotify, function (error, response, body) {
+                    request(optionsNotify, function (error, response, body) {
                         setTimeout(function () {
                             configurationReceived.should.equal(true);
                             done();

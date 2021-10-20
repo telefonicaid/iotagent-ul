@@ -35,6 +35,7 @@ const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
 
 const utils = require('../../utils');
+const request = utils.request;
 let contextBrokerMock;
 let mqttClient;
 
@@ -74,7 +75,7 @@ describe('MQTT: Commands', function () {
             .reply(204);
 
         iotagentMqtt.start(config, function () {
-            utils.request(provisionOptions, function (error, response, body) {
+            request(provisionOptions, function (error, response, body) {
                 done();
             });
         });
@@ -111,14 +112,14 @@ describe('MQTT: Commands', function () {
         });
 
         it('should return a 204 OK without errors', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(204);
                 done();
             });
         });
         it('should update the status in the Context Broker', function (done) {
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
@@ -131,7 +132,7 @@ describe('MQTT: Commands', function () {
                 payload = data.toString();
             });
 
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 setTimeout(function () {
                     should.exist(payload);
                     payload.should.equal(commandMsg);
@@ -213,8 +214,8 @@ describe('MQTT: Commands', function () {
                 )
                 .reply(204);
 
-            utils.request(configurationOptions, function (error, response, body) {
-                utils.request(provisionOptionsAlt, function (error, response, body) {
+            request(configurationOptions, function (error, response, body) {
+                request(provisionOptionsAlt, function (error, response, body) {
                     mqttClient.subscribe('/ALTERNATIVE/MQTT_4/cmd', null);
 
                     done();
@@ -235,7 +236,7 @@ describe('MQTT: Commands', function () {
                 payload = data.toString();
             });
 
-            utils.request(commandOptions, function (error, response, body) {
+            request(commandOptions, function (error, response, body) {
                 setTimeout(function () {
                     should.exist(payload);
                     payload.should.equal(commandMsg);
