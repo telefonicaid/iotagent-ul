@@ -79,12 +79,10 @@
       "git add"
     ],
     "*.md": [
-      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
-      "git add"
+      "prettier --no-config --tab-width 4 --print-width 120 --write --prose-wrap always"
     ],
     "*.yml": [
-      "prettier --no-config --write",
-      "git add"
+      "prettier --no-config --write"
     ]
   },
   "remarkConfig": {
