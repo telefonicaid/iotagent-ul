@@ -1,0 +1,19 @@
+{
+    "enabler": "IoT Agent for the Ultralight 2.0 protocol",
+    "chapter": "iotagents",
+    "academy": "iot-agents/idas",
+    "readthedocs": "fiware-iotagent-ul",
+    "helpdesk": "",
+    "coveralls": "https://coveralls.io/github/telefonicaid/iotagent-ul",
+    "github": ["telefonicaid/iotagent-ul"],
+    "dockerregistry": ["hub.docker.com"],
+    "docker": ["telefonicaiot/iotagent-ul"],
+    "email": "iot_support@tid.es",
+    "status": "full",
+    "compose": "",
+    "exclude": [""],
+    "stackexchange": ["fiware+iot"],
+    "unit-test": "",
+    "smoke-test": "",
+    "dockerfile": "https://github.com/telefonicaid/iotagent-ul/blob/master/docker/Dockerfile"
+}
