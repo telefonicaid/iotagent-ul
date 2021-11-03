@@ -62,7 +62,7 @@ function parseConfigurationResponse(payload) {
 
 function requestText(options, callback) {
     const httpOptions = {
-        url: options.url,
+        url: options.url || options.uri,
         method: options.method,
         searchParams: options.searchParams || options.qs,
         headers: options.headers,
