@@ -259,7 +259,7 @@ describe('HTTP: Commands', function () {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();
-                }, 100);
+                }, 500);
             });
         });
     });
