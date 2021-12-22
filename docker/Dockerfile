@@ -25,6 +25,13 @@ ARG GITHUB_REPOSITORY=iotagent-ul
 ARG DOWNLOAD=latest
 ARG SOURCE_BRANCH=master
 
+# Default Builder, distro and distroless build version
+ARG BUILDER=node:${NODE_VERSION}
+ARG DISTRO=node:${NODE_VERSION}-slim
+ARG DISTROLESS=gcr.io/distroless/nodejs:${NODE_VERSION}
+ARG PACKAGE_MANAGER=apt
+ARG USER=node
+
 ########################################################################################
 #
 # This build stage retrieves the source code from GitHub. The default download is the 
@@ -42,13 +49,33 @@ ARG SOURCE_BRANCH=master
 # --target=builder
 #
 ######################################################################################## 
-FROM node:${NODE_VERSION} AS builder
+FROM ${BUILDER} AS builder
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG DOWNLOAD
 ARG SOURCE_BRANCH
+ARG PACKAGE_MANAGER
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# hadolint ignore=DL3002
+USER root
+# hadolint ignore=DL3059
+RUN \
+	# Ensure that the chosen package manger is supported by this Dockerfile
+	# also ensure that unzip and git is installed prior to downloading sources
+	if [ "${PACKAGE_MANAGER}" = "apt"  ]; then \
+		echo -e "\033[0;34mINFO: Using default \"${PACKAGE_MANAGER}\".\033[0m"; \
+		apt-get install -y --no-install-recommends unzip git; \
+	elif [ "${PACKAGE_MANAGER}" = "yum"  ]; then \
+		echo -e "\033[0;33mWARNING: Overriding default package manager. Using \"${PACKAGE_MANAGER}\" .\033[0m"; \
+		yum install -y unzip git; \
+		yum clean all; \
+	else \
+	 	echo -e "\033[0;31mERROR: Package Manager \"${PACKAGE_MANAGER}\" not supported.\033[0m"; \
+	 	exit 1; \
+	fi
+
 
 # As an Alternative for local development, just copy this Dockerfile into file the root of 
 # the repository and replace the whole RUN statement below by the following COPY statement 
@@ -59,8 +86,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
 RUN \
-	# Ensure that unzip is installed prior to downloading
-	apt-get install -y --no-install-recommends unzip && \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
 		RELEASE="${SOURCE_BRANCH}"; \
@@ -77,25 +102,13 @@ RUN \
 	curl -s -L https://github.com/"${GITHUB_ACCOUNT}"/"${GITHUB_REPOSITORY}"/archive/"${RELEASE}".zip > source.zip && \
 	unzip source.zip -x "*/test/**" "*/rpm/**" "*/ghpages/**" "*/docs/**" "*/.*" && \
 	rm source.zip && \
-	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul && \
-	# Remove unzip and clean apt cache
-	apt-get clean && \
-	apt-get remove -y unzip && \
-	apt-get -y autoremove && \
-	rm -rf /var/lib/apt/lists/* 
+	mv "${GITHUB_REPOSITORY}-${RELEASE_CONCAT}" /opt/iotaul
 
 WORKDIR /opt/iotaul
 
-# hadolint ignore=DL3008
 RUN \
-	# Ensure that Git is installed prior to running npm install
-	apt-get install -y --no-install-recommends git && \
 	echo "INFO: npm install --production..." && \
-	npm install --only=prod --no-package-lock --no-optional && \
-	# Remove Git and clean apt cache
-	apt-get clean && \
-	apt-get remove -y git && \
-	apt-get -y autoremove
+	npm install --only=prod --no-package-lock --no-optional --unsafe-perm
 
 ########################################################################################
 #
@@ -106,10 +119,11 @@ RUN \
 # --target=pm2-install
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS pm2
+FROM ${DISTRO} AS pm2
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
+ARG USER
 
 LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
 LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
@@ -124,7 +138,7 @@ LABEL "org.nodejs.version"="${NODE_VERSION}"
 COPY --from=builder /opt/iotaul /opt/iotaul
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
-USER node
+USER ${USER}
 ENV NODE_ENV=production
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
@@ -136,7 +150,9 @@ CMD ["pm2-runtime", "/opt/iotaul/bin/iotagent-ul", "-- ", "config.js"]
 # as defined below.
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS anon-user
+FROM ${DISTRO} AS anon-user
+# hadolint ignore=DL3002
+USER root
 RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
     && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
@@ -152,7 +168,7 @@ RUN sed -i -r "/^(root|nobody)/!d" /etc/passwd /etc/shadow /etc/group \
 # - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
 #
 ########################################################################################
-FROM gcr.io/distroless/nodejs:${NODE_VERSION} AS distroless
+FROM ${DISTROLESS} AS distroless
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
@@ -191,10 +207,11 @@ HEALTHCHECK  --interval=30s --timeout=3s --start-period=10s \
 # - IOTA_AUTH_CLIENT_ID, IOTA_AUTH_CLIENT_SECRET - when using OAuth2 Security
 #
 ########################################################################################
-FROM node:${NODE_VERSION}-slim AS slim
+FROM ${DISTRO} AS slim
 ARG GITHUB_ACCOUNT
 ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
+ARG USER
 
 LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
 LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
@@ -209,7 +226,7 @@ LABEL "org.nodejs.version"="${NODE_VERSION}"
 COPY --from=builder /opt/iotaul /opt/iotaul
 WORKDIR /opt/iotaul
 
-USER node
+USER ${USER}
 ENV NODE_ENV=production
 # Expose 4061 for NORTH PORT, 7896 for HTTP PORT
 EXPOSE ${IOTA_NORTH_PORT:-4061} ${IOTA_HTTP_PORT:-7896}
