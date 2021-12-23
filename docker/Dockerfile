@@ -56,11 +56,9 @@ ARG DOWNLOAD
 ARG SOURCE_BRANCH
 ARG PACKAGE_MANAGER
 
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # hadolint ignore=DL3002
 USER root
-# hadolint ignore=DL3059
+# hadolint ignore=SC2039
 RUN \
 	# Ensure that the chosen package manger is supported by this Dockerfile
 	# also ensure that unzip and git is installed prior to downloading sources
@@ -71,6 +69,9 @@ RUN \
 		echo -e "\033[0;33mWARNING: Overriding default package manager. Using \"${PACKAGE_MANAGER}\" .\033[0m"; \
 		yum install -y unzip git; \
 		yum clean all; \
+	elif [ "${PACKAGE_MANAGER}" = "apk"  ]; then \
+		echo -e "\033[0;33mWARNING: Overriding default package manager. Using \"${PACKAGE_MANAGER}\" .\033[0m"; \
+		apk add --no-cache unzip git; \
 	else \
 	 	echo -e "\033[0;31mERROR: Package Manager \"${PACKAGE_MANAGER}\" not supported.\033[0m"; \
 	 	exit 1; \
@@ -84,7 +85,6 @@ RUN \
 # COPY . /opt/iotaul/
 #
 
-# hadolint ignore=DL3008
 RUN \
 	if [ "${DOWNLOAD}" = "latest" ] ; \
 	then \
