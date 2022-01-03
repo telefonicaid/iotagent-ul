@@ -32,7 +32,7 @@ const commandLine = require('iotagent-node-lib').commandLine;
 const clUtils = commandLine.clUtils;
 const mqtt = require('mqtt');
 const request = require('request');
-const async = iotAgentLib.async;
+const async = require('iotagent-node-lib').async;
 const _ = require('underscore');
 let mqttClient;
 const configCb = {
