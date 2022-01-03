@@ -31,7 +31,7 @@ const config = require('./config-test.js');
 const nock = require('nock');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
-const async = require('async');
+const async = iotAgentLib.async;
 const request = require('request');
 const utils = require('../../utils');
 let mockedClientServer;
@@ -163,9 +163,7 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice'
-                )
+                .patch('/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice')
                 .reply(204);
 
             mockedClientServer = nock('http://localhost:9876')
@@ -186,7 +184,6 @@ describe('HTTP: Commands', function () {
     });
 
     describe('When a command arrive with a wrong endpoint', function () {
-
         const commandOptions = {
             url: 'http://localhost:' + config.iota.server.port + '/v2/op/update',
             method: 'POST',
@@ -225,17 +222,14 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice'
-                )
+                .patch('/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice')
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
-                    '/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice', function (body) {
-                        return body.PING_status.value === 'ERROR';
+                .patch('/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice', function (body) {
+                    return body.PING_status.value === 'ERROR';
                 })
                 .reply(204);
 

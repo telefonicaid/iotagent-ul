@@ -36,12 +36,8 @@
   },
   "dependencies": {
     "amqplib": "~0.5.1",
-    "async": "2.6.1",
-    "body-parser": "1.18.3",
     "dateformat": "3.0.3",
-    "express": "~4.16.4",
-    "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
-    "logops": "2.1.0",
+    "iotagent-node-lib": "git://github.com/jason-fox/iotagent-node-lib.git#feature/libs",
     "mqtt": "3.0.0",
     "request": "2.88.0",
     "underscore": "1.12.1"

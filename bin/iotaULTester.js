@@ -32,7 +32,7 @@ const commandLine = require('iotagent-node-lib').commandLine;
 const clUtils = commandLine.clUtils;
 const mqtt = require('mqtt');
 const request = require('request');
-const async = require('async');
+const async = iotAgentLib.async;
 const _ = require('underscore');
 let mqttClient;
 const configCb = {
@@ -99,7 +99,7 @@ function httpPublishHandler(error, response, body) {
 }
 
 function checkConnection(fn) {
-    return function(commands) {
+    return function (commands) {
         if (mqttClient || config.binding === 'HTTP') {
             fn(commands);
         } else {

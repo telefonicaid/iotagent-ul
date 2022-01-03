@@ -24,13 +24,14 @@
  */
 'use strict';
 
-let iotAgent = require('../lib/iotagent-ul'),
-    iotAgentLib = require('iotagent-node-lib'),
-    info = require('../package.json'),
-    context = {
+const iotAgent = require('../lib/iotagent-ul');
+const iotAgentLib = require('iotagent-node-lib');
+const info = require('../package.json');
+const context = {
         op: 'IOTAUL.Executable'
-    },
-    logger = require('logops');
+    };
+const logger = iotAgentLib.logModule;
+
 
 function start() {
     let config;
