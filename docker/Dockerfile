@@ -136,6 +136,7 @@ LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${
 LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder /opt/iotaul /opt/iotaul
+COPY --from=builder /opt/iotaul/LICENSE /licenses/LICENSE
 RUN npm install pm2@4.4.0 -g --no-package-lock --no-optional
 
 USER ${USER}
@@ -224,6 +225,7 @@ LABEL "org.opencontainers.image.source"="https://github.com/${GITHUB_ACCOUNT}/${
 LABEL "org.nodejs.version"="${NODE_VERSION}"
 
 COPY --from=builder /opt/iotaul /opt/iotaul
+COPY --from=builder /opt/iotaul/LICENSE /licenses/LICENSE
 WORKDIR /opt/iotaul
 
 USER ${USER}
