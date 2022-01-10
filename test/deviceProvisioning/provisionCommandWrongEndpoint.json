@@ -7,7 +7,7 @@
       "timezone": "America/Santiago",
       "protocol": "HTTP_UL",
       "transport": "HTTP",
-      "endpoint": "http://unexistent.com/command",
+      "endpoint": "http://unexistent.aa/command",
       "commands": [
         {
           "name": "PING",
