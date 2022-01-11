@@ -24,6 +24,7 @@
 /* eslint-disable no-unused-vars */
 
 const fs = require('fs');
+const request = require('iotagent-node-lib').request;
 
 function readExampleFile(name, raw) {
     let text = null;
@@ -37,7 +38,7 @@ function readExampleFile(name, raw) {
 }
 
 function delay(ms) {
-    return function(callback) {
+    return function (callback) {
         setTimeout(callback, ms);
     };
 }
@@ -51,7 +52,7 @@ function parseConfigurationResponse(payload) {
     _result.device = _device[0];
     _result.type = _fields[0];
 
-    _attributes.forEach(function(item, index) {
+    _attributes.forEach(function (item, index) {
         const _attribute = item.split('=');
         _result[_attribute[0]] = _attribute[1];
     });
@@ -59,6 +60,22 @@ function parseConfigurationResponse(payload) {
     return _result;
 }
 
+function requestText(options, callback) {
+    const httpOptions = {
+        url: options.url || options.uri,
+        method: options.method,
+        searchParams: options.searchParams || options.qs,
+        headers: options.headers,
+        throwHttpErrors: options.throwHttpErrors || false,
+        retry: options.retry || 0,
+        responseType: options.responseType || 'text',
+        body: options.body
+    };
+    request(httpOptions, callback);
+}
+
 exports.readExampleFile = readExampleFile;
 exports.parseConfigurationResponse = parseConfigurationResponse;
 exports.delay = delay;
+exports.request = request;
+exports.requestText = requestText;

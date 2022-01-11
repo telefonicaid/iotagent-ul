@@ -1,7 +1,7 @@
 {
   "name": "iotagent-ul",
   "license": "AGPL-3.0-only",
-  "description": "IoT Agent for the Ultrlight 2.0 protocol",
+  "description": "IoT Agent for the Ultralight 2.0 protocol",
   "version": "1.19.0-next",
   "homepage": "https://github.com/telefonicaid/iotagent-ul",
   "author": {
@@ -28,7 +28,7 @@
     "prettier": "prettier --config .prettierrc.json --write '**/**/**/*.js' '**/**/*.js' '**/*.js' '*.js'",
     "prettier:text": "prettier 'README.md' 'docs/*.md' 'docs/**/*.md' --no-config --tab-width 4 --print-width 120 --write --prose-wrap always",
     "start": "node ./bin/iotagent-ul",
-    "test": "nyc --reporter=text mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --ui bdd --exit",
+    "test": "nyc --reporter=text mocha --recursive 'test/**/*.js' --reporter spec --timeout 5000 --ui bdd --exit --color true",
     "test:coverage": "nyc --reporter=lcov mocha -- --recursive 'test/**/*.js' --reporter spec --exit",
     "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "test:watch": "npm run test -- -w ./lib",
@@ -43,7 +43,6 @@
     "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib.git#master",
     "logops": "2.1.2",
     "mqtt": "3.0.0",
-    "request": "2.88.0",
     "underscore": "1.12.1"
   },
   "devDependencies": {

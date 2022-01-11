@@ -30,8 +30,8 @@ const nock = require('nock');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
-const request = require('request');
 const utils = require('../../utils');
+const request = utils.request;
 let mockedClientServer;
 let contextBrokerMock;
 
@@ -80,9 +80,7 @@ describe('HTTP binding - Update command provisioned devices from polling to push
             method: 'GET'
         };
         request(options, function (error, response, body) {
-            /* jshint camelcase:false */
-            const parsedBody = JSON.parse(body);
-            parsedBody.polling.should.equal(true);
+            body.polling.should.equal(true);
             done();
         });
     });
@@ -154,9 +152,7 @@ describe('HTTP binding - Update command provisioned devices from polling to push
                 };
 
                 request(options, function (error, response, body) {
-                    /* jshint camelcase:false */
-                    const parsedBody = JSON.parse(body);
-                    parsedBody.polling.should.equal(false);
+                    body.polling.should.equal(false);
                     done();
                 });
             });

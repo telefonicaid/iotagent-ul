@@ -31,7 +31,7 @@ const defaultConfig = require('../client-config.js');
 const commandLine = require('iotagent-node-lib').commandLine;
 const clUtils = commandLine.clUtils;
 const mqtt = require('mqtt');
-const request = require('request');
+const request = require('iotagent-node-lib').request;
 const async = require('async');
 const _ = require('underscore');
 let mqttClient;
@@ -99,7 +99,7 @@ function httpPublishHandler(error, response, body) {
 }
 
 function checkConnection(fn) {
-    return function(commands) {
+    return function (commands) {
         if (mqttClient || config.binding === 'HTTP') {
             fn(commands);
         } else {
@@ -121,7 +121,8 @@ function singleMeasure(commands) {
                 i: config.deviceId,
                 k: config.apikey,
                 d: commands[0] + '|' + commands[1]
-            }
+            },
+            responseType: 'text'
         };
 
         request(httpRequest, httpPublishHandler);
@@ -173,7 +174,8 @@ function multipleMeasure(commands) {
                 i: config.deviceId,
                 k: config.apikey,
                 d: values
-            }
+            },
+            responseType: 'text'
         };
 
         request(httpRequest, httpPublishHandler);

@@ -31,8 +31,10 @@ const config = require('./config-test.js');
 const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
-const request = require('request');
+
 const utils = require('../../utils');
+const request = utils.request;
+const requestText = utils.requestText;
 let mockedClientServer;
 let contextBrokerMock;
 
@@ -153,7 +155,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should return a list of the pending commands', function (done) {
-            request(deviceRequest, function (error, response, body) {
+            requestText(deviceRequest, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 should.exist(body);
@@ -197,7 +199,6 @@ describe('HTTP Transport binding: polling commands', function () {
         const deviceRequestWithoutPayload = {
             url: 'http://localhost:' + config.http.port + '/iot/d',
             method: 'GET',
-            json: true,
             qs: {
                 i: 'MQTT_2',
                 k: '1234',
@@ -228,7 +229,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should return a list of the pending commands', function (done) {
-            request(deviceRequestWithoutPayload, function (error, response, body) {
+            requestText(deviceRequestWithoutPayload, function (error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 body.should.equal('MQTT_2@PING|data=22');
@@ -237,7 +238,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should be marked as delivered in the Context Broker', function (done) {
-            request(deviceRequest, function (error, response, body) {
+            requestText(deviceRequest, function (error, response, body) {
                 setTimeout(function () {
                     contextBrokerMock.done();
                     done();
@@ -285,7 +286,7 @@ describe('HTTP Transport binding: polling commands', function () {
         });
 
         it('should update the entity in the Context Broker with the OK status and the result', function (done) {
-            request(commandResponse, function (error, response, body) {
+            requestText(commandResponse, function (error, response, body) {
                 contextBrokerMock.done();
                 done();
             });

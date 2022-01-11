@@ -30,8 +30,9 @@ const iotagentMqtt = require('../../../');
 const config = require('./config-test.js');
 const nock = require('nock');
 const async = require('async');
-const request = require('request');
+
 const utils = require('../../utils');
+const request = utils.request;
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const amqp = require('amqplib/callback_api');
