@@ -126,6 +126,10 @@ ARG NODE_VERSION
 ARG USER
 
 LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "name"="iotagent-ul"
+LABEL "summary"="IoT Agent for Ultralight 2.0 with PM2"
+
 LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
 LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
 LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
@@ -175,6 +179,10 @@ ARG GITHUB_REPOSITORY
 ARG NODE_VERSION
 
 LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "name"="iotagent-ul"
+LABEL "summary"="IoT Agent for Ultralight 2.0 (Distroless)"
+
 LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
 LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
 LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
@@ -215,6 +223,10 @@ ARG NODE_VERSION
 ARG USER
 
 LABEL "maintainer"="FIWARE IoTAgent Team. Telefónica I+D"
+LABEL "description"="An Internet of Things Agent for the Ultralight 2.0 protocol (with AMQP, HTTP and MQTT transports). This IoT Agent is designed to be a bridge between Ultralight and the NGSI interface of a context broker."
+LABEL "name"="iotagent-ul"
+LABEL "summary"="IoT Agent for Ultralight 2.0"
+
 LABEL "org.opencontainers.image.authors"="iot_support@tid.es"
 LABEL "org.opencontainers.image.documentation"="https://fiware-iotagent-ul.rtfd.io/"
 LABEL "org.opencontainers.image.vendor"="Telefónica Investigación y Desarrollo, S.A.U"
