@@ -66,12 +66,6 @@ There was some communication error connecting with the Context Broker that made 
 this log appears frequently, it may be a signal of network problems between the IoTAgent and the Context Broker. Check
 the IoTAgent network connection, and the configured Context Broker port and host.
 
-#### MEASURES-003: Parse error parsing incoming MQTT message \[%\]
-
-An error was found parsing the MQTT message payload. This will commonly happen when a new client is integrating their
-software with the platform, meaning the payload has not the appropriate Ultralight 2.0 format. Normally, this is an
-error that can only be addressed by the client itself
-
 #### MEASURES-004: Couldn\'t process message \[%s\] due to format issues
 
 Implies a message was received in an invalid MQTT Topic. Normally, this is an error that can only be addressed by the
