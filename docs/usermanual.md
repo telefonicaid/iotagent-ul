@@ -210,27 +210,6 @@ curl -X GET 'http://localhost:7896/iot/d?i=motion001&k=4jggokgpepnvsb2uv4s40d59o
 Robot1@turn|left#Robot1@move|20
 ```
 
--   MQTT devices can configure (at provisioning and updating time) each command with different values of MQTT QoS and
-    MQTT retain values, which will be used only by a command. Moreover, in the same MQTT device different commands can
-    be configured to use different MQTT options related with QoS level and Retain message policy. I.E:
-
-```json
-{
-    "commands": [
-        {
-            "type": "command",
-            "name": "a_command_name_A",
-            "mqtt": { "qos": 2, "retain": true }
-        },
-        {
-            "type": "command",
-            "name": "a_command_name_B",
-            "mqtt": { "qos": 1, "retain": false }
-        }
-    ]
-}
-```
-
 #### MQTT binding
 
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
@@ -433,6 +412,29 @@ $ mosquitto_pub -t /ul/ABCDEF/id_sen1/cmdexe -m 'id_sen1@ping|1234567890' -h <mo
 
 In the end, Context Broker will have updated the values of `ping_info` and `ping_status` to `1234567890` and `OK`,
 respectively. `ping` attribute is never updated.
+
+Some additional remarks regarding MQTT commands:
+
+-   MQTT devices can configure (at provisioning and updating time) each command with different values of MQTT QoS and
+    MQTT retain values, which will be used only by a command. Moreover, in the same MQTT device different commands can
+    be configured to use different MQTT options related with QoS level and Retain message policy. I.E:
+
+```json
+{
+    "commands": [
+        {
+            "type": "command",
+            "name": "a_command_name_A",
+            "mqtt": { "qos": 2, "retain": true }
+        },
+        {
+            "type": "command",
+            "name": "a_command_name_B",
+            "mqtt": { "qos": 1, "retain": false }
+        }
+    ]
+}
+```
 
 #### AMQP binding
 
