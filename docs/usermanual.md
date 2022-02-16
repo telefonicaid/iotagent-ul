@@ -202,12 +202,12 @@ Some additional remarks regarding polling commands:
 curl -X GET 'http://localhost:7896/iot/d?i=motion001&k=4jggokgpepnvsb2uv4s40d59ov&getCmd=1' -i
 ```
 
--   Example of the HTTP response sent by IOTA in the case of polling commands:
+-   Example of the HTTP response sent by IOTA in the case of polling commands (and only one command is stored for that device):
     
 ```
 200 OK
 
-Robot1@turn|left#Robot1@move|20
+Robot1@turn|left
 ```
 
 #### MQTT binding
