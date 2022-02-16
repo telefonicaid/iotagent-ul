@@ -189,14 +189,16 @@ Robot1@turn|left
     from the IoT Agent, the device will send the query parameter 'getCmd' with value '1' as part of a normal measure. As
     a result of this action, the IoTAgent, instead of returning an empty body (the typical response to a measurement
     report), will return a list of all the commands available for the device, sepparated by the character '#'. The
-    command payload is described in the [commands syntax section](#commands-Syntax) (and its shared with the push commands). Whenever the device
+    command payload is described in the [commands syntax section](#commands-syntax) (and its shared with the push commands). Whenever the device
     has completed the execution of the command, it will send the response in the same way measurements are reported, but
-    using the **command result format** as exposed in the [commands syntax section](#commands-Syntax).
+    using the **command result format** as exposed in the [commands syntax section](#commands-syntax).
 
 Some additional remarks regarding polling commands:
 
 -   Commands can be also retrieved without needed of sending a mesaure. In other words, the device is not forced to send
-    a measure in order to get the accumulated commands. Example to retrieve commands from IoT Agent:
+    a measure in order to get the accumulated commands. However, in this case note that `GET` method is used to carry
+    the `getCmd=1` query parameter (as they are no actual payload for measures, `POST` wouldn't make too much sense).
+    Example to retrieve commands from IoT Agent:
 
 ```text
 curl -X GET 'http://localhost:7896/iot/d?i=motion001&k=4jggokgpepnvsb2uv4s40d59ov&getCmd=1' -i
@@ -206,6 +208,7 @@ curl -X GET 'http://localhost:7896/iot/d?i=motion001&k=4jggokgpepnvsb2uv4s40d59o
     
 ```
 200 OK
+Content-type: text/plain
 
 Robot1@turn|left
 ```
