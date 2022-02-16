@@ -196,7 +196,9 @@ Robot1@turn|left
 Some additional remarks regarding polling commands:
 
 -   Commands can be also retrieved without needed of sending a mesaure. In other words, the device is not forced to send
-    a measure in order to get the accumulated commands. Example to retrieve commands from IoT Agent:
+    a measure in order to get the accumulated commands. However, in this case note that `GET` method is used to carry
+    the `getCmd=1` query parameter (as they are no actual payload for measures, `POST` wouldn't make too much sense).
+    Example to retrieve commands from IoT Agent:
 
 ```text
 curl -X GET 'http://localhost:7896/iot/d?i=motion001&k=4jggokgpepnvsb2uv4s40d59ov&getCmd=1' -i
