@@ -193,7 +193,8 @@ IoT Agent. The following attributes are accepted:
     order versions) or without the slash. See
     [discussion](https://github.com/telefonicaid/iotagent-node-lib/issues/866).
 -   **clean**: this flag is by default true, set to false to receive QoS 1 and 2 messages while offline.
--   **clientId**: string ID which identifies client in mqtt broker.
+-   **clientId**: string ID which identifies client in mqtt broker. By default is using a string composed by a fixed prefix 
+    `iotaul_` and a random suffix, i.e. `iotaul_43bf8a3a`.
 
 #### AMQP Binding configuration
 
