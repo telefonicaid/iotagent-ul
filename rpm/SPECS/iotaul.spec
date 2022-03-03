@@ -170,6 +170,10 @@ fi
 %{_install_dir}
 
 %changelog
+* Thu Mar 3 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.1
+- Upgrade iotagent-node-lib dependency from 2.19.0 to 2.20.0
+
+%changelog
 * Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
 - Add: allow to handle binary messages (#530)
 - Fix: default mqtt keepalive value by conf (must be 60 instead of 0) (#527)
