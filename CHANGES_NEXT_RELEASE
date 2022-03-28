@@ -1,3 +1,4 @@
+Add: apply expression and payload transformations to commands (iota-json#634, iota-json#627
 Fix: https:// url instead of git:// for npm dependences
 Upgrade NodeJS version from 12 to 14 in Dockerfile
 Remove: obsolete iotaULTester binary 
