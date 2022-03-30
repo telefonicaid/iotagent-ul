@@ -133,7 +133,7 @@ the following meanings:
 -   **binaryfromstring**: Payload will transformed into a be Buffer after read it form a string.
 -   **binaryfromhex**: Payload will transformed into a be Buffer after read it form a string hex.
 -   **binaryfromjson**: Payload will transformed into a be Buffer after read it form a JSON string.
--   **json**: Paylaod will be stringify form a JSON.
+-   **json**: Payload will be stringify form a JSON.
 -   **<empty>**: This is the default case. Payload will not be transformed.
 
 #### Casting to JSON native format
