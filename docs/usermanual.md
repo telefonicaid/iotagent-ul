@@ -118,22 +118,20 @@ adding `expression` to command definition. This way a command could be defined l
 }
 ```
 
-and when command will be executed the command value will be the result of apply value to defined expression. Followig
+and when command will be executed the command value will be the result of apply value to defined expression. Following
 the example case the command will be:
 
-```json
-{
-    "set": 0
-}
+```
+set|0
 ```
 
 Additionally a command could define a `payloadType` in their definnition with the aim to transform payload command with
 the following meanings:
 
--   **binaryfromstring**: Payload will transformed into a be Buffer after read it form a string.
--   **binaryfromhex**: Payload will transformed into a be Buffer after read it form a string hex.
--   **binaryfromjson**: Payload will transformed into a be Buffer after read it form a JSON string.
--   **json**: Payload will be stringify form a JSON.
+-   **binaryfromstring**: Payload will transformed into a be Buffer after read it from a string.
+-   **binaryfromhex**: Payload will transformed into a be Buffer after read it from a string hex.
+-   **binaryfromjson**: Payload will transformed into a be Buffer after read it from a JSON string.
+-   **json**: Payload will be stringify from a JSON.
 -   **<empty>**: This is the default case. Payload will not be transformed.
 
 #### Casting to JSON native format
