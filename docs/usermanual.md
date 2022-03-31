@@ -125,7 +125,7 @@ the example case the command will be:
 set|0
 ```
 
-Additionally a command could define a `payloadType` in their definnition with the aim to transform payload command with
+Additionally a command could define a `payloadType` in their definition with the aim to transform payload command with
 the following meanings:
 
 -   **binaryfromstring**: Payload will transformed into a be Buffer after read it from a string.
