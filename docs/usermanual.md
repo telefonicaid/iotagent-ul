@@ -105,6 +105,35 @@ a transformation expression in the IoTAgent). In this cases, when a reverse expr
 bidirectional attribute is modified, the IoTAgent sends a command to the original device, with the name defined in the
 reverse expression attribute and the ID of the device (see Commands Syntax, just above).
 
+#### Commands transformations
+
+It is possible to use expressions to transform commands, in the same way that other attributes could do it, that is
+adding `expression` to command definition. This way a command could be defined like:
+
+```json
+{
+    "name": "reset",
+    "type": "command",
+    "expression": "{ set: 0}"
+}
+```
+
+and when command will be executed the command value will be the result of apply value to defined expression. Following
+the example case the command will be:
+
+```
+set|0
+```
+
+Additionally a command could define a `payloadType` in their definition with the aim to transform payload command with
+the following meanings:
+
+-   **binaryfromstring**: Payload will transformed into a be Buffer after read it from a string.
+-   **binaryfromhex**: Payload will transformed into a be Buffer after read it from a string hex.
+-   **binaryfromjson**: Payload will transformed into a be Buffer after read it from a JSON string.
+-   **json**: Payload will be stringify from a JSON.
+-   **<empty>**: This is the default case. Payload will not be transformed.
+
 #### Casting to JSON native format
 
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSI v2. For example: The IotAgent receives
@@ -172,9 +201,9 @@ MQTT devices commands are always push. For HTTP Devices commands to be push they
 command will be poll. When using the HTTP transport, the command handling have two flavours:
 
 -   **Push commands**: The request payload format will be the one described in the UL Protocol description. The device
-    will reply with a 200OK response containing the result of the command in the UL2.0 result format. Example
-    of the HTTP request sent by IOTA in the case of push command:
-    
+    will reply with a 200OK response containing the result of the command in the UL2.0 result format. Example of the
+    HTTP request sent by IOTA in the case of push command:
+
 ```
 POST http://[DEVICE_IP]:[PORT]
 fiware-service: smart
@@ -189,9 +218,10 @@ Robot1@turn|left
     from the IoT Agent, the device will send the query parameter 'getCmd' with value '1' as part of a normal measure. As
     a result of this action, the IoTAgent, instead of returning an empty body (the typical response to a measurement
     report), will return a list of all the commands available for the device, sepparated by the character '#'. The
-    command payload is described in the [commands syntax section](#commands-syntax) (and its shared with the push commands). Whenever the device
-    has completed the execution of the command, it will send the response in the same way measurements are reported, but
-    using the **command result format** as exposed in the [commands syntax section](#commands-syntax).
+    command payload is described in the [commands syntax section](#commands-syntax) (and its shared with the push
+    commands). Whenever the device has completed the execution of the command, it will send the response in the same way
+    measurements are reported, but using the **command result format** as exposed in the
+    [commands syntax section](#commands-syntax).
 
 Some additional remarks regarding polling commands:
 
@@ -204,8 +234,9 @@ Some additional remarks regarding polling commands:
 curl -X GET 'http://localhost:7896/iot/d?i=motion001&k=4jggokgpepnvsb2uv4s40d59ov&getCmd=1' -i
 ```
 
--   Example of the HTTP response sent by IOTA in the case of polling commands (and only one command is stored for that device):
-    
+-   Example of the HTTP response sent by IOTA in the case of polling commands (and only one command is stored for that
+    device):
+
 ```
 200 OK
 Content-type: text/plain
