@@ -196,6 +196,13 @@ request payload. Two query parameters are still mandatory:
 
 ##### Sending commands
 
+All the interations between IotAgent and ContextBroker related to comamnds are described in
+[Theory: Scenario 3: commands](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands)
+and
+[Practice: Scenario 3: commands - happy path](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands-happy-path)
+and
+[Practice: Scenario 3: commands - error](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands-error).
+
 MQTT devices commands are always push. For HTTP Devices commands to be push they **must** be provisioned with the
 `endpoint` attribute, that will contain the URL where the IoT Agent will send the received commands. Otherwise the
 command will be poll. When using the HTTP transport, the command handling have two flavours:
@@ -373,6 +380,13 @@ device_1@configuration|pollingInterval=200|publishInterval=80|dt=20190626T154200
 ```
 
 ##### Commands
+
+All the interations between IotAgent and ContextBroker related to comamnds are described in
+[Theory: Scenario 3: commands](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands)
+and
+[Practice: Scenario 3: commands - happy path](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands-happy-path)
+and
+[Practice: Scenario 3: commands - error](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands-error).
 
 Commands using the MQTT transport protocol binding always work in PUSH mode: the server publishes a message in a topic
 where the device is subscribed: the _commands topic_. Once the device has finished with the command, it publishes it
