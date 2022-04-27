@@ -266,9 +266,25 @@ are prefixed with the agent procotol:
 
 where `<apiKey>` is the API Key assigned to the service and `<deviceId>` is the ID of the device.
 
-All topis published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
+All topics published by the agent (to send a comamnd or to send configuration information) to a device are not prefixed
 by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF957A98/MydeviceId/cmd` and
 `/FF957A98/MyDeviceId/configuration/values` ).
+
+> **Note** Measures and commands are sent over different MQTT topics:
+>
+> *   _Measures_ are sent on the `/<protocol>/<api-key>/<device-id>/attrs` topic,
+> *   _Commands_ are sent on the `/<api-key>/<device-id>/cmd` topic,
+>
+>  The reasoning behind this is that when sending measures northbound from device to IoT Agent,
+>  it is necessary to explicitly identify which IoT Agent is needed to parse the data. This
+>  is done by prefixing the relevant MQTT topic with a protocol, otherwise there is no way to
+>  define which agent is processing the measure. This mechanism allows smart systems to connect
+>  different devices to different IoT Agents according to need.
+>
+>  For southbound commands, this distinction is unnecessary since the correct IoT Agent has already
+>  registered itself for the command during the device provisioning step and the device will always
+>  receive commands in an appropriate format.
+
 
 This transport protocol binding is still under development.
 
