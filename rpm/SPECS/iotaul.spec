@@ -170,6 +170,19 @@ fi
 %{_install_dir}
 
 %changelog
+* Fri Apr 29 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
+- Add: apply expression and payload transformations to commands (iota-json#634, iota-json#627)
+- Fix: ensure command QoS for MQTT is an integer
+- Fix: ensure mqtt client_id is unique between reconnections to avoid reconnection loop (iota-json#650)
+- Fix: bad mqtt measure is progressing as a multiple measure after be procesed as hex string
+- Fix: search device and group for a command using entity type when provided to proper match (iota-node-lib#1211)
+- Fix: https:// url instead of git:// for npm dependences
+- Remove: obsolete iotaULTester binary
+- Upgrade moment dep from 2.27.0 to 2.29.2 due to security vulnerability (CVE-2022-24785)
+- Upgrade async dep from 2.6.1 to 2.6.4 due to security vulnerability (CWE-1321)
+- Upgrade MQTT dep from 3.0.0 to 4.3.7
+- Upgrade NodeJS version from 12 to 14 in Dockerfile
+
 * Mon Feb 7 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.20.0
 - Add: allow to handle binary messages (#530)
 - Fix: default mqtt keepalive value by conf (must be 60 instead of 0) (#527)
