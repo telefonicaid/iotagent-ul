@@ -1,2 +1,3 @@
 - Fix: Set service and subservice in logs when processing measures
 - Fix: Dockerfile to include initial packages upgrade
+- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
