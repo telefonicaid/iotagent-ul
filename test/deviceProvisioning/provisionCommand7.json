@@ -1,0 +1,21 @@
+{
+  "devices": [
+    {
+      "device_id": "MQTT_2",
+      "entity_name": "Second MQTT Device",
+      "entity_type": "AnMQTTDevice",
+      "timezone": "America/Santiago",
+      "protocol": "HTTP_UL",
+      "transport": "HTTP",
+      "expressionLanguage": "jexl",
+      "endpoint": "http://localhost:9876/command",
+      "commands": [
+        {
+          "name": "PING",
+          "type": "command",
+          "expression": "id+type"
+        }
+      ]
+    }
+  ]
+}
