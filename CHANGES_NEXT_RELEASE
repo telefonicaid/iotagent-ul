@@ -1,3 +1,4 @@
+- Add: allow apply expression to device http endpoint (for push commands)
 - Add: include device ID, Type, Service and SubService in context to expression push command
 - Fix: default transport used by send configuration when no defined at device level
 - Fix: Set service and subservice in logs when processing measures
