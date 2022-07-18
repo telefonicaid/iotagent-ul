@@ -170,6 +170,15 @@ fi
 %{_install_dir}
 
 %changelog
+* Mon Jul 18 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.22.0
+- Add: allow apply expression to device http endpoint (for push commands)
+- Add: include device ID, Type, Service and SubService in context to expression push command
+- Fix: default transport used by send configuration when no defined at device level
+- Fix: Set service and subservice in logs when processing measures
+- Fix: Dockerfile to include initial packages upgrade
+- Upgrade iotagent-node-lib dependency from 2.21.0 to 2.22.0
+- Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
+
 * Fri Apr 29 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
 - Add: apply expression and payload transformations to commands (iota-json#634, iota-json#627)
 - Fix: ensure command QoS for MQTT is an integer
