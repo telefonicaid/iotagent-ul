@@ -170,7 +170,7 @@ fi
 %{_install_dir}
 
 %changelog
-* Fri Jul 15 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.22.0
+* Mon Jul 18 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.22.0
 - Add: allow apply expression to device http endpoint (for push commands)
 - Add: include device ID, Type, Service and SubService in context to expression push command
 - Fix: default transport used by send configuration when no defined at device level
