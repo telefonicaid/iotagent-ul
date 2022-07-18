@@ -176,6 +176,7 @@ fi
 - Fix: default transport used by send configuration when no defined at device level
 - Fix: Set service and subservice in logs when processing measures
 - Fix: Dockerfile to include initial packages upgrade
+- Upgrade iotagent-node-lib dependency from 2.21.0 to 2.22.0
 - Upgrade NodeJS version from 14-slim to 16-slim in Dockerfile
 
 * Fri Apr 29 2022 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 1.21.0
