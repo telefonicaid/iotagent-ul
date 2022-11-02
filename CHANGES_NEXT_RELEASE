@@ -1,1 +1,2 @@
 - Fix: mqtt error handling was calling callback in loop
+- Use pluginUtils from iota-node-lib
