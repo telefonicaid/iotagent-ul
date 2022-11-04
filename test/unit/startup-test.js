@@ -44,6 +44,7 @@ describe('Startup tests', function () {
             process.env.IOTA_MQTT_RETRIES = '2';
             process.env.IOTA_MQTT_RETRY_TIME = '5';
             process.env.IOTA_MQTT_KEEPALIVE = '0';
+            process.env.IOTA_MQTT_DISABLED = 'true';
         });
 
         afterEach(function () {
@@ -62,6 +63,7 @@ describe('Startup tests', function () {
             delete process.env.IOTA_MQTT_RETRIES;
             delete process.env.IOTA_MQTT_RETRY_TIME;
             delete process.env.IOTA_MQTT_KEEPALIVE;
+            delete process.env.IOTA_MQTT_DISABLED;
         });
 
         it('should load the MQTT environment variables in the internal configuration', function (done) {
@@ -79,6 +81,7 @@ describe('Startup tests', function () {
             config.getConfig().mqtt.retries.should.equal('2');
             config.getConfig().mqtt.retryTime.should.equal('5');
             config.getConfig().mqtt.keepalive.should.equal('0');
+            config.getConfig().mqtt.disabled.should.equal(true);
             done();
         });
     });
@@ -94,6 +97,7 @@ describe('Startup tests', function () {
             process.env.IOTA_AMQP_DURABLE = 'true';
             process.env.IOTA_AMQP_RETRIES = '0';
             process.env.IOTA_AMQP_RETRY_TIME = '5';
+            process.env.IOTA_AMQP_DISABLED = 'true';
         });
 
         afterEach(function () {
@@ -106,6 +110,7 @@ describe('Startup tests', function () {
             delete process.env.IOTA_AMQP_DURABLE;
             delete process.env.IOTA_AMQP_RETRIES;
             delete process.env.IOTA_AMQP_RETRY_TIME;
+            delete process.env.IOTA_AMQP_DISABLED;
         });
 
         it('should load the AMQP environment variables in the internal configuration', function (done) {
@@ -119,6 +124,7 @@ describe('Startup tests', function () {
             config.getConfig().amqp.options.durable.should.equal(true);
             config.getConfig().amqp.retries.should.equal('0');
             config.getConfig().amqp.retryTime.should.equal('5');
+            config.getConfig().amqp.disabled.should.equal(true);
             done();
         });
     });
