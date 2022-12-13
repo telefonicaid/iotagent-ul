@@ -1,4 +1,3 @@
-- Set Nodejs 14 as minimum version in packages.json (effectively removing Nodev12 from supported versions)
 - Use pluginUtils from iota-node-lib
 - Add IOTA_MQTT_DISABLED (mqtt.disabled) and IOTA_AMQP_DISABLED (amqp.disabled) flags to disable MQTT and AMQP (#576)
 - Set Nodejs 14 as minimum version in packages.json (effectively removing Nodev12 from supported versions)
