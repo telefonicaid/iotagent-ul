@@ -4,7 +4,7 @@
       "resource": "/iot/d",
       "apikey": "80K09H324HV8732",
       "entity_type": "SensorMachine",
-      "cbHost": "http://unexistentHost:1026",
+      "cbHost": "http://192.168.1.1:1026",
       "commands": [],
       "lazy": [],
       "attributes": [
