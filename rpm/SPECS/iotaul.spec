@@ -177,7 +177,7 @@ fi
 - Hardning: use pluginUtils from iota-node-lib
 - Set Nodejs 14 as minimum version in packages.json (effectively removing Nodev12 from supported versions)
 
-* Fri Sep 02 2022 Fermin Galan <fermin.galanmarquez> 1.24.0
+* Fri Sep 02 2022 Fermin Galan <fermin.galanmarquez@telefonica.com> 1.24.0
 - Fix: mqtt error handling was calling callback in loop
 - Upgrade iotagent-node-lib dependency from 2.23.0 to 2.24.0
 
