@@ -7,7 +7,7 @@ BuildRoot: %{_topdir}/BUILDROOT/
 BuildArch: x86_64
 # Requires: nodejs >= 0.10.24
 Requires: logrotate
-Requires(post): /sbin/chkconfig, /usr/sbin/useradd npm
+Requires(post): /sbin/chkconfig, /usr/sbin/useradd /usr/bin/npm
 Requires(preun): /sbin/chkconfig, /sbin/service
 Requires(postun): /sbin/service
 Group: Applications/Engineering
