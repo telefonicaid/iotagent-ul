@@ -1,23 +1,11 @@
 {
   "temperature": {
     "type": "float",
-    "value": "24.4",
-    "metadata": {
-      "TimeInstant": {
-        "type": "DateTime",
-        "value": "2020-06-14T12:19:26.476659Z"
-      }
-    }
+    "value": "24.4"
   },
   "humidity": {
     "type": "string",
-    "value": "32",
-    "metadata": {
-      "TimeInstant": {
-        "type": "DateTime",
-        "value": "2020-06-14T12:19:26.476659Z"
-      }
-    }
+    "value": "32"
   },
   "TimeInstant": {
     "type": "DateTime",
