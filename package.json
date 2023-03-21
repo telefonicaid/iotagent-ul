@@ -40,7 +40,7 @@
     "body-parser": "1.18.3",
     "dateformat": "3.0.3",
     "express": "~4.16.4",
-    "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib.git#task/plugins_refactor",
+    "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib.git#master",
     "logops": "2.1.2",
     "mqtt": "4.3.7",
     "underscore": "1.12.1"
