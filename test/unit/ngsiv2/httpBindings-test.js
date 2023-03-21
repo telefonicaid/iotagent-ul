@@ -646,8 +646,7 @@ describe('HTTP Transport binding: measures', function () {
             method: 'POST',
             qs: {
                 i: 'urn:x-iot:smartsantander:u7jcfa:fixed:t311',
-                k: '1234',
-                t: '2016-05-11T10:12:26.476659Z'
+                k: '1234'
             },
             headers: {
                 'Content-type': 'text/plain'
@@ -684,6 +683,7 @@ describe('HTTP Transport binding: measures', function () {
                     let attributes = 0;
 
                     for (const attribute in body) {
+                        // checks that all attributes has metadata
                         if (body.hasOwnProperty(attribute)) {
                             attributes++;
                             for (const metadata in body[attribute].metadata) {
@@ -699,7 +699,7 @@ describe('HTTP Transport binding: measures', function () {
                 .times(13)
                 .reply(204);
 
-            config.iota.timestamp = true;
+            config.iota.timestamp = true; // forces to add timestamp att and  metadata with timeinstant to all attributes
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
