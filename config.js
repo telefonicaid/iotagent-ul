@@ -170,6 +170,13 @@ config.iota = {
          * Port where the Context Broker is listening.
          */
         port: '1026'
+        
+        /**
+        * For Scorpio Broker use below configuration:
+        * port: '9090',
+        * ngsiVersion: 'ld',
+        * jsonLdContext: 'http://context/ngsi-context.jsonld'
+        */
     },
 
     /**
@@ -179,7 +186,7 @@ config.iota = {
         /**
          * Port where the IoT Agent will be listening for NGSI and Provisioning requests.
          */
-        port: 4061
+        port: 4041
     },
 
     /**
