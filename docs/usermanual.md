@@ -161,7 +161,7 @@ This functionality does not change the attribute type, using the type specified 
 As an example, for a given measure:
     
 ```
-a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']g|{a:1,b:2,c:3}    
+a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']|g|{a:1,b:2,c:3}|h|I'm a string    
 ```
 
 The resulting entity would be something like:
@@ -197,6 +197,10 @@ The resulting entity would be something like:
   "g": {
     "type": "provisionedType",
     "value": {"a":1,"b":2,"c":3}
+  },
+  "h": {
+    "type": "provisionedType",
+    "value": "I'm a string"
   }
 }
 ```
