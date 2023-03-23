@@ -147,8 +147,8 @@ then the NGSI v2 update uses `10`(number), `true` (boolean) and `78.8` (number) 
 (string) and "78.8" (string).
 
 This functionality relies on string measures casting feature implemented in the iotagent library. This functionality
-uses native Javascript [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) 
-function to cast data comming from measures (as text) to JSON native types.
+uses native JavaScript [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) 
+function to cast data coming from measures (as text) to JSON native types.
 
 In order to use it, the `autocast` configuration parameter has to be set to true. Please see
 [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration)
