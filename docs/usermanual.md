@@ -136,6 +136,8 @@ the following meanings:
 
 #### Casting to JSON native format
 
+FIXME: this need to be tested, once IOTA Lib 3.0.0 gets released and IOTA UL 2.0.0 (using it) gets released.
+
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSI v2. For example: The IotAgent receives
 this UL measure:
 
@@ -201,7 +203,6 @@ The resulting entity would be something like:
     
 Note that `provisionedType` is the type included in the device provision or config group, and it is not changed. 
 
-FIXME: this need to be tested, once IOTA Lib 3.0.0 gets released and IOTA UL 2.0.0 (using it) gets released.
 
 
 ### Transport Protocol
