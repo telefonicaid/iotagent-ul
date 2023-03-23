@@ -199,8 +199,10 @@ The resulting entity would be something like:
 }
 ```
     
+Note that `provisionedType` is the type included in the device provision or config group, and it is not changed. 
 
-This functionality does not change the attribute type, using the type specified in the config group or device provision.
+FIXME: this need to be tested, once IOTA Lib 3.0.0 gets released and IOTA UL 2.0.0 (using it) gets released.
+
 
 ### Transport Protocol
 
