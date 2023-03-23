@@ -146,20 +146,15 @@ t|10|s|true|l|78.8
 then the NGSI v2 update uses `10`(number), `true` (boolean) and `78.8` (number) instead of "10" (string), "true"
 (string) and "78.8" (string).
 
-This functionality relies on string measures casting feature implemented in the iotagent library. In order to use it,
-the `autocast` configuration parameter has to be set to true. Please see
+This functionality relies on string measures casting feature implemented in the iotagent library. This functionality
+uses native Javascript [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) 
+function to cast data comming from measures (as text) to JSON native types.
+
+In order to use it, the `autocast` configuration parameter has to be set to true. Please see
 [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration)
 for further information.
 
-In addition, the device has to be provisioned using the right types for the attributes to be cast, which are:
-
--   Type "Number" for integer or float numbers
--   Type "Boolean" for boolean
--   Type "None" for null
-
-As a consequence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
-autoprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default type
-"string").
+This functionality does not change the attribute type, using the type specified in the config group or device provision.
 
 ### Transport Protocol
 
