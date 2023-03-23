@@ -136,6 +136,8 @@ the following meanings:
 
 #### Casting to JSON native format
 
+**FIXME**: this need to be tested, once IOTA Lib 3.0.0 gets released and IOTA UL 2.0.0 (using it) gets released.
+
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSI v2. For example: The IotAgent receives
 this UL measure:
 
@@ -146,20 +148,62 @@ t|10|s|true|l|78.8
 then the NGSI v2 update uses `10`(number), `true` (boolean) and `78.8` (number) instead of "10" (string), "true"
 (string) and "78.8" (string).
 
-This functionality relies on string measures casting feature implemented in the iotagent library. In order to use it,
-the `autocast` configuration parameter has to be set to true. Please see
+This functionality relies on string measures casting feature implemented in the iotagent library. This functionality
+uses native JavaScript [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) 
+function to cast data coming from measures (as text) to JSON native types.
+
+In order to use it, the `autocast` configuration parameter has to be set to true. Please see
 [configuration section of iotagent library](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/installationguide.md#global-configuration)
 for further information.
 
-In addition, the device has to be provisioned using the right types for the attributes to be cast, which are:
+This functionality does not change the attribute type, using the type specified in the config group or device provision.
+    
+As an example, for a given measure:
+    
+```
+a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']g|{a:1,b:2,c:3}    
+```
 
--   Type "Number" for integer or float numbers
--   Type "Boolean" for boolean
--   Type "None" for null
+The resulting entity would be something like:
 
-As a consequence of the above, note the casting to JSON native format doesn't work for autoprovisioned devices as
-autoprovisioning doesn't allow to provide explicit types for each attribute (all them are considered of default type
-"string").
+```json
+{
+  "id": "entityid:001",
+  "type": "entitytype",
+  "a": {
+    "type": "provisionedType",
+    "value": 1
+  },
+  "b": {
+    "type": "provisionedType",
+    "value": 1.01
+  },
+  "c": {
+    "type": "provisionedType",
+    "value": true
+  },
+  "d": {
+    "type": "provisionedType",
+    "value": null
+  },
+  "e": {
+    "type": "provisionedType",
+    "value": [1,2,3]
+  },
+  "f": {
+    "type": "provisionedType",
+    "value": ["a","b","c"]
+  },
+  "g": {
+    "type": "provisionedType",
+    "value": {"a":1,"b":2,"c":3}
+  }
+}
+```
+    
+Note that `provisionedType` is the type included in the device provision or config group, and it is not changed. 
+
+
 
 ### Transport Protocol
 
