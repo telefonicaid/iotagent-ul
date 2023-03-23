@@ -155,6 +155,52 @@ In order to use it, the `autocast` configuration parameter has to be set to true
 for further information.
 
 This functionality does not change the attribute type, using the type specified in the config group or device provision.
+    
+As an example, for a given measure:
+    
+```
+a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']g|{a:1,b:2,c:3}    
+```
+
+The resulting entity would be something like:
+
+```json
+{
+  "id": "entityid:001",
+  "type": "entitytype",
+  "a": {
+    "type": "provisionedType",
+    "value": 1
+  },
+  "b": {
+    "type": "provisionedType",
+    "value": 1.01
+  },
+  "c": {
+    "type": "provisionedType",
+    "value": true
+  },
+  "d": {
+    "type": "provisionedType",
+    "value": null
+  },
+  "e": {
+    "type": "provisionedType",
+    "value": [1,2,3]
+  },
+  "f": {
+    "type": "provisionedType",
+    "value": ["a","b","c"]
+  },
+  "g": {
+    "type": "provisionedType",
+    "value": {"a":1,"b":2,"c":3}
+  }
+}
+```
+    
+
+This functionality does not change the attribute type, using the type specified in the config group or device provision.
 
 ### Transport Protocol
 
