@@ -26,9 +26,9 @@ const config = {};
 
 config.mqtt = {
     host: 'localhost',
-    port: 1883,
+    port: 1883 /*,
     username: 'guest',
-    password: 'guest'
+    password: 'guest' */
 };
 
 config.http = {
@@ -43,7 +43,7 @@ config.amqp = {
 };
 
 config.iota = {
-    logLevel: 'FATAL',
+    logLevel: 'DEBUG',
     autocast: true,
     contextBroker: {
         host: '192.168.1.1',
