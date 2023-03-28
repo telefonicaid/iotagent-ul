@@ -129,7 +129,7 @@ describe('MQTT Transport binding: measures', function () {
             mqttClient.publish(
                 '/ul/1234/MQTT_2/attrs',
                 'luminosity|10|humidity|32|pollution|43.4|' +
-                    'temperature|10|enabled|true|alive|null|tags' +
+                    'temperature|10|enabled|true|alive|None|tags' +
                     '|["iot","device"]|configuration|{"firmware":' +
                     '{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }',
                 null,
@@ -146,7 +146,7 @@ describe('MQTT Transport binding: measures', function () {
             mqttClient.publish(
                 'ul/1234/MQTT_2/attrs',
                 'luminosity|10|humidity|32|pollution|43.4|' +
-                    'temperature|10|enabled|true|alive|null|tags' +
+                    'temperature|10|enabled|true|alive|None|tags' +
                     '|["iot","device"]|configuration|{"firmware":' +
                     '{"version":"1.1.0","hash":"cf23df2207d99a74fbe169e3eba035e633b65d94" } }',
                 null,

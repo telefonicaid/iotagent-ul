@@ -1,7 +1,7 @@
 {
     "temperature":{
         "type": "celsius",
-        "value": "23"
+        "value": 23
     },
     "TimeInstant":{
         "type": "DateTime",

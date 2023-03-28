@@ -5,6 +5,6 @@
     },
     "PING_info": {
         "type": "commandResult",
-        "value": "1234567890"
+        "value": 1234567890
     }
 }
