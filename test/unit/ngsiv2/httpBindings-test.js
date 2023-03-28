@@ -72,7 +72,7 @@ describe('HTTP Transport binding: measures', function () {
             protocol: 'HTTP_UL',
             description: 'HTTP Ultralight 2.0 IoT Agent (Node.js version)'
         };
-
+        config.iota.logLevel = 'DEBUG';
         iotagentUl.start(config, function () {
             request(provisionOptions, function (error, response, body) {
                 done();
@@ -700,7 +700,7 @@ describe('HTTP Transport binding: measures', function () {
                 .reply(204);
 
             config.iota.timestamp = true; // forces to add timestamp att and  metadata with timeinstant to all attributes
-
+            config.iota.logLevel = 'DEBUG';
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -775,7 +775,7 @@ describe('HTTP Transport binding: measures', function () {
                 .reply(204);
 
             config.iota.timestamp = true;
-
+            config.iota.logLevel = 'DEBUG';
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -840,7 +840,7 @@ describe('HTTP Transport binding: measures', function () {
                 .reply(204);
 
             config.iota.timestamp = true;
-
+            config.iota.logLevel = 'DEBUG';
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -905,7 +905,7 @@ describe('HTTP Transport binding: measures', function () {
                 .reply(204);
 
             config.iota.timestamp = true;
-
+            config.iota.logLevel = 'DEBUG';
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -970,7 +970,7 @@ describe('HTTP Transport binding: measures', function () {
                 .reply(204);
 
             config.iota.timestamp = true;
-
+            config.iota.logLevel = 'DEBUG';
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -1035,7 +1035,7 @@ describe('HTTP Transport binding: measures', function () {
                 .reply(204);
 
             config.iota.timestamp = true;
-
+            config.iota.logLevel = 'DEBUG';
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
