@@ -43,7 +43,7 @@ config.amqp = {
 };
 
 config.iota = {
-    logLevel: 'FATAL',
+    logLevel: 'DEBUG',
     autocast: true,
     contextBroker: {
         host: '192.168.1.1',
