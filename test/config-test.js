@@ -30,7 +30,8 @@ config.mqtt = {
 };
 
 config.http = {
-    port: 7896
+    port: 7896,
+    host: 'localhost'
 };
 
 config.amqp = {
@@ -48,7 +49,8 @@ config.iota = {
         port: '1026'
     },
     server: {
-        port: 4061
+        port: 4061,
+        host: 'localhost'
     },
     deviceRegistry: {
         type: 'memory'
