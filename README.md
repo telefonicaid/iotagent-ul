@@ -78,7 +78,7 @@ The latest IoT Agent for Ultralight documentation is also available on
 
 ## Contributing
 
-If you'd like to contribute, start by searching through the issues and pull requests to see whether someone else has 
+If you'd like to contribute, start by searching through the issues and pull requests to see whether someone else has
 raised a similar idea or question.
 
 Before contributing, please check out [contribution guidelines](docs/contribution.md)
@@ -100,13 +100,9 @@ In order to successfuly run the tests, on the local machine three services must 
 They can be run using Docker:
 
 ```shell
-docker pull eclipse-mosquitto
-docker pull mongo
-docker pull rabbitmq
-
-docker run -d -p 1883:1883   -l mosquitto eclipse-mosquitto
-docker run -d -p 27017:27017 -l mongodb mongo
-docker run -d -p 5672:5672   -l rabbitmq rabbitmq
+   docker run -d -p 27017:27017 --hostname mongo --name mongo mongo:4.4.19
+   docker run -d -p 1883:1883 -l mosquitto eclipse-mosquitto:1.6.15
+   docker run -d -p 5672:5672 --hostname my-rabbit --name some-rabbit rabbitmq:3.11.13
 ```
 
 The required libraries, if missing, can be installed with:
