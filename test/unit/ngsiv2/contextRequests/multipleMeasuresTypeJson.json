@@ -1,19 +1,19 @@
 {
   "luminosity": {
     "type": "Number",
-    "value": 10
+    "value": 3130
   },
   "humidity":{
     "type": "degrees",
-    "value": 32
+    "value": 3332
   },
   "pollution": {
     "type": "Number",
-    "value": 43.4
+    "value": 34332e34
   },
   "temperature": {
     "type": "celsius",
-    "value": 10
+    "value": 3130
   },
   "tags": {
     "type": "Array",
