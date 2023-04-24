@@ -173,7 +173,7 @@ describe('AMQP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
                     '/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure1.json')
                 )
                 .query({ type: 'AnMQTTDevice' })
                 .reply(204);
@@ -232,7 +232,7 @@ describe('AMQP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
                     '/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure1.json')
                 )
                 .query({ type: 'AnMQTTDevice' })
                 .reply(204);
@@ -242,7 +242,7 @@ describe('AMQP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch(
                     '/v2/entities/Second%20UL%20Device/attrs',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
+                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure1.json')
                 )
                 .query({ type: 'AnMQTTDevice' })
                 .reply(204);
