@@ -1,7 +1,7 @@
 {
   "temperature": {
     "type": "float",
-    "value": 24.4
+    "value": 32342e34
   },
   "TimeInstant": {
     "type": "DateTime",
