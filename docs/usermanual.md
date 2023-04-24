@@ -9,7 +9,7 @@
 ## API Overview
 
 This section describes the specific South-bound API implemented by this IoTAgent. For the Configuration API and other
-APIs concerning general IoTAgents, check the [API Reference section](#apireference);
+APIs concerning general IoTAgents, check the [API Reference section](https://github.com/Keshav-NEC/iotagent-ul/blob/master/README.md#install).
 
 ### Ultralight 2.0 Protocol
 
@@ -47,7 +47,7 @@ Measure groups can additionally have an optional timestamp, with the following s
 ```
 
 The timestamp will be added as a prefix of the measures themselves, separated by a '|'. The attribute will be translated
-to a `TimeInstant` attribute in the final entity.T
+to a `TimeInstant` attribute in the final entity.
 
 #### Active versus passive attributes
 
@@ -334,7 +334,6 @@ by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF
 >  receive commands in an appropriate format.
 
 
-This transport protocol binding is still under development.
 
 ##### Sending a single measure in one message
 
