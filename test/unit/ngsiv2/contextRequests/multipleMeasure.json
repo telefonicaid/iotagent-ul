@@ -1,10 +1,10 @@
 {
   "temperature": {
     "type": "celsius",
-    "value": 23
+    "value": 3233
   },
   "humidity": {
     "type": "degrees",
-    "value": 98
+    "value": 3938
   }
 }
