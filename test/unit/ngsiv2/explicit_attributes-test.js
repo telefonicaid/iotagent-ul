@@ -169,7 +169,7 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    temperature: { type: 'Number', value: 89 }
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -239,8 +239,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -312,7 +312,7 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    temperature: { type: 'Number', value: 89 }
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -383,7 +383,7 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    temperature: { type: 'Number', value: 89 }
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -428,8 +428,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -499,8 +499,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -572,7 +572,7 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    temperature: { type: 'Number', value: 89 }
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -643,8 +643,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -689,8 +689,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -760,8 +760,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -833,7 +833,7 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    temperature: { type: 'Number', value: 89 }
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
@@ -904,8 +904,8 @@ describe('explicitAttrs tests ', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .patch('/v2/entities/Sensor:Temperature:JSON_UNPROVISIONED/attrs', {
-                    h: { type: 'string', value: 33 },
-                    temperature: { type: 'Number', value: 89 }
+                    h: { type: 'string', value: 3333 },
+                    temperature: { type: 'Number', value: 3839 }
                 })
                 .query({ type: 'Sensor:Temperature' })
                 .reply(204);
