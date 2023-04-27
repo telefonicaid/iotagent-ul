@@ -9,7 +9,7 @@
 ## API Overview
 
 This section describes the specific South-bound API implemented by this IoTAgent. For the Configuration API and other
-APIs concerning general IoTAgents, check the [API Reference section](https://github.com/Keshav-NEC/iotagent-ul/blob/master/README.md#install).
+APIs concerning general IoTAgents, check the [API Reference section](https://github.com/telefonicaid/iotagent-ul/blob/master/README.md#api).
 
 ### Ultralight 2.0 Protocol
 
