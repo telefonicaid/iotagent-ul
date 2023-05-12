@@ -133,16 +133,16 @@ describe('Data Bidirectionality: HTTP', function () {
 
                         if (
                             list.commands[i].name === 'latitude' &&
-                            list.commands[i].type === 'string' &&
-                            list.commands[i].value === '-9.6'
+                            list.commands[i].type === 'Number' &&
+                            list.commands[i].value === -9.6
                         ) {
                             latitudeFound = true;
                         }
 
                         if (
                             list.commands[i].name === 'longitude' &&
-                            list.commands[i].type === 'string' &&
-                            list.commands[i].value === '12.4'
+                            list.commands[i].type === 'Number' &&
+                            list.commands[i].value === 12.4
                         ) {
                             longitudeFound = true;
                         }
