@@ -170,6 +170,9 @@ fi
 %{_install_dir}
 
 %changelog
+* Tue May 23 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 2.2.0
+- Upgrade iotagent-node-lib dependency from 3.1.0 to 3.2.0
+
 * Tue Apr 25 2023 Alvaro Vega <alvaro.vegagarcia@telefonica.com> 2.1.0
  - Add: support to run tests with node 18
  - Upgrade iotagent-node-lib dependency from 3.0.0 to 3.1.0
