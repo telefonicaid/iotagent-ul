@@ -1,1 +1,2 @@
+- Add: update tests according new default value for appendMode
 - Remove: RPM stuff (no longer used)
