@@ -103,7 +103,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
@@ -145,7 +145,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json')
                 )
@@ -201,7 +201,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
-                .patch(
+                .post(
                     '/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json')
                 )
@@ -286,7 +286,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json')
                 )
@@ -324,7 +324,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
@@ -365,7 +365,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
@@ -406,7 +406,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
@@ -416,7 +416,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
                 )
@@ -457,7 +457,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
@@ -467,7 +467,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
                 )
@@ -519,7 +519,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .patch(
+                .post(
                     '/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json')
                 )
@@ -565,7 +565,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock = nock('http://192.168.1.1:1026')
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json')
                 )
@@ -618,7 +618,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .patch(
+                .post(
                     '/v2/entities/Second%20UL%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json')
                 )
@@ -678,7 +678,7 @@ describe('HTTP Transport binding: measures', function () {
                 // intercept requests from the IOTA to the CB for each one of the different observations.
                 // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
                 // and just check the structure of the payload programmatically.
-                .patch('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function (body) {
+                .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function (body) {
                     let i = 0;
                     let attributes = 0;
 
@@ -767,7 +767,7 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .patch(
+                .post(
                     '/v2/entities/TimeInstant%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
                 )
@@ -832,7 +832,7 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .patch(
+                .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
                 )
@@ -897,7 +897,7 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .patch(
+                .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
                 )
@@ -962,7 +962,7 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .patch(
+                .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
                 )
@@ -1027,7 +1027,7 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post('/v2/entities?options=upsert')
                 .reply(204)
-                .patch(
+                .post(
                     '/v2/entities/TimeInstant%20New%20Device/attrs',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
                 )
