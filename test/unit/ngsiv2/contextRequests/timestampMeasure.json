@@ -1,4 +1,6 @@
 {
+    "id":"Second UL Device",
+    "type":"AnMQTTDevice",
     "temperature":{
         "type": "celsius",
         "value": 23

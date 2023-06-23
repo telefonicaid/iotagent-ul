@@ -1,4 +1,6 @@
 {
+    "id":"TimeInstant Device",
+    "type":"clock",
   "temperature": {
     "type": "float",
     "value": 24.4

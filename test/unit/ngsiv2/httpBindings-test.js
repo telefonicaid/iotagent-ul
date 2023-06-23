@@ -104,10 +104,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -146,10 +145,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasuresTypeJson.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -202,10 +200,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'TestService')
                 .matchHeader('fiware-servicepath', '/testingPath')
                 .post(
-                    '/v2/entities/SensorMachine:UL_UNPROVISIONED/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedMeasure.json')
                 )
-                .query({ type: 'SensorMachine' })
                 .reply(204);
 
             request(groupCreation, function (error, response, body) {
@@ -287,10 +284,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timestampMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -325,10 +321,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -366,10 +361,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -407,20 +401,18 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -458,10 +450,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             contextBrokerMock

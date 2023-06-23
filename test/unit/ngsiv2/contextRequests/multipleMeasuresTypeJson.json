@@ -1,4 +1,6 @@
 {
+    "id":"Second UL Device",
+    "type":"AnMQTTDevice",    
   "luminosity": {
     "type": "Number",
     "value": 10
