@@ -406,7 +406,6 @@ describe('MQTT Transport binding: measures', function () {
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
                 )
-                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
