@@ -1,6 +1,8 @@
 {
+    "id":"Second UL Device",
+    "type":"AnMQTTDevice",    
    "Correlation": {
-    	"type": "Number",
-    	"value": 23
+        "type": "Number",
+        "value": 23
     }
 }

@@ -459,10 +459,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
         });
 
@@ -511,10 +510,9 @@ describe('HTTP Transport binding: measures', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204)
                 .post(
-                    '/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasureProduction.json')
                 )
-                .query({ type: 'repeater:illuminance' })
                 .reply(204);
 
             request(provisionOptions, function (error, response, body) {
@@ -557,10 +555,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             request(groupCreation, function (error, response, body) {
@@ -610,10 +607,9 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20UL%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/unprovisionedAliasMeasure2.json')
                 )
-                .query({ type: 'AnMQTTDevice' })
                 .reply(204);
 
             request(groupCreation, function (error, response, body) {
@@ -669,7 +665,7 @@ describe('HTTP Transport binding: measures', function () {
                 // intercept requests from the IOTA to the CB for each one of the different observations.
                 // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
                 // and just check the structure of the payload programmatically.
-                .post('/v2/entities/urn:x-iot:smartsantander:u7jcfa:fixed:t311/attrs', function (body) {
+                .post('/v2/entities?options=upsert', function (body) {
                     let i = 0;
                     let attributes = 0;
 
@@ -684,9 +680,8 @@ describe('HTTP Transport binding: measures', function () {
                             }
                         }
                     }
-                    return i === attributes - 1;
+                    return i === attributes - 1 - 2;
                 })
-                .query({ type: 'repeater:illuminance' })
                 .times(13)
                 .reply(204);
 
@@ -759,10 +754,9 @@ describe('HTTP Transport binding: measures', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204)
                 .post(
-                    '/v2/entities/TimeInstant%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
                 )
-                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
@@ -824,10 +818,9 @@ describe('HTTP Transport binding: measures', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204)
                 .post(
-                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
                 )
-                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
@@ -889,10 +882,9 @@ describe('HTTP Transport binding: measures', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204)
                 .post(
-                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
                 )
-                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
@@ -954,10 +946,9 @@ describe('HTTP Transport binding: measures', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204)
                 .post(
-                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
                 )
-                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
@@ -1019,10 +1010,9 @@ describe('HTTP Transport binding: measures', function () {
                 .post('/v2/entities?options=upsert')
                 .reply(204)
                 .post(
-                    '/v2/entities/TimeInstant%20New%20Device/attrs',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
                 )
-                .query({ type: 'clock' })
                 .reply(204);
 
             config.iota.timestamp = true;
