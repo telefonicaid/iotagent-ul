@@ -1,3 +1,5 @@
+- Fix: use 'options=upsert' when update ngsiv2 CB entities (#956)
+
 2.2.0 (May 23rd, 2023)
 
 - Upgrade iotagent-node-lib dependency from 3.1.0 to 3.2.0
