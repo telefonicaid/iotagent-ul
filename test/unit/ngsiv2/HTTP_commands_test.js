@@ -94,7 +94,7 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
@@ -103,7 +103,7 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
                 )
                 .reply(204);
@@ -156,7 +156,7 @@ describe('HTTP: Commands', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
@@ -164,7 +164,7 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice')
+                .post('/v2/entities?options=upsert')
                 .reply(204);
 
             mockedClientServer = nock('http://localhost:9876')
@@ -223,13 +223,13 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice')
+                .post('/v2/entities?options=uprsert')
                 .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities/Wrong%20MQTT%20Device/attrs?type=AnMQTTDevice', function (body) {
+                .post('/v2/entities?options=upsert', function (body) {
                     return body.PING_status.value === 'ERROR';
                 })
                 .reply(204);
@@ -316,7 +316,7 @@ describe('HTTP: Commands with expressions', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
@@ -325,7 +325,7 @@ describe('HTTP: Commands with expressions', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
                 )
                 .reply(204);
@@ -419,7 +419,7 @@ describe('HTTP: Commands with expressions 2', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus1.json')
                 )
                 .reply(204);
@@ -428,7 +428,7 @@ describe('HTTP: Commands with expressions 2', function () {
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
-                    '/v2/entities/Second%20MQTT%20Device/attrs?type=AnMQTTDevice',
+                    '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/updateStatus6.json')
                 )
                 .reply(204);
