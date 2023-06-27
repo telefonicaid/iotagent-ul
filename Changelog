@@ -1,4 +1,4 @@
-- Fix: use 'options=upsert' when update ngsiv2 CB entities (#956)
+- Fix: use 'options=upsert' when update ngsiv2 CB entities and appendMode is enabled (iotagent-node-lib#956)
 
 2.2.0 (May 23rd, 2023)
 
