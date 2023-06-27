@@ -1,2 +1,3 @@
+- Fix: do not propagate group config (timestamp and explicitAttrs) to autoprovisioned devices (at database level) (iotagent-node-lib#1377)
 - Add: update tests according new default value for appendMode
 - Remove: RPM stuff (no longer used)
