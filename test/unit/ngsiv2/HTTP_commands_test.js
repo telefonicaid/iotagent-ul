@@ -223,7 +223,7 @@ describe('HTTP: Commands', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=uprsert')
+                .post('/v2/entities?options=upsert')
                 .reply(204);
 
             contextBrokerMock
