@@ -1,2 +1,3 @@
+- Fix: use 'options=upsert' when update ngsiv2 CB entities and appendMode is enabled (iotagent-node-lib#956)
 - Add: update tests according new default value for appendMode
 - Remove: RPM stuff (no longer used)
