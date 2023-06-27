@@ -1,4 +1,6 @@
 {
+    "id":"SensorMachine:UL_UNPROVISIONED",
+    "type":"SensorMachine",    
    "temperature": {
           "type": "celsius",
           "value": 23

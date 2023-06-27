@@ -1,4 +1,6 @@
 {
+    "id":"Second UL Device",
+    "type":"AnMQTTDevice",    
   "humidity": {
     "type": "degrees",
     "value": 98

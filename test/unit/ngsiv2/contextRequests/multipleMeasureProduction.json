@@ -1,4 +1,6 @@
 {
+    "id":"urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+    "type":"repeater:illuminance",
         "batteryLevel": {
                 "type": "float",
                 "value": 75.0
