@@ -7,7 +7,6 @@
       "timezone": "America/Santiago",
       "protocol": "HTTP_UL",
       "transport": "HTTP",
-      "expressionLanguage": "jexl",
       "endpoint": "http://localhost:9876/command",
       "commands": [
         {
