@@ -123,7 +123,10 @@ npm test
 
 The IoT Agent for Ultralight is licensed under [Affero General Public License (GPL) version 3](./LICENSE).
 
-© 2022 Telefonica Investigación y Desarrollo, S.A.U
+© 2023 Telefonica Investigación y Desarrollo, S.A.U
+
+<details>
+<summary><strong>Further information on the use of the AGPL open source license</strong></summary>
 
 ### Are there any legal issues with AGPL 3.0? Is it safe for me to use?
 
@@ -139,3 +142,5 @@ public statement as follows:
 > incorporate enhancements is considered a derivative work of the product. Software that merely uses or aggregates (i.e.
 > links to) an otherwise unmodified version of existing software is not considered a derivative work, and therefore it
 > does not need to be released as under the same license, or even released as open source.
+
+</details>
