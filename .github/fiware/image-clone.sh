@@ -25,11 +25,11 @@ for i in "$@" ; do
     if [[ $i == "docker" ]]; then
         
         clone "$SOURCE" "$VERSION" "$DOCKER_TARGET" true
-        clone "$SOURCE" "$VERSION"-distroless "$DOCKER_TARGET"-distroless
+        clone "$SOURCE" "$VERSION"-distroless "$DOCKER_TARGET"
     fi
     if [[ $i == "quay" ]]; then
         clone "$SOURCE" "$VERSION" "$QUAY_TARGET" true
-        clone "$SOURCE" "$VERSION"-distroless "$QUAY_TARGET"-distroless
+        clone "$SOURCE" "$VERSION"-distroless "$QUAY_TARGET"
     fi
     echo ""
 done
