@@ -59,11 +59,11 @@ describe('HTTP Transport binding: measures', function () {
         // This mock does not check the payload since the aim of the test is not to verify
         // device provisioning functionality. Appropriate verification is done in tests under
         // provisioning folder of iotagent-node-lib
-        contextBrokerMock = nock('http://192.168.1.1:1026')
-            .matchHeader('fiware-service', 'smartgondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities?options=upsert')
-            .reply(204);
+        contextBrokerMock = nock('http://192.168.1.1:1026');
+        // .matchHeader('fiware-service', 'smartgondor')
+        // .matchHeader('fiware-servicepath', '/gardens')
+        // .post('/v2/entities?options=upsert')
+        // .reply(204);
 
         config.iota.iotManager = {
             host: 'localhost',
@@ -190,11 +190,11 @@ describe('HTTP Transport binding: measures', function () {
             // This mock does not check the payload since the aim of the test is not to verify
             // device provisioning functionality. Appropriate verification is done in tests under
             // provisioning folder of iotagent-node-lib
-            contextBrokerUnprovMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'TestService')
-                .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerUnprovMock = nock('http://192.168.1.1:1026');
+            // .matchHeader('fiware-service', 'TestService')
+            // .matchHeader('fiware-servicepath', '/testingPath')
+            // .post('/v2/entities?options=upsert')
+            // .reply(204);
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -659,8 +659,8 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
+                // .post('/v2/entities?options=upsert')
+                // .reply(204)
                 // Note: The expected body payload is not set explicitly since this mock will be used to
                 // intercept requests from the IOTA to the CB for each one of the different observations.
                 // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
@@ -751,8 +751,8 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
+                // .post('/v2/entities?options=upsert')
+                // .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
@@ -815,8 +815,8 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
+                // .post('/v2/entities?options=upsert')
+                // .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
@@ -879,8 +879,8 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
+                // .post('/v2/entities?options=upsert')
+                // .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
@@ -943,8 +943,8 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
+                // .post('/v2/entities?options=upsert')
+                // .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
@@ -1007,8 +1007,8 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
+                // .post('/v2/entities?options=upsert')
+                // .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
