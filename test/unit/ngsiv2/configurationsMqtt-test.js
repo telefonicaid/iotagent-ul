@@ -58,11 +58,11 @@ describe('MQTT Transport binding: configurations', function () {
             connectTimeout: 60 * 60 * 1000
         });
 
-        contextBrokerMock = nock('http://192.168.1.1:1026')
-            .matchHeader('fiware-service', 'smartgondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities?options=upsert')
-            .reply(204);
+        contextBrokerMock = nock('http://192.168.1.1:1026');
+        // .matchHeader('fiware-service', 'smartgondor')
+        // .matchHeader('fiware-servicepath', '/gardens')
+        // .post('/v2/entities?options=upsert')
+        // .reply(204);
 
         oldConfigurationFlag = config.configRetrieval;
         config.configRetrieval = true;

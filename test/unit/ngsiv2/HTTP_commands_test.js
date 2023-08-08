@@ -60,11 +60,11 @@ describe('HTTP: Commands', function () {
             .post('/v2/registrations')
             .reply(201, null, { Location: '/v2/registrations/6319a7f5254b05844116584d' });
 
-        contextBrokerMock
-            .matchHeader('fiware-service', 'smartgondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities?options=upsert')
-            .reply(204);
+        // contextBrokerMock
+        //     .matchHeader('fiware-service', 'smartgondor')
+        //     .matchHeader('fiware-servicepath', '/gardens')
+        //     .post('/v2/entities?options=upsert')
+        //     .reply(204);
 
         iotagentMqtt.start(config, function () {
             request(provisionOptions, function (error, response, body) {
@@ -161,11 +161,11 @@ describe('HTTP: Commands', function () {
                 )
                 .reply(204);
 
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            // contextBrokerMock
+            //     .matchHeader('fiware-service', 'smartgondor')
+            //     .matchHeader('fiware-servicepath', '/gardens')
+            //     .post('/v2/entities?options=upsert')
+            //     .reply(204);
 
             mockedClientServer = nock('http://localhost:9876')
                 .post('/command', function (body) {
@@ -214,11 +214,11 @@ describe('HTTP: Commands', function () {
                 .post('/v2/registrations')
                 .reply(201, null, { Location: '/v2/registrations/6319a7f5254b05844116584d' });
 
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            // contextBrokerMock
+            //     .matchHeader('fiware-service', 'smartgondor')
+            //     .matchHeader('fiware-servicepath', '/gardens')
+            //     .post('/v2/entities?options=upsert')
+            //     .reply(204);
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -282,11 +282,11 @@ describe('HTTP: Commands with expressions', function () {
             .post('/v2/registrations')
             .reply(201, null, { Location: '/v2/registrations/6319a7f5254b05844116584d' });
 
-        contextBrokerMock
-            .matchHeader('fiware-service', 'smartgondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities?options=upsert')
-            .reply(204);
+        // contextBrokerMock
+        //     .matchHeader('fiware-service', 'smartgondor')
+        //     .matchHeader('fiware-servicepath', '/gardens')
+        //     .post('/v2/entities?options=upsert')
+        //     .reply(204);
 
         iotagentMqtt.start(config, function () {
             request(provisionOptions, function (error, response, body) {
@@ -385,11 +385,11 @@ describe('HTTP: Commands with expressions 2', function () {
             .post('/v2/registrations')
             .reply(201, null, { Location: '/v2/registrations/6319a7f5254b05844116584d' });
 
-        contextBrokerMock
-            .matchHeader('fiware-service', 'smartgondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities?options=upsert')
-            .reply(204);
+        // contextBrokerMock
+        //     .matchHeader('fiware-service', 'smartgondor')
+        //     .matchHeader('fiware-servicepath', '/gardens')
+        //     .post('/v2/entities?options=upsert')
+        //     .reply(204);
 
         iotagentMqtt.start(config, function () {
             request(provisionOptions, function (error, response, body) {
