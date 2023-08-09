@@ -159,11 +159,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -230,11 +226,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -304,11 +296,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -376,11 +364,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -422,11 +406,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -494,11 +474,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -568,11 +544,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -640,11 +612,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -687,11 +655,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -759,11 +723,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -833,11 +793,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
@@ -905,11 +861,7 @@ describe('explicitAttrs tests ', function () {
         };
 
         beforeEach(function (done) {
-            contextBrokerMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerMock = nock('http://192.168.1.1:1026');
 
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')

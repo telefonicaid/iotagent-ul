@@ -69,11 +69,7 @@ describe('AMQP Transport binding: measures', function () {
         // This mock does not check the payload since the aim of the test is not to verify
         // device provisioning functionality. Appropriate verification is done in tests under
         // provisioning folder of iotagent-node-lib
-        contextBrokerMock = nock('http://192.168.1.1:1026')
-            .matchHeader('fiware-service', 'smartgondor')
-            .matchHeader('fiware-servicepath', '/gardens')
-            .post('/v2/entities?options=upsert')
-            .reply(204);
+        contextBrokerMock = nock('http://192.168.1.1:1026');
 
         async.series(
             [
@@ -130,11 +126,7 @@ describe('AMQP Transport binding: measures', function () {
             // This mock does not check the payload since the aim of the test is not to verify
             // device provisioning functionality. Appropriate verification is done in tests under
             // provisioning folder of iotagent-node-lib
-            contextBrokerUnprovMock = nock('http://192.168.1.1:1026')
-                .matchHeader('fiware-service', 'TestService')
-                .matchHeader('fiware-servicepath', '/testingPath')
-                .post('/v2/entities?options=upsert')
-                .reply(204);
+            contextBrokerUnprovMock = nock('http://192.168.1.1:1026');
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -304,8 +296,6 @@ describe('AMQP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v2/entities?options=upsert')
-                .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')
