@@ -1,3 +1,4 @@
+- Fix: update tests to not create initial entity when append mode is enabled
 - Remove: expressionLanguage field (as it it not longer needed, due to only one expression language is supported, after the removal of legacy expressions in iota-node-lib 3.2.0) (iota-node-lib#1384)
 - Fix: update tests according new default value for appendMode
 - Fix: use 'options=upsert' when update ngsiv2 CB entities and appendMode is enabled (iotagent-node-lib#956)
