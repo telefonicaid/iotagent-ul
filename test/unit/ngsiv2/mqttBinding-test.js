@@ -61,10 +61,6 @@ describe('MQTT Transport binding: measures', function () {
         // device provisioning functionality. Appropriate verification is done in tests under
         // provisioning folder of iotagent-node-lib
         contextBrokerMock = nock('http://192.168.1.1:1026');
-        // .matchHeader('fiware-service', 'smartgondor')
-        // .matchHeader('fiware-servicepath', '/gardens')
-        // .post('/v2/entities?options=upsert')
-        // .reply(204);
 
         iotagentUL.start(config, function () {
             request(provisionOptions, function (error, response, body) {
@@ -174,10 +170,6 @@ describe('MQTT Transport binding: measures', function () {
             // device provisioning functionality. Appropriate verification is done in tests under
             // provisioning folder of iotagent-node-lib
             contextBrokerUnprovMock = nock('http://192.168.1.1:1026');
-            // .matchHeader('fiware-service', 'TestService')
-            // .matchHeader('fiware-servicepath', '/testingPath')
-            // .post('/v2/entities?options=upsert')
-            // .reply(204);
 
             contextBrokerUnprovMock
                 .matchHeader('fiware-service', 'TestService')
@@ -400,8 +392,6 @@ describe('MQTT Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                // .post('/v2/entities?options=upsert')
-                // .reply(204)
                 .post(
                     '/v2/entities?options=upsert',
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantDuplicated.json')

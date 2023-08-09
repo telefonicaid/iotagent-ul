@@ -59,10 +59,6 @@ describe('MQTT Transport binding: configurations', function () {
         });
 
         contextBrokerMock = nock('http://192.168.1.1:1026');
-        // .matchHeader('fiware-service', 'smartgondor')
-        // .matchHeader('fiware-servicepath', '/gardens')
-        // .post('/v2/entities?options=upsert')
-        // .reply(204);
 
         oldConfigurationFlag = config.configRetrieval;
         config.configRetrieval = true;
