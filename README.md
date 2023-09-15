@@ -2,7 +2,8 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: APGL](https://img.shields.io/github/license/telefonicaid/iotagent-ul.svg)](https://opensource.org/licenses/AGPL-3.0)
-[![Docker badge](https://img.shields.io/badge/quay.io-fiware%2Fiotagent--ul-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/iotagent-ul)
+[![Quay badge](https://img.shields.io/badge/quay.io-fiware%2Fiotagent--ul-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/iotagent-ul)
+[![Docker badge](https://img.shields.io/badge/docker-telefonicaiot%2Fiotagent--ul-blue?logo=docker)](https://registry.hub.docker.com/r/telefonicaiot/iotagent-ul)
 [![Support badge](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
 <br/>
 [![Documentation badge](https://img.shields.io/readthedocs/fiware-iotagent-ul.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/?badge=latest)
