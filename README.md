@@ -2,9 +2,10 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: APGL](https://img.shields.io/github/license/telefonicaid/iotagent-ul.svg)](https://opensource.org/licenses/AGPL-3.0)
+[![Support badge](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
+<br/>
 [![Quay badge](https://img.shields.io/badge/quay.io-fiware%2Fiotagent--ul-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/iotagent-ul)
 [![Docker badge](https://img.shields.io/badge/docker-telefonicaiot%2Fiotagent--ul-blue?logo=docker)](https://registry.hub.docker.com/r/telefonicaiot/iotagent-ul)
-[![Support badge](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
 <br/>
 [![Documentation badge](https://img.shields.io/readthedocs/fiware-iotagent-ul.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/?badge=latest)
 [![CI](https://github.com/telefonicaid/iotagent-ul/workflows/CI/badge.svg)](https://github.com/telefonicaid/iotagent-ul/actions?query=workflow%3ACI)
@@ -26,7 +27,7 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information 
 [IoT Agents](https://github.com/Fiware/catalogue/tree/master/iot-agents).
 
 | :books: [Documentation](https://fiware-iotagent-ul.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/iotagent-ul) | :whale: [Docker Hub](https://hub.docker.com/r/telefonicaiot/iotagent-ul) | :dart: [Roadmap](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/roadmap.md) |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | --- |
 
 
 ## Contents
