@@ -91,10 +91,10 @@ describe('Ultralight 2.0 Parser: measures', function () {
             result.length.should.equal(2);
             should.exist(result[0]);
             should.exist(result[0].c);
-            result[0].c.should.equal('7');
+            result[0].c.should.equal(7);
             should.exist(result[1]);
             should.exist(result[1].b);
-            result[1].b.should.equal('18');
+            result[1].b.should.equal(18);
         });
     });
     describe('When a payload with multiple groups and measures is parsed', function () {
