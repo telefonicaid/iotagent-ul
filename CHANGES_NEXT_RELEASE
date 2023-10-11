@@ -1,1 +1,2 @@
 - Fix: ensure service and subservice from device in logs about error proccesing message
+- Fix: use entityNameExp with autoprovisioned devices (iota-node-lib#1145)
