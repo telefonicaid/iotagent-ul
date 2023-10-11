@@ -34,7 +34,7 @@ describe('Ultralight 2.0 Parser: measures', function () {
             result.length.should.equal(1);
             should.exist(result[0]);
             should.exist(result[0].a);
-            result[0].a.should.equal('1');
+            result[0].a.should.equal(1);
         });
     });
     describe('When a payload with a multiple measures is parsed', function () {
@@ -46,9 +46,9 @@ describe('Ultralight 2.0 Parser: measures', function () {
             result.length.should.equal(1);
             should.exist(result[0]);
             should.exist(result[0].c);
-            result[0].c.should.equal('7');
+            result[0].c.should.equal(7);
             should.exist(result[0].b);
-            result[0].b.should.equal('18');
+            result[0].b.should.equal(18);
         });
     });
     describe('When a payload with timestamp information is parsed', function () {
@@ -64,7 +64,7 @@ describe('Ultralight 2.0 Parser: measures', function () {
             should.exist(result[0].TimeInstant);
             result[0].TimeInstant.should.equal('2016-06-13T00:35:30Z');
             should.exist(result[0].lle);
-            result[0].lle.should.equal('100');
+            result[0].lle.should.equal(100);
         });
     });
     describe('When a payload with an initial bar and multiple measures is parsed', function () {
@@ -76,9 +76,9 @@ describe('Ultralight 2.0 Parser: measures', function () {
             result.length.should.equal(1);
             should.exist(result[0]);
             should.exist(result[0].c);
-            result[0].c.should.equal('7');
+            result[0].c.should.equal(7);
             should.exist(result[0].b);
-            result[0].b.should.equal('18');
+            result[0].b.should.equal(18);
         });
     });
 
