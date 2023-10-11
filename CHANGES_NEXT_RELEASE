@@ -1,4 +1,4 @@
 - Fix: ensure service and subservice from device in logs about error proccesing message
 - Fix: use but not store timestamp and entityNameExp from group with autoprovisioned devices (iotagent-node-lib#1504, partially)
-- Fix: remove autocast (iota-node-lib#1501)
+- Fix: remove autocast (iotagent-node-lib#1498)
 
