@@ -1,3 +1,4 @@
+- Remove: local mergeDeviceWithConfiguration redefined from iota-node-lib (#642)
 - Fix: ensure service and subservice from device in logs about error proccesing message
 - Fix: use but not store timestamp and entityNameExp from group with autoprovisioned devices (iotagent-node-lib#1504, partially)
 - Fix: remove autocast (iotagent-node-lib#1498)
