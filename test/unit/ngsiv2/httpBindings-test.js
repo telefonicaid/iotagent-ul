@@ -266,7 +266,7 @@ describe('HTTP Transport binding: measures', function () {
             qs: {
                 i: 'HTTP_2',
                 k: '1234',
-                t: '20160530T162522304Z',
+                t: '2016-05-30T16:25:22Z',
                 d: 'temperature|23'
             }
         };
@@ -747,7 +747,7 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
+            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
@@ -809,7 +809,7 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
+            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
@@ -871,7 +871,7 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
+            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
@@ -933,7 +933,7 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
+            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
@@ -995,7 +995,7 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
+            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
