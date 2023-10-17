@@ -747,8 +747,6 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            //config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -808,8 +806,6 @@ describe('HTTP Transport binding: measures', function () {
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
                 )
                 .reply(204);
-
-            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
@@ -871,8 +867,6 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            //config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -933,8 +927,6 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            //config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -994,8 +986,6 @@ describe('HTTP Transport binding: measures', function () {
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
                 )
                 .reply(204);
-
-            //config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
