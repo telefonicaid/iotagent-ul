@@ -398,8 +398,6 @@ describe('MQTT Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUL.stop(function () {
