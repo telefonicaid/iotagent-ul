@@ -1,4 +1,2 @@
-- Remove: local mergeDeviceWithConfiguration redefined from iota-node-lib (#642)
-- Fix: ensure service and subservice from device in logs about error proccesing message
-- Fix: remove autocast (iotagent-node-lib#1498)
+
 
