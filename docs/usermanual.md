@@ -97,14 +97,6 @@ weatherStation167@ping|Ping ok
 
 In this case, the Weather station replies with a String value indicating everything has worked fine.
 
-#### Bidirectionality Syntax
-
-The latest versions of the Provisioning API allow for the definition of reverse expressions to keep data shared between
-the Context Broker and the device in sync (regardless of whether the data originated in plain data from the device or in
-a transformation expression in the IoTAgent). In this cases, when a reverse expression is defined, whenever the
-bidirectional attribute is modified, the IoTAgent sends a command to the original device, with the name defined in the
-reverse expression attribute and the ID of the device (see Commands Syntax, just above).
-
 #### Commands transformations
 
 It is possible to use expressions to transform commands, in the same way that other attributes could do it, that is
@@ -135,8 +127,6 @@ the following meanings:
 -   **`<empty>`**: This is the default case. Payload will not be transformed.
 
 #### Casting to JSON native format
-
-**FIXME**: this need to be tested, once IOTA Lib 3.0.0 gets released and IOTA UL 2.0.0 (using it) gets released.
 
 Ultralight 2.0 defines a method that allows to use native JSON types in the NGSI v2. For example: The IotAgent receives
 this UL measure:
