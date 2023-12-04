@@ -27,7 +27,7 @@ This project is part of [FIWARE](https://www.fiware.org/). For more information 
 [IoT Agents](https://github.com/Fiware/catalogue/tree/master/iot-agents).
 
 | :books: [Documentation](https://fiware-iotagent-ul.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/iotagent-ul) | :whale: [Docker Hub](https://hub.docker.com/r/telefonicaiot/iotagent-ul) | :dart: [Roadmap](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/roadmap.md) |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | --- |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 
 
 ## Contents
@@ -102,9 +102,9 @@ In order to successfuly run the tests, on the local machine three services must 
 They can be run using Docker:
 
 ```shell
-   docker run -d -p 27017:27017 --hostname mongo --name mongo mongo:4.4.19
-   docker run -d -p 1883:1883 -l mosquitto eclipse-mosquitto:1.6.15
-   docker run -d -p 5672:5672 --hostname my-rabbit --name some-rabbit rabbitmq:3.11.13
+   docker run -d -p 27017:27017 --hostname mongo --name mongo mongo:6.0.12
+   docker run -d -p 1883:1883 --hostname mosquitto --name mosquitto eclipse-mosquitto:1.6.15
+   docker run -d -p 5672:5672 --hostname rabbit --name rabbit rabbitmq:3.11.13
 ```
 
 The required libraries, if missing, can be installed with:
