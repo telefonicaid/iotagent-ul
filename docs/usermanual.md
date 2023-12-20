@@ -149,60 +149,59 @@ then the NGSI v2 update uses `10`(number), `true` (boolean) and `78.8` (number) 
 (string) and "78.8" (string).
 
 This functionality relies on string measures casting feature implemented in the iotagent library. This functionality
-uses native JavaScript [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) 
-function to cast data coming from measures (as text) to JSON native types. This functionality does not change the attribute type, 
-using the type specified in the config group or device provision, even if it is not consistent with the measures that are coming. 
-    
+uses native JavaScript
+[`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) function
+to cast data coming from measures (as text) to JSON native types. This functionality does not change the attribute type,
+using the type specified in the config group or device provision, even if it is not consistent with the measures that
+are coming.   
 As an example, for a given measure:
-    
+
 ```
-a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']|g|{a:1,b:2,c:3}|h|I'm a string    
+a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']|g|{a:1,b:2,c:3}|h|I'm a string
 ```
 
 The resulting entity would be something like:
 
 ```json
 {
-  "id": "entityid:001",
-  "type": "entitytype",
-  "a": {
-    "type": "provisionedType",
-    "value": 1
-  },
-  "b": {
-    "type": "provisionedType",
-    "value": 1.01
-  },
-  "c": {
-    "type": "provisionedType",
-    "value": true
-  },
-  "d": {
-    "type": "provisionedType",
-    "value": null
-  },
-  "e": {
-    "type": "provisionedType",
-    "value": [1,2,3]
-  },
-  "f": {
-    "type": "provisionedType",
-    "value": ["a","b","c"]
-  },
-  "g": {
-    "type": "provisionedType",
-    "value": {"a":1,"b":2,"c":3}
-  },
-  "h": {
-    "type": "provisionedType",
-    "value": "I'm a string"
-  }
+    "id": "entityid:001",
+    "type": "entitytype",
+    "a": {
+        "type": "provisionedType",
+        "value": 1
+    },
+    "b": {
+        "type": "provisionedType",
+        "value": 1.01
+    },
+    "c": {
+        "type": "provisionedType",
+        "value": true
+    },
+    "d": {
+        "type": "provisionedType",
+        "value": null
+    },
+    "e": {
+        "type": "provisionedType",
+        "value": [1, 2, 3]
+    },
+    "f": {
+        "type": "provisionedType",
+        "value": ["a", "b", "c"]
+    },
+    "g": {
+        "type": "provisionedType",
+        "value": { "a": 1, "b": 2, "c": 3 }
+    },
+    "h": {
+        "type": "provisionedType",
+        "value": "I'm a string"
+    }
 }
 ```
-    
-Note that `provisionedType` is the type included in the device provision or config group, and it is not changed. 
 
-
+Note that `provisionedType` is the type included in the device provision or config group, and it is not changed.
 
 ### Transport Protocol
 
@@ -247,8 +246,8 @@ and
 [Practice: Scenario 3: commands - error](https://github.com/telefonicaid/iotagent-node-lib/blob/master/doc/northboundinteractions.md#scenario-3-commands-error).
 
 MQTT devices commands are always push. For HTTP Devices commands to be push they **must** be provisioned with the
-`endpoint` attribute, that will contain the URL where the IoT Agent will send the received commands. Otherwise the
-command will be poll. When using the HTTP transport, the command handling have two flavours:
+`endpoint` attribute, from device or group device, that will contain the URL where the IoT Agent will send the received
+commands. Otherwise the command will be poll. When using the HTTP transport, the command handling have two flavours:
 
 -   **Push commands**: The request payload format will be the one described in the UL Protocol description. The device
     will reply with a 200OK response containing the result of the command in the UL2.0 result format. Example of the
@@ -315,19 +314,16 @@ by the protocol, in this case '/ul', just include apikey and deviceid (e.g: `/FF
 
 > **Note** Measures and commands are sent over different MQTT topics:
 >
-> *   _Measures_ are sent on the `/<protocol>/<api-key>/<device-id>/attrs` topic,
-> *   _Commands_ are sent on the `/<api-key>/<device-id>/cmd` topic,
+> -   _Measures_ are sent on the `/<protocol>/<api-key>/<device-id>/attrs` topic,
+> -   _Commands_ are sent on the `/<api-key>/<device-id>/cmd` topic,
 >
->  The reasoning behind this is that when sending measures northbound from device to IoT Agent,
->  it is necessary to explicitly identify which IoT Agent is needed to parse the data. This
->  is done by prefixing the relevant MQTT topic with a protocol, otherwise there is no way to
->  define which agent is processing the measure. This mechanism allows smart systems to connect
->  different devices to different IoT Agents according to need.
+> The reasoning behind this is that when sending measures northbound from device to IoT Agent, it is necessary to
+> explicitly identify which IoT Agent is needed to parse the data. This is done by prefixing the relevant MQTT topic
+> with a protocol, otherwise there is no way to define which agent is processing the measure. This mechanism allows
+> smart systems to connect different devices to different IoT Agents according to need.
 >
->  For southbound commands, this distinction is unnecessary since the correct IoT Agent has already
->  registered itself for the command during the device provisioning step and the device will always
->  receive commands in an appropriate format.
-
+> For southbound commands, this distinction is unnecessary since the correct IoT Agent has already registered itself for
+> the command during the device provisioning step and the device will always receive commands in an appropriate format.
 
 This transport protocol binding is still under development.
 
@@ -375,7 +371,8 @@ commands and a topic to receive configuration information. This mechanism can be
 configuration flag, `configRetrieval`.
 
 In case of MQTT to retrieve configuration parameters from the Context Broker, it is required that the device should be
-provisioned using "MQTT" as transport key. By default it will be considered "HTTP" as transport.
+provisioned using "MQTT" as transport key, at device or group level. By default it will be considered "HTTP" as
+transport.
 
 The parameter will be given as follows:
 
