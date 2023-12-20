@@ -237,7 +237,7 @@ describe('HTTP Transport binding: measures', function () {
                 });
             });
         });
-        it('should add a transport to the registered devices', function (done) {
+        it('should not add a transport to the registered devices', function (done) {
             const getDeviceOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices/UL_UNPROVISIONED',
                 method: 'GET',
@@ -251,8 +251,7 @@ describe('HTTP Transport binding: measures', function () {
                 request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
                     response.statusCode.should.equal(200);
-                    should.exist(body.transport);
-                    body.transport.should.equal('HTTP');
+                    should.not.exist(body.transport);
                     done();
                 });
             });
