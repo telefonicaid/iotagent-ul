@@ -153,8 +153,7 @@ uses native JavaScript
 [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) function
 to cast data coming from measures (as text) to JSON native types. This functionality does not change the attribute type,
 using the type specified in the config group or device provision, even if it is not consistent with the measures that
-are coming.   
-As an example, for a given measure:
+are coming. As an example, for a given measure:
 
 ```
 a|1|b|1.01|c|true|d|null|e|[1,2,3]|f|['a','b','c']|g|{a:1,b:2,c:3}|h|I'm a string
