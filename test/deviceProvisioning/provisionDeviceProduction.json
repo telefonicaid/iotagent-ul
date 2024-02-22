@@ -35,7 +35,7 @@
         }
       ],
       "timezone": "Europe/Madrid",
-      "timestamp": "true"
+      "timestamp": true
     }
   ]
 }
