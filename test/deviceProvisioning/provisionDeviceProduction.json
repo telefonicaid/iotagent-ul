@@ -34,7 +34,8 @@
           "value": "WGS84"
         }
       ],
-      "timezone": "Europe/Madrid"
+      "timezone": "Europe/Madrid",
+      "timestamp": "true"
     }
   ]
 }
