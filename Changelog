@@ -1,3 +1,9 @@
+3.3.0 (February 27th, 2024)
+
+- Fix: default attribute type changed from 'string' to 'Text' (#664)
+- Add: log and return device/group information when DeviceNotFound and GroupNotFound errors (iotagent-json#815)
+- Upgrade iotagent-node-lib dependency from 4.2.0 to 4.3.0
+
 3.2.0 (January 30th, 2024)
 
 - Upgrade iotagent-node-lib dependency from 4.1.0 to 4.2.0
