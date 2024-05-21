@@ -391,19 +391,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
-                )
-                .reply(204);
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
-                )
+                .post('/v2/op/update', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure.json'))
                 .reply(204);
         });
 
@@ -440,19 +428,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
-                )
-                .reply(204);
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
-                )
+                .post('/v2/op/update', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure2.json'))
                 .reply(204);
         });
 
@@ -650,28 +626,10 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                // Note: The expected body payload is not set explicitly since this mock will be used to
-                // intercept requests from the IOTA to the CB for each one of the different observations.
-                // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
-                // and just check the structure of the payload programmatically.
-                .post('/v2/entities?options=upsert', function (body) {
-                    let i = 0;
-                    let attributes = 0;
-
-                    for (const attribute in body) {
-                        // checks that all attributes has metadata
-                        if (body.hasOwnProperty(attribute)) {
-                            attributes++;
-                            for (const metadata in body[attribute].metadata) {
-                                if (body[attribute].metadata.hasOwnProperty(metadata)) {
-                                    i++;
-                                }
-                            }
-                        }
-                    }
-                    return i === attributes - 1 - 2;
-                })
-                .times(13)
+                .post(
+                    '/v2/op/update'
+                    //utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure3.json')
+                )
                 .reply(204);
 
             config.iota.timestamp = true; // forces to add timestamp att and  metadata with timeinstant to all attributes

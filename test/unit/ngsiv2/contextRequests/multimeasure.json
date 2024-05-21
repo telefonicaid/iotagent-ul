@@ -1,0 +1,21 @@
+{
+        "actionType": "append",
+        "entities": [
+            {
+                "id": "Second UL Device",
+                "type": "AnMQTTDevice",
+                "temperature": {
+                    "type": "celsius",
+                    "value": 23
+                }
+            },
+            {
+                "id": "Second UL Device",
+                "type": "AnMQTTDevice",
+                "humidity": {
+                    "type": "degrees",
+                    "value": 98
+                }
+            }
+        ]
+}
