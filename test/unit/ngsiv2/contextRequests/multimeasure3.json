@@ -1,0 +1,499 @@
+{
+    "actionType": "append",
+    "entities": [
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "temperature:ambient": {
+                "type": "float",
+                "value": 24.4,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "hum": {
+                "type": "Text",
+                "value": 58,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "aco": {
+                "type": "Text",
+                "value": 0.1,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "apa": {
+                "type": "Text",
+                "value": 0.38,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "ao3": {
+                "type": "Text",
+                "value": 121,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "no2": {
+                "type": "Text",
+                "value": 115,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "pla": {
+                "type": "Text",
+                "value": 43.4551,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "plo": {
+                "type": "Text",
+                "value": -3.83381,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "poa": {
+                "type": "Text",
+                "value": 28,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "spi": {
+                "type": "Text",
+                "value": 0,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "dia": {
+                "type": "Text",
+                "value": 0,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "mit": {
+                "type": "Text",
+                "value": 1492,
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        },
+        {
+            "id": "urn:x-iot:smartsantander:u7jcfa:fixed:t311",
+            "type": "repeater:illuminance",
+            "att_name": {
+                "type": "string",
+                "value": "value",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "coords": {
+                "type": "string",
+                "value": "WGS84",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "pos": {
+                "type": "Text",
+                "value": "43.4630608,-3.8345434",
+                "metadata": {
+                    "TimeInstant": {
+                        "type": "DateTime",
+                        "value": "2024-05-21T16:33:16.657+02:00"
+                    }
+                }
+            },
+            "TimeInstant": {
+                "type": "DateTime",
+                "value": "2024-05-21T16:33:16.657+02:00"
+            }
+        }
+    ]
+}
