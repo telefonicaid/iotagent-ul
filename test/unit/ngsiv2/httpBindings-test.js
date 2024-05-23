@@ -628,7 +628,6 @@ describe('HTTP Transport binding: measures', function () {
                 .matchHeader('fiware-servicepath', '/gardens')
                 .post(
                     '/v2/op/update'
-                    //utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure3.json')
                 )
                 .reply(204);
 
