@@ -30,12 +30,12 @@ const nock = require('nock');
 const should = require('should');
 const iotAgentLib = require('iotagent-node-lib');
 const async = require('async');
+const request = require('request');
 const utils = require('../../utils');
-const request = utils.request;
 let mockedClientServer;
 let contextBrokerMock;
 
-describe('HTTP binding - Update command provisioned with a new apikey', function () {
+describe('HTTP binding - Update provisioned devices with a new apikey', function () {
     const provisionOptions = {
         url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
         method: 'POST',
@@ -66,6 +66,7 @@ describe('HTTP binding - Update command provisioned with a new apikey', function
             method: 'GET'
         };
         request(options, function (error, response, body) {
+            /* jshint camelcase:false */
             const parsedBody = JSON.parse(body);
             parsedBody.apikey.should.equal('APIKEY1');
             done();
