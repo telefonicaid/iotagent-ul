@@ -1,4 +1,4 @@
-3.5.0 (April 26th, 2024)
+3.5.0 (June 11th, 2024)
 
 - Fix: update device using previous device apikey to avoid error when apikey is updated (iota-json#833)
 - Fix: allow send multiple measures to CB in a batch (POST /v2/op/update) and sorted by TimeInstant when possible, instead of using multiples single request (iotagent-json#825, iotagent-node-lib#1612)
