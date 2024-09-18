@@ -1,3 +1,9 @@
+3.6.0 (September 18th, 2024)
+
+- Upgrade express from 4.19.2 to 4.20.0 due to a vulnerability
+- Upgrade body-parser dep from 1.18.3 to 1.20.3 due to a vulnerability
+- Upgrade iotagent-node-lib dependency from 4.5.0 to 4.6.0
+
 3.5.0 (June 11th, 2024)
 
 - Fix: update device using previous device apikey to avoid error when apikey is updated (iota-json#833)
