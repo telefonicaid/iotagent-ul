@@ -1,3 +1,5 @@
+- ADD: reponse header about procesing time (iotagent-node-lib#1650)
+
 3.6.0 (September 18th, 2024)
 
 - Upgrade express from 4.19.2 to 4.20.0 due to a vulnerability
