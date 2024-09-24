@@ -30,14 +30,15 @@ t|15|k|abc
 In this example, two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted.
 Values in Ultralight 2.0 are not typed (everything is treated as a string).
 
-Multiple groups of measures can be combined into a single request (but just for HTTP/POST or MQTT), using the `#` character. In that case, a different
-NGSI request will be generated for each group of measures. E.g.:
+Multiple groups of measures can be combined into a single request (but just for HTTP/POST or MQTT), using the `#`
+character. In that case, a different NGSI request will be generated for each group of measures. E.g.:
 
 ```text
 gps|1.2/3.4#t|10
 ```
 
-This will generate two elements in the NGSI batch update request (POST /v2/op/update) for the same entity, one for each one of the measures. Each one of those elements can contain any number of attributes.
+This will generate two elements in the NGSI batch update request (POST /v2/op/update) for the same entity, one for each
+one of the measures. Each one of those elements can contain any number of attributes.
 
 Measure groups can additionally have an optional timestamp, with the following syntax:
 
@@ -290,6 +291,11 @@ Content-type: text/plain
 
 Robot1@turn|left
 ```
+
+##### Time processing
+
+HTTP bindig is returning in a HTTP header named `X-Processing-Time` processing time expended by current HTTP measure
+request.
 
 #### MQTT binding
 
