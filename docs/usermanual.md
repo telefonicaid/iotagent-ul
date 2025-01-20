@@ -294,8 +294,9 @@ Robot1@turn|left
 
 ##### Time processing
 
-HTTP bindig is returning in a HTTP header named `X-Processing-Time` processing time (in milliseconds) expended by current HTTP measure
-request. For example:
+HTTP bindig is returning in a HTTP header named `X-Processing-Time` processing time (in milliseconds) expended by
+current HTTP measure request. For example:
+
 ```
 X-Processing-Time: 38
 ```
@@ -378,8 +379,8 @@ commands and a topic to receive configuration information. This mechanism can be
 configuration flag, `configRetrieval`.
 
 In case of MQTT to retrieve configuration parameters from the Context Broker, it is required that the device should be
-provisioned using "MQTT" as transport key, at device or group level. By default it will be considered "HTTP" as
-transport.
+provisioned using "MQTT" as transport key, at device or group level. By default it will be considered "MQTT" as
+transport if none transport is defined at device or group level or IOTA_DEFAULT_TRANSPORT env var.
 
 The parameter will be given as follows:
 
