@@ -30,15 +30,15 @@ t|15|k|abc
 In this example, two attributes, one named "t" with value "15" and another named "k" with value "abc" are transmitted.
 Values in Ultralight 2.0 are not typed (everything is treated as a string).
 
-Multiple groups of measures can be combined into a single request, using the `#` character. In that case, a different
-NGSI request will be generated for each group of measures. E.g.:
+Multiple groups of measures can be combined into a single request (but just for HTTP/POST or MQTT), using the `#`
+character. In that case, a different NGSI request will be generated for each group of measures. E.g.:
 
 ```text
 gps|1.2/3.4#t|10
 ```
 
-This will generate two NGSI requests for the same entity, one for each one of the values. Each one of those requests can
-contain any number of attributes.
+This will generate two elements in the NGSI batch update request (POST /v2/op/update) for the same entity, one for each
+one of the measures. Each one of those elements can contain any number of attributes.
 
 Measure groups can additionally have an optional timestamp, with the following syntax:
 
@@ -292,6 +292,15 @@ Content-type: text/plain
 Robot1@turn|left
 ```
 
+##### Time processing
+
+HTTP bindig is returning in a HTTP header named `X-Processing-Time` processing time (in milliseconds) expended by
+current HTTP measure request. For example:
+
+```
+X-Processing-Time: 38
+```
+
 #### MQTT binding
 
 MQTT is a machine-to-machine (M2M)/IoT connectivity protocol, focused on a lightweight interaction between peers. MQTT
@@ -370,8 +379,8 @@ commands and a topic to receive configuration information. This mechanism can be
 configuration flag, `configRetrieval`.
 
 In case of MQTT to retrieve configuration parameters from the Context Broker, it is required that the device should be
-provisioned using "MQTT" as transport key, at device or group level. By default it will be considered "HTTP" as
-transport.
+provisioned using "MQTT" as transport key, at device or group level. By default it will be considered "MQTT" as
+transport if none transport is defined at device or group level or IOTA_DEFAULT_TRANSPORT env var.
 
 The parameter will be given as follows:
 
