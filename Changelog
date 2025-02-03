@@ -1,3 +1,9 @@
+3.7.0 (February 3rd, 2025)
+
+- Fix: use config.defaultTransport (from config.js or IOTA_DEFAULT_TRANSPORT env var) instead of magic 'HTTP' at provision device
+- Add: X-Processing-Time response header with processing time (in milliseconds) expended by current HTTP measure (iotagent-node-lib#1650)
+- Add: print also IOTA_CONFIG_RETRIEVAL, IOTA_DEFAULT_KEY, IOTA_DEFAULT_TRANSPORT env var values at iotagent startup
+
 3.6.0 (September 18th, 2024)
 
 - Upgrade express from 4.19.2 to 4.20.0 due to a vulnerability
