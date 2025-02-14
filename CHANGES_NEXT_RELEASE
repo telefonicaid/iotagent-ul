@@ -1,0 +1,1 @@
+- Fix: bad format measures are reported as 500 Error instead of 400 (iotajson#863)
