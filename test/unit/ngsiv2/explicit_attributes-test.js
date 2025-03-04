@@ -234,7 +234,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);
@@ -414,7 +414,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);
@@ -482,7 +482,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);
@@ -620,7 +620,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);
@@ -663,7 +663,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);
@@ -731,7 +731,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);
@@ -869,7 +869,7 @@ describe('explicitAttrs tests ', function () {
                 .post('/v2/entities?options=upsert', {
                     id: 'Sensor:Temperature:JSON_UNPROVISIONED',
                     type: 'Sensor:Temperature',
-                    h: { type: 'string', value: 33 },
+                    h: { type: 'Text', value: 33 },
                     temperature: { type: 'Number', value: 89 }
                 })
                 .reply(204);

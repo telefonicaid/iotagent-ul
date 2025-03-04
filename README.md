@@ -2,8 +2,10 @@
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: APGL](https://img.shields.io/github/license/telefonicaid/iotagent-ul.svg)](https://opensource.org/licenses/AGPL-3.0)
-[![Docker badge](https://img.shields.io/docker/pulls/fiware/iotagent-ul.svg)](https://hub.docker.com/r/fiware/iotagent-ul/)
-[![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/iot-agents.svg)](https://stackoverflow.com/questions/tagged/fiware+iot)
+[![Support badge](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
+<br/>
+[![Quay badge](https://img.shields.io/badge/quay.io-fiware%2Fiotagent--ul-grey?logo=red%20hat&labelColor=EE0000)](https://quay.io/repository/fiware/iotagent-ul)
+[![Docker badge](https://img.shields.io/badge/docker-telefonicaiot%2Fiotagent--ul-blue?logo=docker)](https://registry.hub.docker.com/r/telefonicaiot/iotagent-ul)
 <br/>
 [![Documentation badge](https://img.shields.io/readthedocs/fiware-iotagent-ul.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/?badge=latest)
 [![CI](https://github.com/telefonicaid/iotagent-ul/workflows/CI/badge.svg)](https://github.com/telefonicaid/iotagent-ul/actions?query=workflow%3ACI)
@@ -24,8 +26,8 @@ library's GitHub repository.
 This project is part of [FIWARE](https://www.fiware.org/). For more information check the FIWARE Catalogue entry for the
 [IoT Agents](https://github.com/Fiware/catalogue/tree/master/iot-agents).
 
-| :books: [Documentation](https://fiware-iotagent-ul.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | :whale: [Docker Hub](https://hub.docker.com/r/fiware/iotagent-ul/) | :dart: [Roadmap](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/roadmap.md) |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| :books: [Documentation](https://fiware-iotagent-ul.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/iotagent-ul) | :whale: [Docker Hub](https://hub.docker.com/r/telefonicaiot/iotagent-ul) | :dart: [Roadmap](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/roadmap.md) |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 
 
 ## Contents
@@ -100,9 +102,9 @@ In order to successfuly run the tests, on the local machine three services must 
 They can be run using Docker:
 
 ```shell
-   docker run -d -p 27017:27017 --hostname mongo --name mongo mongo:4.4.19
-   docker run -d -p 1883:1883 -l mosquitto eclipse-mosquitto:1.6.15
-   docker run -d -p 5672:5672 --hostname my-rabbit --name some-rabbit rabbitmq:3.11.13
+   docker run -d -p 27017:27017 --hostname mongo --name mongo mongo:6.0.12
+   docker run -d -p 1883:1883 --hostname mosquitto --name mosquitto eclipse-mosquitto:1.6.15
+   docker run -d -p 5672:5672 --hostname rabbit --name rabbit rabbitmq:3.11.13
 ```
 
 The required libraries, if missing, can be installed with:
@@ -123,7 +125,10 @@ npm test
 
 The IoT Agent for Ultralight is licensed under [Affero General Public License (GPL) version 3](./LICENSE).
 
-© 2022 Telefonica Investigación y Desarrollo, S.A.U
+© 2023 Telefonica Investigación y Desarrollo, S.A.U
+
+<details>
+<summary><strong>Further information on the use of the AGPL open source license</strong></summary>
 
 ### Are there any legal issues with AGPL 3.0? Is it safe for me to use?
 
@@ -139,3 +144,5 @@ public statement as follows:
 > incorporate enhancements is considered a derivative work of the product. Software that merely uses or aggregates (i.e.
 > links to) an otherwise unmodified version of existing software is not considered a derivative work, and therefore it
 > does not need to be released as under the same license, or even released as open source.
+
+</details>

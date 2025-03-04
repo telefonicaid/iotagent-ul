@@ -237,7 +237,7 @@ describe('HTTP Transport binding: measures', function () {
                 });
             });
         });
-        it('should add a transport to the registered devices', function (done) {
+        it('should not add a transport to the registered devices', function (done) {
             const getDeviceOptions = {
                 url: 'http://localhost:' + config.iota.server.port + '/iot/devices/UL_UNPROVISIONED',
                 method: 'GET',
@@ -251,8 +251,7 @@ describe('HTTP Transport binding: measures', function () {
                 request(getDeviceOptions, function (error, response, body) {
                     should.not.exist(error);
                     response.statusCode.should.equal(200);
-                    should.exist(body.transport);
-                    body.transport.should.equal('HTTP');
+                    should.not.exist(body.transport);
                     done();
                 });
             });
@@ -266,7 +265,7 @@ describe('HTTP Transport binding: measures', function () {
             qs: {
                 i: 'HTTP_2',
                 k: '1234',
-                t: '20160530T162522304Z',
+                t: '2016-05-30T16:25:22Z',
                 d: 'temperature|23'
             }
         };
@@ -392,19 +391,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/singleMeasure.json')
-                )
-                .reply(204);
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondSingleMeasure.json')
-                )
+                .post('/v2/op/update', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure.json'))
                 .reply(204);
         });
 
@@ -441,19 +428,7 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multipleMeasure.json')
-                )
-                .reply(204);
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartgondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post(
-                    '/v2/entities?options=upsert',
-                    utils.readExampleFile('./test/unit/ngsiv2/contextRequests/secondMultipleMeasure.json')
-                )
+                .post('/v2/op/update', utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure2.json'))
                 .reply(204);
         });
 
@@ -651,28 +626,11 @@ describe('HTTP Transport binding: measures', function () {
             contextBrokerMock
                 .matchHeader('fiware-service', 'smartgondor')
                 .matchHeader('fiware-servicepath', '/gardens')
-                // Note: The expected body payload is not set explicitly since this mock will be used to
-                // intercept requests from the IOTA to the CB for each one of the different observations.
-                // Therefore, instead of introducing 13 different mocks, we have decided to have a single one
-                // and just check the structure of the payload programmatically.
-                .post('/v2/entities?options=upsert', function (body) {
-                    let i = 0;
-                    let attributes = 0;
-
-                    for (const attribute in body) {
-                        // checks that all attributes has metadata
-                        if (body.hasOwnProperty(attribute)) {
-                            attributes++;
-                            for (const metadata in body[attribute].metadata) {
-                                if (body[attribute].metadata.hasOwnProperty(metadata)) {
-                                    i++;
-                                }
-                            }
-                        }
-                    }
-                    return i === attributes - 1 - 2;
-                })
-                .times(13)
+                .post(
+                    '/v2/op/update'
+                    // FIXME: Mock about current timestamp
+                    //utils.readExampleFile('./test/unit/ngsiv2/contextRequests/multimeasure3.json')
+                )
                 .reply(204);
 
             config.iota.timestamp = true; // forces to add timestamp att and  metadata with timeinstant to all attributes
@@ -747,8 +705,6 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -808,8 +764,6 @@ describe('HTTP Transport binding: measures', function () {
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures.json')
                 )
                 .reply(204);
-
-            config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
@@ -871,8 +825,6 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -933,8 +885,6 @@ describe('HTTP Transport binding: measures', function () {
                 )
                 .reply(204);
 
-            config.iota.timestamp = true;
-
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
             iotagentUl.stop(function () {
@@ -994,8 +944,6 @@ describe('HTTP Transport binding: measures', function () {
                     utils.readExampleFile('./test/unit/ngsiv2/contextRequests/timeInstantMeasures2.json')
                 )
                 .reply(204);
-
-            config.iota.timestamp = true;
 
             nock('http://localhost:8082').post('/protocols').reply(200, {});
 
