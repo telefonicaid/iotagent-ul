@@ -1,3 +1,5 @@
+⚠️**IOTAGENT UL IS DEPRECATED SOFTWARE**. Pleas use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead.
+
 # IoT Agent for the Ultralight 2.0 protocol
 
 [![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
