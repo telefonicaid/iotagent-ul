@@ -1,4 +1,4 @@
-⚠️**IOTAGENT UL IS DEPRECATED SOFTWARE**. Pleas use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead.
+⚠️**IOTAGENT UL IS DEPRECATED SOFTWARE**. Please use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead.
 
 # IoT Agent for the Ultralight 2.0 protocol
 
