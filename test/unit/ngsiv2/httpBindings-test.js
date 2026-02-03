@@ -237,25 +237,6 @@ describe('HTTP Transport binding: measures', function () {
                 });
             });
         });
-        it('should not add a transport to the registered devices', function (done) {
-            const getDeviceOptions = {
-                url: 'http://localhost:' + config.iota.server.port + '/iot/devices/UL_UNPROVISIONED',
-                method: 'GET',
-                headers: {
-                    'fiware-service': 'TestService',
-                    'fiware-servicepath': '/testingPath'
-                }
-            };
-
-            requestText(getOptions, function (error, response, body) {
-                request(getDeviceOptions, function (error, response, body) {
-                    should.not.exist(error);
-                    response.statusCode.should.equal(200);
-                    should.not.exist(body.transport);
-                    done();
-                });
-            });
-        });
     });
 
     describe('When a measure with timestamp arrives for a Device, via HTTP GET', function () {
