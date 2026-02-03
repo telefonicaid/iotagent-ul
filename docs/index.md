@@ -1,7 +1,7 @@
 # Welcome to the FIWARE IoT Agent for Ultralight 2.0
 
 [![FIWARE IoT Agents](https://fiware.github.io/catalogue/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
-[![](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow.)](https://stackoverflow.com/questions/tagged/fiware+iot)
+[![](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
 
 This Internet of Things Agent is a bridge that can be used to communicate devices using the Ultralight 2.0 protocol and
 NGSI Context Brokers (like Orion). Ultralight 2.0 is a lightweight text based protocol aimed to constrained devices and
