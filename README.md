@@ -1,8 +1,6 @@
-⚠️**IOTAGENT UL IS DEPRECATED SOFTWARE**. Please use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead.
-
 # IoT Agent for the Ultralight 2.0 protocol
 
-[![FIWARE IoT Agents](https://nexus.lab.fiware.org/static/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
+[![FIWARE IoT Agents](https://fiware.github.io/catalogue/badges/chapters/iot-agents.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: APGL](https://img.shields.io/github/license/telefonicaid/iotagent-ul.svg)](https://opensource.org/licenses/AGPL-3.0)
 [![Support badge](https://img.shields.io/badge/tag-fiware+iot-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware+iot)
 <br/>
@@ -12,8 +10,10 @@
 [![Documentation badge](https://img.shields.io/readthedocs/fiware-iotagent-ul.svg)](http://fiware-iotagent-ul.readthedocs.io/en/latest/?badge=latest)
 [![CI](https://github.com/telefonicaid/iotagent-ul/workflows/CI/badge.svg)](https://github.com/telefonicaid/iotagent-ul/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/github/telefonicaid/iotagent-ul/badge.svg?branch=master)](https://coveralls.io/github/telefonicaid/iotagent-ul?branch=master)
-![Status](https://nexus.lab.fiware.org/static/badges/statuses/iot-ultralight.svg)
+![Status](https://fiware.github.io/catalogue/badges/statuses/status-deprecated.svg)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4699/badge)](https://bestpractices.coreinfrastructure.org/projects/4699)
+
+**This repository is now archived. IOTA-UL is no longer supported and further development is not envisaged. Please use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead**
 
 An Internet of Things Agent for the Ultralight 2.0 protocol (with [AMQP](https://www.amqp.org/),
 [HTTP](https://www.w3.org/Protocols/) and [MQTT](https://mqtt.org/) transports). This IoT Agent is designed to be a
@@ -25,7 +25,7 @@ It is based on the [IoT Agent Node.js Library](https://github.com/telefonicaid/i
 information about the FIWARE IoT Agents framework, its architecture and the common interaction model can be found in the
 library's GitHub repository.
 
-This project is part of [FIWARE](https://www.fiware.org/). For more information check the FIWARE Catalogue entry for the
+Whilst active, this project was part of [FIWARE](https://www.fiware.org/). For more information check the FIWARE Catalogue entry for the
 [IoT Agents](https://github.com/Fiware/catalogue/tree/master/iot-agents).
 
 | :books: [Documentation](https://fiware-iotagent-ul.readthedocs.io) | :mortar_board: [Academy](https://fiware-academy.readthedocs.io/en/latest/iot-agents/idas) | <img style="height:1em" src="https://quay.io/static/img/quay_favicon.png"/> [quay.io](https://quay.io/repository/fiware/iotagent-ul) | :whale: [Docker Hub](https://hub.docker.com/r/telefonicaiot/iotagent-ul) | :dart: [Roadmap](https://github.com/telefonicaid/iotagent-ul/blob/master/docs/roadmap.md) |
