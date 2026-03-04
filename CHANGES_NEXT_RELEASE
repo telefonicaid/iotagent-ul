@@ -1,0 +1,1 @@
+- Upgrade underscore dep from 1.12.1 to 1.13.8 due to CVE-2026-27601
