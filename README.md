@@ -13,7 +13,7 @@
 ![Status](https://fiware.github.io/catalogue/badges/statuses/status-deprecated.svg)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4699/badge)](https://bestpractices.coreinfrastructure.org/projects/4699)
 
-**This repository is now archived. IOTA-UL is no longer supported and further development is not envisaged. Please use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead**
+**This repository is now archived. IOTA-UL is no longer supported and further development is not envisaged. Please use [IOTAgent-JSON](https://github.com/telefonicaid/iotagent-json) instead. Check migration from UL to JSON documentation [here](https://github.com/telefonicaid/iotagent-json/blob/master/docs/iotagent-ul_to_iotagent-json_migration_guide.mdul_json.md).**
 
 An Internet of Things Agent for the Ultralight 2.0 protocol (with [AMQP](https://www.amqp.org/),
 [HTTP](https://www.w3.org/Protocols/) and [MQTT](https://mqtt.org/) transports). This IoT Agent is designed to be a
