@@ -129,22 +129,9 @@ In this mode, the log file is written in `/var/log/iotaul/iotaul.log`.
 The Docker automatically starts listening in the API ports, so there is no need to execute any process in order to have
 the application running. The Docker image will automatically start.
 
-## Packaging
-
-The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
-in the system.
-
-From the root folder of the project, create the RPM with the following commands:
-
-```bash
-cd rpm
-./create-rpm.sh -v <version-number> -r  <release-number>
-```
-
-Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
-number dependent un previous installations.
-
 ## Configuration
+
+#### Overview
 
 All the configuration for the IoT Agent resides in the `config.js` file, in the root of the application. This file is a
 JavaScript file, that contains the following sections:
@@ -416,3 +403,18 @@ It means that we need to make some changes in the execution of node.js and in th
             net.nf_conntrack_max = 1048576
 
     For more details about any other kernel parameters, take a look to the example [sysctl.conf](sysctl.conf) file.
+    
+## Packaging
+
+The only package type allowed is RPM. In order to execute the packaging scripts, the RPM Build Tools must be available
+in the system.
+
+From the root folder of the project, create the RPM with the following commands:
+
+```bash
+cd rpm
+./create-rpm.sh -v <version-number> -r  <release-number>
+```
+
+Where `<version-number>` is the version (x.y.z) you want the package to have and `<release-number>` is an increasing
+number dependent un previous installations.
